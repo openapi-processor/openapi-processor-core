@@ -11,7 +11,7 @@ plugins {
 }
 
 group 'com.github.hauner.openapi'
-version '1.0.0.M14'
+version '1.0.0.M1'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -139,10 +139,10 @@ bintray {
 
     pkg {
         repo = 'openapi-processor'
-        name = 'openapi-processor-spring'
+        name = 'openapi-processor-core'
         //userOrg = 'openapi-generatr'
         licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/hauner/openapi-processor-spring'
+        vcsUrl = 'https://github.com/hauner/openapi-processor-core'
 
         version {
             name = project.version
