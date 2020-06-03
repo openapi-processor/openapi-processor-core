@@ -10,11 +10,12 @@ link:{oaps-ci}[image:{badge-ci}[]]
 link:{oaps-license}[image:{badge-license}[]]
 
 // does not center on github
-//image::images/openapi-processor-core-800x400.png[logo,200,align="center"]
-[cols=",^,",frame=none,grid=none]
-|===
-| | image:images/openapi-processor-core-800x400.png[logo,200] |
-|===
+image::images/openapi-processor-core-800x400.png[logo,200,align="center"]
+
+//[cols=",^,",frame=none,grid=none]
+//|===
+//| | image:images/openapi-processor-core-800x400.png[logo,200] |
+//|===
 
 
 == openapi-processor-core
