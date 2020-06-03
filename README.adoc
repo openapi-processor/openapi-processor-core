@@ -9,7 +9,12 @@
 link:{oaps-ci}[image:{badge-ci}[]]
 link:{oaps-license}[image:{badge-license}[]]
 
-image::images/openapi-processor-core-800x400.png[Tiger,200,align="center"]
+// does not center on github
+//image::images/openapi-processor-core-800x400.png[logo,200,align="center"]
+[cols=",^,",frame=none,grid=none]
+|===
+| | image:images/openapi-processor-core-800x400.png[logo,200] |
+|===
 
 
 == openapi-processor-core
