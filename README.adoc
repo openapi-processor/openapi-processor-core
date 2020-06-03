@@ -13,7 +13,7 @@ link:{oaps-license}[image:{badge-license}[]]
 //image::images/openapi-processor-core-800x400.png[logo,200,align="center"]
 ++++
 <p align="center">
-  <img width="200px" src="images/openapi-processor-core-800x400.png">
+  <img width="300px" src="images/openapi-processor-core-800x400.png">
 </p>
 ++++
 
