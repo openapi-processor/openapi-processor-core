@@ -45,7 +45,6 @@ import com.github.hauner.openapi.core.parser.RefResolver
 import com.github.hauner.openapi.core.parser.Response
 import com.github.hauner.openapi.core.parser.RequestBody
 import com.github.hauner.openapi.core.parser.Schema
-import com.github.hauner.openapi.spring.processor.SpringFramework
 import com.github.hauner.openapi.core.support.Identifier
 import groovy.util.logging.Slf4j
 
@@ -69,13 +68,13 @@ class  ApiConverter {
     private MappingFinder mappingFinder
     private ApiOptions options
 
-    ApiConverter(ApiOptions options) {
+    ApiConverter(ApiOptions options, Framework framework) {
         this.options = options
-        this.framework = framework = new SpringFramework()
+        this.framework = framework
 
-        if (!this.options) {
-            this.options = new DefaultApiOptions()
-        }
+//        if (!this.options) {
+//            this.options = new DefaultApiOptions()
+//        }
 
         dataTypeConverter = new DataTypeConverter(this.options)
         dataTypeWrapper = new ResultDataTypeWrapper(this.options)

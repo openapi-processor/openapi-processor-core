@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.datatypes.LazyDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import spock.lang.Specification
@@ -56,7 +57,8 @@ components:
 """)
 
         when:
-        def api = new ApiConverter (new ApiOptions()).convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()

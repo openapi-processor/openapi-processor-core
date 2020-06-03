@@ -20,13 +20,12 @@ import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.datatypes.ListDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
-import com.github.hauner.openapi.spring.writer.java.HeaderWriter
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.AssertHelper.extractImports
 
 class DataTypeWriterSpec extends Specification {
-    def headerWriter = Mock HeaderWriter
+    def headerWriter = Mock SimpleWriter
     def options = new ApiOptions()
 
     def writer = new DataTypeWriter(headerWriter: headerWriter, apiOptions: options)

@@ -34,10 +34,10 @@ import com.github.hauner.openapi.core.model.datatypes.LongDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
-import com.github.hauner.openapi.spring.model.parameters.QueryParameter
 import spock.lang.Specification
 import spock.lang.Unroll
 

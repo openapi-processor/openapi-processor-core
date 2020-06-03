@@ -21,6 +21,8 @@ import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.ParameterTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.ResponseTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.TypeMapping
+import com.github.hauner.openapi.core.framework.Framework
+import com.github.hauner.openapi.core.framework.FrameworkBase
 import com.github.hauner.openapi.core.model.Api
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -54,7 +56,8 @@ paths:
         def options = new ApiOptions(packageName: 'pkg', typeMappings: [
             new TypeMapping ('array', targetTypeName)
         ])
-        Api api = new ApiConverter (options).convert (openApi)
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -103,7 +106,9 @@ paths:
                     'array',
                     'java.util.Collection')
             ])
-        new ApiConverter (options).convert (openApi)
+
+        new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         def e = thrown (AmbiguousTypeMappingException)
@@ -139,7 +144,9 @@ paths:
         def options = new ApiOptions(
             packageName: 'pkg',
             typeMappings: mappings)
-        new ApiConverter (options).convert (openApi)
+
+        new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         thrown (AmbiguousTypeMappingException)
@@ -218,7 +225,9 @@ paths:
                     targetTypeName)
             ])
         ])
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -260,7 +269,9 @@ paths:
 
         when:
         def options = new ApiOptions(packageName: 'pkg', typeMappings: mappings)
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -318,7 +329,9 @@ paths:
 
         when:
         def options = new ApiOptions(packageName: 'pkg', typeMappings: mappings)
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()

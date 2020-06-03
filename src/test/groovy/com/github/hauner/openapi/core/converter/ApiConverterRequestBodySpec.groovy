@@ -18,6 +18,8 @@ package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.TypeMapping
+import com.github.hauner.openapi.core.framework.Framework
+import com.github.hauner.openapi.core.framework.FrameworkBase
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse
@@ -52,7 +54,8 @@ paths:
 """)
 
         when:
-        def api = new ApiConverter ().convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -102,7 +105,8 @@ paths:
         ])
 
         when:
-        def api = new ApiConverter (options).convert (openApi)
+        def api = new ApiConverter (options, new FrameworkBase())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -144,7 +148,8 @@ paths:
         )
 
         when:
-        new ApiConverter ().convert (openApi)
+        new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         def e = thrown(MultipartResponseBodyException)
@@ -181,7 +186,8 @@ paths:
         )
 
         when:
-        def cv = new ApiConverter ().convert (openApi)
+        def cv = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         cv.models.objectDataTypes.empty

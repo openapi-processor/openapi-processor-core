@@ -33,7 +33,6 @@ import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
-import com.github.hauner.openapi.spring.writer.java.HeaderWriter
 import spock.lang.Specification
 
 import java.util.stream.Collectors
@@ -41,7 +40,7 @@ import java.util.stream.Collectors
 import static com.github.hauner.openapi.core.test.AssertHelper.extractImports
 
 class InterfaceWriterSpec extends Specification {
-    def headerWriter = Mock HeaderWriter
+    def headerWriter = Mock SimpleWriter
     def methodWriter = Stub MethodWriter
     def annotations = Stub (FrameworkAnnotations)
     def apiOptions = new ApiOptions()

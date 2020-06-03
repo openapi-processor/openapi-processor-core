@@ -17,11 +17,12 @@
 package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
-import com.github.hauner.openapi.spring.processor.SpringFrameworkAnnotations
+import com.github.hauner.openapi.core.framework.Framework
+import com.github.hauner.openapi.core.framework.FrameworkAnnotations
+import com.github.hauner.openapi.core.writer.java.MappingAnnotationWriter
+import com.github.hauner.openapi.core.writer.java.SimpleWriter
 import com.github.hauner.openapi.core.test.ModelAsserts
-import com.github.hauner.openapi.spring.writer.java.HeaderWriter
 import com.github.hauner.openapi.core.writer.java.InterfaceWriter
-import com.github.hauner.openapi.spring.writer.java.MappingAnnotationWriter
 import com.github.hauner.openapi.core.writer.java.MethodWriter
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -64,7 +65,8 @@ paths:
 """)
 
         when:
-        api = new ApiConverter ().convert (openApi)
+        api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         assertInterfaces ('ping', 'pong')
@@ -93,11 +95,13 @@ paths:
 """)
 
         when:
-        api = new ApiConverter ().convert (openApi)
+        api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
+
         def w = new InterfaceWriter (
-            headerWriter: new HeaderWriter (),
-            methodWriter: new MethodWriter(mappingAnnotationWriter: new MappingAnnotationWriter()),
-            annotations: new SpringFrameworkAnnotations())
+            headerWriter: Stub (SimpleWriter),
+            methodWriter: new MethodWriter(mappingAnnotationWriter: Stub (MappingAnnotationWriter)),
+            annotations: Stub (FrameworkAnnotations))
         def writer = new StringWriter()
         w.write (writer, api.interfaces.get (0))
 
@@ -130,7 +134,7 @@ paths:
         )
 
         when:
-        def api = new ApiConverter (options)
+        def api = new ApiConverter (options, Stub (Framework))
             .convert (openApi)
 
         then:
@@ -154,7 +158,7 @@ paths:
 """)
 
         when:
-        def api = new ApiConverter ()
+        def api = new ApiConverter (new ApiOptions(), Stub (Framework))
             .convert (openApi)
 
         then:
@@ -188,7 +192,7 @@ paths:
         ])
 
         when:
-        def api = new ApiConverter (options)
+        def api = new ApiConverter (options, Stub (Framework))
             .convert (openApi)
 
         then:
