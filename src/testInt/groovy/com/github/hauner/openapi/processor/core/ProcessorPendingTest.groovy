@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,38 +14,36 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.processor
+package com.github.hauner.openapi.processor.core
 
 import com.github.hauner.openapi.core.parser.ParserType
-import com.google.common.jimfs.Configuration
-import com.google.common.jimfs.Jimfs
+import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
+import com.github.hauner.openapi.test.ProcessorTestBase
+import com.github.hauner.openapi.test.TestSet
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
-/**
- * using Junit so IDEA adds a "<Click to see difference>" when using assertEquals().
- */
+@Ignore
 @RunWith(Parameterized)
-class ProcessorJimsFileSystemTest extends ProcessorTestBase {
+class ProcessorPendingTest extends ProcessorTestBase {
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
-        // the swagger parser does not work with a custom FileSystem so we just run the test with
-        // openapi4j
-
-        TestSet.testSets.collect {
-           new TestSet (name: it, parser: ParserType.OPENAPI4J)
-        }
+        return [
+            new TestSet(name: 'params-simple-data-types-micronaut', processor: new TestProcessor(), parser: ParserType.SWAGGER),
+            new TestSet(name: 'params-simple-data-types-micronaut', processor: new TestProcessor(), parser: ParserType.OPENAPI4J)
+        ]
     }
 
-    ProcessorJimsFileSystemTest (TestSet testSet) {
+    ProcessorPendingTest (TestSet testSet) {
         super (testSet)
     }
 
     @Test
-    void "jimfs - processor creates expected files for api set "() {
-        runOnCustomFileSystem (Jimfs.newFileSystem (Configuration.unix ()))
+    void "native - processor creates expected files for api set "() {
+        runOnNativeFileSystem ()
     }
 
 }
