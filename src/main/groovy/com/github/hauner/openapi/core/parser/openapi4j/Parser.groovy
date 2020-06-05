@@ -31,7 +31,7 @@ class Parser {
 
     ParserOpenApi parse (String apiPath) {
         if (!hasScheme (apiPath)) {
-            apiPath = "file://${apiPath}"
+            apiPath = "file:${apiPath}"
         }
 
         OpenApi3 api = new OpenApi3Parser ()
