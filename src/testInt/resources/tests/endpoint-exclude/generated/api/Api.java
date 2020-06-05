@@ -7,11 +7,10 @@ package generated.api;
 
 import annotation.Mapping;
 import annotation.Parameter;
-import org.springframework.http.ResponseEntity;
 
 public interface Api {
 
     @Mapping("/endpoint/{foo}")
-    ResponseEntity<Void> getEndpointFoo(@Parameter String foo);
+    void getEndpointFoo(@Parameter String foo);
 
 }

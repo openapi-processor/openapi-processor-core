@@ -13,22 +13,21 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.http.ResponseEntity;
 
 public interface EndpointApi {
 
     @Mapping("/endpoint/nullable")
-    ResponseEntity<Void> getEndpointNullable(
+    void getEndpointNullable(
             @NotNull @Parameter String nullableFalse, @Parameter String nullableTrue);
 
     @Mapping("/endpoint/length")
-    ResponseEntity<Void> getEndpointLength(
+    void getEndpointLength(
             @Size(min = 2) @Parameter String minLength,
             @Size(max = 4) @Parameter String maxLength,
             @Size(min = 2, max = 4) @Parameter String minMaxLength);
 
     @Mapping("/endpoint/minmax")
-    ResponseEntity<Void> getEndpointMinmax(
+    void getEndpointMinmax(
             @DecimalMin(value = "10") @Parameter Integer min,
             @DecimalMin(value = "10", inclusive = false) @Parameter Integer minEx,
             @DecimalMax(value = "20") @Parameter Integer max,
@@ -40,12 +39,12 @@ public interface EndpointApi {
                     Integer minMaxEx);
 
     @Mapping("/endpoint/items")
-    ResponseEntity<Void> getEndpointItems(
+    void getEndpointItems(
             @Size(min = 2) @Parameter String[] min,
             @Size(max = 4) @Parameter String[] max,
             @Size(min = 2, max = 4) @Parameter String[] minMax);
 
     @Mapping("/endpoint/obj")
-    ResponseEntity<Void> postEndpointObj(@Valid @Parameter Obj1 body);
+    void postEndpointObj(@Valid @Parameter Obj1 body);
 
 }

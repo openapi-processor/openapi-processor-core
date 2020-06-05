@@ -7,11 +7,10 @@ package generated.api;
 
 import annotation.Mapping;
 import annotation.Parameter;
-import org.springframework.http.ResponseEntity;
 
 public interface ExcludedApi {
 
     @Mapping("/endpoint-exclude/{foo}")
-    ResponseEntity<Void> getEndpointExcludeFoo(@Parameter String foo);
+    void getEndpointExcludeFoo(@Parameter String foo);
 
 }
