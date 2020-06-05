@@ -27,25 +27,41 @@ import io.swagger.v3.parser.core.models.SwaggerParseResult
  * @author Martin Hauner
  */
 class Parser {
+    public static final String SCHEME_RESOURCE = "resource:"
 
     ParserOpenApi parse (String apiPath) {
-        if (!hasScheme (apiPath)) {
-            apiPath = "file://${apiPath}"
-        }
-
         ParseOptions opts = new ParseOptions(
             // loads $refs to other files into #/components/schema and replaces the $refs to the
             // external files with $refs to #/components/schema.
             resolve: true)
 
         SwaggerParseResult result = new OpenAPIV3Parser ()
-                  .readLocation (apiPath, null, opts)
+                  .readLocation (preparePath (apiPath), null, opts)
 
         new OpenApi(result)
     }
 
-    boolean hasScheme (String path) {
-        path.indexOf ("://") > -1
+    private static String preparePath (String path) {
+        // the swagger parser works with http(s) & file protocols only.
+        // If it is something different (or nothing) it tries to find the given path as-is on the
+        // file system. If that fails it tries to load the path as resource.
+
+        if (isResource (path)) {
+            // strip resource: (only used by tests) to load it from resources
+            path.substring (SCHEME_RESOURCE.size ())
+        } else if (hasScheme (path)) {
+            "file:${path}"
+        } else {
+            path
+        }
+    }
+
+    static boolean isResource (String path) {
+        path.startsWith (SCHEME_RESOURCE)
+    }
+
+    static boolean hasScheme (String path) {
+        path.indexOf (":") > -1
     }
 
 }
