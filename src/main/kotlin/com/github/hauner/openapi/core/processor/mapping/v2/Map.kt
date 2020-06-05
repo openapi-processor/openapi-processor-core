@@ -26,17 +26,17 @@ data class Map(
         /**
      * global result mapping
      */
-    val result: String?,
+    val result: String? = null,
 
         /**
      * single mapping, i.e. Mono<>
      */
-    val single: String?,
+    val single: String? = null,
 
         /**
      * multi mapping, i.e. Flux<>
      */
-    val multi: String?,
+    val multi: String? = null,
 
         /**
      * global type mappings

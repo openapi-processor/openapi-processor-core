@@ -39,7 +39,7 @@ data class Mapping(
         /**
      * the type mappings
      */
-    val map: Map
+    val map: Map = Map()
 
 ): VersionedMapping {
 
