@@ -20,7 +20,7 @@ java {
 
 
 ext {
-    processorApiVersion = '1.0.0.M4'
+    processorApiVersion = '1.0.0'
 
     bintrayUser = project.hasProperty ('BINTRAY_USER') ? BINTRAY_USER : 'n/a'
     bintrayKey =  project.hasProperty ('BINTRAY_KEY')  ? BINTRAY_KEY  : 'n/a'
