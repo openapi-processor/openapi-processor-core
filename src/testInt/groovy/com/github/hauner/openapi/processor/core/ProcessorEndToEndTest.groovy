@@ -30,32 +30,7 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized)
 class ProcessorEndToEndTest extends ProcessorTestBase {
 
-    static def testSets = TestSet.testSetsCore + TestSet.testSetsFramework
-
-    static def testSetsX = [
-        'bean-validation',
-//        'endpoint-exclude',
-//        'method-operation-id',
-//        'no-response-content',
-//        'params-additional',
-//        'params-complex-data-types',
-//        'params-enum',
-//        'params-simple-data-types',
-//        'params-request-body',
-//        'params-request-body-multipart-form-data',
-//        'params-path-simple-data-types',
-//        'params-spring-pageable-mapping',
-//        'ref-into-another-file',
-//        'ref-loop',
-//        'response-array-data-type-mapping',
-//        'response-complex-data-types',
-//        'response-content-multiple',
-//        'response-content-single',
-//        'response-result-mapping',
-//        'response-simple-data-types',
-//        'response-single-multi-mapping',
-//        'schema-composed'
-    ]
+    static def testSets = TestSet.ALL
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {

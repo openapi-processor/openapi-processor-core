@@ -32,7 +32,7 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized)
 class ProcessorJimsFileSystemTest extends ProcessorTestBase {
 
-    static def testSets = TestSet.testSetsCore + TestSet.testSetsFramework
+    static def testSets = TestSet.ALL
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
