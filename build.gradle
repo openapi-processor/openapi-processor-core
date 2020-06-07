@@ -64,33 +64,31 @@ compileKotlin {
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy:2.5.10'
-    implementation 'org.codehaus.groovy:groovy-nio:2.5.10'
+    implementation 'org.codehaus.groovy:groovy:2.5.12'
+    implementation 'org.codehaus.groovy:groovy-nio:2.5.12'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0'
 
-    implementation ('io.swagger.parser.v3:swagger-parser:2.0.19') {
+    compileOnly "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
+
+    implementation 'org.openapi4j:openapi-parser:0.9'
+    implementation ('io.swagger.parser.v3:swagger-parser:2.0.20') {
         exclude group: 'io.swagger.parser.v3', module: 'swagger-parser-v2-converter'
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
-    implementation 'org.openapi4j:openapi-parser:0.9'
-    implementation 'com.google.googlejavaformat:google-java-format:1.7'
-    compileOnly "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
+    implementation 'com.google.googlejavaformat:google-java-format:1.8'
 
-    testImplementation 'com.google.jimfs:jimfs:1.1'
+    testImplementation 'com.github.hauner.openapi:openapi-processor-test:1.0.0.M1'
     testImplementation ('org.spockframework:spock-core:2.0-M2-groovy-2.5') {
         exclude group: 'org.codehaus.groovy'
     }
     testImplementation ('org.spockframework:spock-junit4:2.0-M2-groovy-2.5') {
         exclude group: 'org.codehaus.groovy'
     }
-    testImplementation 'net.bytebuddy:byte-buddy:1.10.9'
+    testImplementation 'net.bytebuddy:byte-buddy:1.10.11'
     testImplementation 'ch.qos.logback:logback-classic:1.2.3'
 
-    testIntImplementation "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
-    testIntImplementation 'io.github.java-diff-utils:java-diff-utils:4.5'
-//    testIntRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
-//    testIntRuntimeOnly 'org.slf4j:slf4j-nop:1.6.1'
+    testIntCompileOnly "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
 }
 
 tasks.withType(Test) {
