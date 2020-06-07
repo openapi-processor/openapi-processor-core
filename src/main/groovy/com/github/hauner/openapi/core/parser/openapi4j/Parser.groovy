@@ -44,8 +44,8 @@ class Parser {
         new OpenApi (api, results)
     }
 
-    boolean hasScheme (String path) {
-        path.indexOf ("://") > -1
+    static boolean hasScheme (String path) {
+        path.indexOf (":") > -1
     }
 
 }
