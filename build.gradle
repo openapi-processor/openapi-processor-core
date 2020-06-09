@@ -21,6 +21,7 @@ java {
 
 ext {
     processorApiVersion = '1.0.0'
+    jacksonVersion = '2.11.0'
 
     bintrayUser = project.hasProperty ('BINTRAY_USER') ? BINTRAY_USER : 'n/a'
     bintrayKey =  project.hasProperty ('BINTRAY_KEY')  ? BINTRAY_KEY  : 'n/a'
@@ -64,10 +65,13 @@ compileKotlin {
 }
 
 dependencies {
+    components.all(JacksonPlatformRule)
+    components.all(KotlinPlatformRule)
+
     implementation 'org.codehaus.groovy:groovy:2.5.12'
     implementation 'org.codehaus.groovy:groovy-nio:2.5.12'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0'
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
 
     compileOnly "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
 
@@ -76,19 +80,44 @@ dependencies {
         exclude group: 'io.swagger.parser.v3', module: 'swagger-parser-v2-converter'
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
-    implementation 'com.google.googlejavaformat:google-java-format:1.8'
 
-    testImplementation 'com.github.hauner.openapi:openapi-processor-test:1.0.0.M1'
+     implementation ('com.google.googlejavaformat:google-java-format:1.8') {
+        exclude group: 'com.google.guava'
+    }
+
+    implementation ('com.google.guava:guava:28.1-jre') {
+        exclude group: 'com.google.guava'
+        exclude group: 'com.google.j2objc'
+        exclude group: 'com.google.code.findbugs'
+        exclude group: 'com.google.errorprone'
+        exclude group: 'org.checkerframework'
+        exclude group: 'org.codehaus.mojo'
+    }
+
+    testImplementation "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
+    testImplementation ('com.github.hauner.openapi:openapi-processor-test:1.0.0.M1') {
+        exclude group: 'com.google.guava'
+    }
+
+    testImplementation("com.google.jimfs:jimfs:1.1") {
+         exclude group: 'com.google.guava'
+     }
+
+    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testCompileOnly  ("junit:junit:4.13")
+    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    testRuntimeOnly ("org.junit.vintage:junit-vintage-engine:5.6.2")
+
     testImplementation ('org.spockframework:spock-core:2.0-M2-groovy-2.5') {
         exclude group: 'org.codehaus.groovy'
+        exclude group: 'junit'
     }
     testImplementation ('org.spockframework:spock-junit4:2.0-M2-groovy-2.5') {
         exclude group: 'org.codehaus.groovy'
+        exclude group: 'junit'
     }
     testImplementation 'net.bytebuddy:byte-buddy:1.10.11'
     testImplementation 'ch.qos.logback:logback-classic:1.2.3'
-
-    testIntCompileOnly "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
 }
 
 tasks.withType(Test) {
