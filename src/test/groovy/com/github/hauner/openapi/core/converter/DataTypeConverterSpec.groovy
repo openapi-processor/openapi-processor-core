@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.DataTypes
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
@@ -29,7 +30,7 @@ import spock.lang.Unroll
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse
 
 class DataTypeConverterSpec extends Specification {
-    def converter = new DataTypeConverter(new DefaultApiOptions())
+    def converter = new DataTypeConverter(new ApiOptions())
 
 
     @Unroll
@@ -149,7 +150,9 @@ paths:
 """)
         when:
         def options = new ApiOptions(packageName: 'pkg')
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -183,7 +186,9 @@ paths:
 """)
         when:
         def options = new ApiOptions(packageName: 'pkg')
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -231,7 +236,9 @@ components:
 """)
         when:
         def options = new ApiOptions(packageName: 'pkg')
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         api.models.size () == 1
@@ -285,7 +292,9 @@ components:
 """)
         when:
         def options = new ApiOptions(packageName: 'pkg')
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         api.models.size () == 1
@@ -336,7 +345,9 @@ components:
 
         when:
         def options = new ApiOptions(packageName: 'pkg')
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         api.models.size () == 2
@@ -378,7 +389,9 @@ paths:
 
         when:
         def options = new ApiOptions(packageName: 'pkg')
-        Api api = new ApiConverter (options).convert (openApi)
+
+        Api api = new ApiConverter (options, Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()

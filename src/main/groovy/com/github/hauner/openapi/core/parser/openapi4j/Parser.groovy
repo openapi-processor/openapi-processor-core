@@ -31,7 +31,7 @@ class Parser {
 
     ParserOpenApi parse (String apiPath) {
         if (!hasScheme (apiPath)) {
-            apiPath = "file://${apiPath}"
+            apiPath = "file:${apiPath}"
         }
 
         OpenApi3 api = new OpenApi3Parser ()
@@ -44,8 +44,8 @@ class Parser {
         new OpenApi (api, results)
     }
 
-    boolean hasScheme (String path) {
-        path.indexOf ("://") > -1
+    static boolean hasScheme (String path) {
+        path.indexOf (":") > -1
     }
 
 }

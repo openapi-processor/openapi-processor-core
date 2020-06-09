@@ -19,6 +19,7 @@ package com.github.hauner.openapi.core.converter
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
+import com.github.hauner.openapi.core.framework.Framework
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -32,7 +33,7 @@ class ApiConverterErrorSpec extends Specification {
     def appender
 
     void setup () {
-        converter = new ApiConverter ()
+        converter = new ApiConverter (new ApiOptions(), Stub (Framework))
 
         appender = new ListAppender<ILoggingEvent> ()
         appender.start ()

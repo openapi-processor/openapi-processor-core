@@ -19,6 +19,8 @@ package com.github.hauner.openapi.core.converter
 import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.TypeMapping
+import com.github.hauner.openapi.core.framework.Framework
+import com.github.hauner.openapi.core.framework.FrameworkBase
 import spock.lang.Ignore
 import spock.lang.Specification
 
@@ -53,7 +55,8 @@ paths:
 """)
 
         when:
-        def api = new ApiConverter ().convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -91,7 +94,8 @@ paths:
 """)
 
         when:
-        def api = new ApiConverter ().convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -129,7 +133,8 @@ paths:
 """)
 
         when:
-        def api = new ApiConverter ().convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -167,7 +172,8 @@ paths:
 """)
 
         when:
-        def api = new ApiConverter ().convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -213,7 +219,8 @@ paths:
         ])
 
         when:
-        def api = new ApiConverter (options).convert (openApi)
+        def api = new ApiConverter (options, new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()

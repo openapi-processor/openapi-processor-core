@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.converter
 
+import com.github.hauner.openapi.core.framework.Framework
+import com.github.hauner.openapi.core.framework.FrameworkBase
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse
@@ -53,7 +55,8 @@ paths:
 """)
 
         when:
-        def api = new ApiConverter ().convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.first ()
@@ -109,7 +112,8 @@ components:
 """)
 
         when:
-        def api = new ApiConverter ().convert (openApi)
+        def api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         api.models.dataTypes.size () == 2

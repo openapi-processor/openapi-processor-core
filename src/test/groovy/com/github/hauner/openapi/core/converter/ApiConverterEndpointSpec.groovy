@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
@@ -55,7 +56,8 @@ components:
           type: string
 """)
         when:
-        Api api = new ApiConverter ().convert (openApi)
+        Api api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         api.models.size () == 1
@@ -91,7 +93,8 @@ paths:
 """)
 
         when:
-        Api api = new ApiConverter ().convert (openApi)
+        Api api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         api.interfaces.size () == 1
@@ -125,7 +128,8 @@ paths:
 """)
 
         when:
-        Api api = new ApiConverter ().convert (openApi)
+        Api api = new ApiConverter (new ApiOptions(), Stub(Framework))
+            .convert (openApi)
 
         then:
         api.interfaces.size () == 1
@@ -159,7 +163,8 @@ paths:
 """)
 
         when:
-        api = new ApiConverter ().convert (openApi)
+        api = new ApiConverter (new ApiOptions(), Stub(Framework))
+            .convert (openApi)
 
         then:
         api.interfaces.get (0).name == ApiConverter.INTERFACE_DEFAULT_NAME
@@ -187,7 +192,8 @@ paths:
 """)
 
         when:
-        api = new ApiConverter ().convert (openApi)
+        api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
 
         then:
         def itf = api.interfaces.get (0)

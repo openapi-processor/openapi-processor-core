@@ -17,11 +17,10 @@
 package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
-import com.github.hauner.openapi.spring.writer.java.HeaderWriter
 import spock.lang.Specification
 
 class StringEnumWriterSpec extends Specification {
-    def headerWriter = Mock HeaderWriter
+    def headerWriter = Mock SimpleWriter
 
     def writer = new StringEnumWriter(headerWriter: headerWriter)
     def target = new StringWriter ()
