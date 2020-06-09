@@ -44,7 +44,7 @@ class RefResolver implements ParserRefResolver {
             resolved = o4jCompSchema
         } else {
             O4jSchema o4jSchema = (ref as Schema).schema
-            resolved = o4jSchema.copy (api.context, true)
+            resolved = o4jSchema.getReference(api.getContext()).getMappedContent(O4jSchema)
         }
 
         new Schema (resolved)
