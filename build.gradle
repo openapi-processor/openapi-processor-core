@@ -162,15 +162,14 @@ dokka {
 bintray {
     user = bintrayUser
     key = bintrayKey
-    publications = ['processor']
+    publications = ['core']
 
     pkg {
-        repo = 'openapi-processor'
+        repo = 'primary'
         name = 'openapi-processor-core'
-        //userOrg = 'openapi-processor'
+        userOrg = 'openapi-processor'
         licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/hauner/openapi-processor-core'
-
+        vcsUrl = 'https://github.com/openapi-processor/openapi-processor-core'
         version {
             name = project.version
         }
@@ -180,7 +179,7 @@ bintray {
 
 publishing {
     publications {
-        processor (MavenPublication) {
+        core (MavenPublication) {
             from components.java
             artifact sourcesJar
             artifact javadocJar
