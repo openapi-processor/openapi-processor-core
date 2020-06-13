@@ -10,7 +10,7 @@ plugins {
     id "com.github.ben-manes.versions" version "0.28.0"
 }
 
-group 'com.github.hauner.openapi'
+group 'io.openapiprocessor'
 version '1.0.0.M1'
 
 java {
