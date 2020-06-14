@@ -27,3 +27,15 @@ generate java code.
 == Documentation
 
 See link:{oap-docs}[here].
+
+
+== snapshots
+
+=== repository
+
+https://oss.jfrog.org/artifactory/oss-snapshot-local
+
+=== artifacts
+
+https://oss.jfrog.org/oss-snapshot-local/io/openapiprocessor/openapi-processor-core
+
