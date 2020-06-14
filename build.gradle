@@ -4,6 +4,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'com.jfrog.bintray' version '1.8.5'
+    id 'com.jfrog.artifactory' version '4.15.2'
     id 'org.jetbrains.dokka' version '0.10.1'
     id 'org.jetbrains.kotlin.jvm' version '1.3.72'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
@@ -11,7 +12,7 @@ plugins {
 }
 
 group 'io.openapiprocessor'
-version '1.0.0.M1'
+version '1.0.0.M2-SNAPSHOT'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -163,6 +164,41 @@ dokka {
 }
 
 
+publishing {
+    publications {
+        core (MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            groupId project.group
+            artifactId project.name
+            version project.version
+        }
+    }
+}
+
+
+artifactory {
+    contextUrl = 'https://oss.jfrog.org'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = bintrayUser
+            password = bintrayKey
+        }
+        defaults {
+            publications('core')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
+}
+
+
 bintray {
     user = bintrayUser
     key = bintrayKey
@@ -176,21 +212,6 @@ bintray {
         vcsUrl = 'https://github.com/openapi-processor/openapi-processor-core'
         version {
             name = project.version
-        }
-    }
-}
-
-
-publishing {
-    publications {
-        core (MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-
-            groupId project.group
-            artifactId project.name
-            version project.version
         }
     }
 }
