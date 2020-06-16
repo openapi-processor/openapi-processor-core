@@ -21,7 +21,7 @@ java {
 
 
 ext {
-    processorApiVersion = '1.0.0'
+    processorApiVersion = '1.1.0.M1'
     jacksonVersion = '2.11.0'
 
     bintrayUser = project.hasProperty ('BINTRAY_USER') ? BINTRAY_USER : 'n/a'
@@ -37,10 +37,6 @@ repositories {
     }
     maven {
         url "https://dl.bintray.com/openapi-processor/primary"
-    }
-    maven {
-        // deprecated but still used
-        url "https://dl.bintray.com/hauner/openapi-processor"
     }
 }
 
@@ -78,7 +74,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
 
-    compileOnly "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
+    compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
 
     implementation 'org.openapi4j:openapi-parser:1.0'
     implementation ('io.swagger.parser.v3:swagger-parser:2.0.20') {
@@ -99,8 +95,8 @@ dependencies {
         exclude group: 'org.codehaus.mojo'
     }
 
-    testImplementation "com.github.hauner.openapi:openapi-processor-api:$processorApiVersion"
-    testImplementation ('com.github.hauner.openapi:openapi-processor-test:1.0.0.M1') {
+    testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
+    testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.0.M1') {
         exclude group: 'com.google.guava'
     }
 
