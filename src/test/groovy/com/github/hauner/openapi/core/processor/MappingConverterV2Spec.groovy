@@ -36,7 +36,7 @@ class MappingConverterV2Spec extends Specification {
     @Unroll
     void "reads global type mapping: (#input.source)" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
 
 map:
   types:
@@ -141,7 +141,7 @@ map:
 
     void "reads global response type mapping" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
 
 map:
   responses:
@@ -165,7 +165,7 @@ map:
 
     void "reads global parameter type mapping" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   parameters:
@@ -197,7 +197,7 @@ map:
 
     void "reads endpoint exclude flag" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   paths:
@@ -223,7 +223,7 @@ map:
 
     void "reads endpoint parameter type mapping" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   paths:
@@ -252,7 +252,7 @@ map:
 
     void "reads endpoint add mapping" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   paths:
@@ -282,7 +282,7 @@ map:
 
     void "reads endpoint response type mapping" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   paths:
@@ -312,7 +312,7 @@ map:
 
     void "reads global result mapping #result" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   result: $result
@@ -335,7 +335,7 @@ map:
 
     void "reads endpoint result mapping #result" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   paths:
@@ -365,7 +365,7 @@ map:
 
     void "reads global single & multi mapping" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   single: $single
@@ -392,7 +392,7 @@ map:
 
     void "reads endpoint single & multi mapping" () {
         String yaml = """\
-openapi-processor-spring: v2.0
+openapi-processor-mapping: v2.0
     
 map:
   paths:
