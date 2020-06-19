@@ -16,20 +16,32 @@
 
 package com.github.hauner.openapi.core.processor.mapping.version
 
-import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Mapping(
         @JsonProperty("openapi-processor-mapping")
-        @JsonAlias("openapi-processor-spring") // deprecated
-        val version: String?) {
+        val version: String? = null,
+
+        @JsonProperty("openapi-processor-spring")
+        val versionObsolete: String? = null
+) {
 
     fun isV2(): Boolean {
-        if (version == null) {
-            return false
-        }
+        return getSafeVersion().startsWith("v2")
+    }
 
-        return version.startsWith("v2")
+    fun isDeprecatedVersionKey (): Boolean {
+        return versionObsolete != null
+    }
+
+    private fun getSafeVersion(): String {
+        if (version != null)
+            return version
+
+        if (versionObsolete != null)
+            return versionObsolete
+
+        return "no version"
     }
 
 }

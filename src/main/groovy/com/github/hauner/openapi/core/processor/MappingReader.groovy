@@ -30,12 +30,14 @@ import com.github.hauner.openapi.core.processor.mapping.version.Mapping as Versi
 import com.github.hauner.openapi.core.processor.mapping.v2.Mapping as MappingV2
 import com.github.hauner.openapi.core.processor.mapping.v2.Parameter as ParameterV2
 import com.github.hauner.openapi.core.processor.mapping.v2.ParameterDeserializer as ParameterDeserializerV2
+import groovy.util.logging.Slf4j
 
 /**
  *  Reader for mapping yaml.
  *
  *  @author Martin Hauner
  */
+@Slf4j
 class MappingReader {
 
     VersionedMapping read (String typeMappings) {
@@ -54,11 +56,19 @@ class MappingReader {
 
         def versionMapper = createVersionParser ()
         VersionMapping version = versionMapper.readValue (mapping, VersionMapping)
+
+        if (version.isDeprecatedVersionKey ()) {
+            log.warn ('the mapping version key "openapi-processor-spring" is deprecated, please use "openapi-processor-mapping"')
+        }
+
         if (version.v2) {
             def mapper = createV2Parser ()
             mapper.readValue (mapping, MappingV2)
         } else {
             // assume v1
+            log.info ('please update the mapping to the latest format')
+            log.info ('see https://hauner.github.io/openapi-processor/spring/mapping/structure.html')
+
             def mapper = createYamlParser ()
             mapper.readValue (mapping, Mapping)
         }
