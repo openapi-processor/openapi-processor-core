@@ -24,7 +24,7 @@ this is the re-usable core of (some) openapi-processors.
 It reads the link:{openapi}[OpenAPI] yaml, converts it to an internal model and provides writers to
 generate java code.
 
-== Documentation
+== openapi-processor documentation
 
 See link:{oap-docs}[here].
 
