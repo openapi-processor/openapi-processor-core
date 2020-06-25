@@ -16,7 +16,6 @@
 
 package com.github.hauner.openapi.processor.core.processor.test
 
-import com.github.hauner.openapi.api.OpenApiProcessor
 import com.github.hauner.openapi.core.converter.ApiConverter
 import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.framework.FrameworkBase
@@ -31,6 +30,7 @@ import com.github.hauner.openapi.core.writer.java.InterfaceWriter
 import com.github.hauner.openapi.core.writer.java.MethodWriter
 import com.github.hauner.openapi.core.writer.java.StringEnumWriter
 import groovy.util.logging.Slf4j
+import io.openapiprocessor.api.OpenApiProcessor
 
 /**
  *  Simple processor for testing.
