@@ -19,7 +19,7 @@ java {
 
 
 ext {
-    processorApiVersion = '1.1.0-SNAPSHOT'
+    processorApiVersion = '1.1.0'
     jacksonVersion = '2.11.0'
 
     bintrayUser = project.hasProperty ('BINTRAY_USER') ? BINTRAY_USER : 'n/a'
@@ -111,7 +111,7 @@ dependencies {
     }
 
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
-    testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.0-SNAPSHOT') {
+    testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.0') {
         exclude group: 'com.google.guava'
     }
 
