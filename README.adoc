@@ -1,8 +1,8 @@
 :badge-license: https://img.shields.io/badge/License-Apache%202.0-blue.svg?labelColor=313A42
-:badge-ci: https://github.com/hauner/openapi-processor-core/workflows/ci/badge.svg
-:oaps-ci: https://github.com/hauner/openapi-processor-core/actions?query=workflow%3Aci
-:oaps-license: https://github.com/hauner/openapi-processor-core/blob/master/LICENSE
-:oap-docs: https://hauner.github.com/openapi-processor/spring/current/index.html
+:badge-ci: https://github.com/openapi-processor/openapi-processor-core/workflows/ci/badge.svg
+:oaps-ci: https://github.com/openapi-processor/openapi-processor-core/actions?query=workflow%3Aci
+:oaps-license: https://github.com/openapi-processor/openapi-processor-core/blob/master/LICENSE
+:oap-docs: https://docs.openapiprocessor.io
 :openapi: https://www.openapis.org/
 
 // badges
@@ -24,7 +24,7 @@ this is the re-usable core of openapi-processors that generate java code.
 It reads the link:{openapi}[OpenAPI] yaml, converts it to an internal model and provides writers to
 generate java code.
 
-== openapi-processor documentation
+== documentation
 
 See link:{oap-docs}[here].
 
