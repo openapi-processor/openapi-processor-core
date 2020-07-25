@@ -39,6 +39,7 @@ import spock.lang.Specification
 import java.util.stream.Collectors
 
 import static com.github.hauner.openapi.core.test.AssertHelper.extractImports
+import static io.openapiprocessor.core.model.Builder.intrface
 
 class InterfaceWriterSpec extends Specification {
     def headerWriter = Mock SimpleWriter
@@ -328,10 +329,16 @@ import ${pkg2}.${type2};
     void "writes @Deprecated import" () {
         writer.importFilter = new NullImportFilter()
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: '/foo', method: HttpMethod.GET, deprecated: true, responses: [
-                '204': [new EmptyResponse()]])
-        ])
+        def apiItf = intrface ('name', {
+            endpoint ('/foo', {
+                get ()
+                deprecated ()
+
+                responses ('204') {
+                    empty ()
+                }
+            })
+        })
 
         when:
         writer.write (target, apiItf)
