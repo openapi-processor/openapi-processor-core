@@ -74,6 +74,7 @@ compileGroovy {
 compileTestGroovy {
     dependsOn 'compileKotlin'
     classpath += files(compileKotlin.destinationDir)
+    classpath += files(compileTestKotlin.destinationDir)
 }
 
 compileKotlin {

@@ -20,6 +20,8 @@ import com.github.hauner.openapi.core.framework.FrameworkAnnotations
 import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
+import io.openapiprocessor.core.writer.java.DefaultImportFilter
+import io.openapiprocessor.core.writer.java.ImportFilter
 
 /**
  * Writer for Java interfaces.
@@ -33,6 +35,7 @@ class InterfaceWriter {
     MethodWriter methodWriter
     BeanValidationFactory beanValidationFactory
     FrameworkAnnotations annotations
+    ImportFilter importFilter = new DefaultImportFilter()
 
     void write (Writer target, Interface itf) {
         headerWriter.write (target)
@@ -62,6 +65,10 @@ class InterfaceWriter {
         endpoints.each { ep ->
             imports.add (annotations.getAnnotation (ep.method).fullyQualifiedName)
 
+            if (ep.deprecated) {
+                imports.add (Deprecated.canonicalName)
+            }
+
             ep.parameters.each { p ->
                 if (apiOptions.beanValidation) {
                     imports.addAll (beanValidationFactory.collectImports (p.dataType))
@@ -90,7 +97,7 @@ class InterfaceWriter {
             }
         }
 
-        new ImportFilter ()
+        importFilter
             .filter (packageName, imports)
             .sort ()
     }

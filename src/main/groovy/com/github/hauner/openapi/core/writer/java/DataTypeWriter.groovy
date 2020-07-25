@@ -20,6 +20,7 @@ import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.support.Identifier
+import io.openapiprocessor.core.writer.java.DefaultImportFilter
 
 /**
  * Writer for POJO classes.
@@ -109,7 +110,8 @@ class DataTypeWriter {
             }
         }
 
-        new ImportFilter ().filter (packageName, imports)
+        new DefaultImportFilter ()
+            .filter (packageName, imports)
             .sort ()
     }
 

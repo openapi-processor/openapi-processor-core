@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.writer.java
+package io.openapiprocessor.core.writer.java
 
 import spock.lang.Specification
 
 class ImportFilterSpec extends Specification {
-    def filter = new ImportFilter()
+    def filter = new DefaultImportFilter()
 
     void "drops imports from same package" () {
         when:
