@@ -1,0 +1,26 @@
+openapi: 3.0.2
+info:
+  title: test deprecated endpoint & property
+  version: 1.0.0
+
+paths:
+  /foo:
+    get:
+      description: expect @Deprecated annotation on endpoint
+      deprecated: true
+      responses:
+        '200':
+          description: expect @Deprecated annotation on property
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Bar'
+components:
+  schemas:
+
+    Bar:
+      type: object
+      properties:
+        foobar:
+          deprecated: true
+          type: string
