@@ -27,6 +27,7 @@ class Endpoint {
     String path
     HttpMethod method
     String operationId
+    boolean deprecated
 
     List<Parameter> parameters = []
     List<RequestBody> requestBodies = []

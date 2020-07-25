@@ -76,6 +76,11 @@ class Operation implements ParserOperation {
     }
 
     @Override
+    boolean isDeprecated () {
+        operation.deprecated ?: false
+    }
+
+    @Override
     boolean hasTags () {
         operation.tags ? !operation.tags.empty : false
     }
