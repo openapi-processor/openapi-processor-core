@@ -95,7 +95,7 @@ import annotation.Mapping;
 """)
     }
 
-    void "writes mapping imports" () {
+    void "writes multiple mapping imports" () {
         annotations.getAnnotation (_) >>> [
             new FrameworkAnnotation(name: 'MappingA', pkg: 'annotation'),
             new FrameworkAnnotation(name: 'MappingB', pkg: 'annotation'),
