@@ -33,6 +33,7 @@ import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
+import io.openapiprocessor.core.writer.java.NullImportFilter
 import spock.lang.Specification
 
 import java.util.stream.Collectors
@@ -321,6 +322,24 @@ import ${pkg}.${type};
 """)
         result.contains("""\
 import ${pkg2}.${type2};
+""")
+    }
+
+    void "writes @Deprecated import" () {
+        writer.importFilter = new NullImportFilter()
+
+        def apiItf = new Interface (name: 'name', endpoints: [
+            new Endpoint(path: '/foo', method: HttpMethod.GET, deprecated: true, responses: [
+                '204': [new EmptyResponse()]])
+        ])
+
+        when:
+        writer.write (target, apiItf)
+
+        then:
+        def result = extractImports (target.toString ())
+        result.contains("""\
+import java.lang.Deprecated;
 """)
     }
 
