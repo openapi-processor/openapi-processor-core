@@ -41,6 +41,8 @@ import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static io.openapiprocessor.core.model.Builder.endpoint
+
 class MethodWriterSpec extends Specification {
     def apiOptions = new ApiOptions()
 
@@ -50,6 +52,7 @@ class MethodWriterSpec extends Specification {
         parameterAnnotationWriter: new TestParameterAnnotationWriter())
     def target = new StringWriter ()
 
+    @Deprecated // use endpoint() builder
     private Endpoint createEndpoint (Map properties) {
         new Endpoint(properties).initEndpointResponses ()
     }
@@ -64,6 +67,26 @@ class MethodWriterSpec extends Specification {
 
         then:
         target.toString () == """\
+    @CoreMapping
+    void getFoo();
+"""
+    }
+
+    void "writes @Deprecated annotation" () {
+        def endpoint = endpoint('/foo') {
+            deprecated ()
+
+            responses ('204') {
+                empty ()
+            }
+        }
+
+        when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        then:
+        target.toString () == """\
+    @Deprecated
     @CoreMapping
     void getFoo();
 """

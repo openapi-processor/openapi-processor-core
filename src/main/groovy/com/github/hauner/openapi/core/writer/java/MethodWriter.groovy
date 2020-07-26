@@ -38,6 +38,12 @@ class MethodWriter {
     BeanValidationFactory beanValidationFactory
 
     void write (Writer target, Endpoint endpoint, EndpointResponse endpointResponse) {
+        if (endpoint.deprecated) {
+            target.write ("""\
+    @Deprecated
+""")
+        }
+
         target.write ("""\
     ${createMappingAnnotation (endpoint, endpointResponse)}
     ${endpointResponse.responseType} ${createMethodName (endpoint, endpointResponse)}(${createParameters(endpoint)});
