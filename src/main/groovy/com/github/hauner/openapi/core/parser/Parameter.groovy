@@ -28,5 +28,6 @@ interface Parameter {
 
     Schema getSchema ()
     Boolean isRequired ()
+    Boolean isDeprecated ()
 
 }
