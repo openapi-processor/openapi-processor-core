@@ -8,18 +8,27 @@ paths:
     get:
       description: expect @Deprecated annotation on endpoint
       deprecated: true
+      parameters:
+        - name: bar
+          description: expect @Deprecated annotation at parameter
+          deprecated: true
+          in: query
+          schema:
+            $ref: '#/components/schemas/Bar'
       responses:
         '200':
-          description: expect @Deprecated annotation on property
+          description: expect @Deprecated annotation on schema & property
           content:
             application/json:
                 schema:
                   $ref: '#/components/schemas/Bar'
+
 components:
   schemas:
 
     Bar:
       type: object
+      deprecated: true
       properties:
         foobar:
           deprecated: true

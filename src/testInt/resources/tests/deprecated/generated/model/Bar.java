@@ -7,6 +7,7 @@ package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Deprecated
 public class Bar {
 
     @Deprecated

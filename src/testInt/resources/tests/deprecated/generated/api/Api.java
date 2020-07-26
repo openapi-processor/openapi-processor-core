@@ -6,12 +6,13 @@
 package generated.api;
 
 import annotation.Mapping;
+import annotation.Parameter;
 import generated.model.Bar;
 
 public interface Api {
 
     @Deprecated
     @Mapping("/foo")
-    Bar getFoo();
+    Bar getFoo(@Deprecated @Parameter Bar bar);
 
 }
