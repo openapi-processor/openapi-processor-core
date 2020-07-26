@@ -141,6 +141,47 @@ import java.util.List;
 """)
     }
 
+    void "writes deprecated property" () {
+        def pkg = 'com.github.hauner.openapi'
+        def dataType = new ObjectDataType (type: 'Book', properties: [
+            isbn: new StringDataType(deprecated: true)
+        ], pkg: pkg)
+
+        when:
+        writer.write (target, dataType)
+
+        then:
+        target.toString ().contains ("""\
+    @Deprecated
+    @JsonProperty("isbn")
+    private String isbn;
+""")
+    }
+
+    void "writes deprecated property getters & setters" () {
+        def pkg = 'com.github.hauner.openapi'
+        def dataType = new ObjectDataType (type: 'Book', properties: [
+            isbn: new StringDataType(deprecated: true)
+        ], pkg: pkg)
+
+        when:
+        writer.write (target, dataType)
+
+        then:
+        target.toString ().contains ("""\
+    @Deprecated
+    public String getIsbn() {
+        return isbn;
+    }
+
+    @Deprecated
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+""")
+    }
+
     void "writes properties with valid java identifiers" () {
         def pkg = 'com.github.hauner.openapi'
 

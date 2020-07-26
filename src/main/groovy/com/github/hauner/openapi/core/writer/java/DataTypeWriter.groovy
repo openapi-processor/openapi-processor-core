@@ -66,8 +66,12 @@ class DataTypeWriter {
     }
 
     private String getProp (String propertyName, String javaPropertyName, DataType propDataType) {
-        String result
-        result = "    @JsonProperty(\"${propertyName}\")\n"
+        String result = ''
+        if (propDataType.deprecated) {
+            result += "    @Deprecated\n"
+        }
+
+        result += "    @JsonProperty(\"${propertyName}\")\n"
 
         if (apiOptions.beanValidation) {
             def beanValidationAnnotations = beanValidationFactory.createAnnotations (propDataType)
@@ -81,21 +85,33 @@ class DataTypeWriter {
     }
 
     private String getGetter (String propertyName, DataType propDataType) {
-        """\
+        String result = ''
+        if (propDataType.deprecated) {
+            result += "    @Deprecated\n"
+        }
+
+        result += """\
     public ${propDataType.name} get${propertyName.capitalize ()}() {
         return ${propertyName};
     }
 
 """
+        result
     }
 
     private String getSetter (String propertyName, DataType propDataType) {
-        """\
+        String result = ''
+        if (propDataType.deprecated) {
+            result += "    @Deprecated\n"
+        }
+
+        result += """\
     public void set${propertyName.capitalize ()}(${propDataType.name} ${propertyName}) {
         this.${propertyName} = ${propertyName};
     }
 
 """
+        result
     }
 
     List<String> collectImports (String packageName, ObjectDataType dataType) {
