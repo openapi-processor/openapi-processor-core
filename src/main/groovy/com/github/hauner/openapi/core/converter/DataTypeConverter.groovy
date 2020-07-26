@@ -106,7 +106,8 @@ class DataTypeConverter {
             objectType = new MappedDataType (
                 type: targetType.name,
                 pkg: targetType.pkg,
-                genericTypes: targetType.genericNames
+                genericTypes: targetType.genericNames,
+                deprecated: schemaInfo.deprecated
             )
             return objectType
         }
@@ -114,7 +115,8 @@ class DataTypeConverter {
         objectType = new ComposedObjectDataType (
             type: schemaInfo.name,
             pkg: [options.packageName, 'model'].join ('.'),
-            of: schemaInfo.itemOf ()
+            of: schemaInfo.itemOf (),
+            deprecated: schemaInfo.deprecated
         )
 
         schemaInfo.eachItemOf { SchemaInfo itemSchemaInfo ->
@@ -143,12 +145,13 @@ class DataTypeConverter {
             def mappedDataType = new MappedCollectionDataType (
                 type: targetType.name,
                 pkg: targetType.pkg,
-                item: item
+                item: item,
+                deprecated: schemaInfo.deprecated
             )
             return mappedDataType
         }
 
-        new ArrayDataType (item: item, constraints: constraints)
+        new ArrayDataType (item: item, constraints: constraints, deprecated: schemaInfo.deprecated)
     }
 
     private DataType createRefDataType (SchemaInfo schemaInfo, DataTypes dataTypes) {
@@ -166,14 +169,16 @@ class DataTypeConverter {
                     objectType = new MappedMapDataType (
                         type: targetType.name,
                         pkg: targetType.pkg,
-                        genericTypes: targetType.genericNames
+                        genericTypes: targetType.genericNames,
+                        deprecated: schemaInfo.deprecated
                     )
                     return objectType
                 default:
                     objectType = new MappedDataType (
                         type: targetType.name,
                         pkg: targetType.pkg,
-                        genericTypes: targetType.genericNames
+                        genericTypes: targetType.genericNames,
+                        deprecated: schemaInfo.deprecated
                     )
 
                     // probably not required anymore
@@ -189,7 +194,8 @@ class DataTypeConverter {
         objectType = new ObjectDataType (
             type: schemaInfo.name,
             pkg: [options.packageName, 'model'].join ('.'),
-            constraints: constraints
+            constraints: constraints,
+            deprecated: schemaInfo.deprecated
         )
 
         schemaInfo.eachProperty { String propName, SchemaInfo propDataTypeInfo ->
@@ -233,29 +239,34 @@ class DataTypeConverter {
         switch (typeFormat) {
             case 'integer':
             case 'integer/int32':
-                simpleType = new IntegerDataType (constraints: constraints)
+                simpleType = new IntegerDataType (
+                    constraints: constraints, deprecated: schemaInfo.deprecated)
                 break
             case 'integer/int64':
-                simpleType = new LongDataType (constraints: constraints)
+                simpleType = new LongDataType (
+                    constraints: constraints, deprecated: schemaInfo.deprecated)
                 break
             case 'number':
             case 'number/float':
-                simpleType = new FloatDataType (constraints: constraints)
+                simpleType = new FloatDataType (
+                    constraints: constraints, deprecated: schemaInfo.deprecated)
                 break
             case 'number/double':
-                simpleType = new DoubleDataType (constraints: constraints)
+                simpleType = new DoubleDataType (
+                    constraints: constraints, deprecated: schemaInfo.deprecated)
                 break
             case 'boolean':
-                simpleType = new BooleanDataType (constraints: constraints)
+                simpleType = new BooleanDataType (
+                    constraints: constraints, deprecated: schemaInfo.deprecated)
                 break
             case 'string':
                 simpleType = createStringDataType (schemaInfo, constraints, dataTypes)
                 break
             case 'string/date':
-                simpleType = new LocalDateDataType ()
+                simpleType = new LocalDateDataType (deprecated: schemaInfo.deprecated)
                 break
             case 'string/date-time':
-                simpleType = new OffsetDateTimeDataType ()
+                simpleType = new OffsetDateTimeDataType (deprecated: schemaInfo.deprecated)
                 break
             default:
                 throw new UnknownDataTypeException(schemaInfo.name, schemaInfo.type, schemaInfo.format)
@@ -266,7 +277,7 @@ class DataTypeConverter {
 
     private DataType createStringDataType (SchemaInfo info, DataTypeConstraints constraints, DataTypes dataTypes) {
         if (!info.isEnum()) {
-            return new StringDataType (constraints: constraints)
+            return new StringDataType (constraints: constraints, deprecated: info.deprecated)
         }
 
         // in case of an inline definition the name may be lowercase, make sure the enum
@@ -275,7 +286,8 @@ class DataTypeConverter {
             type: info.name.capitalize (),
             pkg: [options.packageName, 'model'].join ('.'),
             values: info.enumValues,
-            constraints: constraints)
+            constraints: constraints,
+            deprecated: info.deprecated)
 
         dataTypes.add (enumType)
         enumType
