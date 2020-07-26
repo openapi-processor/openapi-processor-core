@@ -256,6 +256,9 @@ class  ApiConverter {
                 true
             }
 
+            Boolean isDeprecated () {
+                false
+            }
         }
 
         framework.createAdditionalParameter (parameter, addType)
@@ -298,6 +301,9 @@ class  ApiConverter {
                     true
                 }
 
+                Boolean isDeprecated () {
+                    false
+                }
             }
 
             framework.createMultipartParameter (parameter, it.value)
