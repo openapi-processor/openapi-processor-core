@@ -30,7 +30,9 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized)
 class ProcessorEndToEndTest extends ProcessorTestBase {
 
-    static def testSets = TestSet.ALL
+    static def testSets = TestSet.ALL + [
+        'deprecated'
+    ]
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
