@@ -105,6 +105,9 @@ class MethodWriter {
 
     private String createParameterAnnotation (Parameter parameter) {
         def annotation = new StringWriter ()
+        if (parameter.deprecated) {
+            annotation.write ("@Deprecated ")
+        }
         parameterAnnotationWriter.write (annotation, parameter)
         annotation.toString ()
     }
