@@ -154,6 +154,15 @@ class SchemaInfo implements MappingSchema {
     }
 
     /**
+     * get deprecated value
+     *
+     * @return true or false
+     */
+    boolean getDeprecated () {
+        schema.deprecated
+    }
+
+    /**
      * get nullable value.
      *
      * @return nullable value or null

@@ -43,6 +43,7 @@ class TestSchema implements Schema {
     }
 
     def defaultValue
+    Boolean deprecated
     Boolean nullable
     Integer minLength
     Integer maxLength
@@ -59,6 +60,11 @@ class TestSchema implements Schema {
 
     def getDefault() {
         defaultValue
+    }
+
+    @Override
+    Boolean isDeprecated () {
+        deprecated
     }
 
     @Override
