@@ -46,6 +46,9 @@ class DataTypeWriter {
             target.write ("\n")
         }
 
+        if (dataType.deprecated) {
+            target.write ("@Deprecated\n")
+        }
         target.write ("public class ${dataType.type} {\n\n")
 
         def propertyNames = dataType.properties.keySet ()

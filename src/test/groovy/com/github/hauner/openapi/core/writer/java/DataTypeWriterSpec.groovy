@@ -141,6 +141,23 @@ import java.util.List;
 """)
     }
 
+    void "writes deprecated class" () {
+        def pkg = 'io.openapiprocessor.core'
+        def dataType = new ObjectDataType (
+            type: 'Bar', deprecated: true, properties: [:] as Map, pkg: pkg)
+
+        when:
+        writer.write (target, dataType)
+
+        then:
+        target.toString ().contains ("""\
+@Deprecated
+public class Bar {
+
+}
+""")
+    }
+
     void "writes deprecated property" () {
         def pkg = 'com.github.hauner.openapi'
         def dataType = new ObjectDataType (type: 'Book', properties: [
