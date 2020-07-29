@@ -33,11 +33,13 @@ import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
+import io.openapiprocessor.core.writer.java.NullImportFilter
 import spock.lang.Specification
 
 import java.util.stream.Collectors
 
 import static com.github.hauner.openapi.core.test.AssertHelper.extractImports
+import static io.openapiprocessor.core.model.Builder.intrface
 
 class InterfaceWriterSpec extends Specification {
     def headerWriter = Mock SimpleWriter
@@ -95,7 +97,7 @@ import annotation.Mapping;
 """)
     }
 
-    void "writes mapping imports" () {
+    void "writes multiple mapping imports" () {
         annotations.getAnnotation (_) >>> [
             new FrameworkAnnotation(name: 'MappingA', pkg: 'annotation'),
             new FrameworkAnnotation(name: 'MappingB', pkg: 'annotation'),
@@ -321,6 +323,30 @@ import ${pkg}.${type};
 """)
         result.contains("""\
 import ${pkg2}.${type2};
+""")
+    }
+
+    void "writes @Deprecated import" () {
+        writer.importFilter = new NullImportFilter()
+
+        def apiItf = intrface ('name', {
+            endpoint ('/foo', {
+                get ()
+                deprecated ()
+
+                responses ('204') {
+                    empty ()
+                }
+            })
+        })
+
+        when:
+        writer.write (target, apiItf)
+
+        then:
+        def result = extractImports (target.toString ())
+        result.contains("""\
+import java.lang.Deprecated;
 """)
     }
 

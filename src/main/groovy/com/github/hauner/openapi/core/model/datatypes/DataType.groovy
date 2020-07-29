@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ package com.github.hauner.openapi.core.model.datatypes
  * @author Martin Hauner
  */
 trait /*interface*/ DataType {
+    boolean deprecated = false
 
     /**
      * The Java type name without package.
@@ -57,6 +58,10 @@ trait /*interface*/ DataType {
      */
     DataTypeConstraints getConstraints () {
         null
+    }
+
+    boolean isDeprecated () {
+        deprecated
     }
 
     /**

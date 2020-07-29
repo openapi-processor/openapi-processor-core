@@ -117,6 +117,11 @@ class Schema implements ParserSchema {
     }
 
     @Override
+    Boolean isDeprecated () {
+        return schema.deprecated ?: false
+    }
+
+    @Override
     Boolean getNullable () {
         schema.nullable
     }

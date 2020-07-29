@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.writer.java
+package io.openapiprocessor.core.writer.java
 
 /**
- * Removes imports from the list of import that are not needed.
- *
- * @author Martin Hauner
+ * Removes no imports from the given list of imports. Testing only.
  */
-class ImportFilter {
-
-    Set<String> filter(String packageName, Set<String> imports) {
-        imports.findAll {
-           !it.startsWith ('java.lang.') && !it.startsWith (packageName)
-        }
+class NullImportFilter: ImportFilter {
+    override fun filter(currentPackageName: String, imports: Set<String>): Set<String> {
+        return  imports;
     }
-
 }

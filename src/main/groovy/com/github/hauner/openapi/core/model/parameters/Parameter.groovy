@@ -61,6 +61,13 @@ interface Parameter {
     boolean isRequired ()
 
     /**
+     * Deprecated parameter?
+     *
+     * @return true if deprecated, false otherwise
+     */
+    boolean isDeprecated ()
+
+    /**
      * Create annotation? Some parameters should not have a parameter annotation.
      *
      * @return true if the parameter should have an annotation, else false

@@ -20,6 +20,7 @@ import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.support.Identifier
+import io.openapiprocessor.core.writer.java.DefaultImportFilter
 
 /**
  * Writer for POJO classes.
@@ -45,6 +46,9 @@ class DataTypeWriter {
             target.write ("\n")
         }
 
+        if (dataType.deprecated) {
+            target.write ("@Deprecated\n")
+        }
         target.write ("public class ${dataType.type} {\n\n")
 
         def propertyNames = dataType.properties.keySet ()
@@ -65,8 +69,12 @@ class DataTypeWriter {
     }
 
     private String getProp (String propertyName, String javaPropertyName, DataType propDataType) {
-        String result
-        result = "    @JsonProperty(\"${propertyName}\")\n"
+        String result = ''
+        if (propDataType.deprecated) {
+            result += "    @Deprecated\n"
+        }
+
+        result += "    @JsonProperty(\"${propertyName}\")\n"
 
         if (apiOptions.beanValidation) {
             def beanValidationAnnotations = beanValidationFactory.createAnnotations (propDataType)
@@ -80,21 +88,33 @@ class DataTypeWriter {
     }
 
     private String getGetter (String propertyName, DataType propDataType) {
-        """\
+        String result = ''
+        if (propDataType.deprecated) {
+            result += "    @Deprecated\n"
+        }
+
+        result += """\
     public ${propDataType.name} get${propertyName.capitalize ()}() {
         return ${propertyName};
     }
 
 """
+        result
     }
 
     private String getSetter (String propertyName, DataType propDataType) {
-        """\
+        String result = ''
+        if (propDataType.deprecated) {
+            result += "    @Deprecated\n"
+        }
+
+        result += """\
     public void set${propertyName.capitalize ()}(${propDataType.name} ${propertyName}) {
         this.${propertyName} = ${propertyName};
     }
 
 """
+        result
     }
 
     List<String> collectImports (String packageName, ObjectDataType dataType) {
@@ -109,7 +129,8 @@ class DataTypeWriter {
             }
         }
 
-        new ImportFilter ().filter (packageName, imports)
+        new DefaultImportFilter ()
+            .filter (packageName, imports)
             .sort ()
     }
 

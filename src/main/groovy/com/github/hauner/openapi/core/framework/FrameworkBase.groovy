@@ -41,6 +41,7 @@ class FrameworkBase implements Framework {
         new QueryParameter (
             name: parameter.name,
             required: parameter.required,
+            deprecated: parameter.deprecated,
             dataType: dataType)
     }
 
@@ -49,6 +50,7 @@ class FrameworkBase implements Framework {
         new HeaderParameter (
             name: parameter.name,
             required: parameter.required,
+            deprecated: parameter.deprecated,
             dataType: dataType)
     }
 
@@ -57,6 +59,7 @@ class FrameworkBase implements Framework {
         new CookieParameter (
             name: parameter.name,
             required: parameter.required,
+            deprecated: parameter.deprecated,
             dataType: dataType)
     }
 
@@ -65,6 +68,7 @@ class FrameworkBase implements Framework {
         new PathParameter (
             name: parameter.name,
             required: parameter.required,
+            deprecated: parameter.deprecated,
             dataType: dataType)
     }
 
@@ -73,6 +77,7 @@ class FrameworkBase implements Framework {
         new MultipartParameter (
             name: parameter.name,
             required: parameter.required,
+            deprecated: parameter.deprecated,
             dataType: dataType)
     }
 

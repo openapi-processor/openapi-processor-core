@@ -43,6 +43,7 @@ interface Schema {
     List<?> getEnum ()
 
     def getDefault ()
+    Boolean isDeprecated ()
     Boolean getNullable ()
     Integer getMinLength ()
     Integer getMaxLength ()

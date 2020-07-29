@@ -32,6 +32,7 @@ interface Operation {
     RequestBody getRequestBody ()
     Map<String, Response> getResponses ()
 
+    boolean isDeprecated ()
     boolean hasTags ()
 
     String getFirstTag ()

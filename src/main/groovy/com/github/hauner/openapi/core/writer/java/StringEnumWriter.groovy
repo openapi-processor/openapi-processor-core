@@ -19,6 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
 import com.github.hauner.openapi.core.support.Identifier
+import io.openapiprocessor.core.writer.java.DefaultImportFilter
 
 /**
  * Writer for String enum.
@@ -87,7 +88,8 @@ class StringEnumWriter {
         imports.add ('com.fasterxml.jackson.annotation.JsonValue')
         imports.addAll (dataType.referencedImports)
 
-        new ImportFilter ().filter (packageName, imports)
+        new DefaultImportFilter ()
+            .filter (packageName, imports)
             .sort ()
     }
 

@@ -21,6 +21,7 @@ import com.github.hauner.openapi.core.model.datatypes.DataType
 abstract class ParameterBase implements Parameter {
     String name
     boolean required
+    boolean deprecated = false
     DataType dataType
 
     /**
@@ -51,6 +52,16 @@ abstract class ParameterBase implements Parameter {
     @Override
     boolean isRequired () {
         required
+    }
+
+    /**
+     * Deprecated parameter?
+     *
+     * @return true if deprecated, false otherwise
+     */
+    @Override
+    boolean isDeprecated () {
+        deprecated
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser
+package io.openapiprocessor.core.writer.java
 
 /**
- * OpenAPI Parameter abstraction.
+ * Remove imports from the list of import that are not needed.
  *
  * @author Martin Hauner
  */
-interface Parameter {
+interface ImportFilter {
 
-    String getIn ()
-    String getName ()
-
-    Schema getSchema ()
-    Boolean isRequired ()
-    Boolean isDeprecated ()
+    fun filter(currentPackageName: String, imports: Set<String>): Set<String>
 
 }

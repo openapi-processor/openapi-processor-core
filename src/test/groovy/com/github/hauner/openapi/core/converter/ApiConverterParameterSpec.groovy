@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package com.github.hauner.openapi.core.converter
 import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.TypeMapping
-import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.framework.FrameworkBase
 import spock.lang.Ignore
 import spock.lang.Specification
@@ -269,6 +268,41 @@ paths:
         def e = thrown (UnknownParameterTypeException)
         e.name == 'foo'
         e.type == 'unknown'
+    }
+
+    void "converts deprecated parameter"() {
+        def openApi = parse (
+"""\
+openapi: 3.0.2
+info:
+  title: test deprecated parameter
+  version: 1.0.0
+
+paths:
+  /endpoint:
+
+    get:
+      parameters:
+        - name: foo
+          description: deprecated parameter
+          in: query
+          deprecated: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: empty
+""")
+
+        when:
+        def api = new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
+
+        then:
+        def itf = api.interfaces.first ()
+        def ep = itf.endpoints.first ()
+        def param = ep.parameters.first ()
+        param.deprecated
     }
 
 }

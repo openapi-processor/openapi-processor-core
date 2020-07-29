@@ -53,4 +53,9 @@ class Parameter implements ParserParameter {
         parameter.required != null ? parameter.required : false
     }
 
+    @Override
+    Boolean isDeprecated () {
+        parameter.deprecated ?: false
+    }
+
 }
