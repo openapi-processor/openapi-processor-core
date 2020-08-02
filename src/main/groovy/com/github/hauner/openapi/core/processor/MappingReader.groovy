@@ -78,10 +78,14 @@ class MappingReader {
         SimpleModule module = new SimpleModule ()
         module.addDeserializer (ParameterV2, new ParameterDeserializerV2 ())
 
+        def kotlinModule = new KotlinModule.Builder()
+            .nullIsSameAsDefault (true)
+            .build ()
+
         new ObjectMapper (new YAMLFactory ())
             .configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .setPropertyNamingStrategy (PropertyNamingStrategy.KEBAB_CASE)
-            .registerModules (new KotlinModule (), module)
+            .registerModules (kotlinModule, module)
     }
 
     private ObjectMapper createYamlParser () {

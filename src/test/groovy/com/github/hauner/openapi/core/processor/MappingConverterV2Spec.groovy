@@ -424,4 +424,47 @@ map:
         multi << ['reactor.core.publisher.Flux']
     }
 
+    void "does not fail on 'empty' options: key" () {
+        String yaml = """\
+openapi-processor-mapping: v2.0
+
+options:
+"""
+
+        when:
+        def mapping = reader.read (yaml)
+        converter.convert (mapping)
+
+        then:
+        notThrown ()
+    }
+
+    void "does not fail on 'empty' map: key" () {
+        String yaml = """\
+openapi-processor-mapping: v2.0
+
+map:
+"""
+
+        when:
+        def mapping = reader.read (yaml)
+        converter.convert (mapping)
+
+        then:
+        notThrown ()
+    }
+
+    void "does not fail on 'empty' mapping.yaml" () {
+        String yaml = """\
+openapi-processor-mapping: v2.0
+"""
+
+        when:
+        def mapping = reader.read (yaml)
+        converter.convert (mapping)
+
+        then:
+        notThrown ()
+    }
+
 }
