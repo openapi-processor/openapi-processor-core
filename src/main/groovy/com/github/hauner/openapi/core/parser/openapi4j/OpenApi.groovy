@@ -43,7 +43,14 @@ class OpenApi implements ParserOpenApi {
         Map<String, ParserPath> paths = new LinkedHashMap<> ()
 
         api.paths.each { Map.Entry<String, O4jPath> pathEntry ->
-            paths.put (pathEntry.key, new Path (pathEntry.key, pathEntry.value))
+            def name = pathEntry.key
+            def path = pathEntry.value
+
+            if (isRef(path)) {
+                path = resolve (path)
+            }
+
+            paths.put (pathEntry.key, new Path (name, path))
         }
 
         return paths
@@ -57,6 +64,14 @@ class OpenApi implements ParserOpenApi {
     @Override
     void printWarnings () {
         println "openapi4j: warnings are not yet implemented"
+    }
+
+    private O4jPath resolve (O4jPath path) {
+        path.getReference (api.getContext ()).getMappedContent (O4jPath)
+    }
+
+    private static boolean isRef (O4jPath path) {
+        path.ref != null
     }
 
 }
