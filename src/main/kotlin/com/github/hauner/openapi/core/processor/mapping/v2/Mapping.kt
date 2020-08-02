@@ -27,19 +27,19 @@ import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
  */
 data class Mapping(
 
-        /**
+    /**
      * mapping format version
      */
     @JsonProperty("openapi-processor-mapping")
     @JsonAlias("openapi-processor-spring") // deprecated
     val version: String,
 
-        /**
+    /**
      * general options
      */
     val options: Options = Options(),
 
-        /**
+    /**
      * the type mappings
      */
     val map: Map = Map()
