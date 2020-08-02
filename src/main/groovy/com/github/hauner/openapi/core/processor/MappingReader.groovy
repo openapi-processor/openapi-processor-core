@@ -67,7 +67,7 @@ class MappingReader {
         } else {
             // assume v1
             log.info ('please update the mapping to the latest format')
-            log.info ('see https://hauner.github.io/openapi-processor/spring/mapping/structure.html')
+            log.info ('see https://docs.openapiprocessor.io/spring/mapping/structure.html')
 
             def mapper = createYamlParser ()
             mapper.readValue (mapping, Mapping)
