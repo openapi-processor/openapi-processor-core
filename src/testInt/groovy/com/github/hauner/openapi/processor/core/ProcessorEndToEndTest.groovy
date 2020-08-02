@@ -31,7 +31,8 @@ import org.junit.runners.Parameterized
 class ProcessorEndToEndTest extends ProcessorTestBase {
 
     static def testSets = TestSet.ALL + [
-        'deprecated'
+        'deprecated',
+        'ref-into-another-file-path'
     ]
 
     @Parameterized.Parameters(name = "{0}")
