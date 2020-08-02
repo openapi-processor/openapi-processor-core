@@ -31,7 +31,7 @@ data class Options(
      * - so the final package name of the generated interfaces will be `"${packageName}.api"`
      * - and the final package name of the generated models will be `"${packageName}.model"`
      */
-    val packageName: String? = null,
+    val packageName: String = "io.openapiprocessor.generated",
 
     /**
      * bean validation (optional)
