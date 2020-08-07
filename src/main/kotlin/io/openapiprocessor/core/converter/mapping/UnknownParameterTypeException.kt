@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,19 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter
+package io.openapiprocessor.core.converter.mapping
 
 /**
  * thrown when the ApiConverter hits an unknown parameter type.
  *
  * @author Martin Hauner
  */
-class UnknownParameterTypeException extends RuntimeException {
+class UnknownParameterTypeException(
+    val name: String,
+    val type: String
+): RuntimeException() {
 
-    String name
-    String type
-
-    UnknownParameterTypeException(String name, String type) {
-        super()
-        this.name = name
-        this.type = type
-    }
-
-    @Override
-    String getMessage () {
-        "unknown parameter type: $type for parameter $name"
-    }
+    override val message: String
+        get() = "unknown parameter type: $type for parameter $name"
 
 }

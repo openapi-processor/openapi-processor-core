@@ -40,6 +40,7 @@ import com.github.hauner.openapi.core.model.datatypes.OffsetDateTimeDataType
 import com.github.hauner.openapi.core.model.datatypes.LazyDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 
 /**
  * Converter to map OpenAPI schemas to Java data types.

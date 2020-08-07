@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter
+package io.openapiprocessor.core.converter.mapping
+
+import java.lang.RuntimeException
 
 /**
  * thrown when the DataTypeConverter hits an unknown data type.
  *
  * @author Martin Hauner
  */
-class UnknownDataTypeException extends RuntimeException {
+class UnknownDataTypeException(
+    val name: String?,
+    val type: String,
+    var format: String?
+): RuntimeException() {
 
-    String name
-    String type
-    String format
-
-    UnknownDataTypeException(String name, String type, String format) {
-        super()
-        this.name = name
-        this.type = type
-        this.format = format
-    }
-
-    @Override
-    String getMessage () {
-        "unknown schema: ${name} of type $type${format ? "/" + format: ''}"
-    }
+    override val message: String
+        get() = "unknown schema: $name of type $type${if(format != null) "/$format" else ""}"
 
 }

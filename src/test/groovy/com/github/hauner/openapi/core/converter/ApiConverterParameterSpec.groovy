@@ -20,6 +20,7 @@ import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.framework.FrameworkBase
+import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
 import spock.lang.Ignore
 import spock.lang.Specification
 

@@ -20,6 +20,7 @@ import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
 import com.github.hauner.openapi.core.framework.Framework
+import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import spock.lang.Specification
 import spock.lang.Subject
 

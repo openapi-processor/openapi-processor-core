@@ -47,6 +47,8 @@ import com.github.hauner.openapi.core.parser.RequestBody
 import com.github.hauner.openapi.core.parser.Schema
 import com.github.hauner.openapi.core.support.Identifier
 import groovy.util.logging.Slf4j
+import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
+import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
 
 /**
  * Converts the open api model to a new model that is better suited for generating source files

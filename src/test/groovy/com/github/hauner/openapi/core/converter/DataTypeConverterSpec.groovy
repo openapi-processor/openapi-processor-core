@@ -23,7 +23,7 @@ import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.parser.RefResolver
 import com.github.hauner.openapi.core.parser.Schema
 import com.github.hauner.openapi.core.test.TestSchema
-
+import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import spock.lang.Specification
 import spock.lang.Unroll
 
