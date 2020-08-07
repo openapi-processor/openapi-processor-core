@@ -19,9 +19,13 @@ package io.openapiprocessor.core.model
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.model.Interface
+import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import com.github.hauner.openapi.core.model.parameters.MultipartParameter
+import com.github.hauner.openapi.core.model.parameters.Parameter
 
 class Builder {
 
@@ -64,6 +68,9 @@ class EndpointBuilder {
     private String path
     private HttpMethod method = HttpMethod.GET
     private boolean deprecated = false
+
+    private parameters = new ArrayList<Parameter>()
+    private bodies = new ArrayList<RequestBody>()
     private responses = new LinkedHashMap<String, List<Response>>()
 
     void get () {
@@ -72,6 +79,15 @@ class EndpointBuilder {
 
     void deprecated () {
         deprecated = true
+    }
+
+    void bodies (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ResponsesBuilder) Closure init) {
+        def builder = new BodiesBuilder()
+        def code = init.rehydrate (builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        bodies.addAll (builder.buildBodies ())
+        parameters.addAll (builder.buildParameters ())
     }
 
     void responses (String httpStatus, @DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ResponsesBuilder) Closure init) {
@@ -87,6 +103,8 @@ class EndpointBuilder {
         def ep = new Endpoint(path: path)
         ep.method = method
         ep.deprecated = deprecated
+        ep.requestBodies.addAll (bodies)
+        ep.parameters.addAll (parameters)
         responses.each { status, values ->
             ep.addResponses (status, values)
         }
@@ -95,6 +113,73 @@ class EndpointBuilder {
     }
 
 }
+
+
+class BodiesBuilder {
+    private List<RequestBody> bodies = []
+    private List<Parameter> parameters = []
+
+    void content (String contentType, @DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = BodyBuilder) Closure init) {
+        if (contentType == 'multipart/form-data') {
+            def builder = new MultipartBuilder()
+            def code = init.rehydrate (builder, this, this)
+            code.resolveStrategy = Closure.DELEGATE_ONLY
+            code()
+            def params = builder.build ()
+            parameters.addAll (params)
+        } else {
+            def builder = new BodyBuilder(content: contentType)
+            def code = init.rehydrate (builder, this, this)
+            code.resolveStrategy = Closure.DELEGATE_ONLY
+            code()
+            def body = builder.build ()
+            bodies.add (body)
+        }
+    }
+
+    List<RequestBody> buildBodies () {
+        bodies
+    }
+
+    List<Parameter> buildParameters () {
+        parameters
+    }
+
+}
+
+class MultipartBuilder {
+    private ObjectDataType data
+
+    void data (ObjectDataType dataType) {
+        data = dataType
+    }
+
+    List<Parameter> build () {
+        data.properties.collect {
+            new MultipartParameter (name: it.key, dataType: it.value)
+        }
+    }
+
+}
+
+class BodyBuilder {
+    private String content
+    private DataType data
+
+    void data (DataType dataType) {
+        data = dataType
+    }
+
+    RequestBody build () {
+        def body = new RequestBody()
+        body.contentType = content
+        body.dataType = data
+        body
+    }
+
+}
+
+
 
 class ResponsesBuilder {
     private List<Response> responses = []
@@ -105,7 +190,7 @@ class ResponsesBuilder {
         code.resolveStrategy = Closure.DELEGATE_ONLY
         code()
         def rsp = builder.build ()
-        responses.put (rsp)
+        responses.add (rsp)
     }
 
     void empty() {

@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
+import com.github.hauner.openapi.core.model.parameters.MultipartParameter
 import com.github.hauner.openapi.core.model.parameters.Parameter
 
 /**
@@ -61,6 +62,52 @@ class Endpoint {
             []
         }
         responses[status]
+    }
+
+    /**
+     * provides a list of all consumed content types of this endpoint including multipart/form-data.
+     *
+     * multipart/form-data is special because a multipart request body with multiple properties is
+     * converted to multiple {@link MultipartParameter}s in the internal model. The request body
+     * information is no longer available.
+     *
+     * @return the list of content types
+     */
+    List<String> getConsumesContentTypes () {
+        def contentTypes = requestBodies.collect {
+            it.contentType
+        }.toSet ().toList ()
+
+        def multipart = parameters.find {
+            it instanceof MultipartParameter
+        }
+
+        if (multipart) {
+            contentTypes.add ('multipart/form-data')
+        }
+
+        contentTypes
+    }
+
+    // not needed.... => EndpointResponse.getContentTypes()
+    List<String> getProducesContentTypes (String status) {
+        def responses = getResponses (status)
+        def errors = getErrorResponses ()
+
+        def contentTypes = new HashSet<String>()
+        responses.each {
+            if (!it.contentType) {
+                return
+            }
+
+            contentTypes.add (it.contentType)
+        }
+
+        errors.each {
+            contentTypes.add (it.contentType)
+        }
+
+        contentTypes.toList ()
     }
 
     /**
