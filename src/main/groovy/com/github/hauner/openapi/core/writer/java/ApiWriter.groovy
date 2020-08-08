@@ -28,6 +28,8 @@ import groovy.util.logging.Slf4j
 import java.nio.file.Files
 import java.nio.file.Path
 
+import static com.github.hauner.openapi.core.misc.URL.toURL
+
 /**
  * Root writer for the generated api files.
  *
@@ -141,17 +143,11 @@ class ApiWriter {
 
     private Path createTargetPackage (String apiPkg) {
         String root = options.targetDir
-        if (!hasScheme (root)) {
-            root = "file://${root}"
-        }
+        String pkg = [root, apiPkg].join ('/')
 
-        def target = Path.of (new URL ([root, apiPkg].join ('/')).toURI ())
+        def target = Path.of (toURL(pkg).toURI ())
         Files.createDirectories (target)
         target
-    }
-
-    private boolean hasScheme (String source) {
-        source.indexOf ("://") > -1
     }
 
 }
