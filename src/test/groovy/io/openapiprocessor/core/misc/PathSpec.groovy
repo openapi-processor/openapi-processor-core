@@ -36,8 +36,8 @@ class PathSpec extends Specification {
 
         where:
         source                                                     | url
-        "file:////C:/somewhere/openapi-processor-samples/samples"  | "file:/C:/somewhere/openapi-processor-samples/samples"
-        "C:\\somewhere\\openapi-processor-samples\\samples"        | "file:/C:\\somewhere\\openapi-processor-samples\\samples"
+        "file:////C:/somewhere/openapi-processor-samples/samples"  | "file:////C:/somewhere/openapi-processor-samples/samples"
+        "C:\\somewhere\\openapi-processor-samples\\samples"        | "file:/C:/somewhere/openapi-processor-samples/samples"
     }
 
     @Unroll
