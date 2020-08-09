@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.parser
+package io.openapiprocessor.core.misc
 
 import spock.lang.IgnoreIf
 import spock.lang.Requires
@@ -36,10 +36,9 @@ class PathSpec extends Specification {
 
         where:
         source                                                     | url
-        "file:////C:/somewhere/openapi-processor-samples/samples"  | "file:////C:/somewhere/openapi-processor-samples/samples"
-        "C:\\somewhere\\openapi-processor-samples\\samples"        | "file:////C:\\somewhere\\openapi-processor-samples\\samples"
+        "file:////C:/somewhere/openapi-processor-samples/samples"  | "file:/C:/somewhere/openapi-processor-samples/samples"
+        "C:\\somewhere\\openapi-processor-samples\\samples"        | "file:/C:\\somewhere\\openapi-processor-samples\\samples"
     }
-
 
     @Unroll
     @IgnoreIf({ os.windows })
