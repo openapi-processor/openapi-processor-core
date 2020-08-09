@@ -23,7 +23,7 @@ jobs:
       with:
         java-version: 11.0.2
     - name: build
-      run: ./gradlew build --stacktrace
+      run: ./gradlew build --refresh-dependencies --stacktrace
     - name: archive artifacts
       uses: actions/upload-artifact@v1
       if: success()
