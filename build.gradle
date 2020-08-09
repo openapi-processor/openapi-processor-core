@@ -112,7 +112,7 @@ dependencies {
     }
 
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
-    testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.0') {
+    testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.1') {
         exclude group: 'com.google.guava'
     }
 
