@@ -22,6 +22,8 @@ import org.openapi4j.parser.OpenApi3Parser
 import org.openapi4j.parser.model.v3.OpenApi3
 import org.openapi4j.parser.validation.v3.OpenApi3Validator
 
+import static com.github.hauner.openapi.core.misc.URL.toURL
+
 /**
  * openapi4j parser.
  *
@@ -30,22 +32,14 @@ import org.openapi4j.parser.validation.v3.OpenApi3Validator
 class Parser {
 
     ParserOpenApi parse (String apiPath) {
-        if (!hasScheme (apiPath)) {
-            apiPath = "file:${apiPath}"
-        }
-
         OpenApi3 api = new OpenApi3Parser ()
-            .parse (new URL (apiPath), true)
+            .parse (toURL (apiPath), true)
 
         ValidationResults results = OpenApi3Validator
             .instance ()
             .validate (api)
 
         new OpenApi (api, results)
-    }
-
-    static boolean hasScheme (String path) {
-        path.indexOf (":") > -1
     }
 
 }

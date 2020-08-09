@@ -21,6 +21,8 @@ import io.swagger.v3.parser.OpenAPIV3Parser
 import io.swagger.v3.parser.core.models.ParseOptions
 import io.swagger.v3.parser.core.models.SwaggerParseResult
 
+import static com.github.hauner.openapi.core.misc.URL.toURL
+
 /**
  * swagger parser.
  *
@@ -42,26 +44,21 @@ class Parser {
     }
 
     private static String preparePath (String path) {
-        // the swagger parser works with http(s) & file protocols only.
+        // the swagger parser only works with http(s) & file protocols.
+
         // If it is something different (or nothing) it tries to find the given path as-is on the
         // file system. If that fails it tries to load the path as resource.
 
         if (isResource (path)) {
-            // strip resource: (only used by tests) to load it from resources
-            path.substring (SCHEME_RESOURCE.size ())
-        } else if (hasScheme (path)) {
-            "file:${path}"
-        } else {
-            path
+            // strip resource: (only used by tests) to load test files from the resources
+            return path.substring (SCHEME_RESOURCE.size ())
         }
+
+        toURL (path).toString ()
     }
 
     static boolean isResource (String path) {
         path.startsWith (SCHEME_RESOURCE)
-    }
-
-    static boolean hasScheme (String path) {
-        path.indexOf (":") > -1
     }
 
 }
