@@ -129,9 +129,9 @@ class ApiWriter {
     }
 
     private void createTargetFolders () {
-        def rootPkg = options.packageName.replace ('.', File.separator)
-        def apiPkg = [rootPkg, 'api'].join (File.separator)
-        def modelPkg = [rootPkg, 'model'].join (File.separator)
+        def rootPkg = options.packageName.replace ('.', '/')
+        def apiPkg = [rootPkg, 'api'].join ('/')
+        def modelPkg = [rootPkg, 'model'].join ('/')
         log.debug ('creating target folders: {}', rootPkg)
 
         apiFolder = createTargetPackage (apiPkg)
