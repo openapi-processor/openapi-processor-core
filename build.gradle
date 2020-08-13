@@ -1,4 +1,5 @@
 plugins {
+    id 'antlr'
     id 'jacoco'
     id 'groovy'
     id 'java-library'
@@ -66,6 +67,19 @@ testSets {
 check.dependsOn testInt
 
 
+sourceSets {
+    main {
+        java {
+            srcDir 'build/antlr'
+        }
+    }
+}
+
+generateGrammarSource {
+    arguments += ['-package', 'io.openapiprocessor.core.processor.mapping.v2.parser']
+    outputDirectory = new File("$buildDir/antlr/io/openapiprocessor/core/processor/mapping/v2/parser".toString())
+}
+
 compileGroovy {
     dependsOn 'compileKotlin'
     classpath += files(compileKotlin.destinationDir)
@@ -110,6 +124,8 @@ dependencies {
         exclude group: 'org.checkerframework'
         exclude group: 'org.codehaus.mojo'
     }
+
+    antlr 'org.antlr:antlr4:4.8'
 
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.1') {
