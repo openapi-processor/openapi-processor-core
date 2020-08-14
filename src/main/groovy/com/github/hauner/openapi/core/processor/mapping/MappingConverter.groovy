@@ -110,7 +110,7 @@ class MappingConverter {
                 to: source.to,
                 generics: source.generics
             ))
-            new AddParameterTypeMapping (name, mapping)
+            new AddParameterTypeMapping (name, mapping, null, null)
 
         } else {
             throw new Exception("unknown parameter mapping $source")

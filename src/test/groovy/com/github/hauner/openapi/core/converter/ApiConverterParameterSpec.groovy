@@ -213,8 +213,9 @@ paths:
                 new AddParameterTypeMapping (
                     'request', new TypeMapping (
                         null,
-                        'javax.servlet.http.HttpServletRequest')
-                )
+                        'javax.servlet.http.HttpServletRequest'),
+                    null,
+                    null)
             ])
         ])
 

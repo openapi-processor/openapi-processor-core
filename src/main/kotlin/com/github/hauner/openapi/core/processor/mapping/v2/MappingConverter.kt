@@ -17,6 +17,13 @@
 package com.github.hauner.openapi.core.processor.mapping.v2
 
 import com.github.hauner.openapi.core.converter.mapping.*
+import io.openapiprocessor.core.processor.mapping.v2.parser.ToData
+import io.openapiprocessor.core.processor.mapping.v2.parser.ToExtractor
+import io.openapiprocessor.core.processor.mapping.v2.parser.ToLexer
+import io.openapiprocessor.core.processor.mapping.v2.parser.ToParser
+import org.antlr.v4.runtime.CharStreams
+import org.antlr.v4.runtime.CommonTokenStream
+import org.antlr.v4.runtime.tree.ParseTreeWalker
 import com.github.hauner.openapi.core.processor.mapping.v2.Mapping as MappingV2
 
 /**
@@ -59,7 +66,7 @@ class MappingConverter {
             result.add (convertResponse (it))
         }
 
-        mapping.map.paths.forEach() {
+        mapping.map.paths.forEach {
             result.add(convertPath (it.key, it.value))
         }
 
@@ -91,9 +98,9 @@ class MappingConverter {
 
         } else if (source is AdditionalParameter) {
             val (name, toType) = parseTypes(source.add)
-            val (toName, generics) = parseToType(toType, source.generics)
+            val (type, typeArguments) = parseToTypeV2(toType, source.generics)
 
-            return AddParameterTypeMapping(name, TypeMapping(null, toName, generics))
+            return AddParameterTypeMapping(name, TypeMapping(null, type, typeArguments))
 
         } else {
             throw Exception("unknown parameter mapping $source")
@@ -185,6 +192,21 @@ class MappingConverter {
         }
 
         return ToType(name, generics)
+    }
+
+    private fun parseToTypeV2(type: String, typeGenerics: List<String>?): ToData {
+        val lexer = ToLexer(CharStreams.fromString(type))
+        val tokens = CommonTokenStream(lexer)
+       	val parser = ToParser(tokens)
+        val ctx = parser.to ()
+        val extractor = ToExtractor ()
+        ParseTreeWalker().walk (extractor, ctx)
+
+        val target = extractor.getTarget()
+        if (typeGenerics != null) {
+            target.typeArguments = typeGenerics
+        }
+        return target
     }
 
 }

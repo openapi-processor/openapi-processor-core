@@ -25,7 +25,7 @@ data class ToData(
     /**
      * target type
      */
-    var type: String? = null,
+    val type: String,
 
     /**
      * target type generic arguments

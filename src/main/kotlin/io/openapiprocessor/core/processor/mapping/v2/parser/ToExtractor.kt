@@ -21,29 +21,37 @@ package io.openapiprocessor.core.processor.mapping.v2.parser
  *
  * @author Martin Hauner
  */
-class ToExtractor(val target: ToData = ToData()): ToBaseListener() {
+class ToExtractor: ToBaseListener() {
+
+    lateinit var type: String
+    var typeArguments = mutableListOf<String>()
+    var annotationType: String? = null
+    var annotationArguments: String? = null
+
+    fun getTarget(): ToData {
+        return ToData(type, typeArguments, annotationType, annotationArguments)
+    }
 
     override fun enterAnnotationType(ctx: ToParser.AnnotationTypeContext) {
         // type string with package
-        target.annotationType = ctx.type ().text
-        target.annotationArguments = ctx.AnnotationAnyArguments ()?.text
+        annotationType = ctx.type ().text
+
+        // all arguments as a single string
+        annotationArguments = ctx.AnnotationAnyArguments ()?.text
     }
 
     override fun enterToType(ctx: ToParser.ToTypeContext) {
         // type string "{pkg.}Type"
-        target.type = ctx.type().text
+        type = ctx.type().text
 
         // type strings of <> type arguments
-        val args: MutableList<String> = mutableListOf()
         ctx.typeArguments ()
             ?.typeArgumentList ()
             ?.typeArgument ()
             ?.filter { it.type() != null }
             ?.forEach {
-                args.add(it.type ().text)
+                typeArguments.add(it.type ().text)
             }
-
-        target.typeArguments = args
     }
 
 }

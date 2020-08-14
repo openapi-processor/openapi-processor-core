@@ -32,7 +32,17 @@ class AddParameterTypeMapping(
     /**
      * additional parameter type mapping.
      */
-    val mapping: TypeMapping
+    val mapping: TypeMapping,
+
+    /**
+     * additional annotation of parameter.
+     */
+    val annotation: String? = null,
+
+    /**
+     * all parameter to the annotation.
+     */
+    val annotationParameter: String? = null
 
 ): Mapping {
 

@@ -36,8 +36,9 @@ class ToParserSpec extends Specification {
         new ParseTreeWalker().walk (extractor, r)
 
         then:
-        extractor.target.type == type
-        extractor.target.typeArguments == typeArguments
+        def target = extractor.target
+        target.type == type
+        target.typeArguments == typeArguments
 
         where:
         source                            | type                      | typeArguments
@@ -58,11 +59,11 @@ class ToParserSpec extends Specification {
        	def parser = new ToParser(tokens)
         def r = parser.to ()
 
-        ToData target = new ToData()
-        def listener = new ToExtractor (target)
-        new ParseTreeWalker().walk (listener, r)
+        def extractor = new ToExtractor ()
+        new ParseTreeWalker().walk (extractor, r)
 
         then:
+        def target = extractor.target
         target.annotationType == type
         target.annotationArguments == typeArguments
 
@@ -90,9 +91,8 @@ class ToParserSpec extends Specification {
 
         def r = parser.to ()
 
-        ToData target = new ToData()
-        def listener = new ToExtractor (target: target)
-        new ParseTreeWalker().walk (listener, r)
+        def extractor = new ToExtractor ()
+        new ParseTreeWalker().walk (extractor, r)
 
         then:
         def e = thrown (ToException)
