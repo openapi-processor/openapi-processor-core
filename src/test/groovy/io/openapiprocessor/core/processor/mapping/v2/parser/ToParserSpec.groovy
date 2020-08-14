@@ -1,72 +1,28 @@
+/*
+ * Copyright 2020 the original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.openapiprocessor.core.processor.mapping.v2.parser
 
-import org.antlr.v4.runtime.BaseErrorListener
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
-import org.antlr.v4.runtime.RecognitionException
-import org.antlr.v4.runtime.Recognizer
-import org.antlr.v4.runtime.misc.ParseCancellationException
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class ToParserSpec extends Specification {
-
-    class Data {
-        String type
-        List<String> typeArguments = []
-
-        String annotationType
-        String annotationArguments
-    }
-
-    class ToExtractor extends ToBaseListener {
-        Data target
-
-        @Override
-        void enterAnnotationType (ToParser.AnnotationTypeContext ctx) {
-            // type string with package
-            target.annotationType = ctx.type ().text
-            target.annotationArguments = ctx.AnnotationAnyArguments ()?.text
-        }
-
-        @Override
-        void exitToType (ToParser.ToTypeContext ctx) {
-            // type string "{pkg.}Type"
-            target.type = ctx.type ().text
-
-            // type strings of <> type arguments
-            ctx.typeArguments ()
-                ?.typeArgumentList ()
-                ?.typeArgument ()
-                // skip if empty
-                ?.findAll {
-                    it.type () != null
-                }
-                ?.each {
-                    target.typeArguments.add (it.type ().text)
-                }
-        }
-
-    }
-
-    class ToException extends ParseCancellationException {
-        int line
-        int pos
-
-        ToException (int line, int pos, String msg, RecognitionException e) {
-            super(msg, e)
-            this.line = line
-            this.pos = pos
-        }
-    }
-
-    class ToErrorListener extends BaseErrorListener {
-        @Override
-        void syntaxError (Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int pos, String msg, RecognitionException e) {
-            throw new ToException(line, pos, msg, e)
-        }
-    }
 
     @Unroll
     void "parses add mapping without annotation '#source'"() {
@@ -76,13 +32,12 @@ class ToParserSpec extends Specification {
        	def parser = new ToParser(tokens)
         def r = parser.to ()
 
-        Data result = new Data()
-        def listener = new ToExtractor (target: result)
-        new ParseTreeWalker().walk (listener, r)
+        def extractor = new ToExtractor ()
+        new ParseTreeWalker().walk (extractor, r)
 
         then:
-        result.type == type
-        result.typeArguments == typeArguments
+        extractor.target.type == type
+        extractor.target.typeArguments == typeArguments
 
         where:
         source                            | type                      | typeArguments
@@ -103,13 +58,13 @@ class ToParserSpec extends Specification {
        	def parser = new ToParser(tokens)
         def r = parser.to ()
 
-        Data result = new Data()
-        def listener = new ToExtractor (target: result)
+        ToData target = new ToData()
+        def listener = new ToExtractor (target)
         new ParseTreeWalker().walk (listener, r)
 
         then:
-        result.annotationType == type
-        result.annotationArguments == typeArguments
+        target.annotationType == type
+        target.annotationArguments == typeArguments
 
         where:
         source                                  | type    | typeArguments
@@ -135,8 +90,8 @@ class ToParserSpec extends Specification {
 
         def r = parser.to ()
 
-        Data result = new Data()
-        def listener = new ToExtractor (target: result)
+        ToData target = new ToData()
+        def listener = new ToExtractor (target: target)
         new ParseTreeWalker().walk (listener, r)
 
         then:
