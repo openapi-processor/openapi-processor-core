@@ -214,7 +214,6 @@ paths:
                     'request', new TypeMapping (
                         null,
                         'javax.servlet.http.HttpServletRequest'),
-                    null,
                     null)
             ])
         ])

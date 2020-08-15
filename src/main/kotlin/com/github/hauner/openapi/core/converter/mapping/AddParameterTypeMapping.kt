@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.converter.mapping
 
+import io.openapiprocessor.core.converter.mapping.Annotation
+
 /**
  * Used with {@link EndpointTypeMapping} to configure an additional endpoint parameter that is not
  * defined in the api description.
@@ -37,12 +39,7 @@ class AddParameterTypeMapping(
     /**
      * additional annotation of parameter.
      */
-    val annotation: String? = null,
-
-    /**
-     * all parameters of the annotation (pass through).
-     */
-    val annotationParameters: String? = null
+    val annotation: Annotation? = null
 
 ): Mapping {
 

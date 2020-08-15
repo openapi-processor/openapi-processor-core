@@ -25,6 +25,7 @@ import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import com.github.hauner.openapi.core.processor.mapping.v2.Mapping as MappingV2
+import io.openapiprocessor.core.converter.mapping.Annotation as AddAnnotation
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information
@@ -100,11 +101,15 @@ class MappingConverter {
             val (name, toType) = parseTypes(source.add)
             val add = parseToTypeV2(toType, source.generics)
 
+            var annotation: AddAnnotation? = null
+            if (add.annotationType != null) {
+                annotation = AddAnnotation(add.annotationType!!, add.annotationParameters)
+            }
+
             return AddParameterTypeMapping(
                 name,
                 TypeMapping(null, add.type, add.typeArguments),
-                annotation = add.annotationType,
-                annotationParameters = add.annotationParameters
+                annotation
             )
         } else {
             throw Exception("unknown parameter mapping $source")
