@@ -99,21 +99,26 @@ class MappingConverter {
 
         } else if (source is AdditionalParameter) {
             val (name, toType) = splitMapping(source.add)
-            val add = parseToTypeV2(toType, source.generics)
+            val to = parseToTypeV2(toType, source.generics)
 
-            var annotation: AddAnnotation? = null
-            if (add.annotationType != null) {
-                annotation = AddAnnotation(add.annotationType!!, add.annotationParameters)
-            }
-
-            return AddParameterTypeMapping(
-                name,
-                TypeMapping(null, add.type, add.typeArguments),
-                annotation
+            return AddParameterTypeMapping(name,
+                createSourcelessTypeMapping(to),
+                createAnnotation(to)
             )
         } else {
             throw Exception("unknown parameter mapping $source")
         }
+    }
+
+    private fun createSourcelessTypeMapping(to: ToData) =
+        TypeMapping(null, to.type, to.typeArguments)
+
+    private fun createAnnotation(to: ToData): io.openapiprocessor.core.converter.mapping.Annotation? {
+        if(to.annotationType == null) {
+            return null
+        }
+
+        return AddAnnotation(to.annotationType!!, to.annotationParameters)
     }
 
     private fun convertResponse(source: Response): Mapping {
