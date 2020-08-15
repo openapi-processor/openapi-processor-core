@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.converter.ApiOptions
+import com.github.hauner.openapi.core.model.datatypes.AnnotationDataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ResultDataType
 import com.github.hauner.openapi.core.model.parameters.Parameter
@@ -192,7 +193,7 @@ class MethodWriterSpec extends Specification {
 """
     }
 
-    void "does not write parameter annotation if empty" () {
+    void "writes no parameter annotation if the annotation writer skips it" () {
         def stubWriter = Stub (ParameterAnnotationWriter) {}
 
         writer.parameterAnnotationWriter = stubWriter
@@ -210,6 +211,30 @@ class MethodWriterSpec extends Specification {
         target.toString () == """\
     @CoreMapping
     void getFoo(String foo);
+"""
+    }
+
+    void "writes additional parameter annotation" () {
+        def endpoint = endpoint('/foo') {
+            parameters {
+                add {
+                    name ('foo')
+                    type (new StringDataType())
+                    annotation (new AnnotationDataType (pkg: 'oap', type: 'Foo', parameters: '()'))
+                }
+            }
+            responses ('204') {
+                empty ()
+            }
+        }
+
+        when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        then:
+        target.toString () == """\
+    @CoreMapping
+    void getFoo(@Parameter @Foo() String foo);
 """
     }
 

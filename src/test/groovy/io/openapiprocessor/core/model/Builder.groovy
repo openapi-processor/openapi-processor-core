@@ -21,11 +21,14 @@ import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.model.Interface
 import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
+import com.github.hauner.openapi.core.model.datatypes.AnnotationDataType
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import com.github.hauner.openapi.core.model.parameters.AdditionalParameter
 import com.github.hauner.openapi.core.model.parameters.MultipartParameter
 import com.github.hauner.openapi.core.model.parameters.Parameter
+import com.github.hauner.openapi.core.model.parameters.QueryParameter
 
 class Builder {
 
@@ -88,6 +91,15 @@ class EndpointBuilder {
         code()
         bodies.addAll (builder.buildBodies ())
         parameters.addAll (builder.buildParameters ())
+    }
+
+    void parameters (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ParametersBuilder) Closure init) {
+        def builder = new ParametersBuilder()
+        def code = init.rehydrate (builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        def params = builder.build ()
+        parameters.addAll (params)
     }
 
     void responses (String httpStatus, @DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ResponsesBuilder) Closure init) {
@@ -179,6 +191,74 @@ class BodyBuilder {
 
 }
 
+
+class ParametersBuilder {
+    private List<Parameter> parameters = []
+
+    void query (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = QueryParameterBuilder) Closure init) {
+        def builder = new QueryParameterBuilder()
+        def code = init.rehydrate (builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        def parameter = builder.build ()
+        parameters.add (parameter)
+    }
+
+    void add (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = QueryParameterBuilder) Closure init) {
+        def builder = new AddParameterBuilder()
+        def code = init.rehydrate (builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        def parameter = builder.build ()
+        parameters.add (parameter)
+    }
+
+    List<Parameter> build () {
+        parameters
+    }
+
+}
+
+class QueryParameterBuilder {
+    private String name
+    private DataType type
+
+    void name (String name) {
+        this.name = name
+    }
+
+    void type (DataType dataType) {
+        this.type = dataType
+    }
+
+    QueryParameter build () {
+        new QueryParameter(name: name, dataType: dataType)
+    }
+
+}
+
+class AddParameterBuilder {
+    private String name
+    private DataType type
+    private AnnotationDataType annotationType
+
+    void name (String name) {
+        this.name = name
+    }
+
+    void type (DataType dataType) {
+        this.type = dataType
+    }
+
+    void annotation (AnnotationDataType dataType) {
+        annotationType = dataType
+    }
+
+    AdditionalParameter build () {
+        new AdditionalParameter (name: name, dataType: type, annotationDataType: annotationType)
+    }
+
+}
 
 
 class ResponsesBuilder {

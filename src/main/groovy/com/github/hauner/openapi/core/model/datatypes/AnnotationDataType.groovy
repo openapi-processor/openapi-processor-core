@@ -14,27 +14,41 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.parameters
-
-import com.github.hauner.openapi.core.model.datatypes.AnnotationDataType
+package com.github.hauner.openapi.core.model.datatypes
 
 /**
- * default implementation of am additional parameter.
- *
- * extend {@code ParameterBase} to implement framework specific handling.
+ * additional annotation type.
  *
  * @author Martin Hauner
  */
-class AdditionalParameter extends ParameterBase {
+class AnnotationDataType implements DataType {
 
-    AnnotationDataType annotationDataType
+    protected String type
+    String pkg = 'unknown'
+    String parameters
 
-    boolean withAnnotation () {
-        false
+    @Override
+    String getName () {
+        "@$type"
     }
 
-    boolean hasAdditionalAnnotation () {
-        annotationDataType != null
+    @Override
+    String getPackageName () {
+        pkg
+    }
+
+    String getParameters () {
+        parameters ?: ""
+    }
+
+    @Override
+    Set<String> getImports () {
+        [[packageName, type].join ('.')]
+    }
+
+    @Override
+    Set<String> getReferencedImports () {
+        []
     }
 
 }

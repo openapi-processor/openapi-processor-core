@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.writer.java
 
+import com.github.hauner.openapi.core.model.parameters.AdditionalParameter
 import com.github.hauner.openapi.core.model.parameters.Parameter
 import com.github.hauner.openapi.core.writer.java.MappingAnnotationWriter as CoreMappingAnnotationWriter
 import com.github.hauner.openapi.core.writer.java.ParameterAnnotationWriter as CoreParameterAnnotationWriter
@@ -108,7 +109,13 @@ class MethodWriter {
         if (parameter.deprecated) {
             annotation.write ("@Deprecated ")
         }
+
         parameterAnnotationWriter.write (annotation, parameter)
+
+        if (parameter instanceof AdditionalParameter && parameter.hasAdditionalAnnotation ()) {
+            annotation.write (" ${parameter.annotationDataType.name}${parameter.annotationDataType.parameters}")
+        }
+
         annotation.toString ()
     }
 
