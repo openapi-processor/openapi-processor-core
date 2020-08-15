@@ -83,7 +83,7 @@ class MappingConverter {
     }
 
     private fun convertType(source: Type): Mapping {
-        val (fromType, toType) = parseTypes(source.type)
+        val (fromType, toType) = splitMapping(source.type)
         val (fromName, fromFormat) = parseFromType(fromType)
         val (toName, generics) = parseToType(toType, source.generics)
 
@@ -92,13 +92,13 @@ class MappingConverter {
 
     private fun convertParameter(source: Parameter): Mapping {
         if (source is RequestParameter) {
-            val (name, toType) = parseTypes(source.name)
+            val (name, toType) = splitMapping(source.name)
             val (toName, generics) = parseToType(toType, source.generics)
 
             return ParameterTypeMapping(name, TypeMapping(null, toName, generics))
 
         } else if (source is AdditionalParameter) {
-            val (name, toType) = parseTypes(source.add)
+            val (name, toType) = splitMapping(source.add)
             val add = parseToTypeV2(toType, source.generics)
 
             var annotation: AddAnnotation? = null
@@ -117,7 +117,7 @@ class MappingConverter {
     }
 
     private fun convertResponse(source: Response): Mapping {
-        val (content, toType) = parseTypes(source.content)
+        val (content, toType) = splitMapping(source.content)
         val (toName, generics) = parseToType(toType, source.generics)
 
         return ResponseTypeMapping(content, TypeMapping(null, toName, generics))
@@ -157,7 +157,7 @@ class MappingConverter {
     private data class FromType(val name: String, val format: String?)
     private data class ToType(val name: String, val generics: List<String>)
 
-    private fun parseTypes(type: String): MappingTypes {
+    private fun splitMapping(type: String): MappingTypes {
         val split = type
                 .split(SEPARATOR_TYPE)
                 .map { it.trim() }
