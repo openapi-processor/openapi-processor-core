@@ -65,7 +65,7 @@ class ToParserSpec extends Specification {
         then:
         def target = extractor.target
         target.annotationType == type
-        target.annotationArguments == typeArguments
+        target.annotationParameters == typeArguments
 
         where:
         source                                  | type    | typeArguments

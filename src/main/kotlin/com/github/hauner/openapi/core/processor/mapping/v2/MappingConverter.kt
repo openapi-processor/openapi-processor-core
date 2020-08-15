@@ -98,10 +98,14 @@ class MappingConverter {
 
         } else if (source is AdditionalParameter) {
             val (name, toType) = parseTypes(source.add)
-            val (type, typeArguments) = parseToTypeV2(toType, source.generics)
+            val add = parseToTypeV2(toType, source.generics)
 
-            return AddParameterTypeMapping(name, TypeMapping(null, type, typeArguments))
-
+            return AddParameterTypeMapping(
+                name,
+                TypeMapping(null, add.type, add.typeArguments),
+                annotation = add.annotationType,
+                annotationParameters = add.annotationParameters
+            )
         } else {
             throw Exception("unknown parameter mapping $source")
         }

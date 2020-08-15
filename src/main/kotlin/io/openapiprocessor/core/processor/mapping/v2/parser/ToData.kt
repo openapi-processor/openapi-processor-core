@@ -38,8 +38,8 @@ data class ToData(
     var annotationType: String? = null,
 
     /**
-     * arguments of annotation
+     * all parameters of the annotation, pass through
      */
-    var annotationArguments: String? = null
+    var annotationParameters: String? = null
 
 )

@@ -40,9 +40,9 @@ class AddParameterTypeMapping(
     val annotation: String? = null,
 
     /**
-     * all parameter to the annotation.
+     * all parameters of the annotation (pass through).
      */
-    val annotationParameter: String? = null
+    val annotationParameters: String? = null
 
 ): Mapping {
 
