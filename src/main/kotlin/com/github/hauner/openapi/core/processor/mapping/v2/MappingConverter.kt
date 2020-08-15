@@ -92,22 +92,28 @@ class MappingConverter {
 
     private fun convertParameter(source: Parameter): Mapping {
         if (source is RequestParameter) {
-            val (name, toType) = splitMapping(source.name)
-            val (toName, generics) = parseToType(toType, source.generics)
-
-            return ParameterTypeMapping(name, TypeMapping(null, toName, generics))
-
+            return createParameterTypeMapping(source)
         } else if (source is AdditionalParameter) {
-            val (name, toType) = splitMapping(source.add)
-            val to = parseToTypeV2(toType, source.generics)
-
-            return AddParameterTypeMapping(name,
-                createSourcelessTypeMapping(to),
-                createAnnotation(to)
-            )
+            return createAddParameterTypeMapping(source)
         } else {
             throw Exception("unknown parameter mapping $source")
         }
+    }
+
+    private fun createParameterTypeMapping(source: RequestParameter): ParameterTypeMapping {
+        val (name, toType) = splitMapping(source.name)
+        val (toName, generics) = parseToType(toType, source.generics)
+
+        return ParameterTypeMapping(name, TypeMapping(null, toName, generics))
+    }
+
+    private fun createAddParameterTypeMapping(source: AdditionalParameter): AddParameterTypeMapping {
+        val (name, toType) = splitMapping(source.add)
+        val to = parseToTypeV2(toType, source.generics)
+
+        return AddParameterTypeMapping(name,
+            createSourcelessTypeMapping(to),
+            createAnnotation(to))
     }
 
     private fun createSourcelessTypeMapping(to: ToData) =
