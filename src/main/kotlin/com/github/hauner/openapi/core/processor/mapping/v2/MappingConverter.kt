@@ -115,20 +115,7 @@ class MappingConverter {
         val (name, toType) = splitMapping(source.add)
         val to = parseToTypeV2(toType, source.generics)
 
-        return AddParameterTypeMapping(name,
-            createSourcelessTypeMapping(to),
-            createAnnotation(to))
-    }
-
-    private fun createSourcelessTypeMapping(to: ToData) =
-        TypeMapping(null, to.type, to.typeArguments)
-
-    private fun createAnnotation(to: ToData): io.openapiprocessor.core.converter.mapping.Annotation? {
-        if(to.annotationType == null) {
-            return null
-        }
-
-        return AddAnnotation(to.annotationType!!, to.annotationParameters)
+        return AddParameterTypeMapping(name, to.createSourcelessTypeMapping(), to.createAnnotation())
     }
 
     private fun convertResponse(source: Response): Mapping {
@@ -218,20 +205,33 @@ class MappingConverter {
         return ToType(name, generics)
     }
 
-    private fun parseToTypeV2(type: String, typeGenerics: List<String>?): ToData {
-        val lexer = ToLexer(CharStreams.fromString(type))
-        val tokens = CommonTokenStream(lexer)
-       	val parser = ToParser(tokens)
-        val ctx = parser.to ()
-        val extractor = ToExtractor ()
-        ParseTreeWalker().walk (extractor, ctx)
-
-        val target = extractor.getTarget()
-        if (typeGenerics != null) {
-            target.typeArguments = typeGenerics
-        }
-        return target
-    }
-
 }
 
+private fun ToData.createSourcelessTypeMapping() =
+    TypeMapping(null, type, typeArguments)
+
+private fun ToData.createAnnotation(): io.openapiprocessor.core.converter.mapping.Annotation? {
+    if(annotationType == null) {
+        return null
+    }
+
+    return AddAnnotation(annotationType!!, annotationParameters)
+}
+
+/**
+ * parse "to" with grammar
+ */
+private fun parseToTypeV2(type: String, typeGenerics: List<String>?): ToData {
+    val lexer = ToLexer(CharStreams.fromString(type))
+    val tokens = CommonTokenStream(lexer)
+    val parser = ToParser(tokens)
+    val ctx = parser.to()
+    val extractor = ToExtractor()
+    ParseTreeWalker().walk(extractor, ctx)
+
+    val target = extractor.getTarget()
+    if (typeGenerics != null) {
+        target.typeArguments = typeGenerics
+    }
+    return target
+}
