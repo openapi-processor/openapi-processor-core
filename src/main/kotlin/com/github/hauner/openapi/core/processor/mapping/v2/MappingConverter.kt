@@ -91,12 +91,16 @@ class MappingConverter {
     }
 
     private fun convertParameter(source: Parameter): Mapping {
-        if (source is RequestParameter) {
-            return createParameterTypeMapping(source)
-        } else if (source is AdditionalParameter) {
-            return createAddParameterTypeMapping(source)
-        } else {
-            throw Exception("unknown parameter mapping $source")
+        return when (source) {
+            is RequestParameter -> {
+                createParameterTypeMapping(source)
+            }
+            is AdditionalParameter -> {
+                createAddParameterTypeMapping(source)
+            }
+            else -> {
+                throw Exception("unknown parameter mapping $source")
+            }
         }
     }
 
