@@ -14,38 +14,20 @@
  * limitations under the License.
  */
 
+package io.openapiprocessor.core.model
+
 /**
  * Mapping of http methods to Spring annotations.
  *
  * @author Martin Hauner
  */
-package com.github.hauner.openapi.core.model
-
-@Deprecated
-enum HttpMethod {
-    GET ('get'),
-    PUT ('put'),
-    POST ('post'),
-    DELETE ('delete'),
-    OPTIONS ('options'),
-    HEAD ('head'),
-    PATCH ('patch'),
-    TRACE ('trace')
-
-    private String method
-
-    HttpMethod(String method) {
-        this.method = method
-    }
-
-    String getMethod() {
-        method
-    }
-
-    HttpMethod from(String method) {
-        values ().find {
-            it.method == method
-        }
-    }
-
+enum class HttpMethod(val method: String) {
+    GET ("get"),
+    PUT ("put"),
+    POST ("post"),
+    DELETE ("delete"),
+    OPTIONS ("options"),
+    HEAD ("head"),
+    PATCH ("patch"),
+    TRACE ("trace")
 }

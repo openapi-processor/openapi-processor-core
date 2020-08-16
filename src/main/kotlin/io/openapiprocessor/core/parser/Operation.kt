@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original authors
+ * Copyright 2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,38 +14,27 @@
  * limitations under the License.
  */
 
+package io.openapiprocessor.core.parser
+
+import io.openapiprocessor.core.model.HttpMethod
+
 /**
- * Mapping of http methods to Spring annotations.
+ * OpenAPI Operation abstraction.
  *
  * @author Martin Hauner
  */
-package com.github.hauner.openapi.core.model
+interface Operation {
 
-@Deprecated
-enum HttpMethod {
-    GET ('get'),
-    PUT ('put'),
-    POST ('post'),
-    DELETE ('delete'),
-    OPTIONS ('options'),
-    HEAD ('head'),
-    PATCH ('patch'),
-    TRACE ('trace')
+    fun getMethod(): HttpMethod
+    fun getOperationId(): String
+    fun getParameters(): List<Parameter>
 
-    private String method
+    fun getRequestBody(): RequestBody
+    fun getResponses(): Map<String, Response>
 
-    HttpMethod(String method) {
-        this.method = method
-    }
+    fun isDeprecated(): Boolean?
+    fun hasTags(): Boolean
 
-    String getMethod() {
-        method
-    }
-
-    HttpMethod from(String method) {
-        values ().find {
-            it.method == method
-        }
-    }
+    fun getFirstTag(): String?
 
 }

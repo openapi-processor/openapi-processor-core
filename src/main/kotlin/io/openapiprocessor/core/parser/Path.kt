@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original authors
+ * Copyright 2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,38 +14,16 @@
  * limitations under the License.
  */
 
+package io.openapiprocessor.core.parser
+
 /**
- * Mapping of http methods to Spring annotations.
+ * OpenAPI Path abstraction.
  *
  * @author Martin Hauner
  */
-package com.github.hauner.openapi.core.model
+interface Path {
 
-@Deprecated
-enum HttpMethod {
-    GET ('get'),
-    PUT ('put'),
-    POST ('post'),
-    DELETE ('delete'),
-    OPTIONS ('options'),
-    HEAD ('head'),
-    PATCH ('patch'),
-    TRACE ('trace')
-
-    private String method
-
-    HttpMethod(String method) {
-        this.method = method
-    }
-
-    String getMethod() {
-        method
-    }
-
-    HttpMethod from(String method) {
-        values ().find {
-            it.method == method
-        }
-    }
+    fun getPath(): String
+    fun getOperations(): List<Operation>
 
 }

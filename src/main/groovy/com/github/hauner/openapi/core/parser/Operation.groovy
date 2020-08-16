@@ -23,6 +23,7 @@ import com.github.hauner.openapi.core.model.HttpMethod
  *
  * @author Martin Hauner
  */
+@Deprecated
 interface Operation {
 
     HttpMethod getMethod()

@@ -21,6 +21,7 @@ package com.github.hauner.openapi.core.parser
  *
  * @author Martin Hauner
  */
+@Deprecated
 interface Path {
 
     String getPath()
