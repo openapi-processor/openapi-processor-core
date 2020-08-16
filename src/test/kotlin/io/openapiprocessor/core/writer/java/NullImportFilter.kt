@@ -21,6 +21,6 @@ package io.openapiprocessor.core.writer.java
  */
 class NullImportFilter: ImportFilter {
     override fun filter(currentPackageName: String, imports: Set<String>): Set<String> {
-        return  imports;
+        return  imports
     }
 }
