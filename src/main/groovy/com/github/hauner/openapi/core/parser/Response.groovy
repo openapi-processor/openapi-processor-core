@@ -21,7 +21,8 @@ package com.github.hauner.openapi.core.parser
  *
  * @author Martin Hauner
  */
-interface Response {
+@Deprecated
+interface Response extends io.openapiprocessor.core.parser.Response {
 
     Map<String, MediaType> getContent ()
 

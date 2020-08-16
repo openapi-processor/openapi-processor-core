@@ -15,12 +15,14 @@
  */
 
 package com.github.hauner.openapi.core.parser
+
 /**
  * OpenAPI MediaType abstraction.
  *
  * @author Martin Hauner
  */
-interface MediaType {
+@Deprecated
+interface MediaType extends io.openapiprocessor.core.parser.MediaType {
 
     Schema getSchema ()
 

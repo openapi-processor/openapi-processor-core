@@ -14,45 +14,46 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser
+package io.openapiprocessor.core.parser
+
+import java.math.BigDecimal
 
 /**
  * OpenAPI Schema abstraction.
  *
  * @author Martin Hauner
  */
-@Deprecated
-interface Schema extends io.openapiprocessor.core.parser.Schema {
+interface Schema {
 
-    String getType ()
-    String getFormat ()
+    fun getType(): String
+    fun getFormat(): String
 
     // $ref
-    String getRef ()
+    fun getRef(): String
 
     // array
-    Schema getItem ()
+    fun getItem(): Schema
 
     // object
-    Map<String, Schema> getProperties ()
+    fun getProperties(): Map<String, Schema>
 
     // composed object
-    List<Schema> getItems ()
-    String itemsOf ()
+    fun getItems(): List<Schema>
+    fun itemsOf(): String
 
     // enum
-    List<?> getEnum ()
+    fun getEnum(): List<Any>
 
-    def getDefault ()
-    Boolean isDeprecated ()
-    Boolean getNullable ()
-    Integer getMinLength ()
-    Integer getMaxLength ()
-    Integer getMinItems ()
-    Integer getMaxItems ()
-    BigDecimal getMaximum ()
-    Boolean isExclusiveMaximum ()
-    BigDecimal getMinimum ()
-    Boolean isExclusiveMinimum ()
+    fun getDefault(): Any?
+    fun isDeprecated(): Boolean?
+    fun getNullable(): Boolean?
+    fun getMinLength(): Int?
+    fun getMaxLength(): Int?
+    fun getMinItems(): Int?
+    fun getMaxItems(): Int?
+    fun getMaximum (): BigDecimal?
+    fun isExclusiveMaximum (): Boolean?
+    fun getMinimum (): BigDecimal?
+    fun isExclusiveMinimum (): Boolean?
 
 }

@@ -21,7 +21,8 @@ package com.github.hauner.openapi.core.parser
  *
  * @author Martin Hauner
  */
-interface Parameter {
+@Deprecated
+interface Parameter extends io.openapiprocessor.core.parser.Parameter {
 
     String getIn ()
     String getName ()

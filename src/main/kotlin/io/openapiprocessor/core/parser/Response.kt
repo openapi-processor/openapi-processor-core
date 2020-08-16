@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser
+package io.openapiprocessor.core.parser
 
 /**
- * Resolves $ref objects from an OpenAPI.
+ * OpenAPI Response abstraction.
  *
  * @author Martin Hauner
  */
-@Deprecated
-interface RefResolver extends io.openapiprocessor.core.parser.RefResolver {
+interface Response {
 
-    Schema resolve (Schema ref)
+    fun getContent(): Map<String, MediaType>
 
 }
