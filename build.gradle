@@ -75,6 +75,8 @@ sourceSets {
     }
 }
 
+compileKotlin.dependsOn generateGrammarSource
+
 generateGrammarSource {
     arguments += ['-package', 'io.openapiprocessor.core.processor.mapping.v2.parser']
     outputDirectory = new File("$buildDir/antlr/io/openapiprocessor/core/processor/mapping/v2/parser".toString())
