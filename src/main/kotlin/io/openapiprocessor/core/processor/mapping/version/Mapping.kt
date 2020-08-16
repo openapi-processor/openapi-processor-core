@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping.version
+package io.openapiprocessor.core.processor.mapping.version
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
