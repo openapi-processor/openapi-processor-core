@@ -20,6 +20,7 @@ import com.github.hauner.openapi.core.framework.FrameworkAnnotations
 import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
+import com.github.hauner.openapi.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.ImportFilter
 
@@ -76,6 +77,10 @@ class InterfaceWriter {
 
                 if (p.withAnnotation()) {
                     imports.add (annotations.getAnnotation (p).fullyQualifiedName)
+                }
+
+                if (p instanceof AdditionalParameter && p.hasAdditionalAnnotation ()) {
+                    imports.addAll (p.annotationDataType.imports)
                 }
 
                 imports.addAll (p.dataTypeImports)

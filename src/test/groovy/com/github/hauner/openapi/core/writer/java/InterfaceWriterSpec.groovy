@@ -25,6 +25,7 @@ import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.model.Interface
 import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
+import com.github.hauner.openapi.core.model.datatypes.AnnotationDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
@@ -216,6 +217,31 @@ import annotation.Parameter;
         def result = extractImports (target.toString ())
         result.contains("""\
 import model.Foo;
+""")
+    }
+
+    void "writes additional parameter annotation import" () {
+//        annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Parameter', pkg: 'annotation')
+
+        def itf = intrface ('Foo') {
+            endpoint ('/foo') {
+                parameters {
+                    add {
+                        name ('bar')
+                        type (new StringDataType())
+                        annotation (new AnnotationDataType (pkg: 'bar', type: 'Bar', parameters: '()'))
+                    }
+                }
+            }
+        }
+
+        when:
+        writer.write (target, itf)
+
+        then:
+        def result = extractImports (target.toString ())
+        result.contains("""\
+import bar.Bar;
 """)
     }
 

@@ -204,7 +204,7 @@ class ParametersBuilder {
         parameters.add (parameter)
     }
 
-    void add (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = QueryParameterBuilder) Closure init) {
+    void add (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = AddParameterBuilder) Closure init) {
         def builder = new AddParameterBuilder()
         def code = init.rehydrate (builder, this, this)
         code.resolveStrategy = Closure.DELEGATE_ONLY
