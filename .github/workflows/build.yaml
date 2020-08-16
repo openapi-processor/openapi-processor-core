@@ -68,4 +68,3 @@ jobs:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
         run: ./gradlew publishSnapshot
-
