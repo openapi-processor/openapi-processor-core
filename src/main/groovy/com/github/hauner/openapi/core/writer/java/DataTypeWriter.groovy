@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.support.Identifier
+import io.openapiprocessor.core.support.Identifier
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 
 /**

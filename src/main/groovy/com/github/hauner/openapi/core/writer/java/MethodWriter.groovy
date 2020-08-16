@@ -22,7 +22,7 @@ import com.github.hauner.openapi.core.writer.java.ParameterAnnotationWriter as C
 import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.EndpointResponse
-import com.github.hauner.openapi.core.support.Identifier
+import io.openapiprocessor.core.support.Identifier
 
 /**
  * Writer for Java interface methods, i.e. endpoints.

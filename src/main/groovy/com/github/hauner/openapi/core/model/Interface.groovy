@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
-import com.github.hauner.openapi.core.support.Identifier
+import io.openapiprocessor.core.support.Identifier
 
 /**
  * Java interface properties.
