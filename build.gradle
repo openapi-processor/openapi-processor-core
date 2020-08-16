@@ -177,3 +177,4 @@ dokka {
 
 
 apply from: "${rootProject.rootDir}/gradle/publishing.gradle"
+apply from: "${rootProject.rootDir}/gradle/publishing.tasks.gradle.kts"
