@@ -4,7 +4,7 @@ on:
   push:
     paths-ignore:
       - 'LICENSE'
-      - 'README.md'
+      - 'README.adoc'
       - 'docs/**'
     tags-ignore:
       - v*
