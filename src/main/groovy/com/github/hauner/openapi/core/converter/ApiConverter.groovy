@@ -231,7 +231,7 @@ class  ApiConverter {
     }
 
     private ModelParameter createAdditionalParameter (String path, AddParameterTypeMapping mapping, DataTypes dataTypes, RefResolver resolver) {
-        TypeMapping tm = mapping.childMappings.first ()
+        TypeMapping tm = mapping.childMappings.first () as TypeMapping
         TargetType tt = tm.targetType
 
         def addType = new MappedDataType (
