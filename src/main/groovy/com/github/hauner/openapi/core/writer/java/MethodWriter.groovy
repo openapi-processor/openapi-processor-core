@@ -113,7 +113,7 @@ class MethodWriter {
         parameterAnnotationWriter.write (annotation, parameter)
 
         if (parameter instanceof AdditionalParameter && parameter.hasAdditionalAnnotation ()) {
-            annotation.write (" ${parameter.annotationDataType.name}${parameter.annotationDataType.parameters}")
+            annotation.write (" @${parameter.annotationDataType.name}${parameter.annotationDataType.parameters}")
         }
 
         annotation.toString ()

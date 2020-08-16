@@ -21,6 +21,7 @@ import com.github.hauner.openapi.core.converter.wrapper.MultiDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.ResultDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.SingleDataTypeWrapper
 import com.github.hauner.openapi.core.framework.Framework
+import com.github.hauner.openapi.core.model.datatypes.AnnotationDataType
 import com.github.hauner.openapi.core.model.parameters.Parameter as ModelParameter
 import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.Mapping
@@ -240,6 +241,17 @@ class  ApiConverter {
             genericTypes: tt.genericNames
         )
 
+        def annotationType = null
+        if (mapping.annotation) {
+            def at = new TargetType(mapping.annotation.type, [])
+
+            annotationType = new AnnotationDataType(
+                type: at.name,
+                pkg: at.pkg,
+                parameters: mapping.annotation.parameters
+            )
+        }
+
         def parameter = new Parameter () {
 
             String getIn () {
@@ -263,7 +275,7 @@ class  ApiConverter {
             }
         }
 
-        framework.createAdditionalParameter (parameter, addType)
+        framework.createAdditionalParameter (parameter, addType, annotationType)
     }
 
     private ModelRequestBody createRequestBody (String contentType, SchemaInfo info, boolean required, DataTypes dataTypes) {

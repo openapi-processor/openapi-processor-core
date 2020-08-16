@@ -29,7 +29,7 @@ class AnnotationDataType implements DataType {
 
     @Override
     String getName () {
-        "@$type"
+        type
     }
 
     @Override

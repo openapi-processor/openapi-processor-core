@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.framework
 
 import com.github.hauner.openapi.core.model.RequestBody
+import com.github.hauner.openapi.core.model.datatypes.AnnotationDataType
 import com.github.hauner.openapi.core.model.parameters.Parameter
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.parser.Parameter as ParserParameter
@@ -78,7 +79,8 @@ interface Framework {
      * @param dataType data type of the parameter
      * @return an additional {@link Parameter}
      */
-    Parameter createAdditionalParameter(ParserParameter parameter, DataType dataType)
+    Parameter createAdditionalParameter(ParserParameter parameter, DataType dataType,
+        AnnotationDataType annotationDataType)
 
     /**
      * create a model request body.

@@ -20,6 +20,8 @@ import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.framework.FrameworkBase
+import com.github.hauner.openapi.core.model.parameters.AdditionalParameter
+import io.openapiprocessor.core.converter.mapping.Annotation
 import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
 import spock.lang.Ignore
 import spock.lang.Specification
@@ -236,6 +238,50 @@ paths:
         !request.withAnnotation ()
     }
 
+    void "adds additional request parameter with annotation from endpoint mapping" () {
+        def openApi = parse (
+"""\
+openapi: 3.0.2
+info:
+  title: test additional parameter annotation
+  version: 1.0.0
+
+paths:
+  /foo:
+    get:
+      responses:
+        '204':
+          description: empty
+"""
+        )
+
+        def options = new ApiOptions(packageName: 'pkg', typeMappings: [
+            new EndpointTypeMapping('/foo', [
+                new AddParameterTypeMapping (
+                    'foo', new TypeMapping (
+                        null,
+                        'java.lang.String'),
+                    new Annotation("bar.Bar", "(anything)"))
+            ])
+        ])
+
+        when:
+        def api = new ApiConverter (options, new FrameworkBase ())
+            .convert (openApi)
+
+        then:
+        def itf = api.interfaces.first ()
+        def ep = itf.endpoints.first ()
+        def foo = ep.parameters[0] as AdditionalParameter
+
+        foo.name == 'foo'
+        foo.dataType.name == 'String'
+        foo.dataType.packageName == 'java.lang'
+        foo.annotationDataType?.name == 'Bar'
+        foo.annotationDataType?.packageName == 'bar'
+        foo.annotationDataType?.parameters == '(anything)'
+    }
+
     @Ignore("the openapi parser ignores parameters with unknown types")
     void "throws on unknown parameter"() {
         def openApi = parse (
@@ -263,7 +309,8 @@ paths:
 """)
 
         when:
-        new ApiConverter ().convert (openApi)
+        new ApiConverter (new ApiOptions(), new FrameworkBase ())
+            .convert (openApi)
 
         then:
         def e = thrown (UnknownParameterTypeException)

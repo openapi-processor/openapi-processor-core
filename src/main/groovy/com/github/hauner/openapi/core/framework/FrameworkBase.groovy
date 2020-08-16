@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.framework
 
 import com.github.hauner.openapi.core.model.RequestBody
+import com.github.hauner.openapi.core.model.datatypes.AnnotationDataType
 import com.github.hauner.openapi.core.model.parameters.AdditionalParameter
 import com.github.hauner.openapi.core.model.parameters.CookieParameter
 import com.github.hauner.openapi.core.model.parameters.HeaderParameter
@@ -82,11 +83,14 @@ class FrameworkBase implements Framework {
     }
 
     @Override
-    Parameter createAdditionalParameter (ParserParameter parameter, DataType dataType) {
+    Parameter createAdditionalParameter (ParserParameter parameter, DataType dataType,
+        AnnotationDataType annotationDataType = null) {
+
         new AdditionalParameter (
             name: parameter.name,
             required: parameter.required,
-            dataType: dataType)
+            dataType: dataType,
+            annotationDataType: annotationDataType)
     }
 
     @Override
