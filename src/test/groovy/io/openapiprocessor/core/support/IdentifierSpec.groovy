@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.support
+package io.openapiprocessor.core.support
 
 import spock.lang.Specification
 import spock.lang.Unroll
