@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.parser.swagger
 
-import com.github.hauner.openapi.core.parser.MediaType as ParserMediaType
+import io.openapiprocessor.core.parser.MediaType as ParserMediaType
 import io.openapiprocessor.core.parser.Schema as ParserSchema
 import io.swagger.v3.oas.models.media.MediaType as SwaggerMediaType
 

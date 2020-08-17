@@ -22,9 +22,5 @@ package com.github.hauner.openapi.core.parser
  * @author Martin Hauner
  */
 @Deprecated
-interface RequestBody extends io.openapiprocessor.core.parser.Response {
-
-    Boolean getRequired ()
-    Map<String, MediaType> getContent ()
-
+interface RequestBody extends io.openapiprocessor.core.parser.RequestBody {
 }
