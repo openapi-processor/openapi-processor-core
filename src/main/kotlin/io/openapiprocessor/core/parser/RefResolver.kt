@@ -23,6 +23,6 @@ package io.openapiprocessor.core.parser
  */
 interface RefResolver {
 
-    // ? fun resolve (ref: Schema): Schema
+    fun resolve(ref: Schema): Schema
 
 }

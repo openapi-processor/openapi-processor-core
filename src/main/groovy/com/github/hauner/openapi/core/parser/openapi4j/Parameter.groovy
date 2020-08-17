@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.parser.openapi4j
 
 import com.github.hauner.openapi.core.parser.Parameter as ParserParameter
-import com.github.hauner.openapi.core.parser.Schema as ParserSchema
+import io.openapiprocessor.core.parser.Schema as ParserSchema
 import org.openapi4j.parser.model.v3.Parameter as O4jParameter
 
 /**

@@ -23,12 +23,4 @@ package com.github.hauner.openapi.core.parser
  */
 @Deprecated
 interface Parameter extends io.openapiprocessor.core.parser.Parameter {
-
-    String getIn ()
-    String getName ()
-
-    Schema getSchema ()
-    Boolean isRequired ()
-    Boolean isDeprecated ()
-
 }

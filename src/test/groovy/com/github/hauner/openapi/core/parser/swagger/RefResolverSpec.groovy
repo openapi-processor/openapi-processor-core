@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.parser.swagger
 
 import com.github.hauner.openapi.core.parser.ParserType
-import com.github.hauner.openapi.core.parser.Schema
+import io.openapiprocessor.core.parser.Schema
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse

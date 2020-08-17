@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.test
 
-import com.github.hauner.openapi.core.parser.Schema
+import io.openapiprocessor.core.parser.Schema
 
 /**
  * simple Schema implementation for testing

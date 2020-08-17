@@ -23,7 +23,4 @@ package com.github.hauner.openapi.core.parser
  */
 @Deprecated
 interface MediaType extends io.openapiprocessor.core.parser.MediaType {
-
-    Schema getSchema ()
-
 }

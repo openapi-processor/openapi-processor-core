@@ -21,9 +21,9 @@ import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.DataTypes
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.parser.RefResolver
-import com.github.hauner.openapi.core.parser.Schema
 import com.github.hauner.openapi.core.test.TestSchema
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
+import io.openapiprocessor.core.parser.Schema
 import spock.lang.Specification
 import spock.lang.Unroll
 

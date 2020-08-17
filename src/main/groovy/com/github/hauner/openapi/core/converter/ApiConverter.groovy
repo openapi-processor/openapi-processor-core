@@ -44,10 +44,10 @@ import com.github.hauner.openapi.core.parser.Path
 import com.github.hauner.openapi.core.parser.RefResolver
 import com.github.hauner.openapi.core.parser.Response
 import com.github.hauner.openapi.core.parser.RequestBody
-import com.github.hauner.openapi.core.parser.Schema
 import groovy.util.logging.Slf4j
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
+import io.openapiprocessor.core.parser.Schema
 import io.openapiprocessor.core.support.Identifier
 
 /**

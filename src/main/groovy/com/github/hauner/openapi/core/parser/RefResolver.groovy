@@ -23,7 +23,4 @@ package com.github.hauner.openapi.core.parser
  */
 @Deprecated
 interface RefResolver extends io.openapiprocessor.core.parser.RefResolver {
-
-    Schema resolve (Schema ref)
-
 }

@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.parser.swagger
 
-import com.github.hauner.openapi.core.parser.Schema as ParserSchema
+import io.openapiprocessor.core.parser.Schema as ParserSchema
 import io.swagger.v3.oas.models.media.Schema as SwaggerSchema
 import io.swagger.v3.oas.models.media.ArraySchema as SwaggerArraySchema
 import io.swagger.v3.oas.models.media.ComposedSchema as SwaggerComposedSchema

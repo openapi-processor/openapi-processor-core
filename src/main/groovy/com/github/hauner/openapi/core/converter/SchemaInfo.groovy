@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.converter.mapping.MappingSchema
 import com.github.hauner.openapi.core.parser.RefResolver as ParserRefResolver
-import com.github.hauner.openapi.core.parser.Schema
+import io.openapiprocessor.core.parser.Schema
 
 /**
  * Helper for {@link DataTypeConverter}. Holds an OpenAPI
