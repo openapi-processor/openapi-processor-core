@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.parser.swagger
 
-import com.github.hauner.openapi.core.parser.Path as ParserPath
+import io.openapiprocessor.core.parser.Path as ParserPath
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.Operation as ParserOperation
 import io.swagger.v3.oas.models.PathItem as SwaggerPath
