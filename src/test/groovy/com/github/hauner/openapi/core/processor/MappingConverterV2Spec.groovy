@@ -16,12 +16,12 @@
 
 package com.github.hauner.openapi.core.processor
 
-import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ParameterTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ResponseTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ResultTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
+import io.openapiprocessor.core.converter.mapping.ParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.ResponseTypeMapping
+import io.openapiprocessor.core.converter.mapping.ResultTypeMapping
+import io.openapiprocessor.core.converter.mapping.TypeMapping
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll

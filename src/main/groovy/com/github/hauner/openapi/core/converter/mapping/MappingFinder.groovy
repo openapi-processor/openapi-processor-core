@@ -17,6 +17,14 @@
 package com.github.hauner.openapi.core.converter.mapping
 
 import com.github.hauner.openapi.core.converter.SchemaInfo
+import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
+import io.openapiprocessor.core.converter.mapping.Mapping
+import io.openapiprocessor.core.converter.mapping.MappingVisitor
+import io.openapiprocessor.core.converter.mapping.ParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.ResponseTypeMapping
+import io.openapiprocessor.core.converter.mapping.ResultTypeMapping
+import io.openapiprocessor.core.converter.mapping.TypeMapping
 
 /**
  * find mapping in type mapping list for a schema info.

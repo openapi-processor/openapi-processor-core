@@ -17,10 +17,10 @@
 package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.converter.mapping.AmbiguousTypeMappingException
-import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ParameterTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ResponseTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
+import io.openapiprocessor.core.converter.mapping.ParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.ResponseTypeMapping
+import io.openapiprocessor.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.framework.FrameworkBase
 import com.github.hauner.openapi.core.model.Api

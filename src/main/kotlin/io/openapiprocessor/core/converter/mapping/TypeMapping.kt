@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
+package io.openapiprocessor.core.converter.mapping
 
 /**
  * Used with {@link com.github.hauner.openapi.spring.converter.ApiOptions#typeMappings} to map an

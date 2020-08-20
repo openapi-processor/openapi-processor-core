@@ -14,41 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
+package io.openapiprocessor.core.converter.mapping
 
 /**
- * Mapping target result created from {@link TypeMapping}.
+ * Common interface for type mappings.
  */
-class TargetType(
+interface Mapping {
 
     /**
-     * type name
-     */
-    val typeName: String,
-
-    /**
-     * generic parameters of typeName
-     */
-    val genericNames: List<String>
-
-) {
-
-    /**
-     * Returns the class name without the package name.
+     * check if this mapping applies to the given schema by delegating to the visitor.
      *
-     * @return the class name
+     * @param visitor provides the matching logic
+     * @return true, id mapping applies, false otherwise
      */
-    fun getName(): String {
-        return typeName.substring(typeName.lastIndexOf('.') + 1)
-    }
+    fun matches (visitor: MappingVisitor): Boolean
 
     /**
-     * Returns the package name.
+     * Returns the inner mappings.
+     * In case of an ENDPOINT mapping the IO or TYPE mappings.
+     * In case of an IO mappings its type mappings.
+     * In case of a TYPE or RESULT mapping itself.
      *
-     * @return the package name
+     * @return the inner type mappings.
      */
-    fun getPkg(): String {
-        return typeName.substring(0, typeName.lastIndexOf('.'))
-    }
+    fun getChildMappings (): List<Mapping>
 
 }

@@ -14,34 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
+package io.openapiprocessor.core.converter.mapping
+
+import io.openapiprocessor.core.converter.mapping.*
 
 /**
- * Used with {@link EndpointTypeMapping} to configure an additional endpoint parameter that is not
- * defined in the api description.
+ * interface for type mapping matching logic.
  *
  * @author Martin Hauner
  */
-class AddParameterTypeMapping(
+interface MappingVisitor {
 
-    /**
-     * The parameter name of this mapping.
-     */
-    val parameterName: String,
-
-    /**
-     * additional parameter type mapping.
-     */
-    val mapping: TypeMapping
-
-): Mapping {
-
-    override fun matches(visitor: MappingVisitor): Boolean {
-        return visitor.match(this)
-    }
-
-    override fun getChildMappings(): List<Mapping> {
-        return listOf(mapping)
-    }
+    fun match (mapping: EndpointTypeMapping): Boolean
+    fun match (mapping: ParameterTypeMapping): Boolean
+    fun match (mapping: ResponseTypeMapping): Boolean
+    fun match (mapping: TypeMapping): Boolean
+    fun match (mapping: AddParameterTypeMapping): Boolean
+    fun match (mapping: ResultTypeMapping): Boolean
 
 }

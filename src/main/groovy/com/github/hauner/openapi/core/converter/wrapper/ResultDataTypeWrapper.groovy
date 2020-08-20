@@ -20,9 +20,9 @@ import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.converter.mapping.MappingFinder
 import com.github.hauner.openapi.core.converter.SchemaInfo
 import com.github.hauner.openapi.core.converter.mapping.AmbiguousTypeMappingException
-import com.github.hauner.openapi.core.converter.mapping.Mapping
-import com.github.hauner.openapi.core.converter.mapping.TargetType
-import com.github.hauner.openapi.core.converter.mapping.TargetTypeMapping
+import io.openapiprocessor.core.converter.mapping.Mapping
+import io.openapiprocessor.core.converter.mapping.TargetType
+import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ResultDataType

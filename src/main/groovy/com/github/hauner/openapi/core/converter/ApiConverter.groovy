@@ -22,10 +22,10 @@ import com.github.hauner.openapi.core.converter.wrapper.ResultDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.SingleDataTypeWrapper
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.parameters.Parameter as ModelParameter
-import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.Mapping
-import com.github.hauner.openapi.core.converter.mapping.TargetType
-import com.github.hauner.openapi.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.Mapping
+import io.openapiprocessor.core.converter.mapping.TargetType
+import io.openapiprocessor.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.DataTypes
 import com.github.hauner.openapi.core.model.Endpoint

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
+package io.openapiprocessor.core.converter.mapping
+
+import io.openapiprocessor.core.converter.mapping.TargetType
 
 /**
  * provider of target type information.

@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.converter.mapping
 
-import com.github.hauner.openapi.core.converter.mapping.Mapping
+import io.openapiprocessor.core.converter.mapping.Mapping
 
 /**
  * thrown when the DataTypeConverter finds an ambiguous data type mapping.

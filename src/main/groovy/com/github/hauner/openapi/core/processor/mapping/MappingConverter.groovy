@@ -16,13 +16,13 @@
 
 package com.github.hauner.openapi.core.processor.mapping
 
-import com.github.hauner.openapi.core.converter.mapping.AddParameterTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.EndpointTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ParameterTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ResponseTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.ResultTypeMapping
-import com.github.hauner.openapi.core.converter.mapping.TypeMapping
-import com.github.hauner.openapi.core.converter.mapping.Mapping
+import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
+import io.openapiprocessor.core.converter.mapping.ParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.ResponseTypeMapping
+import io.openapiprocessor.core.converter.mapping.ResultTypeMapping
+import io.openapiprocessor.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.Mapping
 
 import com.github.hauner.openapi.core.processor.mapping.Mapping as MappingV1
 

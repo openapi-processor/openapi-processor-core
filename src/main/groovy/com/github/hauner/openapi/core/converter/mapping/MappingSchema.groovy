@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.converter.mapping
 
 /**
- * Provides the properties required to check if a {@link com.github.hauner.openapi.core.converter.mapping.Mapping} applies to a
+ * Provides the properties required to check if a {@link io.openapiprocessor.core.converter.mapping.Mapping} applies to a
  * {@link com.github.hauner.openapi.core.converter.SchemaInfo}.
  *
  * @author Martin Hauner

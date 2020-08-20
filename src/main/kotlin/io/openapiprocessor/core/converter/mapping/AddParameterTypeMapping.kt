@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original authors
+ * Copyright 2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,33 +14,32 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
+package io.openapiprocessor.core.converter.mapping
 
 /**
- * Used with {@link EndpointTypeMapping} to configure the java type that should represent the schema
- * of the given endpoint parameter.
+ * Used with {@link EndpointTypeMapping} to configure an additional endpoint parameter that is not
+ * defined in the api description.
  *
  * @author Martin Hauner
  */
-class ParameterTypeMapping(
+class AddParameterTypeMapping(
 
     /**
-     * The parameter name of this mapping. Must match 1:1 with what is written in the api.
+     * The parameter name of this mapping.
      */
     val parameterName: String,
 
     /**
-     * Type mapping valid only for requests with parameter {@link #parameterName}.
+     * additional parameter type mapping.
      */
     val mapping: TypeMapping
 
 ): Mapping {
 
-    override fun matches (visitor: MappingVisitor): Boolean {
-        return visitor.match (this)
+    override fun matches(visitor: MappingVisitor): Boolean {
+        return visitor.match(this)
     }
 
-    @Override
     override fun getChildMappings(): List<Mapping> {
         return listOf(mapping)
     }

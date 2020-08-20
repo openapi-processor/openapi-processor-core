@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
+package io.openapiprocessor.core.converter.mapping
 
 /**
  * Used with {@link com.github.hauner.openapi.spring.converter.ApiOptions} to override parameter or
@@ -30,17 +30,17 @@ package com.github.hauner.openapi.core.converter.mapping
  */
 class EndpointTypeMapping @JvmOverloads constructor(
 
-        /**
+    /**
      * Full path of the endpoint that is configured by this object.
      */
     var path: String,
 
-        /**
+    /**
      * Provides type mappings for the endpoint.
      */
     var typeMappings: List<Mapping> = emptyList(),
 
-        /**
+    /**
      * Exclude endpoint.
      */
     var exclude: Boolean = false

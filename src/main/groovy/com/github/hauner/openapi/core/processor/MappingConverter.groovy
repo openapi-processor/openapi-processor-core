@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.processor
 
-import com.github.hauner.openapi.core.converter.mapping.Mapping
+import io.openapiprocessor.core.converter.mapping.Mapping
 import com.github.hauner.openapi.core.processor.mapping.MappingConverter as MappingConverterV1
 import com.github.hauner.openapi.core.processor.mapping.Mapping as MappingV1
 import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
