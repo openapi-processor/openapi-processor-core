@@ -10,8 +10,10 @@ on:
       - 'LICENSE'
       - 'README.adoc'
       - 'docs/**'
-    tags-ignore:
-      - 'v*'
+    tags:
+      - '!v*'
+  #    tags-ignore:
+  #      - 'v*'
 
 jobs:
 
