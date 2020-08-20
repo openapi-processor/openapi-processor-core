@@ -4,16 +4,10 @@ on:
   push:
     branches:
       - '**'
-#    paths:
-#      - 'src/**'
-#      - 'build.gradle'
-#      - '.github/**'
     paths-ignore:
       - 'LICENSE'
       - 'README.adoc'
       - 'docs/**'
-#    tags:
-#      - '!v*'
     tags-ignore:
       - 'v*'
 
