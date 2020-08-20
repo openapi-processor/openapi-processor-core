@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping.v2
+package io.openapiprocessor.core.converter.mapping.v2
 
 import io.openapiprocessor.core.converter.mapping.*
-import com.github.hauner.openapi.core.processor.mapping.v2.Mapping as MappingV2
+import io.openapiprocessor.core.converter.mapping.v2.Mapping as MappingV2
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information

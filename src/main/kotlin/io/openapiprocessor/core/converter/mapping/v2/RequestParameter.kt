@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping.v2
+package io.openapiprocessor.core.converter.mapping.v2
+
+import io.openapiprocessor.core.converter.mapping.v2.Parameter
 
 /**
- * a "parameters:" add parameter entry in the mapping yaml
+ * a "parameters:" request parameter entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-data class AdditionalParameter(
+data class RequestParameter(
 
     /**
-     * the mapping of an additional parameter name to target, ie a mapping string like:
+     * the mapping from parameter name to target, ie a mapping string like:
      *
      * foo => mapping.Bar
      */
-    val add: String,
+    val name: String,
 
     /**
      * (optional) generic parameters of {@link #name} target

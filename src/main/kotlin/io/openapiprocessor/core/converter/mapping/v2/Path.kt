@@ -14,40 +14,48 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping.v2
-
-import com.fasterxml.jackson.annotation.JsonAlias
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
+package io.openapiprocessor.core.converter.mapping.v2
 
 /**
- * *the* v2 Schema of the mapping yaml
+ * a "paths:" entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-data class Mapping(
+data class Path(
 
     /**
-     * mapping format version
+     * path should be excluded
      */
-    @JsonProperty("openapi-processor-mapping")
-    @JsonAlias("openapi-processor-spring") // deprecated
-    val version: String,
+    val exclude: Boolean = false,
 
     /**
-     * general options
+     * path limited result mapping
      */
-    val options: Options = Options(),
+    val result: String?,
 
     /**
-     * the type mappings
+     * single mapping, i.e. Mono<>
      */
-    val map: Map = Map()
+    val single: String?,
 
-): VersionedMapping {
+    /**
+     * multi mapping, i.e. Flux<>
+     */
+    val multi: String?,
 
-    override fun isV2(): Boolean {
-        return version.startsWith("v2")
-    }
+    /**
+     * path limited type mappings
+     */
+    val types: List<Type> = emptyList(),
 
-}
+    /**
+     * path limited parameter mappings
+     */
+    val parameters: List<Parameter> = emptyList(),
+
+    /**
+     * path limited response mappings
+     */
+    val responses: List<Response> = emptyList()
+
+) {}
