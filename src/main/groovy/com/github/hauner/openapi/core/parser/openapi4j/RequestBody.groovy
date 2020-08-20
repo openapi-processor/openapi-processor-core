@@ -16,8 +16,8 @@
 
 package com.github.hauner.openapi.core.parser.openapi4j
 
-import com.github.hauner.openapi.core.parser.RequestBody as ParserRequestBody
 import io.openapiprocessor.core.parser.MediaType as ParserMediaType
+import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
 import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
 import org.openapi4j.parser.model.v3.RequestBody as O4jRequestBody
 

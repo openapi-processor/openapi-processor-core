@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.parser.openapi4j
 import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.parser.Operation as ParserOperation
 import com.github.hauner.openapi.core.parser.Parameter as ParserParameter
-import com.github.hauner.openapi.core.parser.RequestBody as ParserRequestBody
+import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
 import io.openapiprocessor.core.parser.Response as ParserResponse
 import org.openapi4j.parser.model.v3.Operation as O4jOperation
 import org.openapi4j.parser.model.v3.Parameter as O4jParameter
