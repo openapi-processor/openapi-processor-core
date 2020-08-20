@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.parser.swagger
 
-import com.github.hauner.openapi.core.parser.RefResolver as ParserRefResolver
+import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema as ParserSchema
 import io.swagger.v3.oas.models.Components as SwaggerComponents
 

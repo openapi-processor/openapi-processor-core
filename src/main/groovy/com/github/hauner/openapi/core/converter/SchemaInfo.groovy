@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.converter.mapping.MappingSchema
-import com.github.hauner.openapi.core.parser.RefResolver as ParserRefResolver
+import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema
 
 /**

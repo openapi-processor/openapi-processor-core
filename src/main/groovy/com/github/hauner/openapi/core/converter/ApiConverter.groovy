@@ -40,11 +40,11 @@ import com.github.hauner.openapi.core.parser.OpenApi
 import com.github.hauner.openapi.core.parser.Operation
 import com.github.hauner.openapi.core.parser.Parameter
 import com.github.hauner.openapi.core.parser.Path
-import com.github.hauner.openapi.core.parser.RefResolver
 import groovy.util.logging.Slf4j
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
 import io.openapiprocessor.core.parser.MediaType
+import io.openapiprocessor.core.parser.RefResolver
 import io.openapiprocessor.core.parser.RequestBody
 import io.openapiprocessor.core.parser.Response
 import io.openapiprocessor.core.parser.Schema

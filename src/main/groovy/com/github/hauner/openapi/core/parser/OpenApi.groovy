@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.parser
 
+import io.openapiprocessor.core.parser.RefResolver
+
 /**
  * OpenAPI parser result abstraction.
  *
