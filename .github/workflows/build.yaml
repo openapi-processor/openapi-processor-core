@@ -2,6 +2,8 @@ name: build
 
 on:
   push:
+    branches:
+      - '**'
 #    paths:
 #      - 'src/**'
 #      - 'build.gradle'
@@ -12,8 +14,8 @@ on:
       - 'docs/**'
 #    tags:
 #      - '!v*'
-#    tags-ignore:
-#      - 'v*'
+    tags-ignore:
+      - 'v*'
 
 jobs:
 
