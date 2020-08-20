@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.parser
 
 import com.github.hauner.openapi.core.model.HttpMethod
+import io.openapiprocessor.core.parser.Parameter
 import io.openapiprocessor.core.parser.RequestBody
 import io.openapiprocessor.core.parser.Response
 

@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.parser.swagger
 
 import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.parser.Operation as ParserOperation
-import com.github.hauner.openapi.core.parser.Parameter as ParserParameter
+import io.openapiprocessor.core.parser.Parameter as ParserParameter
 import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
 import io.openapiprocessor.core.parser.Response as ParserResponse
 import io.swagger.v3.oas.models.Operation as SwaggerOperation

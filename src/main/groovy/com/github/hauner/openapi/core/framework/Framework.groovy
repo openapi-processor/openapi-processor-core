@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.framework
 import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.parameters.Parameter
 import com.github.hauner.openapi.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.parser.Parameter as ParserParameter
+import io.openapiprocessor.core.parser.Parameter as ParserParameter
 
 /**
  * factory for framework model objects.

@@ -25,7 +25,7 @@ import com.github.hauner.openapi.core.model.parameters.Parameter
 import com.github.hauner.openapi.core.model.parameters.PathParameter
 import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.parser.Parameter as ParserParameter
+import io.openapiprocessor.core.parser.Parameter as ParserParameter
 
 /**
  * default implementation of {@link Framework}.
