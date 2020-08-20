@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.parser.swagger
 
-import com.github.hauner.openapi.core.parser.OpenApi as ParserOpenApi
+import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import io.swagger.v3.parser.OpenAPIV3Parser
 import io.swagger.v3.parser.core.models.ParseOptions
 import io.swagger.v3.parser.core.models.SwaggerParseResult

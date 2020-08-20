@@ -36,7 +36,7 @@ import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.Response as ModelResponse
 import com.github.hauner.openapi.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.parser.OpenApi
+import io.openapiprocessor.core.parser.OpenApi
 import groovy.util.logging.Slf4j
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException

@@ -19,7 +19,7 @@ package com.github.hauner.openapi.processor.core.processor.test
 import com.github.hauner.openapi.core.converter.ApiConverter
 import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.framework.FrameworkBase
-import com.github.hauner.openapi.core.parser.OpenApi
+import io.openapiprocessor.core.parser.OpenApi
 import com.github.hauner.openapi.core.parser.Parser
 import com.github.hauner.openapi.core.processor.MappingConverter
 import com.github.hauner.openapi.core.processor.MappingReader

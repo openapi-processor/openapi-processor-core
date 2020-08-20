@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.test.parser
 
-import com.github.hauner.openapi.core.parser.OpenApi as ParserOpenApi
+import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import com.github.hauner.openapi.core.parser.openapi4j.OpenApi
 import com.github.hauner.openapi.core.parser.openapi4j.Parser
 import com.github.hauner.openapi.core.test.memory.Memory

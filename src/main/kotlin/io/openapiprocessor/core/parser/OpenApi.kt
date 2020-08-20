@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser
-
-import io.openapiprocessor.core.parser.Path
-import io.openapiprocessor.core.parser.RefResolver
+package io.openapiprocessor.core.parser
 
 /**
  * OpenAPI parser result abstraction.
@@ -26,9 +23,9 @@ import io.openapiprocessor.core.parser.RefResolver
  */
 interface OpenApi {
 
-    Map<String, Path> getPaths ()
+    fun getPaths(): Map<String, Path>
 
-    RefResolver getRefResolver ()
-    void printWarnings ()
+    fun getRefResolver(): RefResolver
+    fun printWarnings()
 
 }

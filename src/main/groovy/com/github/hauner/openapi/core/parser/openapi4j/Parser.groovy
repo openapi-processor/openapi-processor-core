@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.parser.openapi4j
 
-import com.github.hauner.openapi.core.parser.OpenApi as ParserOpenApi
+import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import org.openapi4j.core.validation.ValidationResults
 import org.openapi4j.parser.OpenApi3Parser
 import org.openapi4j.parser.model.v3.OpenApi3
