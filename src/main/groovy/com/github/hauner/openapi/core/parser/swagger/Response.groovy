@@ -16,8 +16,8 @@
 
 package com.github.hauner.openapi.core.parser.swagger
 
-import com.github.hauner.openapi.core.parser.Response as ParserResponse
 import io.openapiprocessor.core.parser.MediaType as ParserMediaType
+import io.openapiprocessor.core.parser.Response as ParserResponse
 import io.swagger.v3.oas.models.media.MediaType as SwaggerMediaType
 import io.swagger.v3.oas.models.responses.ApiResponse as SwaggerResponse
 

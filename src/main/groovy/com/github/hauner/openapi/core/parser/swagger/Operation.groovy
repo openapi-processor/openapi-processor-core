@@ -20,7 +20,7 @@ import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.parser.Operation as ParserOperation
 import com.github.hauner.openapi.core.parser.Parameter as ParserParameter
 import com.github.hauner.openapi.core.parser.RequestBody as ParserRequestBody
-import com.github.hauner.openapi.core.parser.Response as ParserResponse
+import io.openapiprocessor.core.parser.Response as ParserResponse
 import io.swagger.v3.oas.models.Operation as SwaggerOperation
 import io.swagger.v3.oas.models.parameters.Parameter as SwaggerParameter
 import io.swagger.v3.oas.models.responses.ApiResponse as SwaggerResponse
