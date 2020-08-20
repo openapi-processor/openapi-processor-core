@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.processor.core
 
-import com.github.hauner.openapi.core.parser.ParserType
+import io.openapiprocessor.core.parser.ParserType
 import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
 import com.github.hauner.openapi.test.ProcessorTestBase
 import com.github.hauner.openapi.test.TestSet

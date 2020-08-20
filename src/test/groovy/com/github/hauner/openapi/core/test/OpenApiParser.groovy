@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.test
 
 import com.github.hauner.openapi.core.parser.OpenApi
-import com.github.hauner.openapi.core.parser.ParserType
+import io.openapiprocessor.core.parser.ParserType
 import com.github.hauner.openapi.core.test.parser.OpenApi4jParser
 import com.github.hauner.openapi.core.test.parser.SwaggerParser
 

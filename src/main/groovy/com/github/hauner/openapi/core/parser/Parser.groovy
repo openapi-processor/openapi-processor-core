@@ -18,6 +18,7 @@ package com.github.hauner.openapi.core.parser
 
 import com.github.hauner.openapi.core.parser.swagger.Parser as Swagger
 import com.github.hauner.openapi.core.parser.openapi4j.Parser as OpenApi4J
+import io.openapiprocessor.core.parser.ParserType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser
+package io.openapiprocessor.core.parser
 
 /**
  * Parser types support by the {@code Parser} abstraction.
  *
  * @author Martin Hauner
  */
-enum ParserType {
+enum class ParserType {
     SWAGGER,
     OPENAPI4J
 }
