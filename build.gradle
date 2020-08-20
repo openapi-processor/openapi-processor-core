@@ -3,8 +3,8 @@ plugins {
     id 'groovy'
     id 'java-library'
     id 'maven-publish'
-    id 'org.jetbrains.dokka' version '0.10.1'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
+    id 'org.jetbrains.dokka' version '1.4.0-rc'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.0'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
     id "com.github.ben-manes.versions" version "0.28.0"
 }
@@ -87,7 +87,6 @@ dependencies {
 
     implementation 'org.codehaus.groovy:groovy:2.5.12'
     implementation 'org.codehaus.groovy:groovy-nio:2.5.12'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
 
     compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
@@ -156,7 +155,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-task javadocJar(type: Jar, dependsOn: [groovydoc, dokka]) {
+task javadocJar(type: Jar, dependsOn: [groovydoc, dokkaHtml]) {
     archiveClassifier.set ('javadoc')
     from "$buildDir/docs"
 }
@@ -170,11 +169,9 @@ groovydoc {
     destinationDir file("$buildDir/docs/groovy")
 }
 
-dokka {
-    outputFormat = 'html'
+dokkaHtml {
     outputDirectory = "$buildDir/docs/kotlin"
 }
-
 
 apply from: "${rootProject.rootDir}/gradle/publishing.gradle"
 apply from: "${rootProject.rootDir}/gradle/publishing.tasks.gradle.kts"
