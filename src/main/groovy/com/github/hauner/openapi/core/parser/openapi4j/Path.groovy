@@ -16,9 +16,9 @@
 
 package com.github.hauner.openapi.core.parser.openapi4j
 
-import com.github.hauner.openapi.core.parser.Operation as ParserOperation
 import com.github.hauner.openapi.core.parser.Path as ParserPath
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.parser.Operation as ParserOperation
 import org.openapi4j.parser.model.v3.Path as Oa4jPath
 
 /**

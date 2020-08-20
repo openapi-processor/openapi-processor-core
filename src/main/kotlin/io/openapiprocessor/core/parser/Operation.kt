@@ -32,7 +32,7 @@ interface Operation {
     fun getRequestBody(): RequestBody
     fun getResponses(): Map<String, Response>
 
-    fun isDeprecated(): Boolean?
+    fun isDeprecated(): Boolean
     fun hasTags(): Boolean
 
     fun getFirstTag(): String?

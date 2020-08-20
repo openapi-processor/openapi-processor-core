@@ -37,12 +37,12 @@ import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.Response as ModelResponse
 import com.github.hauner.openapi.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.parser.OpenApi
-import com.github.hauner.openapi.core.parser.Operation
 import com.github.hauner.openapi.core.parser.Path
 import groovy.util.logging.Slf4j
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
 import io.openapiprocessor.core.parser.MediaType
+import io.openapiprocessor.core.parser.Operation
 import io.openapiprocessor.core.parser.Parameter
 import io.openapiprocessor.core.parser.RefResolver
 import io.openapiprocessor.core.parser.RequestBody
