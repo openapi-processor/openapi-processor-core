@@ -6,12 +6,12 @@ on:
 #      - 'src/**'
 #      - 'build.gradle'
 #      - '.github/**'
-#    paths-ignore:
-#      - 'LICENSE'
-#      - 'README.adoc'
-#      - 'docs/**'
-    tags-ignore:
-      - v*
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.adoc'
+      - 'docs/**'
+#    tags-ignore:
+#      - v*
 
 jobs:
 
