@@ -17,7 +17,6 @@
 package io.openapiprocessor.core.model
 
 import com.github.hauner.openapi.core.model.Endpoint
-import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.model.Interface
 import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response

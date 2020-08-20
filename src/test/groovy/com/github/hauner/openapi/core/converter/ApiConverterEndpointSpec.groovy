@@ -18,9 +18,9 @@ package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.Api
-import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.test.ModelAsserts
+import io.openapiprocessor.core.model.HttpMethod
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse

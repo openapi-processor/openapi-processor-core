@@ -22,7 +22,6 @@ import com.github.hauner.openapi.core.model.datatypes.ResultDataType
 import com.github.hauner.openapi.core.model.parameters.Parameter
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.Endpoint
-import com.github.hauner.openapi.core.model.HttpMethod
 import com.github.hauner.openapi.core.model.Response
 import com.github.hauner.openapi.core.model.datatypes.ArrayDataType
 import com.github.hauner.openapi.core.model.datatypes.BooleanDataType
@@ -38,6 +37,7 @@ import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
+import io.openapiprocessor.core.model.HttpMethod
 import spock.lang.Specification
 import spock.lang.Unroll
 
