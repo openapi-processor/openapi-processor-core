@@ -6,7 +6,7 @@ plugins {
     id 'org.jetbrains.dokka' version '1.4.0-rc'
     id 'org.jetbrains.kotlin.jvm' version '1.4.0'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
-    id "com.github.ben-manes.versions" version "0.28.0"
+    id "com.github.ben-manes.versions" version "0.29.0"
 }
 
 group projectGroupId
@@ -20,7 +20,7 @@ java {
 
 ext {
     processorApiVersion = '1.1.0'
-    jacksonVersion = '2.11.0'
+    jacksonVersion = '2.11.2'
 
     bintrayUser = project.findProperty ('BINTRAY_USER') ?: System.getenv ("BINTRAY_USER") ?: 'n/a'
     bintrayKey =  project.findProperty ('BINTRAY_KEY') ?: System.getenv ("BINTRAY_KEY") ?: 'n/a'
@@ -91,8 +91,8 @@ dependencies {
 
     compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
 
-    implementation 'org.openapi4j:openapi-parser:1.0'
-    implementation ('io.swagger.parser.v3:swagger-parser:2.0.20') {
+    implementation 'org.openapi4j:openapi-parser:1.0.3'
+    implementation ('io.swagger.parser.v3:swagger-parser:2.0.21') {
         exclude group: 'io.swagger.parser.v3', module: 'swagger-parser-v2-converter'
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
@@ -101,7 +101,7 @@ dependencies {
         exclude group: 'com.google.guava'
     }
 
-    implementation ('com.google.guava:guava:28.1-jre') {
+    implementation ('com.google.guava:guava:29.0-jre') {
         exclude group: 'com.google.guava'
         exclude group: 'com.google.j2objc'
         exclude group: 'com.google.code.findbugs'
