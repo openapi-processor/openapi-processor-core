@@ -14,33 +14,28 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
+
 /**
- * *the* Schema of the mapping yaml
+ * general options
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class Mapping implements VersionedMapping {
+@Deprecated("replaced by mapping.v2")
+class Options(
 
     /**
-     * version (currently optional)
+     * the root package name of the generated interfaces & models (required)
+     *
+     * Interfaces and models will be generated into the `api` and `model` subpackages of `packageName`.
+     * - so the final package name of the generated interfaces will be `"${packageName}.api"`
+     * - and the final package name of the generated models will be `"${packageName}.model"`
      */
-    String openapiProcessorSpring
+    val packageName: String = "io.openapiprocessor.generated",
 
     /**
-     * general options
+     * bean validation (optional)
      */
-    Options options
+    val beanValidation: Boolean = false
 
-    /**
-     * the type mappings
-     */
-    Map map
-
-    @Override
-    boolean isV2() {
-        false
-    }
-
-}
+)

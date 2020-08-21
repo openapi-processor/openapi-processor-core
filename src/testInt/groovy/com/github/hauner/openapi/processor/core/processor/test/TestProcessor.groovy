@@ -21,8 +21,8 @@ import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.framework.FrameworkBase
 import io.openapiprocessor.core.parser.OpenApi
 import io.openapiprocessor.core.parser.Parser
-import com.github.hauner.openapi.core.processor.MappingConverter
-import com.github.hauner.openapi.core.processor.MappingReader
+import io.openapiprocessor.core.processor.MappingConverter
+import io.openapiprocessor.core.processor.MappingReader
 import com.github.hauner.openapi.core.writer.java.ApiWriter
 import com.github.hauner.openapi.core.writer.java.BeanValidationFactory
 import com.github.hauner.openapi.core.writer.java.DataTypeWriter

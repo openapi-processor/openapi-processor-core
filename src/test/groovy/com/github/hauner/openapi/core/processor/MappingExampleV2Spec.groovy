@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.processor
 
+import io.openapiprocessor.core.processor.MappingConverter
+import io.openapiprocessor.core.processor.MappingReader
 import spock.lang.Specification
 import spock.lang.Subject
 

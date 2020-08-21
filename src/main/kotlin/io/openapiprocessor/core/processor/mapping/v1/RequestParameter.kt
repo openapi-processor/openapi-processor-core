@@ -14,19 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
 
 /**
- * the "result:" entry in the mapping yaml
+ * a "parameters:" request parameter entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class Result {
+@Deprecated("replaced by mapping.v2")
+class RequestParameter(
+
+    /**
+     * name of the parameter
+     */
+    val name: String,
 
     /**
      * target java type
      */
-    String to
+    val to: String,
 
-}
+    /**
+     * (optional) generic parameters of {@link #to}
+     */
+    val generics: List<String>?
+
+): Parameter

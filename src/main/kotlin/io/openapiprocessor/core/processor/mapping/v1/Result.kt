@@ -14,29 +14,19 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
 
 /**
- * a "types:" entry in the mapping yaml
+ * the "result:" entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class Type {
-
-    /**
-     * source type
-     */
-    String from
+@Deprecated("replaced by mapping.v2")
+class Result(
 
     /**
      * target java type
      */
-    String to
+    val to: String
 
-    /**
-     * (optional) generic parameters of {@link #to}
-     */
-    List<String> generics
-
-}
+)

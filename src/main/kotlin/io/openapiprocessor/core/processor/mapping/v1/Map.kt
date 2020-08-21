@@ -14,27 +14,42 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
 
 /**
- * a "responses:" entry in the mapping yaml
+ * the "map:" entry in the mapping yaml
+ *
+ *  @author Martin Hauner
  */
-@Deprecated
-class Response {
+@Deprecated("replaced by mapping.v2")
+class Map(
 
     /**
-     * content type
+     * global result mapping
      */
-    String content
+    val result: Result? = null,
 
     /**
-     * target java type
+     * global type mappings
      */
-    String to
+    val types: List<Type> = emptyList(),
 
     /**
-     * (optional) generic parameters of {@link #to}
+     * global parameter mappings
      */
-    List<String> generics
+    val parameters: List<Parameter> = emptyList(),
 
-}
+    /**
+     * global response mappings
+     */
+    val responses: List<Response> = emptyList(),
+
+    /**
+     * endpoint mappings
+     *
+     * the LinkedHashMap preserves order
+     */
+    val paths: LinkedHashMap<String, Path> = LinkedHashMap()
+
+)
+

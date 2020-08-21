@@ -14,39 +14,39 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
 
 /**
  * a "paths:" entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class Path {
+@Deprecated("replaced by mapping.v2")
+class Path(
 
     /**
      * path should be excluded
      */
-    boolean exclude = false
+    val exclude: Boolean = false,
 
     /**
      * path limited result mapping
      */
-    Result result
+    val result: Result? = null,
 
     /**
      * path limited type mappings
      */
-    List<Type> types
+    val types: List<Type> = emptyList(),
 
     /**
      * path limited parameter mappings
      */
-    List<Parameter> parameters
+    val parameters: List<Parameter> = emptyList(),
 
     /**
      * path limited response mappings
      */
-    List<Response> responses
+    val responses: List<Response> = emptyList()
 
-}
+)

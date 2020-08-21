@@ -16,9 +16,9 @@
 
 package com.github.hauner.openapi.core.processor
 
-import com.github.hauner.openapi.core.test.Sl4jMockRule
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
+import io.openapiprocessor.core.processor.MappingReader
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import org.slf4j.Logger
@@ -36,7 +36,6 @@ class MappingReaderSpec extends Specification {
     TemporaryFolder folder
 
     def log = Mock Logger
-    @Rule Sl4jMockRule rule = new Sl4jMockRule(MappingReader, log)
 
     void "ignores empty type mapping" () {
         when:
@@ -115,8 +114,11 @@ map:
 openapi-processor-spring: v2
 """
 
+        def reader = new MappingReader()
+        reader.log = log
+
         when:
-        new MappingReader().read (yaml)
+        reader.read (yaml)
 
         then:
         1 * log.warn (*_)
@@ -127,8 +129,11 @@ openapi-processor-spring: v2
 openapi-processor-mapping: v1
 """
 
+        def reader = new MappingReader()
+        reader.log = log
+
         when:
-        new MappingReader().read (yaml)
+        reader.read (yaml)
 
         then:
         2 * log.info (*_)

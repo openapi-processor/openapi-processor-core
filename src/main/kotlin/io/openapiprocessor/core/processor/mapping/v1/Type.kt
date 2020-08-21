@@ -14,28 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
 
 /**
- * general options
+ * a "types:" entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class Options {
+@Deprecated("replaced by mapping.v2")
+class Type(
 
     /**
-     * the root package name of the generated interfaces & models (required)
-     *
-     * Interfaces and models will be generated into the `api` and `model` subpackages of `packageName`.
-     * - so the final package name of the generated interfaces will be `"${packageName}.api"`
-     * - and the final package name of the generated models will be `"${packageName}.model"`
+     * source type
      */
-    String packageName
+    val from: String?,
 
     /**
-     * bean validation (optional)
+     * target java type
      */
-    Boolean beanValidation
+    val to: String,
 
-}
+    /**
+     * (optional) generic parameters of {@link #to}
+     */
+    val generics: List<String>?
+
+)

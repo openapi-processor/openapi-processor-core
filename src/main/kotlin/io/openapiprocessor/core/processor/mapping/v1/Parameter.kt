@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
 
 /**
  * a "parameters:" entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class Parameter {
-}
+@Deprecated("replaced by mapping.v2")
+interface Parameter

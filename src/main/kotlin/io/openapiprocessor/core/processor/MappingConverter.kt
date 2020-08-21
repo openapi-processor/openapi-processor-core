@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor
+package io.openapiprocessor.core.processor
 
 import io.openapiprocessor.core.converter.mapping.Mapping
-import com.github.hauner.openapi.core.processor.mapping.MappingConverter as MappingConverterV1
-import com.github.hauner.openapi.core.processor.mapping.Mapping as MappingV1
+import io.openapiprocessor.core.processor.mapping.v1.MappingConverter as MappingConverterV1
+import io.openapiprocessor.core.processor.mapping.v1.Mapping as MappingV1
 import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
 import io.openapiprocessor.core.processor.mapping.v2.MappingConverter as MappingConverterV2
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
@@ -31,12 +31,16 @@ import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
  */
 class MappingConverter {
 
-    List<Mapping> convert (VersionedMapping source) {
-        if (source?.isV2()) {
-            def converter = new MappingConverterV2 ()
+   fun convert(source: VersionedMapping?): List<Mapping> {
+       if (source == null) {
+           return emptyList()
+       }
+
+        return if (source.isV2) {
+            val converter = MappingConverterV2()
             converter.convert (source as MappingV2)
         } else {
-            def converter = new MappingConverterV1 ()
+            val converter = MappingConverterV1()
             converter.convert (source as MappingV1)
         }
     }

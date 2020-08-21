@@ -14,28 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
+
 /**
- * a "parameters:" add parameter entry in the mapping yaml
+ * a "responses:" entry in the mapping yaml
  *
- *  @author Martin Hauner
+ * @author Martin Hauner
  */
-@Deprecated
-class AdditionalParameter extends Parameter {
+@Deprecated("replaced by mapping.v2")
+class Response(
 
     /**
-     * name of the additional parameter
+     * content type
      */
-    String add
+    val content: String,
 
     /**
      * target java type
      */
-    String to
+    val to: String,
 
     /**
      * (optional) generic parameters of {@link #to}
      */
-    List<String> generics
+    val generics: List<String>?
 
-}
+)

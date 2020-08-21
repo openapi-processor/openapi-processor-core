@@ -14,29 +14,37 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
+
+import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
 
 /**
- * a "parameters:" request parameter entry in the mapping yaml
+ * *the* Schema of the mapping yaml
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class RequestParameter extends Parameter {
+@Deprecated("replaced by mapping.v2")
+class Mapping(
 
     /**
-     * name of the parameter
+     * version (currently optional)
      */
-    String name
+    val openapiProcessorSpring: String?,
 
     /**
-     * target java type
+     * general options
      */
-    String to
+    val options: Options = Options(),
 
     /**
-     * (optional) generic parameters of {@link #to}
+     * the type mappings
      */
-    List<String> generics
+    val map: Map = Map()
+
+): VersionedMapping {
+
+    override fun isV2(): Boolean {
+        return false
+    }
 
 }

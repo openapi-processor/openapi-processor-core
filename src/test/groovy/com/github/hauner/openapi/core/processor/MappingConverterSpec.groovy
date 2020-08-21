@@ -22,6 +22,8 @@ import io.openapiprocessor.core.converter.mapping.ParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.ResponseTypeMapping
 import io.openapiprocessor.core.converter.mapping.ResultTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.processor.MappingConverter
+import io.openapiprocessor.core.processor.MappingReader
 import spock.lang.Specification
 import spock.lang.Subject
 

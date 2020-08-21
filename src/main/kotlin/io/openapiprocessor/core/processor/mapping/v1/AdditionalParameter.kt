@@ -14,41 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.processor.mapping
+package io.openapiprocessor.core.processor.mapping.v1
 
 /**
- * the "map:" entry in the mapping yaml
+ * a "parameters:" add parameter entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-@Deprecated
-class Map {
+@Deprecated("replaced by mapping.v2")
+class AdditionalParameter(
 
     /**
-     * global result mapping
+     * name of the additional parameter
      */
-    Result result
+    val add: String,
 
     /**
-     * global type mappings
+     * target java type
      */
-    List<Type> types
+    val to: String,
 
     /**
-     * global parameter mappings
+     * (optional) generic parameters of {@link #to}
      */
-    List<Parameter> parameters
+    val generics: List<String>?
 
-    /**
-     * global response mappings
-     */
-    List<Response> responses
-
-    /**
-     * endpoint mappings
-     *
-     * the LinkedHashMap preserves order
-     */
-    LinkedHashMap<String, Path> paths
-
-}
+): Parameter
