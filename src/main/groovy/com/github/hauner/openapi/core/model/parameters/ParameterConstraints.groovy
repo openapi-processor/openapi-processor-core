@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.model.parameters
 
-import com.github.hauner.openapi.core.model.datatypes.DataTypeConstraints
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 
 /**
  * Constraints of the parameter data type.

@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+
 /**
  * OpenAPI schema collection mapped to a java type. The java type is expected to have a single
  * generic parameter.

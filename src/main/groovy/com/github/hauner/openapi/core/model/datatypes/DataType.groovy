@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+
 /**
  * Data type description of a Java data type.
  *

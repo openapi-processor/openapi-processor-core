@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.model.datatypes.ArrayDataType
 import com.github.hauner.openapi.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.model.datatypes.DataTypeConstraints
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import com.github.hauner.openapi.core.model.datatypes.DoubleDataType
 import com.github.hauner.openapi.core.model.datatypes.FloatDataType
 import com.github.hauner.openapi.core.model.datatypes.IntegerDataType

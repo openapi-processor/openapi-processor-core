@@ -25,7 +25,7 @@ import com.github.hauner.openapi.core.model.DataTypes
 import com.github.hauner.openapi.core.model.datatypes.ArrayDataType
 import com.github.hauner.openapi.core.model.datatypes.BooleanDataType
 import com.github.hauner.openapi.core.model.datatypes.ComposedObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.DataTypeConstraints
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import com.github.hauner.openapi.core.model.datatypes.LocalDateDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedDataType

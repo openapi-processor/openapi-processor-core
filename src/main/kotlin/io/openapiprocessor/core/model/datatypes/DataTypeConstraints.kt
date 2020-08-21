@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI constraint details of a data type.
@@ -22,21 +22,23 @@ package com.github.hauner.openapi.core.model.datatypes
  * @author Martin Hauner
  * @author Bastian Wilhelm
  */
-class DataTypeConstraints {
+class DataTypeConstraints(
 
-    def defaultValue
-    def nullable
-    def minLength
-    def maxLength
-    def minimum
-    def exclusiveMinimum
-    def maximum
-    def exclusiveMaximum
-    def minItems
-    def maxItems
+    var defaultValue: Any? = null,
+    var nullable: Boolean? = null,
+    var minLength: Int? = null,
+    var maxLength: Int? = null,
+    var minimum: Number? = null,
+    var exclusiveMinimum: Boolean? = null,
+    var maximum: Number? = null,
+    var exclusiveMaximum: Boolean? = null,
+    var minItems: Int? = null,
+    var maxItems: Int? = null
 
-    def getDefault () {
-        defaultValue
+) {
+
+    fun getDefault(): Any? {
+        return defaultValue
     }
 
 }

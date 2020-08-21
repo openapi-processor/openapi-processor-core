@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+
 /**
  * OpenAPI type 'number' with format 'float' maps to java Float.
  *

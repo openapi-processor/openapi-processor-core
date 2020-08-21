@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+
 /**
  * Result data type wrapper. Assumes a single generic parameter.
  *
