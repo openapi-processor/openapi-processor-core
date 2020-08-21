@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,33 +14,24 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
-
-import io.openapiprocessor.core.converter.mapping.Mapping
+package io.openapiprocessor.core.converter.mapping
 
 /**
  * thrown when the DataTypeConverter finds an ambiguous data type mapping.
  *
  * @author Martin Hauner
  */
-class AmbiguousTypeMappingException extends RuntimeException {
+class AmbiguousTypeMappingException(val typeMappings: List<TypeMapping>): RuntimeException() {
 
-    List<Mapping> typeMappings
-
-    AmbiguousTypeMappingException(List<Mapping> typeMappings) {
-        super()
-        this.typeMappings = typeMappings
-    }
-
-    @Override
-    String getMessage () {
-        def from = typeMappings.first ()
-        def msg = "ambiguous type mapping:\n"
-        msg += "  from: ${from.fullSourceType}\n"
-        typeMappings.each {
-            msg += "  to: ${it.targetTypeName}"
+    override val message: String
+        get() {
+            val from = typeMappings.first()
+            var msg = "ambiguous type mapping:\n"
+            msg += "  from: ${from.sourceTypeName}\n"
+            typeMappings.forEach {
+                msg += "  to: ${it.targetTypeName}"
+            }
+            return msg
         }
-        msg
-    }
 
 }

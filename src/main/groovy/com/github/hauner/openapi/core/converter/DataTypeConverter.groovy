@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.converter.mapping.MappingFinder
-import com.github.hauner.openapi.core.converter.mapping.AmbiguousTypeMappingException
+import io.openapiprocessor.core.converter.mapping.AmbiguousTypeMappingException
 import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.converter.mapping.Mapping
