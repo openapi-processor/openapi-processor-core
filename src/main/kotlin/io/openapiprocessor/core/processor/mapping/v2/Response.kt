@@ -14,28 +14,25 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.converter.mapping.v2
+package io.openapiprocessor.core.processor.mapping.v2
 
 /**
- * general options
+ * a "responses:" entry in the mapping yaml
  *
- *  @author Martin Hauner
+ * @author Martin Hauner
  */
-data class Options(
+data class Response(
 
     /**
-     * the root package name of the generated interfaces & models (required)
+     * the mapping from content to target, ie a mapping string like:
      *
-     * Interfaces and models will be generated into the `api` and `model` subpackages of
-     * `packageName`.
-     * - so the final package name of the generated interfaces will be `"${packageName}.api"`
-     * - and the final package name of the generated models will be `"${packageName}.model"`
+     * application/json => org.springframework.data.domain.Page<java.lang.String>
      */
-    val packageName: String = "io.openapiprocessor.generated",
+    val content: String,
 
     /**
-     * bean validation (optional)
+     * (optional) generic parameters of {@link #content} target
      */
-    val beanValidation: Boolean = false
+    val generics: List<String>?
 
-) {}
+)

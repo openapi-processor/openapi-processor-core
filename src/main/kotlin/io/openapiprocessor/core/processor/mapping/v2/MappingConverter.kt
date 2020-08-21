@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.converter.mapping.v2
+package io.openapiprocessor.core.processor.mapping.v2
 
 import io.openapiprocessor.core.converter.mapping.*
-import io.openapiprocessor.core.converter.mapping.v2.Mapping as MappingV2
+import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information
@@ -59,7 +59,7 @@ class MappingConverter {
             result.add (convertResponse (it))
         }
 
-        mapping.map.paths.forEach() {
+        mapping.map.paths.forEach {
             result.add(convertPath (it.key, it.value))
         }
 

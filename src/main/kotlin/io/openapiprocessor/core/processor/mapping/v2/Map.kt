@@ -14,48 +14,50 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.converter.mapping.v2
+package io.openapiprocessor.core.processor.mapping.v2
 
 /**
- * a "paths:" entry in the mapping yaml
+ * the "map:" entry in the mapping yaml
  *
  *  @author Martin Hauner
  */
-data class Path(
+data class Map(
 
     /**
-     * path should be excluded
+     * global result mapping
      */
-    val exclude: Boolean = false,
-
-    /**
-     * path limited result mapping
-     */
-    val result: String?,
+    val result: String? = null,
 
     /**
      * single mapping, i.e. Mono<>
      */
-    val single: String?,
+    val single: String? = null,
 
     /**
      * multi mapping, i.e. Flux<>
      */
-    val multi: String?,
+    val multi: String? = null,
 
     /**
-     * path limited type mappings
+     * global type mappings
      */
     val types: List<Type> = emptyList(),
 
     /**
-     * path limited parameter mappings
+     * global parameter mappings
      */
     val parameters: List<Parameter> = emptyList(),
 
     /**
-     * path limited response mappings
+     * global response mappings
      */
-    val responses: List<Response> = emptyList()
+    val responses: List<Response> = emptyList(),
 
-) {}
+    /**
+     * endpoint mappings
+     *
+     * the LinkedHashMap preserves order
+     */
+    val paths: LinkedHashMap<String, Path> = LinkedHashMap()
+
+)

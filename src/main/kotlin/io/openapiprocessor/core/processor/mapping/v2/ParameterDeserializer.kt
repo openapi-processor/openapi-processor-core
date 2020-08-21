@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.converter.mapping.v2
+package io.openapiprocessor.core.processor.mapping.v2
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
@@ -27,7 +27,7 @@ import kotlin.collections.Map
  *
  *  @author Martin Hauner
  */
-class ParameterDeserializer() : StdDeserializer<Parameter>(Parameter::class.java) {
+class ParameterDeserializer : StdDeserializer<Parameter>(Parameter::class.java) {
 
     @Suppress("UNCHECKED_CAST")
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): Parameter {

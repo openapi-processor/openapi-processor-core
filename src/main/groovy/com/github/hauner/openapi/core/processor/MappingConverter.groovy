@@ -20,8 +20,8 @@ import io.openapiprocessor.core.converter.mapping.Mapping
 import com.github.hauner.openapi.core.processor.mapping.MappingConverter as MappingConverterV1
 import com.github.hauner.openapi.core.processor.mapping.Mapping as MappingV1
 import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
-import io.openapiprocessor.core.converter.mapping.v2.MappingConverter as MappingConverterV2
-import io.openapiprocessor.core.converter.mapping.v2.Mapping as MappingV2
+import io.openapiprocessor.core.processor.mapping.v2.MappingConverter as MappingConverterV2
+import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information

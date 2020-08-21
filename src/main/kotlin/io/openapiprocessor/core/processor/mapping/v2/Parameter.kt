@@ -14,27 +14,11 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.converter.mapping.v2
-
-import io.openapiprocessor.core.converter.mapping.v2.Parameter
+package io.openapiprocessor.core.processor.mapping.v2
 
 /**
- * a "parameters:" request parameter entry in the mapping yaml
+ * a "parameters:" entry (name or add) in the mapping yaml
  *
  *  @author Martin Hauner
  */
-data class RequestParameter(
-
-    /**
-     * the mapping from parameter name to target, ie a mapping string like:
-     *
-     * foo => mapping.Bar
-     */
-    val name: String,
-
-    /**
-     * (optional) generic parameters of {@link #name} target
-     */
-    val generics: List<String>?
-
-): Parameter {}
+interface Parameter
