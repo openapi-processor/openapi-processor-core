@@ -29,8 +29,8 @@ import io.swagger.v3.oas.models.parameters.RequestBody as SwaggerRequestBody
 
 class RequestBody(private val requestBody: SwaggerRequestBody): ParserRequestBody {
 
-    override fun getRequired(): Boolean? {
-        return requestBody.required
+    override fun getRequired(): Boolean {
+        return requestBody.required ?: false
     }
 
     override fun getContent(): Map<String, ParserMediaType> {

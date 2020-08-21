@@ -92,9 +92,9 @@ class Schema(val schema: O4jSchema) : ParserSchema {
 
     override fun getDefault(): Any? = schema.default
 
-    override fun isDeprecated(): Boolean? = schema.deprecated
+    override fun isDeprecated(): Boolean = schema.deprecated ?: false
 
-    override fun getNullable(): Boolean? = schema.nullable
+    override fun getNullable(): Boolean = schema.nullable ?: false
 
     override fun getMinLength(): Int? = schema.minLength
 
@@ -106,10 +106,10 @@ class Schema(val schema: O4jSchema) : ParserSchema {
 
     override fun getMaximum (): Number? = schema.maximum
 
-    override fun isExclusiveMaximum(): Boolean? = schema.exclusiveMaximum
+    override fun isExclusiveMaximum(): Boolean = schema.exclusiveMaximum ?: false
 
     override fun getMinimum(): Number? = schema.minimum
 
-    override fun isExclusiveMinimum(): Boolean? = schema.exclusiveMinimum
+    override fun isExclusiveMinimum(): Boolean = schema.exclusiveMinimum ?: false
 
 }

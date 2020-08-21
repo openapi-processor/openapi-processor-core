@@ -28,8 +28,8 @@ import org.openapi4j.parser.model.v3.RequestBody as O4jRequestBody
  */
 class RequestBody(private val requestBody: O4jRequestBody): ParserRequestBody {
 
-    override fun getRequired(): Boolean? {
-        return requestBody.required
+    override fun getRequired(): Boolean {
+        return requestBody.required ?: false
     }
 
     override fun getContent(): Map<String, ParserMediaType> {

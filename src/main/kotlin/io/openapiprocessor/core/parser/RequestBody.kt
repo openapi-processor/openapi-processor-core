@@ -23,7 +23,8 @@ package io.openapiprocessor.core.parser
  */
 interface RequestBody {
 
-    fun getRequired(): Boolean?  // todo not null
+    // default: false
+    fun getRequired(): Boolean
     fun getContent(): Map<String, MediaType>
 
 }

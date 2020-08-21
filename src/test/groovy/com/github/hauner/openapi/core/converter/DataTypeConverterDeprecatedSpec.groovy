@@ -43,43 +43,33 @@ class DataTypeConverterDeprecatedSpec extends Specification {
 
         where:
         type      | format      | deprecated | result
-        'string'  | null        | null       | false
         'string'  | null        | false      | false
         'string'  | null        | true       | true
 
-        'string'  | 'date'      | null       | false
         'string'  | 'date'      | false      | false
         'string'  | 'date'      | true       | true
 
-        'string'  | 'date-time' | null       | false
         'string'  | 'date-time' | false      | false
         'string'  | 'date-time' | true       | true
 
-        'integer' | null        | null       | false
         'integer' | null        | false      | false
         'integer' | null        | true       | true
 
-        'integer' | 'int32'     | null       | false
         'integer' | 'int32'     | false      | false
         'integer' | 'int32'     | true       | true
 
-        'integer' | 'int64'     | null       | false
         'integer' | 'int64'     | false      | false
         'integer' | 'int64'     | true       | true
 
-        'number'  | null        | null       | false
         'number'  | null        | false      | false
         'number'  | null        | true       | true
 
-        'number'  | 'float'     | null       | false
         'number'  | 'float'     | false      | false
         'number'  | 'float'     | true       | true
 
-        'number'  | 'double'    | null       | false
         'number'  | 'double'    | false      | false
         'number'  | 'double'    | true       | true
 
-        'boolean' | null        | null       | false
         'boolean' | null        | false      | false
         'boolean' | null        | true       | true
     }

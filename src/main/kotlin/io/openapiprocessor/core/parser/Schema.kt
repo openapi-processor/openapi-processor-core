@@ -45,15 +45,23 @@ interface Schema {
     fun getEnum(): List<*>
 
     fun getDefault(): Any?
-    fun isDeprecated(): Boolean?   // todo not null
-    fun getNullable(): Boolean?    // todo not null
+
+    // default false
+    fun isDeprecated(): Boolean
+
+    // default false
+    fun getNullable(): Boolean
     fun getMinLength(): Int?
     fun getMaxLength(): Int?
     fun getMinItems(): Int?
     fun getMaxItems(): Int?
     fun getMaximum (): Number?
-    fun isExclusiveMaximum (): Boolean?  // todo not null
+
+    // default false
+    fun isExclusiveMaximum (): Boolean
     fun getMinimum (): Number?
-    fun isExclusiveMinimum (): Boolean?  // todo not null
+
+    // default false
+    fun isExclusiveMinimum (): Boolean
 
 }

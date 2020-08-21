@@ -169,8 +169,6 @@ class  ApiConverter {
             return
         }
 
-        def required = requestBody.required != null ?: false
-
         requestBody.content.each { Map.Entry<String, MediaType> requestBodyEntry ->
             def contentType = requestBodyEntry.key
             def mediaType = requestBodyEntry.value
@@ -182,9 +180,9 @@ class  ApiConverter {
                 resolver: resolver)
 
             if (contentType == MULTIPART) {
-                ep.parameters.addAll (createMultipartParameter (info, required))
+                ep.parameters.addAll (createMultipartParameter (info, requestBody.required))
             } else {
-                ep.requestBodies.add (createRequestBody (contentType, info, required, dataTypes))
+                ep.requestBodies.add (createRequestBody (contentType, info, requestBody.required, dataTypes))
             }
         }
     }

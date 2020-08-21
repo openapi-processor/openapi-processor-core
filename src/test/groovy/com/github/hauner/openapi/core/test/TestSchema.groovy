@@ -43,16 +43,16 @@ class TestSchema implements Schema {
     }
 
     def defaultValue
-    Boolean deprecated
-    Boolean nullable
+    boolean deprecated = false
+    boolean nullable = false
     Integer minLength
     Integer maxLength
     Integer minItems
     Integer maxItems
     BigDecimal maximum
-    Boolean exclusiveMaximum
+    boolean exclusiveMaximum = false
     BigDecimal minimum
-    Boolean exclusiveMinimum
+    boolean exclusiveMinimum = false
 
     Schema item
     Map<String, Schema> properties
@@ -60,21 +60,6 @@ class TestSchema implements Schema {
 
     def getDefault() {
         defaultValue
-    }
-
-    @Override
-    Boolean isDeprecated () {
-        deprecated
-    }
-
-    @Override
-    Boolean isExclusiveMaximum () {
-        exclusiveMaximum
-    }
-
-    @Override
-    Boolean isExclusiveMinimum () {
-        exclusiveMinimum
     }
 
 }
