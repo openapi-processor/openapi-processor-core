@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.mapping
+package io.openapiprocessor.core.converter.mapping
 
 /**
  * Provides the properties required to check if a {@link io.openapiprocessor.core.converter.mapping.Mapping} applies to a
@@ -24,11 +24,11 @@ package com.github.hauner.openapi.core.converter.mapping
  */
 interface MappingSchema {
 
-    String getPath ()
-    String getName ()
-    String getContentType ()
+    fun getPath(): String
+    fun getName(): String
+    fun getContentType(): String
 
-    String getType ()
-    String getFormat ()
+    fun getType(): String
+    fun getFormat(): String
 
 }
