@@ -28,7 +28,7 @@ import groovy.util.logging.Slf4j
 import java.nio.file.Files
 import java.nio.file.Path
 
-import static com.github.hauner.openapi.core.misc.URL.toURL
+import static io.openapiprocessor.core.misc.URLKt.toURL
 
 /**
  * Root writer for the generated api files.

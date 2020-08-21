@@ -14,56 +14,49 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.swagger
+package io.openapiprocessor.core.parser.swagger
 
 import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import io.openapiprocessor.core.parser.Path as ParserPath
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.swagger.v3.oas.models.PathItem as SwaggerPath
 import io.swagger.v3.parser.core.models.SwaggerParseResult
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * Swagger parser result.
  *
  * @author Martin Hauner
  */
-class OpenApi implements ParserOpenApi {
+class OpenApi(private val result: SwaggerParseResult): ParserOpenApi {
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
-    private SwaggerParseResult result
+    override fun getPaths(): Map<String, ParserPath> {
+        val paths = linkedMapOf<String, ParserPath>()
 
-    OpenApi (SwaggerParseResult result) {
-        this.result = result
-    }
-
-    @Override
-    Map<String, ParserPath> getPaths () {
-        Map<String, ParserPath> paths = new LinkedHashMap<> ()
-
-        result.openAPI.paths.each { Map.Entry<String, SwaggerPath> pathEntry ->
-            paths.put (pathEntry.key, new Path (pathEntry.key, pathEntry.value))
+        result.openAPI.paths.forEach { (name: String, value: SwaggerPath) ->
+            paths[name] = Path(name, value)
         }
 
-        paths
+        return paths
     }
 
-    @Override
-    ParserRefResolver getRefResolver () {
-        new RefResolver (result.openAPI.components)
-    }
+    override fun getRefResolver(): ParserRefResolver = RefResolver (result.openAPI.components)
 
-    @Override
-    void printWarnings () {
+    override fun printWarnings() {
         print (result.messages)
     }
 
-    private static print (List<String> warnings) {
-        if (warnings.empty) {
+    private fun print (warnings: List<String>) {
+        if (warnings.isEmpty()) {
             return
         }
 
-        warnings.each {
-            println it
+        warnings.forEach {
+            log.warn(it)
         }
+
     }
 
 }

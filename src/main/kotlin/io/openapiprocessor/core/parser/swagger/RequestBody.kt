@@ -14,36 +14,31 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.swagger
+package io.openapiprocessor.core.parser.swagger
 
 import io.openapiprocessor.core.parser.MediaType as ParserMediaType
-import io.openapiprocessor.core.parser.Response as ParserResponse
+import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
 import io.swagger.v3.oas.models.media.MediaType as SwaggerMediaType
-import io.swagger.v3.oas.models.responses.ApiResponse as SwaggerResponse
-
+import io.swagger.v3.oas.models.parameters.RequestBody as SwaggerRequestBody
 
 /**
- * Swagger Response abstraction.
+ * OpenAPI Swagger RequestBody abstraction.
  *
  * @author Martin Hauner
  */
-class Response implements ParserResponse {
 
-    private SwaggerResponse response
+class RequestBody(private val requestBody: SwaggerRequestBody): ParserRequestBody {
 
-    Response (SwaggerResponse response) {
-        this.response = response
+    override fun getRequired(): Boolean? {
+        return requestBody.required
     }
 
-    @Override
-    Map<String, ParserMediaType> getContent () {
-        def content = [:] as LinkedHashMap
-
-        response.content.each { Map.Entry<String, SwaggerMediaType> entry ->
-            content.put (entry.key, new MediaType (entry.value))
+    override fun getContent(): Map<String, ParserMediaType> {
+        val content = linkedMapOf<String, ParserMediaType>()
+        requestBody.content.forEach { (key: String, value: SwaggerMediaType) ->
+            content[key] = MediaType(value)
         }
-
-        content
+        return content
     }
 
 }

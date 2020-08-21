@@ -14,48 +14,31 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.openapi4j
+package io.openapiprocessor.core.parser.swagger
 
 import io.openapiprocessor.core.parser.Parameter as ParserParameter
 import io.openapiprocessor.core.parser.Schema as ParserSchema
-import org.openapi4j.parser.model.v3.Parameter as O4jParameter
+import io.swagger.v3.oas.models.parameters.Parameter as SwaggerParameter
 
 /**
- * openapi4j Parameter abstraction.
+ * Swagger Parameter abstraction.
  *
  * @author Martin Hauner
  */
-class Parameter implements ParserParameter {
+class Parameter(private val parameter: SwaggerParameter): ParserParameter {
 
-    private O4jParameter parameter
+    override fun getIn(): String = parameter.`in`
 
-    Parameter (O4jParameter parameter) {
-        this.parameter = parameter
+    override fun getName(): String = parameter.name
+
+    override fun getSchema(): ParserSchema = Schema (parameter.schema)
+
+    override fun isRequired(): Boolean = if(parameter.required != null) {
+        parameter.required
+    } else {
+        false
     }
 
-    @Override
-    String getIn () {
-        parameter.in
-    }
-
-    @Override
-    String getName () {
-        parameter.name
-    }
-
-    @Override
-    ParserSchema getSchema () {
-        new Schema (parameter.schema)
-    }
-
-    @Override
-    Boolean isRequired () {
-        parameter.required != null ? parameter.required : false
-    }
-
-    @Override
-    Boolean isDeprecated () {
-        parameter.deprecated ?: false
-    }
+    override fun isDeprecated(): Boolean = parameter.deprecated ?: false
 
 }

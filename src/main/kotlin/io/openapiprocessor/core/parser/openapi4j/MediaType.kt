@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.parser
+package io.openapiprocessor.core.parser.openapi4j
+
+import io.openapiprocessor.core.parser.MediaType as ParserMediaType
+import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
 
 /**
- * OpenAPI RequestBody abstraction.
+ * openapi4j MediaType abstraction.
  *
  * @author Martin Hauner
  */
-interface RequestBody {
+class MediaType(val mediaType: O4jMediaType): ParserMediaType {
 
-    fun getRequired(): Boolean?  // todo not null
-    fun getContent(): Map<String, MediaType>
+    override fun getSchema() = Schema(mediaType.schema)
 
 }

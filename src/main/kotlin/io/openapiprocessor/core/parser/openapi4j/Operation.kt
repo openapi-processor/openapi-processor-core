@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.openapi4j
+package io.openapiprocessor.core.parser.openapi4j
 
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.Operation as ParserOperation
@@ -30,64 +30,46 @@ import org.openapi4j.parser.model.v3.Response as O4jResponse
  *
  * @author Martin Hauner
  */
-class Operation implements ParserOperation {
+class Operation(private val method: HttpMethod, private val operation: O4jOperation): ParserOperation {
 
-    HttpMethod method
-    private O4jOperation operation
+    override fun getMethod(): HttpMethod = method
 
-    Operation (HttpMethod method, O4jOperation operation) {
-        this.method = method
-        this.operation = operation
-
+    override fun getOperationId(): String? {
+        return operation.operationId
     }
 
-    @Override
-    String getOperationId () {
-        operation.operationId
-    }
+    override fun getParameters(): List<ParserParameter> {
+        val parameters = mutableListOf<ParserParameter>()
 
-    @Override
-    List<ParserParameter> getParameters () {
-        def params = []
-        operation.parameters.each { O4jParameter p ->
-            params.add (new Parameter(p))
+        operation.parameters?.map { p: O4jParameter ->
+            parameters.add(Parameter(p))
         }
-        params
+
+        return parameters
     }
 
-    @Override
-    ParserRequestBody getRequestBody () {
-        if (!operation.requestBody) {
+    override fun getRequestBody(): ParserRequestBody? {
+        if (operation.requestBody == null) {
             return null
         }
 
-        new RequestBody (operation.requestBody)
+        return RequestBody (operation.requestBody)
     }
 
-    @Override
-    Map<String, ParserResponse> getResponses () {
-        def content = [:] as LinkedHashMap
+    override fun getResponses(): Map<String, ParserResponse> {
+        val content = linkedMapOf<String, ParserResponse>()
 
-        operation.responses.each { Map.Entry<String, O4jResponse> entry ->
-            content.put (entry.key, new Response(entry.value))
+        operation.responses.forEach { (key: String, value: O4jResponse) ->
+            content.put (key, Response(value))
         }
 
-        content
+        return content
     }
 
-    @Override
-    boolean isDeprecated () {
-        operation.deprecated ?: false
-    }
+    override fun isDeprecated(): Boolean = operation.deprecated ?: false
 
-    @Override
-    boolean hasTags () {
-        operation.tags ? !operation.tags.empty : false
-    }
+    override fun hasTags(): Boolean = if (operation.tags != null) operation.tags.isNotEmpty() else false
 
-    @Override
-    String getFirstTag () {
-        operation.tags.first ()
-    }
+    override fun getFirstTag(): String? = operation.tags.first ()
 
 }

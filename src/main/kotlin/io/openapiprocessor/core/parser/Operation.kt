@@ -26,10 +26,10 @@ import io.openapiprocessor.core.model.HttpMethod
 interface Operation {
 
     fun getMethod(): HttpMethod
-    fun getOperationId(): String
+    fun getOperationId(): String?
     fun getParameters(): List<Parameter>
 
-    fun getRequestBody(): RequestBody
+    fun getRequestBody(): RequestBody?
     fun getResponses(): Map<String, Response>
 
     fun isDeprecated(): Boolean

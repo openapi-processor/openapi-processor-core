@@ -14,28 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.swagger
+package io.openapiprocessor.core.parser.openapi4j
 
-import io.openapiprocessor.core.parser.MediaType as ParserMediaType
-import io.openapiprocessor.core.parser.Schema as ParserSchema
-import io.swagger.v3.oas.models.media.MediaType as SwaggerMediaType
+import io.openapiprocessor.core.misc.toURL
+import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
+import org.openapi4j.parser.OpenApi3Parser
+import org.openapi4j.parser.validation.v3.OpenApi3Validator
 
 /**
- * Swagger MediaType abstraction.
+ * openapi4j parser.
  *
  * @author Martin Hauner
  */
-class MediaType implements ParserMediaType {
+open class Parser {
 
-    private SwaggerMediaType mediaType
+    fun parse(apiPath: String): ParserOpenApi {
+        val api = OpenApi3Parser()
+            .parse(toURL (apiPath), true)
 
-    MediaType (SwaggerMediaType mediaType) {
-        this.mediaType = mediaType
-    }
+        val results = OpenApi3Validator
+            .instance()
+            .validate(api)
 
-    @Override
-    ParserSchema getSchema () {
-        return new Schema (mediaType.schema)
+        return OpenApi(api, results)
     }
 
 }

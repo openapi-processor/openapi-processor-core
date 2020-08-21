@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.openapi4j
+package io.openapiprocessor.core.parser.openapi4j
 
 import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import io.openapiprocessor.core.parser.Path as ParserPath
@@ -28,50 +28,34 @@ import org.openapi4j.parser.model.v3.Path as O4jPath
  *
  * @author Martin Hauner
  */
-class OpenApi implements ParserOpenApi {
+class OpenApi(private val api: O4jOpenApi, private val validations: ValidationResults): ParserOpenApi {
 
-    private O4jOpenApi api
-    private ValidationResults validations
+    override fun getPaths(): Map<String, ParserPath> {
+        val paths = linkedMapOf<String, ParserPath>()
 
-    OpenApi (O4jOpenApi api, ValidationResults validations) {
-        this.api = api
-        this.validations = validations
-    }
-
-    @Override
-    Map<String, ParserPath> getPaths () {
-        Map<String, ParserPath> paths = new LinkedHashMap<> ()
-
-        api.paths.each { Map.Entry<String, O4jPath> pathEntry ->
-            def name = pathEntry.key
-            def path = pathEntry.value
-
-            if (isRef(path)) {
+        api.paths.forEach { (name: String, value: O4jPath) ->
+            var path = value
+            if (isRef(value)) {
                 path = resolve (path)
             }
 
-            paths.put (pathEntry.key, new Path (name, path))
+            paths[name] = Path(name, path)
         }
 
         return paths
     }
 
-    @Override
-    ParserRefResolver getRefResolver () {
-        new RefResolver (api)
+    override fun getRefResolver(): ParserRefResolver = RefResolver (api)
+
+    override fun printWarnings() {
     }
 
-    @Override
-    void printWarnings () {
-        println "openapi4j: warnings are not yet implemented"
+    private fun resolve(path: O4jPath): O4jPath {
+        return path.getReference (api.context).getMappedContent (O4jPath::class.java)
     }
 
-    private O4jPath resolve (O4jPath path) {
-        path.getReference (api.getContext ()).getMappedContent (O4jPath)
-    }
-
-    private static boolean isRef (O4jPath path) {
-        path.ref != null
+    private fun isRef(path: O4jPath): Boolean {
+        return path.ref != null
     }
 
 }

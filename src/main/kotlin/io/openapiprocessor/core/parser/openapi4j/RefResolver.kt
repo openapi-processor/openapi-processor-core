@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.openapi4j
+package io.openapiprocessor.core.parser.openapi4j
 
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema as ParserSchema
@@ -26,32 +26,25 @@ import org.openapi4j.parser.model.v3.Schema as O4jSchema
  *
  * @author Martin Hauner
  */
-class RefResolver implements ParserRefResolver {
+class RefResolver(private val api: O4jOpenApi): ParserRefResolver {
 
-    private O4jOpenApi api
+    override fun resolve(ref: ParserSchema): ParserSchema {
+        val resolved: O4jSchema
 
-    RefResolver (O4jOpenApi api) {
-        this.api = api
-    }
-
-    @Override
-    ParserSchema resolve (ParserSchema ref) {
-        def resolved
-
-        def refName = getRefName (ref.ref)
-        O4jSchema o4jCompSchema = api.components?.schemas?.get (refName)
-        if (o4jCompSchema) {
-            resolved = o4jCompSchema
+        val refName = getRefName(ref.getRef()!!)
+        val o4jCompSchema: O4jSchema? = api.components?.schemas?.get(refName)
+        resolved = if (o4jCompSchema != null) {
+            o4jCompSchema
         } else {
-            O4jSchema o4jSchema = (ref as Schema).schema
-            resolved = o4jSchema.getReference(api.getContext()).getMappedContent(O4jSchema)
+            val o4jSchema: O4jSchema = (ref as Schema).schema
+            o4jSchema.getReference(api.context).getMappedContent(O4jSchema::class.java)
         }
 
-        new Schema (resolved)
+        return Schema (resolved)
     }
 
-    private String getRefName (String ref) {
-        ref.substring (ref.lastIndexOf ('/') + 1)
+    private fun getRefName(ref: String): String {
+        return ref.substring(ref.lastIndexOf('/') + 1)
     }
 
 }

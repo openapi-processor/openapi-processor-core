@@ -98,7 +98,7 @@ class  ApiConverter {
     }
 
     private void createInterfaces (OpenApi api, Api target) {
-        Map<String, Interface>interfaces = new HashMap<> ()
+        Map<String, Interface> interfaces = new HashMap<> ()
 
         api.paths.each { Map.Entry<String, Path> pathEntry ->
             String path = pathEntry.key
@@ -254,11 +254,11 @@ class  ApiConverter {
                 null
             }
 
-            Boolean isRequired () {
+            boolean isRequired () {
                 true
             }
 
-            Boolean isDeprecated () {
+            boolean isDeprecated () {
                 false
             }
         }
@@ -299,11 +299,11 @@ class  ApiConverter {
                     null
                 }
 
-                Boolean isRequired () {
+                boolean isRequired () {
                     true
                 }
 
-                Boolean isDeprecated () {
+                boolean isDeprecated () {
                     false
                 }
             }
@@ -341,7 +341,7 @@ class  ApiConverter {
 
             DataType dataType = dataTypeConverter.convert (info, dataTypes)
             DataType changedType
-            if (!info.isArray ()) {
+            if (!info.isArray ()) { // todo fails if ref
                 changedType = singleDataTypeWrapper.wrap (dataType, info)
             } else {
                 changedType = multiDataTypeWrapper.wrap (dataType, info)

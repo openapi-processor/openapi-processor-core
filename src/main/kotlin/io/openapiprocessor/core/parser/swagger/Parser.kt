@@ -14,36 +14,36 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.swagger
+package io.openapiprocessor.core.parser.swagger
 
+import io.openapiprocessor.core.misc.toURL
 import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import io.swagger.v3.parser.OpenAPIV3Parser
 import io.swagger.v3.parser.core.models.ParseOptions
 import io.swagger.v3.parser.core.models.SwaggerParseResult
 
-import static com.github.hauner.openapi.core.misc.URL.toURL
+const val SCHEME_RESOURCE = "resource:"
 
 /**
  * swagger parser.
  *
  * @author Martin Hauner
  */
-class Parser {
-    public static final String SCHEME_RESOURCE = "resource:"
+open class Parser {
 
-    ParserOpenApi parse (String apiPath) {
-        ParseOptions opts = new ParseOptions(
-            // loads $refs to other files into #/components/schema and replaces the $refs to the
-            // external files with $refs to #/components/schema.
-            resolve: true)
+    fun parse(apiPath: String): ParserOpenApi {
+        val opts = ParseOptions()
+        // loads $refs to other files into #/components/schema and replaces the $refs to the
+        // external files with $refs to #/components/schema.
+        opts.setResolve(true)
 
-        SwaggerParseResult result = new OpenAPIV3Parser ()
+        val result: SwaggerParseResult = OpenAPIV3Parser()
                   .readLocation (preparePath (apiPath), null, opts)
 
-        new OpenApi(result)
+        return OpenApi(result)
     }
 
-    private static String preparePath (String path) {
+    private fun preparePath(path: String): String {
         // the swagger parser only works with http(s) & file protocols.
 
         // If it is something different (or nothing) it tries to find the given path as-is on the
@@ -51,14 +51,14 @@ class Parser {
 
         if (isResource (path)) {
             // strip resource: (only used by tests) to load test files from the resources
-            return path.substring (SCHEME_RESOURCE.size ())
+            return path.substring (SCHEME_RESOURCE.length)
         }
 
-        toURL (path).toString ()
+        return toURL(path).toString ()
     }
 
-    static boolean isResource (String path) {
-        path.startsWith (SCHEME_RESOURCE)
+    private fun isResource(path: String): Boolean {
+        return path.startsWith (SCHEME_RESOURCE)
     }
 
 }

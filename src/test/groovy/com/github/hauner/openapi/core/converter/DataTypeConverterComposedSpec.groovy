@@ -18,6 +18,7 @@ package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.datatypes.ComposedObjectDataType
+import io.openapiprocessor.core.parser.ParserType
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse

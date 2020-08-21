@@ -14,32 +14,33 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.swagger
+package io.openapiprocessor.core.parser.swagger
 
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema as ParserSchema
 import io.swagger.v3.oas.models.Components as SwaggerComponents
+import io.swagger.v3.oas.models.media.Schema as SwaggerSchema
 
 /**
  * Swagger $ref resolver.
  *
  * @author Martin Hauner
  */
-class RefResolver implements ParserRefResolver {
+class RefResolver(private val components: SwaggerComponents?): ParserRefResolver {
 
-    private SwaggerComponents components
+    override fun resolve(ref: ParserSchema): ParserSchema {
+        val refName = getRefName(ref.getRef()!!)
 
-    RefResolver (SwaggerComponents components) {
-        this.components = components
+        val schema: SwaggerSchema<*>? = components?.schemas?.get(refName)
+        if (schema == null) {
+            throw Exception("failed to resolve ${ref.getRef()}")
+        }
+
+        return Schema(schema)
     }
 
-    @Override
-    ParserSchema resolve (ParserSchema ref) {
-        new Schema (components.schemas.get (getRefName (ref.ref)))
-    }
-
-    private String getRefName (String ref) {
-        ref.substring (ref.lastIndexOf ('/') + 1)
+    private fun getRefName(ref: String): String {
+        return ref.substring(ref.lastIndexOf('/') + 1)
     }
 
 }

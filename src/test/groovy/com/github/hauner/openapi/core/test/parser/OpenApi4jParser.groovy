@@ -16,10 +16,10 @@
 
 package com.github.hauner.openapi.core.test.parser
 
+import com.github.hauner.openapi.test.streamhandler.Memory
 import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
-import com.github.hauner.openapi.core.parser.openapi4j.OpenApi
-import com.github.hauner.openapi.core.parser.openapi4j.Parser
-import com.github.hauner.openapi.core.test.memory.Memory
+import io.openapiprocessor.core.parser.openapi4j.OpenApi
+import io.openapiprocessor.core.parser.openapi4j.Parser
 import org.openapi4j.core.validation.ValidationResults
 import org.openapi4j.parser.OpenApi3Parser
 import org.openapi4j.parser.model.v3.OpenApi3

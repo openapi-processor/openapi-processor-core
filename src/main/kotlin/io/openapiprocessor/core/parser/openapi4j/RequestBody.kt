@@ -14,40 +14,30 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.swagger
+package io.openapiprocessor.core.parser.openapi4j
 
 import io.openapiprocessor.core.parser.MediaType as ParserMediaType
 import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
-import io.swagger.v3.oas.models.media.MediaType as SwaggerMediaType
-import io.swagger.v3.oas.models.parameters.RequestBody as SwaggerRequestBody
+import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
+import org.openapi4j.parser.model.v3.RequestBody as O4jRequestBody
 
 /**
- * OpenAPI Swagger RequestBody abstraction.
+ * openapi4j RequestBody abstraction.
  *
  * @author Martin Hauner
  */
+class RequestBody(private val requestBody: O4jRequestBody): ParserRequestBody {
 
-class RequestBody implements ParserRequestBody {
-
-    private SwaggerRequestBody requestBody
-
-    RequestBody (SwaggerRequestBody requestBody) {
-        this.requestBody = requestBody
+    override fun getRequired(): Boolean? {
+        return requestBody.required
     }
 
-    @Override
-    Boolean getRequired () {
-        requestBody.required
-    }
-
-    Map<String, ParserMediaType> getContent () {
-        def content = [:] as LinkedHashMap
-
-        requestBody.content.each { Map.Entry<String, SwaggerMediaType> entry ->
-            content.put (entry.key, new MediaType (entry.value))
+    override fun getContent(): Map<String, ParserMediaType> {
+        val content = linkedMapOf<String, ParserMediaType>()
+        requestBody.contentMediaTypes.forEach { (key: String, entry: O4jMediaType) ->
+            content[key] = MediaType(entry)
         }
-
-        content
+        return content
     }
 
 }

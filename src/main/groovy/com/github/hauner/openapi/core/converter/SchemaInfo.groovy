@@ -248,7 +248,7 @@ class SchemaInfo implements MappingSchema {
     }
 
     boolean isArray () {
-        schema?.type == 'array'
+        schema?.type == 'array'  // why ?.  ?
     }
 
     boolean isObject () {
@@ -268,7 +268,7 @@ class SchemaInfo implements MappingSchema {
     }
 
     boolean isEnum () {
-        schema.enum != null
+        !schema.enum.isEmpty()
     }
 
     List<?> getEnumValues () {

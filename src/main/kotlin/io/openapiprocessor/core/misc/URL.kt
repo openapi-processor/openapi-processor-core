@@ -14,28 +14,38 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.openapi4j
+package io.openapiprocessor.core.misc
 
-import io.openapiprocessor.core.parser.MediaType as ParserMediaType
-import io.openapiprocessor.core.parser.Schema as ParserSchema
-import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
+import java.net.URL
+import java.nio.file.Paths
+
 
 /**
- * openapi4j MediaType abstraction.
+ * convert a source string to a valid URL.
+ *
+ * if the source is an url string it converts it to an URL
+ * if the source is not an URL it assumes a local path and prefixes it with file://(//) to
+ * create a valid URL.
+ *
+ * @param source source path or url
+ * @return an URL to the given source
  *
  * @author Martin Hauner
  */
-class MediaType implements ParserMediaType {
 
-    private O4jMediaType mediaType
-
-    MediaType (O4jMediaType mediaType) {
-        this.mediaType = mediaType
+fun toURL(source: String): URL {
+    try {
+        return URL(source)
+    } catch (ignore: Exception) {
+        // catch
     }
 
-    @Override
-    ParserSchema getSchema () {
-        return new Schema (mediaType.schema)
+    try {
+        return Paths.get(source)
+            .normalize()
+            .toUri()
+            .toURL()
+    } catch (e: Exception) {
+        throw e
     }
-
 }

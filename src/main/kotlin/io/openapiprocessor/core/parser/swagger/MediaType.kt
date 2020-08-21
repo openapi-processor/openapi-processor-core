@@ -14,24 +14,18 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.test.memory
+package io.openapiprocessor.core.parser.swagger
+
+import io.openapiprocessor.core.parser.MediaType as ParserMediaType
+import io.swagger.v3.oas.models.media.MediaType as SwaggerMediaType
 
 /**
- * in-memory content by path.
+ * Swagger MediaType abstraction.
+ *
+ * @author Martin Hauner
  */
-class Memory {
-    private static final Map<String, byte[]> contents = new HashMap<> ()
+class MediaType(val mediaType: SwaggerMediaType): ParserMediaType {
 
-    static byte[] get (String path) {
-        contents.get (path)
-    }
-
-    static void add (String path, String data) {
-        add (path, data.getBytes ("UTF-8"))
-    }
-
-    static void add (String path, byte[] data) {
-        contents.put (path, data)
-    }
+    override fun getSchema() = Schema(mediaType.schema)
 
 }

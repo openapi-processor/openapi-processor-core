@@ -14,40 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.openapi4j
+package io.openapiprocessor.core.parser.openapi4j
 
 import io.openapiprocessor.core.parser.MediaType as ParserMediaType
-import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
+import io.openapiprocessor.core.parser.Response as ParserResponse
 import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
-import org.openapi4j.parser.model.v3.RequestBody as O4jRequestBody
+import org.openapi4j.parser.model.v3.Response as O4jResponse
 
 /**
- * openapi4j RequestBody abstraction.
+ * openapi4j Response abstraction.
  *
  * @author Martin Hauner
  */
-class RequestBody implements ParserRequestBody {
+class Response(private val response: O4jResponse): ParserResponse {
 
-    private O4jRequestBody requestBody
-
-    RequestBody (O4jRequestBody requestBody) {
-        this.requestBody = requestBody
-    }
-
-    @Override
-    Boolean getRequired () {
-        requestBody.required
-    }
-
-    @Override
-    Map<String, ParserMediaType> getContent () {
-        def content = [:] as LinkedHashMap
-
-        requestBody.contentMediaTypes.each { Map.Entry<String, O4jMediaType> entry ->
-            content.put (entry.key, new MediaType (entry.value))
+    override fun getContent(): Map<String, ParserMediaType> {
+        val content = linkedMapOf<String, ParserMediaType>()
+        response.contentMediaTypes?.forEach { (key: String, entry: O4jMediaType) ->
+            content[key] = MediaType(entry)
         }
-
-        content
+        return content
     }
 
 }

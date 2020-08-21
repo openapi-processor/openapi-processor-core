@@ -25,11 +25,11 @@ import java.math.BigDecimal
  */
 interface Schema {
 
-    fun getType(): String
-    fun getFormat(): String
+    fun getType(): String?
+    fun getFormat(): String?
 
     // $ref
-    fun getRef(): String
+    fun getRef(): String?
 
     // array
     fun getItem(): Schema
@@ -39,21 +39,21 @@ interface Schema {
 
     // composed object
     fun getItems(): List<Schema>
-    fun itemsOf(): String
+    fun itemsOf(): String?
 
     // enum
-    fun getEnum(): List<Any>
+    fun getEnum(): List<*>
 
     fun getDefault(): Any?
-    fun isDeprecated(): Boolean?
-    fun getNullable(): Boolean?
+    fun isDeprecated(): Boolean?   // todo not null
+    fun getNullable(): Boolean?    // todo not null
     fun getMinLength(): Int?
     fun getMaxLength(): Int?
     fun getMinItems(): Int?
     fun getMaxItems(): Int?
-    fun getMaximum (): BigDecimal?
-    fun isExclusiveMaximum (): Boolean?
-    fun getMinimum (): BigDecimal?
-    fun isExclusiveMinimum (): Boolean?
+    fun getMaximum (): Number?
+    fun isExclusiveMaximum (): Boolean?  // todo not null
+    fun getMinimum (): Number?
+    fun isExclusiveMinimum (): Boolean?  // todo not null
 
 }

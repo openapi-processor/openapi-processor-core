@@ -27,7 +27,7 @@ interface Parameter {
     fun getName(): String
 
     fun getSchema(): Schema
-    fun isRequired(): Boolean?
-    fun isDeprecated(): Boolean?
+    fun isRequired(): Boolean
+    fun isDeprecated(): Boolean
 
 }

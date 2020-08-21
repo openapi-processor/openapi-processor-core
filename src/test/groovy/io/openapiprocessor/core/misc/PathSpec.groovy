@@ -21,8 +21,7 @@ import spock.lang.Requires
 import spock.lang.Specification
 import spock.lang.Unroll
 
-
-import static com.github.hauner.openapi.core.misc.URL.toURL
+import static io.openapiprocessor.core.misc.URLKt.toURL
 
 class PathSpec extends Specification {
 

@@ -14,40 +14,33 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.parser.swagger
+package io.openapiprocessor.core.parser.openapi4j
 
 import io.openapiprocessor.core.parser.Path as ParserPath
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.Operation as ParserOperation
-import io.swagger.v3.oas.models.PathItem as SwaggerPath
+import org.openapi4j.parser.model.v3.Path as Oa4jPath
 
 /**
- * Swagger Path abstraction.
+ * openapi4j Path abstraction.
  *
  * @author Martin Hauner
  */
-class Path implements ParserPath {
+class Path(private val path: String, private val info: Oa4jPath): ParserPath {
 
-    String path
-    private SwaggerPath info
+    override fun getPath(): String = path
 
-    Path (String path, SwaggerPath info) {
-        this.path = path
-        this.info = info
-    }
+    override fun getOperations(): List<ParserOperation> {
+        val ops: MutableList<ParserOperation> = mutableListOf()
 
-    @Override
-    List<ParserOperation> getOperations () {
-        def ops = []
-
-        HttpMethod.values ().each {
-            def op = info."${it.method}"
+        HttpMethod.values().map {
+            val op = info.getOperation(it.method)
             if (op != null) {
-                ops.add (new Operation(it, op))
+                ops.add (Operation(it, op))
             }
         }
 
-        ops
+        return ops
     }
 
 }
