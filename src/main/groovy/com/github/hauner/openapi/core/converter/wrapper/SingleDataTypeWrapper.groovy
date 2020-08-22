@@ -23,7 +23,7 @@ import io.openapiprocessor.core.converter.mapping.AmbiguousTypeMappingException
 import io.openapiprocessor.core.converter.mapping.Mapping
 import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
-import com.github.hauner.openapi.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.SingleDataType
 

@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 
 /**
@@ -23,7 +24,7 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  *
  * @author Martin Hauner
  */
-class ComposedObjectDataType implements DataType {
+class ComposedObjectDataType extends DataTypeBase {
 
     String type
     String pkg = 'unknown'

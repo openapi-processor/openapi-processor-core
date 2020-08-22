@@ -21,7 +21,7 @@ package com.github.hauner.openapi.core.model.datatypes
  *
  * @author Martin Hauner
  */
-class LocalDateDataType implements DataType {
+class LocalDateDataType extends DataTypeBase {
 
     @Override
     String getName () {

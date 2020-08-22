@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
+package io.openapiprocessor.core.model.datatypes
 
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 
@@ -23,20 +23,19 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  *
  * @author Martin Hauner
  */
-trait /*interface*/ DataType {
-    boolean deprecated = false
+interface DataType {
 
     /**
      * The Java type name without package.
      *
      * @return the type name.
      */
-    abstract String getName ()
+    fun getName(): String
 
     /**
      * The package of this type without class.
      */
-    abstract String getPackageName ()
+    fun getPackageName(): String
 
     /**
      * Provides the import(s) of this type, usually a single import. If it is a generic type it will
@@ -44,33 +43,38 @@ trait /*interface*/ DataType {
      *
      * @return import of this type.
      */
-    abstract Set<String> getImports ()
+    fun getImports(): Set<String>
 
     /**
      * Provides the list of imports for the types referenced by this this type.
      *
      * @return the referenced import list.
      */
-    abstract Set<String> getReferencedImports ()
+    fun getReferencedImports(): Set<String>
 
     /**
      * Provides the constraint information of the data type.
      *
      * @return the constraints or null if there are no constraints.
      */
-    DataTypeConstraints getConstraints () {
-        null
+    fun getConstraints(): DataTypeConstraints? {
+        return null
     }
 
-    boolean isDeprecated () {
-        deprecated
+    /**
+     * is the data type deprecated?
+     *
+     * @return true if deprecated, else false
+     */
+    fun isDeprecated(): Boolean {
+        return false
     }
 
     /**
      * is this a composed type, i.e. allOff, anyOf, oneOf ?
      */
-    boolean isMultiOf () {
-        false
+    fun isMultiOf(): Boolean {
+        return false
     }
 
 }

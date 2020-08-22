@@ -21,7 +21,7 @@ package com.github.hauner.openapi.core.model.datatypes
  *
  * @author Martin Hauner
  */
-class MappedDataType implements DataType {
+class MappedDataType extends DataTypeBase {
 
     protected String type
     String pkg = 'unknown'

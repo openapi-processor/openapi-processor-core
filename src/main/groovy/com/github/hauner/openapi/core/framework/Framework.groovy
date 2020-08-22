@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.framework
 
 import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.parameters.Parameter
-import com.github.hauner.openapi.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.parser.Parameter as ParserParameter
 
 /**

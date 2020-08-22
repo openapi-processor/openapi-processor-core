@@ -23,7 +23,7 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  *
  * @author Martin Hauner
  */
-class BooleanDataType implements DataType {
+class BooleanDataType extends DataTypeBase {
 
     DataTypeConstraints constraints
 

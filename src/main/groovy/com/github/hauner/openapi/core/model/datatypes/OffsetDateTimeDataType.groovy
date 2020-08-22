@@ -16,12 +16,14 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataType
+
 /**
  * OpenAPI type 'string' with format 'date-time' maps to java OffsetDateTime.
  *
  * @author Martin Hauner
  */
-class OffsetDateTimeDataType implements DataType {
+class OffsetDateTimeDataType extends DataTypeBase {
 
     @Override
     String getName () {

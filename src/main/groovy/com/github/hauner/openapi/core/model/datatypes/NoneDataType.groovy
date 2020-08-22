@@ -16,12 +16,14 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataType
+
 /**
  * OpenAPI no type.
  *
  * @author Martin Hauner
  */
-class NoneDataType implements DataType {
+class NoneDataType extends DataTypeBase {
 
     private String type = 'void'
 

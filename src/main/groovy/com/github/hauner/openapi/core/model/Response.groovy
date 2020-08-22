@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
-import com.github.hauner.openapi.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 
 /**

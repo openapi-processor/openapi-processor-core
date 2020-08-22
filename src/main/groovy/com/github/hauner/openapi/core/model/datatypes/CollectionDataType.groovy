@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 
 /**
@@ -25,7 +26,7 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  * @author Bastian Wilhelm
  */
 @Deprecated // replaced by MappedCollectionDataType
-class CollectionDataType implements DataType {
+class CollectionDataType extends DataTypeBase {
 
     private DataType item
     private DataTypeConstraints constraints

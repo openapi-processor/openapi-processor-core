@@ -18,13 +18,14 @@ package com.github.hauner.openapi.core.model.datatypes
 
 import com.github.hauner.openapi.core.converter.SchemaInfo
 import com.github.hauner.openapi.core.model.DataTypes
+import io.openapiprocessor.core.model.datatypes.DataType
 
 /**
  * OpenAPI $ref type that is lazily evaluated. It is used to break loops in the schema definitions.
  *
  * @autor Martin Hauner
  */
-class LazyDataType implements DataType {
+class LazyDataType extends DataTypeBase {
 
     private DataTypes dataTypes
     private SchemaInfo info

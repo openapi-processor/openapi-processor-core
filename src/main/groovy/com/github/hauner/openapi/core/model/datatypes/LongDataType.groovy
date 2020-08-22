@@ -23,7 +23,7 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  *
  * @author Martin Hauner
  */
-class LongDataType implements DataType {
+class LongDataType extends DataTypeBase {
 
     DataTypeConstraints constraints
 

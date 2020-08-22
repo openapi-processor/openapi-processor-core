@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,40 +20,28 @@ import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 
 /**
- * OpenAPI type 'array' maps to List<>.
+ * temporary helper to migrate to kotlin, implements interface default methods
  *
  * @author Martin Hauner
- * @author Bastian Wilhelm
  */
-@Deprecated // replaced by MappedCollectionDataType
-class ListDataType extends DataTypeBase {
+@Deprecated
+abstract class DataTypeBase implements DataType {
 
-    private DataType item
-    private DataTypeConstraints constraints
-
+    boolean deprecated = false
 
     @Override
-    String getName () {
-        "List<${item.name}>"
+    boolean isDeprecated () {
+        deprecated
     }
 
     @Override
-    String getPackageName () {
-        'java.util'
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, 'List'].join('.')] + item.imports
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
+    boolean isMultiOf () {
+        false
     }
 
     @Override
     DataTypeConstraints getConstraints () {
-        constraints
+        return null
     }
+
 }

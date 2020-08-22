@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 
 /**
@@ -24,7 +25,7 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  * @author Martin Hauner
  * @author Bastian Wilhelm
  */
-class ArrayDataType implements DataType {
+class ArrayDataType extends DataTypeBase {
 
     private DataType item
     private DataTypeConstraints constraints

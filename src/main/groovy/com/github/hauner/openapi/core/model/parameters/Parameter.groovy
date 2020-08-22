@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.model.parameters
 
-import com.github.hauner.openapi.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.DataType
 
 /**
  * Parameter model of an OpenAPI parameter.
