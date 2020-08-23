@@ -16,17 +16,15 @@
 
 package com.github.hauner.openapi.core.writer.java
 
-import com.github.hauner.openapi.core.model.datatypes.ArrayDataType
-import com.github.hauner.openapi.core.model.datatypes.CollectionDataType
+import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
+import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.DoubleDataType
 import com.github.hauner.openapi.core.model.datatypes.FloatDataType
 import com.github.hauner.openapi.core.model.datatypes.IntegerDataType
-import com.github.hauner.openapi.core.model.datatypes.ListDataType
 import com.github.hauner.openapi.core.model.datatypes.LongDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedMapDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.SetDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 
 /**
@@ -64,17 +62,15 @@ class BeanValidationFactory {
     }
 
     private static useNotNull (DataType dataType) {
-        dataType.constraints?.nullable == false
+        !dataType.constraints?.nullable
     }
 
     private static useSize (DataType dataType) {
         ( // Lists
             (
-                dataType instanceof CollectionDataType
-                    || dataType instanceof ListDataType
-                    || dataType instanceof SetDataType
-                    || dataType instanceof ArrayDataType
+                dataType instanceof ArrayDataType
                     || dataType instanceof MappedMapDataType
+                    || dataType instanceof MappedCollectionDataType
             ) && (
                 dataType.constraints?.maxItems != null
                     || dataType.constraints?.minItems

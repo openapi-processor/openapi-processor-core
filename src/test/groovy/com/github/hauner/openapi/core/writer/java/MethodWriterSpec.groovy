@@ -23,7 +23,7 @@ import com.github.hauner.openapi.core.model.parameters.Parameter
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Response
-import com.github.hauner.openapi.core.model.datatypes.ArrayDataType
+import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import com.github.hauner.openapi.core.model.datatypes.BooleanDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.DoubleDataType
@@ -157,7 +157,7 @@ class MethodWriterSpec extends Specification {
 
         where:
         collection                                                               | response
-        new ArrayDataType (item: new StringDataType ())                          | 'String[]'
+        new ArrayDataType (new StringDataType (), null, false)                   | 'String[]'
         new MappedCollectionDataType (type: 'List', item: new StringDataType ()) | 'List<String>'
         new MappedCollectionDataType (type: 'Set', item: new StringDataType ())  | 'Set<String>'
     }

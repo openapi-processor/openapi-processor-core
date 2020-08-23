@@ -16,258 +16,353 @@
 
 package com.github.hauner.openapi.core.writer.java
 
-import com.github.hauner.openapi.core.model.datatypes.ArrayDataType
+import com.github.hauner.openapi.core.model.datatypes.DataTypeBase
+import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
+import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import com.github.hauner.openapi.core.model.datatypes.DoubleDataType
 import com.github.hauner.openapi.core.model.datatypes.FloatDataType
 import com.github.hauner.openapi.core.model.datatypes.IntegerDataType
-import com.github.hauner.openapi.core.model.datatypes.ListDataType
-import com.github.hauner.openapi.core.model.datatypes.LocalDateDataType
 import com.github.hauner.openapi.core.model.datatypes.LongDataType
-import com.github.hauner.openapi.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.SetDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class BeanValidationFactorySpec extends Specification {
 
-    BeanValidationFactory beanValidationFactory = new BeanValidationFactory ()
+    public static final String NOT_NULL = "javax.validation.constraints.NotNull"
+    public static final String SIZE = "javax.validation.constraints.Size"
+    public static final String VALID = "javax.validation.Valid"
+    public static final String DECIMAL_MIN = "javax.validation.constraints.DecimalMin"
+    public static final String DECIMAL_MAX = "javax.validation.constraints.DecimalMax"
+
+    BeanValidationFactory validation = new BeanValidationFactory ()
 
     @Unroll
-    void "check @Valid for Object (type: #type)" () {
-        setup:
-        DataType dataType = type.getDeclaredConstructor ().newInstance ()
+    void "applies @Valid to Object" () {
+        def dataType = new ObjectDataType()
 
         when:
-        def imports = beanValidationFactory.collectImports (dataType)
-        def annotations = beanValidationFactory.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
 
         then:
         imports == resultImports as Set<String>
         annotations == resultAnnnotation
 
         where:
-        type              || resultImports              | resultAnnnotation
-        ObjectDataType    || ["javax.validation.Valid"] | "@Valid"
-        StringDataType    || []                         | ""
-        IntegerDataType   || []                         | ""
-        LongDataType      || []                         | ""
-        ListDataType      || []                         | ""
-        MappedDataType    || []                         | ""
-        FloatDataType     || []                         | ""
-        LocalDateDataType || []                         | ""
+        resultImports     | resultAnnnotation
+        [VALID, NOT_NULL] | "@Valid @NotNull"
     }
 
-    @Unroll
-    void "check import @Size for String (minLength: #minLength, maxLength: #maxLength, type: #type)" () {
-        setup:
-        DataType dataType = type.getDeclaredConstructor ().newInstance ()
-        dataType.constraints = new DataTypeConstraints ()
-        dataType.constraints.minLength = minLength
-        dataType.constraints.maxLength = maxLength
+    void "does not apply @Valid to non Object types" () {
+        def dataType = new OtherDataType()
 
         when:
-        def imports = beanValidationFactory.collectImports (dataType)
-        def annotations = beanValidationFactory.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
 
         then:
         imports == resultImports as Set<String>
-        annotations == resultAnnotations
+        annotations == resultAnnnotation
 
         where:
-        type            | minLength | maxLength || resultImports                         | resultAnnotations
-        StringDataType  | null      | null      || []                                    | ""
-        StringDataType  | 0         | null      || []                                    | ""
-        StringDataType  | 1         | null      || ["javax.validation.constraints.Size"] | "@Size(min = 1)"
-        StringDataType  | null      | 0         || ["javax.validation.constraints.Size"] | "@Size(max = 0)"
-        StringDataType  | null      | 2         || ["javax.validation.constraints.Size"] | "@Size(max = 2)"
-        StringDataType  | 1         | 2         || ["javax.validation.constraints.Size"] | "@Size(min = 1, max = 2)"
-        IntegerDataType | 1         | null      || []                                    | ""
-        IntegerDataType | null      | 2         || []                                    | ""
-        IntegerDataType | 1         | 2         || []                                    | ""
-        ListDataType    | 1         | 2         || []                                    | ""
+        resultImports | resultAnnnotation
+        [NOT_NULL]    | "@NotNull"
     }
 
     @Unroll
-    void "check import @Size for Collections (minItems: #minItems, maxItems: #maxItems, type: #type)" () {
-        setup:
-        DataType dataType = type.getDeclaredConstructor ().newInstance ()
-        dataType.constraints = new DataTypeConstraints ()
-        dataType.constraints.minItems = minItems
-        dataType.constraints.maxItems = maxItems
+    void "applies @Size to String (minLength: #minLength, maxLength: #maxLength)" () {
+        def constraints = new DataTypeConstraints ()
+        constraints.minLength = minLength
+        constraints.maxLength = maxLength
+
+        def dataType = new StringDataType(constraints: constraints)
 
         when:
-        def imports = beanValidationFactory.collectImports (dataType)
-        def annotations = beanValidationFactory.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
 
         then:
-        imports == resultImports as Set<String>
-        annotations == resultAnnotations
+        containsImports (imports, resultImports)
+        containsAnnotations (annotations, resultAnnotations)
 
         where:
-        type           | minItems | maxItems || resultImports                         | resultAnnotations
-        ArrayDataType  | null     | null     || []                                    | ""
-        ArrayDataType  | 0        | null     || []                                    | ""
-        ArrayDataType  | 1        | null     || ["javax.validation.constraints.Size"] | "@Size(min = 1)"
-        ArrayDataType  | null     | 0        || ["javax.validation.constraints.Size"] | "@Size(max = 0)"
-        ArrayDataType  | null     | 2        || ["javax.validation.constraints.Size"] | "@Size(max = 2)"
-        ArrayDataType  | 1        | 2        || ["javax.validation.constraints.Size"] | "@Size(min = 1, max = 2)"
-        ListDataType   | null     | 2        || ["javax.validation.constraints.Size"] | "@Size(max = 2)"
-        SetDataType    | 1        | 2        || ["javax.validation.constraints.Size"] | "@Size(min = 1, max = 2)"
-        StringDataType | 0        | null     || []                                    | ""
-        StringDataType | 1        | null     || []                                    | ""
-        StringDataType | null     | 2        || []                                    | ""
-        LongDataType   | 1        | 2        || []                                    | ""
+        minLength | maxLength || resultImports | resultAnnotations
+        null      | null      || []            | ""
+        0         | null      || []            | ""
+        1         | null      || [SIZE]        | "@Size(min = 1)"
+        null      | 0         || [SIZE]        | "@Size(max = 0)"
+        null      | 2         || [SIZE]        | "@Size(max = 2)"
+        1         | 2         || [SIZE]        | "@Size(min = 1, max = 2)"
     }
 
     @Unroll
-    void "check import @NotNull (nullable: #nullable, type: #type)" () {
-        setup:
-        DataType dataType = type.getDeclaredConstructor ().newInstance ()
-        dataType.constraints = new DataTypeConstraints ()
-        dataType.constraints.nullable = nullable
+    void "applies @Size to Array (minItems: #minItems, maxItems: #maxItems)" () {
+        def constraints = new DataTypeConstraints ()
+        constraints.minItems = minItems
+        constraints.maxItems = maxItems
+
+        DataType dataType = new ArrayDataType(new NoneDataType(), constraints, false)
 
         when:
-        def imports = beanValidationFactory.collectImports (dataType)
-        def annotations = beanValidationFactory.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
 
         then:
-        imports == resultImports as Set<String>
-        annotations == resultAnnotations
+        imports.containsAll (resultImports)
+        annotations.contains (resultAnnotations)
 
         where:
-        type            | nullable || resultImports                            | resultAnnotations
-        IntegerDataType | null     || []                                       | ""
-        IntegerDataType | true     || []                                       | ""
-        IntegerDataType | false    || ["javax.validation.constraints.NotNull"] | "@NotNull"
-        StringDataType  | null     || []                                       | ""
-        StringDataType  | true     || []                                       | ""
-        StringDataType  | false    || ["javax.validation.constraints.NotNull"] | "@NotNull"
-        ListDataType    | null     || []                                       | ""
-        ListDataType    | true     || []                                       | ""
-        ListDataType    | false    || ["javax.validation.constraints.NotNull"] | "@NotNull"
+        minItems | maxItems || resultImports | resultAnnotations
+        null     | null     || []            | ""
+        0        | null     || []            | ""
+        1        | null     || [SIZE]        | "@Size(min = 1)"
+        null     | 0        || [SIZE]        | "@Size(max = 0)"
+        null     | 2        || [SIZE]        | "@Size(max = 2)"
+        1        | 2        || [SIZE]        | "@Size(min = 1, max = 2)"
     }
 
     @Unroll
-    void "check import @DecimalMin (minimum: #minimum, exclusiveMinimum: #exclusiveMinimum, type: #type)" () {
-        setup:
-        DataType dataType = type.getDeclaredConstructor ().newInstance ()
-        dataType.constraints = new DataTypeConstraints ()
-        dataType.constraints.minimum = minimum
-        dataType.constraints.exclusiveMinimum = exclusiveMinimum
+    void "applies @Size to Collection (minItems: #minItems, maxItems: #maxItems)" () {
+        def constraints = new DataTypeConstraints ()
+        constraints.minItems = minItems
+        constraints.maxItems = maxItems
+
+        DataType dataType = new MappedCollectionDataType(
+            type: Collection.name,
+            pkg: Collection.packageName,
+            constraints: constraints)
 
         when:
-        def imports = beanValidationFactory.collectImports (dataType)
-        def annotations = beanValidationFactory.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
 
         then:
-        imports == resultImports as Set<String>
-        annotations == resultAnnotations
+        imports.containsAll (resultImports)
+        annotations.contains (resultAnnotations)
 
         where:
-        type            | minimum | exclusiveMinimum || resultImports                               | resultAnnotations
-        IntegerDataType | null    | null             || []                                          | ""
-        IntegerDataType | null    | true             || []                                          | ""
-        IntegerDataType | null    | false            || []                                          | ""
-        IntegerDataType | 1       | null             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        IntegerDataType | 1       | true             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\", inclusive = false)"
-        IntegerDataType | 1       | false            || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        IntegerDataType | 0       | false            || ["javax.validation.constraints.DecimalMin"] | '@DecimalMin(value = "0")'
-        LongDataType    | null    | null             || []                                          | ""
-        LongDataType    | null    | true             || []                                          | ""
-        LongDataType    | null    | false            || []                                          | ""
-        LongDataType    | 1       | null             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        LongDataType    | 1       | true             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\", inclusive = false)"
-        LongDataType    | 1       | false            || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        FloatDataType   | null    | null             || []                                          | ""
-        FloatDataType   | null    | true             || []                                          | ""
-        FloatDataType   | null    | false            || []                                          | ""
-        FloatDataType   | 1       | null             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        FloatDataType   | 1       | true             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\", inclusive = false)"
-        FloatDataType   | 1       | false            || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        DoubleDataType  | null    | null             || []                                          | ""
-        DoubleDataType  | null    | true             || []                                          | ""
-        DoubleDataType  | null    | false            || []                                          | ""
-        DoubleDataType  | 1       | null             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        DoubleDataType  | 1       | true             || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\", inclusive = false)"
-        DoubleDataType  | 1       | false            || ["javax.validation.constraints.DecimalMin"] | "@DecimalMin(value = \"1\")"
-        StringDataType  | 1       | null             || []                                          | ""
+        minItems | maxItems || resultImports    | resultAnnotations
+        null     | null     || []       | ""
+        0        | null     || []       | ""
+        1        | null     || [SIZE] | "@Size(min = 1)"
+        null     | 0        || [SIZE] | "@Size(max = 0)"
+        null     | 2        || [SIZE] | "@Size(max = 2)"
+        1        | 2        || [SIZE] | "@Size(min = 1, max = 2)"
     }
 
     @Unroll
-    void "check import @DecimalMax (maximum: #maximum, exclusiveMaximum: #exclusiveMaximum, type: #type)" () {
-        setup:
-        DataType dataType = type.getDeclaredConstructor ().newInstance ()
-        dataType.constraints = new DataTypeConstraints ()
-        dataType.constraints.maximum = maximum
-        dataType.constraints.exclusiveMaximum = exclusiveMaximum
+    void "applies @NotNull (nullable: #nullable, type: #type)" () {
+        def constraints = new DataTypeConstraints ()
+        constraints.nullable = nullable
+
+        DataType dataType = createDataType (type, constraints)
 
         when:
-        def imports = beanValidationFactory.collectImports (dataType)
-        def annotations = beanValidationFactory.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
 
         then:
-        imports == resultImports as Set<String>
-        annotations == resultAnnotations
+        imports.containsAll (resultImports)
+        annotations.contains (resultAnnotations)
 
         where:
-        type            | maximum | exclusiveMaximum || resultImports                               | resultAnnotations
-        IntegerDataType | null    | null             || []                                          | ""
-        IntegerDataType | null    | true             || []                                          | ""
-        IntegerDataType | null    | false            || []                                          | ""
-        IntegerDataType | 1       | null             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        IntegerDataType | 1       | true             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\", inclusive = false)"
-        IntegerDataType | 1       | false            || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        IntegerDataType | 0       | false            || ["javax.validation.constraints.DecimalMax"] | '@DecimalMax(value = "0")'
-        LongDataType    | null    | null             || []                                          | ""
-        LongDataType    | null    | true             || []                                          | ""
-        LongDataType    | null    | false            || []                                          | ""
-        LongDataType    | 1       | null             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        LongDataType    | 1       | true             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\", inclusive = false)"
-        LongDataType    | 1       | false            || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        FloatDataType   | null    | null             || []                                          | ""
-        FloatDataType   | null    | true             || []                                          | ""
-        FloatDataType   | null    | false            || []                                          | ""
-        FloatDataType   | 1       | null             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        FloatDataType   | 1       | true             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\", inclusive = false)"
-        FloatDataType   | 1       | false            || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        DoubleDataType  | null    | null             || []                                          | ""
-        DoubleDataType  | null    | true             || []                                          | ""
-        DoubleDataType  | null    | false            || []                                          | ""
-        DoubleDataType  | 1       | null             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        DoubleDataType  | 1       | true             || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\", inclusive = false)"
-        DoubleDataType  | 1       | false            || ["javax.validation.constraints.DecimalMax"] | "@DecimalMax(value = \"1\")"
-        StringDataType  | 1       | null             || []                                          | ""
+        type                     | nullable || resultImports | resultAnnotations
+        IntegerDataType          | null     || []            | ""
+        IntegerDataType          | true     || []            | ""
+        IntegerDataType          | false    || [NOT_NULL]    | "@NotNull"
+        StringDataType           | null     || []            | ""
+        StringDataType           | true     || []            | ""
+        StringDataType           | false    || [NOT_NULL]    | "@NotNull"
+        MappedCollectionDataType | null     || []            | ""
+        MappedCollectionDataType | true     || []            | ""
+        MappedCollectionDataType | false    || [NOT_NULL]    | "@NotNull"
     }
 
     @Unroll
-    void "check import @DecimalMin and @DecimalMax (minimum: #minimum, exclusiveMinimum: #exclusiveMinimum maximum: #maximum, exclusiveMaximum: #exclusiveMaximum)" () {
-        setup:
-        DataType dataType = new DoubleDataType ()
-        dataType.constraints = new DataTypeConstraints ()
-        dataType.constraints.minimum = minimum
-        dataType.constraints.exclusiveMinimum = exclusiveMinimum
-        dataType.constraints.maximum = maximum
-        dataType.constraints.exclusiveMaximum = exclusiveMaximum
+    void "applies @DecimalMin (minimum: #minimum, exclusiveMinimum: #exclusiveMinimum, type: #type)" () {
+        def constraints = new DataTypeConstraints ()
+        constraints.minimum = minimum
+        constraints.exclusiveMinimum = exclusiveMinimum
+
+        DataType dataType = createDataType (type, constraints)
 
         when:
-        def imports = beanValidationFactory.collectImports (dataType)
-        def annotations = beanValidationFactory.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
 
         then:
-        imports == resultImports as Set<String>
-        annotations == resultAnnotations
+        imports.containsAll (resultImports)
+        annotations.contains (resultAnnotations)
 
         where:
-        minimum | exclusiveMinimum | maximum | exclusiveMaximum || resultImports                                                                          | resultAnnotations
-        1       | false            | 2       | false            || ["javax.validation.constraints.DecimalMin", "javax.validation.constraints.DecimalMax"] | "@DecimalMin(value = \"1\") @DecimalMax(value = \"2\")"
-        1       | true             | 2       | false            || ["javax.validation.constraints.DecimalMin", "javax.validation.constraints.DecimalMax"] | "@DecimalMin(value = \"1\", inclusive = false) @DecimalMax(value = \"2\")"
-        1       | false            | 2       | true             || ["javax.validation.constraints.DecimalMin", "javax.validation.constraints.DecimalMax"] | "@DecimalMin(value = \"1\") @DecimalMax(value = \"2\", inclusive = false)"
-        1       | true             | 2       | true             || ["javax.validation.constraints.DecimalMin", "javax.validation.constraints.DecimalMax"] | "@DecimalMin(value = \"1\", inclusive = false) @DecimalMax(value = \"2\", inclusive = false)"
-        1       | true             | null    | true             || ["javax.validation.constraints.DecimalMin"]                                            | "@DecimalMin(value = \"1\", inclusive = false)"
-        null    | true             | 2       | true             || ["javax.validation.constraints.DecimalMax"]                                            | "@DecimalMax(value = \"2\", inclusive = false)"
+        type            | minimum | exclusiveMinimum || resultImports | resultAnnotations
+        IntegerDataType | null    | null             || []            | ""
+        IntegerDataType | null    | true             || []            | ""
+        IntegerDataType | null    | false            || []            | ""
+        IntegerDataType | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        IntegerDataType | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
+        IntegerDataType | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        IntegerDataType | 0       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "0")'
+        LongDataType    | null    | null             || []            | ""
+        LongDataType    | null    | true             || []            | ""
+        LongDataType    | null    | false            || []            | ""
+        LongDataType    | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        LongDataType    | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
+        LongDataType    | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        FloatDataType   | null    | null             || []            | ""
+        FloatDataType   | null    | true             || []            | ""
+        FloatDataType   | null    | false            || []            | ""
+        FloatDataType   | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        FloatDataType   | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
+        FloatDataType   | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        DoubleDataType  | null    | null             || []            | ""
+        DoubleDataType  | null    | true             || []            | ""
+        DoubleDataType  | null    | false            || []            | ""
+        DoubleDataType  | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        DoubleDataType  | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
+        DoubleDataType  | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+        StringDataType  | 1       | null             || []            | ""
     }
+
+    @Unroll
+    void "applies @DecimalMax (maximum: #maximum, exclusiveMaximum: #exclusiveMaximum, type: #type)" () {
+        def constraints = new DataTypeConstraints ()
+        constraints.maximum = maximum
+        constraints.exclusiveMaximum = exclusiveMaximum
+
+        DataType dataType = createDataType (type, constraints)
+
+        when:
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
+
+        then:
+        imports.containsAll (resultImports)
+        annotations.contains (resultAnnotations)
+
+        where:
+        type            | maximum | exclusiveMaximum || resultImports | resultAnnotations
+        IntegerDataType | null    | null             || []            | ""
+        IntegerDataType | null    | true             || []            | ""
+        IntegerDataType | null    | false            || []            | ""
+        IntegerDataType | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        IntegerDataType | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
+        IntegerDataType | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        IntegerDataType | 0       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "0")'
+        LongDataType    | null    | null             || []            | ""
+        LongDataType    | null    | true             || []            | ""
+        LongDataType    | null    | false            || []            | ""
+        LongDataType    | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        LongDataType    | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
+        LongDataType    | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        FloatDataType   | null    | null             || []            | ""
+        FloatDataType   | null    | true             || []            | ""
+        FloatDataType   | null    | false            || []            | ""
+        FloatDataType   | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        FloatDataType   | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
+        FloatDataType   | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        DoubleDataType  | null    | null             || []            | ""
+        DoubleDataType  | null    | true             || []            | ""
+        DoubleDataType  | null    | false            || []            | ""
+        DoubleDataType  | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        DoubleDataType  | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
+        DoubleDataType  | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+        StringDataType  | 1       | null             || []            | ""
+    }
+
+    @Unroll
+    void "applies @DecimalMin & @DecimalMax (minimum: #minimum, exclusiveMinimum: #exclusiveMinimum maximum: #maximum, exclusiveMaximum: #exclusiveMaximum)" () {
+        def constraints = new DataTypeConstraints ()
+        constraints.minimum = minimum
+        constraints.exclusiveMinimum = exclusiveMinimum
+        constraints.maximum = maximum
+        constraints.exclusiveMaximum = exclusiveMaximum
+
+        DataType dataType = new DoubleDataType (constraints: constraints)
+
+        when:
+        def imports = validation.collectImports (dataType)
+        def annotations = validation.createAnnotations (dataType)
+
+        then:
+        imports.containsAll (resultImports)
+        annotations.contains (resultAnnotations)
+
+        where:
+        minimum | exclusiveMinimum | maximum | exclusiveMaximum || resultImports              | resultAnnotations
+        1       | false            | 2       | false            || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1") @DecimalMax(value = "2")'
+        1       | true             | 2       | false            || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1", inclusive = false) @DecimalMax(value = "2")'
+        1       | false            | 2       | true             || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1") @DecimalMax(value = "2", inclusive = false)'
+        1       | true             | 2       | true             || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1", inclusive = false) @DecimalMax(value = "2", inclusive = false)'
+        1       | true             | null    | true             || [DECIMAL_MIN]              | '@DecimalMin(value = "1", inclusive = false)'
+        null    | true             | 2       | true             || [DECIMAL_MAX]              | '@DecimalMax(value = "2", inclusive = false)'
+    }
+
+    private DataType createDataType (Class clazz, DataTypeConstraints constraints) {
+        switch (clazz) {
+            case IntegerDataType:
+                return new IntegerDataType(constraints: constraints)
+
+            case LongDataType:
+                return new LongDataType(constraints: constraints)
+
+            case FloatDataType:
+                return new FloatDataType(constraints: constraints)
+
+            case DoubleDataType:
+                return new DoubleDataType(constraints: constraints)
+
+            case StringDataType:
+                return new StringDataType(constraints: constraints)
+
+            case MappedCollectionDataType:
+                return new MappedCollectionDataType(
+                    type: Collection.name,
+                    pkg: Collection.packageName,
+                    constraints: constraints
+                )
+        }
+        null
+    }
+
+    private boolean containsImports (Set source, List match) {
+        source.containsAll (match)
+    }
+
+    private boolean containsAnnotations (String annotations, String match) {
+        if (!match || match.empty) {
+            return true
+        }
+
+        annotations.contains (match)
+    }
+
+    class OtherDataType extends DataTypeBase {
+
+        @Override
+        String getName () {
+            'other'
+        }
+
+        @Override
+        String getPackageName () {
+            'other'
+        }
+
+        @Override
+        Set<String> getImports () {
+            []
+        }
+
+        @Override
+        Set<String> getReferencedImports () {
+            []
+        }
+    }
+
 }

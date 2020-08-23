@@ -22,7 +22,7 @@ import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.converter.mapping.Mapping
 import com.github.hauner.openapi.core.model.DataTypes
-import com.github.hauner.openapi.core.model.datatypes.ArrayDataType
+import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import com.github.hauner.openapi.core.model.datatypes.BooleanDataType
 import com.github.hauner.openapi.core.model.datatypes.ComposedObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
@@ -152,7 +152,7 @@ class DataTypeConverter {
             return mappedDataType
         }
 
-        new ArrayDataType (item: item, constraints: constraints, deprecated: schemaInfo.deprecated)
+        new ArrayDataType (item, constraints, schemaInfo.deprecated)
     }
 
     private DataType createRefDataType (SchemaInfo schemaInfo, DataTypes dataTypes) {
