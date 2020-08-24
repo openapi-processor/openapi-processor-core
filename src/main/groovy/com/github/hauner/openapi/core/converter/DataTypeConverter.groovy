@@ -24,7 +24,7 @@ import io.openapiprocessor.core.converter.mapping.Mapping
 import com.github.hauner.openapi.core.model.DataTypes
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.BooleanDataType
-import com.github.hauner.openapi.core.model.datatypes.ComposedObjectDataType
+import io.openapiprocessor.core.model.datatypes.ComposedObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import com.github.hauner.openapi.core.model.datatypes.LocalDateDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
@@ -113,17 +113,20 @@ class DataTypeConverter {
             return objectType
         }
 
-        objectType = new ComposedObjectDataType (
-            type: schemaInfo.name,
-            pkg: [options.packageName, 'model'].join ('.'),
-            of: schemaInfo.itemOf (),
-            deprecated: schemaInfo.deprecated
-        )
-
+        def items = []
         schemaInfo.eachItemOf { SchemaInfo itemSchemaInfo ->
             def itemType = convert (itemSchemaInfo, dataTypes)
-            objectType.addItems (itemType)
+            items.add (itemType)
         }
+
+        objectType = new ComposedObjectDataType (
+            schemaInfo.name,
+            [options.packageName, 'model'].join ('.'),
+            schemaInfo.itemOf (),
+            items,
+            null,
+            schemaInfo.deprecated
+        )
 
         dataTypes.add (objectType)
         objectType
