@@ -22,7 +22,7 @@ import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
-import com.github.hauner.openapi.core.model.datatypes.DoubleDataType
+import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import com.github.hauner.openapi.core.model.datatypes.FloatDataType
 import com.github.hauner.openapi.core.model.datatypes.IntegerDataType
 import com.github.hauner.openapi.core.model.datatypes.LongDataType
@@ -283,7 +283,7 @@ class BeanValidationFactorySpec extends Specification {
         constraints.maximum = maximum
         constraints.exclusiveMaximum = exclusiveMaximum
 
-        DataType dataType = new DoubleDataType (constraints: constraints)
+        DataType dataType = new DoubleDataType (constraints, false)
 
         when:
         def imports = validation.collectImports (dataType)
@@ -315,7 +315,7 @@ class BeanValidationFactorySpec extends Specification {
                 return new FloatDataType(constraints: constraints)
 
             case DoubleDataType:
-                return new DoubleDataType(constraints: constraints)
+                return new DoubleDataType(constraints, false)
 
             case StringDataType:
                 return new StringDataType(constraints: constraints)

@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.model.datatypes.DoubleDataType
+import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import com.github.hauner.openapi.core.model.datatypes.FloatDataType
 import com.github.hauner.openapi.core.model.datatypes.IntegerDataType
 import com.github.hauner.openapi.core.model.datatypes.LongDataType
