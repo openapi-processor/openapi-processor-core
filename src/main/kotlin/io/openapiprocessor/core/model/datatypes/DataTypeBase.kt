@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 the original authors
+ * Copyright 2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,31 +17,23 @@
 package io.openapiprocessor.core.model.datatypes
 
 /**
- * OpenAPI type 'boolean' maps to java Boolean.
+ * basic DataType implementation. Reduces duplication in DataTypes.
  *
  * @author Martin Hauner
  */
-class BooleanDataType(
+abstract class DataTypeBase(
 
-   constraints: DataTypeConstraints? = null,
-   deprecated: Boolean = false
+    private val constraints: DataTypeConstraints? = null,
+    private val deprecated: Boolean = false
 
-): DataTypeBase(constraints, deprecated) {
+): DataType {
 
-    override fun getName(): String {
-        return "Boolean"
+    override fun getConstraints(): DataTypeConstraints? {
+        return constraints
     }
 
-    override fun getPackageName(): String {
-        return "java.lang"
+    override fun isDeprecated(): Boolean {
+        return deprecated
     }
-
-    override fun getImports(): Set<String> {
-        return setOf(getPackageName() + "." + getName())
-    }
-
-    override fun getReferencedImports(): Set<String> {
-        return emptySet()
-    }
-
+    
 }
