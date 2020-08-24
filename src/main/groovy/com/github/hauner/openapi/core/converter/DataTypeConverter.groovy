@@ -33,7 +33,7 @@ import com.github.hauner.openapi.core.model.datatypes.MappedMapDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
-import com.github.hauner.openapi.core.model.datatypes.FloatDataType
+import io.openapiprocessor.core.model.datatypes.FloatDataType
 import com.github.hauner.openapi.core.model.datatypes.IntegerDataType
 import com.github.hauner.openapi.core.model.datatypes.LongDataType
 import com.github.hauner.openapi.core.model.datatypes.OffsetDateTimeDataType
@@ -252,8 +252,7 @@ class DataTypeConverter {
                 break
             case 'number':
             case 'number/float':
-                simpleType = new FloatDataType (
-                    constraints: constraints, deprecated: schemaInfo.deprecated)
+                simpleType = new FloatDataType (constraints, schemaInfo.deprecated)
                 break
             case 'number/double':
                 simpleType = new DoubleDataType (constraints, schemaInfo.deprecated)

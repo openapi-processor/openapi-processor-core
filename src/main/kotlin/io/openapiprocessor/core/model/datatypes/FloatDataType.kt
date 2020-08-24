@@ -14,43 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'number' with format 'float' maps to java Float.
  *
  * @author Martin Hauner
  */
-class FloatDataType extends DataTypeBase {
+class FloatDataType(
 
-    DataTypeConstraints constraints
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-    @Override
-    String getName () {
-        'Float'
+): DataTypeBase(constraints, deprecated) {
+
+    override fun getName(): String {
+        return "Float"
     }
 
-    @Override
-    String getPackageName () {
-        'java.lang'
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints() {
-        constraints
+    override fun getPackageName(): String {
+        return "java.lang"
     }
 
 }
