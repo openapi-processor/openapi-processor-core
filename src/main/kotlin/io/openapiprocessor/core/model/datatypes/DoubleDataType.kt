@@ -23,10 +23,10 @@ package io.openapiprocessor.core.model.datatypes
  */
 class DoubleDataType(
 
-    private val constraints: DataTypeConstraints? = null,
-    private val deprecated: Boolean = false
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-): DataType {
+): DataTypeBase(constraints, deprecated) {
 
     override fun getName(): String {
         return "Double"
@@ -34,22 +34,6 @@ class DoubleDataType(
 
     override fun getPackageName(): String {
         return "java.lang"
-    }
-
-    override fun getImports(): Set<String> {
-        return setOf(getPackageName() + "." + getName())
-    }
-
-    override fun getReferencedImports(): Set<String> {
-        return emptySet()
-    }
-
-    override fun getConstraints(): DataTypeConstraints? {
-        return constraints
-    }
-
-    override fun isDeprecated(): Boolean {
-        return deprecated
     }
 
 }

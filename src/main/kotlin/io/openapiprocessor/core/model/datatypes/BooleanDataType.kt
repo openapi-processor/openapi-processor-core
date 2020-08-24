@@ -36,12 +36,4 @@ class BooleanDataType(
         return "java.lang"
     }
 
-    override fun getImports(): Set<String> {
-        return setOf(getPackageName() + "." + getName())
-    }
-
-    override fun getReferencedImports(): Set<String> {
-        return emptySet()
-    }
-
 }

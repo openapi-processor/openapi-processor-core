@@ -28,6 +28,14 @@ abstract class DataTypeBase(
 
 ): DataType {
 
+    override fun getImports(): Set<String> {
+        return setOf(getPackageName() + "." + getName())
+    }
+
+    override fun getReferencedImports(): Set<String> {
+        return emptySet()
+    }
+
     override fun getConstraints(): DataTypeConstraints? {
         return constraints
     }
@@ -35,5 +43,5 @@ abstract class DataTypeBase(
     override fun isDeprecated(): Boolean {
         return deprecated
     }
-    
+
 }
