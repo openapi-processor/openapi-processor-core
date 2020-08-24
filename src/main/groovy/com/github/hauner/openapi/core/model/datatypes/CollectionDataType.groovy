@@ -16,44 +16,17 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
-
 /**
  * OpenAPI type 'array' maps to Collection<>.
  *
  * @author Martin Hauner
  * @author Bastian Wilhelm
  */
-@Deprecated // replaced by MappedCollectionDataType
-class CollectionDataType extends DataTypeBase {
+class CollectionDataType extends MappedCollectionDataType {
 
-    private DataType item
-    private DataTypeConstraints constraints
-
-    @Override
-    String getName () {
-        "Collection<${item.name}>"
-    }
-
-    @Override
-    String getPackageName () {
-        'java.util'
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, 'Collection'].join('.')] + item.imports
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints () {
-        constraints
+    CollectionDataType() {
+        pkg = Collection.packageName
+        type = Collection.name
     }
 
 }

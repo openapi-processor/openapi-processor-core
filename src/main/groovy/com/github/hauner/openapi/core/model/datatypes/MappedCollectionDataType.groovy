@@ -30,8 +30,8 @@ class MappedCollectionDataType extends DataTypeBase {
     String type
     String pkg = 'unknown'
 
-    private DataType item
-    private DataTypeConstraints constraints
+    protected DataType item
+    protected DataTypeConstraints constraints
 
     @Override
     String getName () {
