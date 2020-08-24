@@ -25,10 +25,10 @@ package io.openapiprocessor.core.model.datatypes
 class ArrayDataType(
 
     private val item: DataType,
-    private val constraints: DataTypeConstraints? = null,
-    private val deprecated: Boolean = false
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-): DataType {
+): DataTypeBase(constraints, deprecated) {
 
     override fun getName(): String {
         return "${item.getName()}[]"
@@ -44,14 +44,6 @@ class ArrayDataType(
 
     override fun getReferencedImports(): Set<String> {
         return item.getReferencedImports()
-    }
-
-    override fun getConstraints(): DataTypeConstraints? {
-        return constraints
-    }
-
-    override fun isDeprecated(): Boolean {
-        return deprecated
     }
 
 }
