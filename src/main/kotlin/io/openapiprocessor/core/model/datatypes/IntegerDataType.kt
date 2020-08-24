@@ -14,43 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'integer' with format 'int32' maps to java Integer.
  *
  * @author Martin Hauner
  */
-class IntegerDataType extends DataTypeBase {
+class IntegerDataType(
 
-    DataTypeConstraints constraints
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-    @Override
-    String getName () {
-        return 'Integer'
+): DataTypeBase(constraints, deprecated) {
+
+    override fun getName(): String {
+        return "Integer"
     }
 
-    @Override
-    String getPackageName () {
-        'java.lang'
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints() {
-        constraints
+    override fun getPackageName(): String {
+        return "java.lang"
     }
 
 }

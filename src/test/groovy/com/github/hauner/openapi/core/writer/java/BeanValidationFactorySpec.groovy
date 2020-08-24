@@ -24,7 +24,7 @@ import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
-import com.github.hauner.openapi.core.model.datatypes.IntegerDataType
+import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import com.github.hauner.openapi.core.model.datatypes.LongDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
@@ -306,7 +306,7 @@ class BeanValidationFactorySpec extends Specification {
     private DataType createDataType (Class clazz, DataTypeConstraints constraints) {
         switch (clazz) {
             case IntegerDataType:
-                return new IntegerDataType(constraints: constraints)
+                return new IntegerDataType(constraints, false)
 
             case LongDataType:
                 return new LongDataType(constraints: constraints)
