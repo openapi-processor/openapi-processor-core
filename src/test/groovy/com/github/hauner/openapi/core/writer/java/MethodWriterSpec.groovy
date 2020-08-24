@@ -24,7 +24,7 @@ import com.github.hauner.openapi.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Response
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
-import com.github.hauner.openapi.core.model.datatypes.BooleanDataType
+import io.openapiprocessor.core.model.datatypes.BooleanDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import com.github.hauner.openapi.core.model.datatypes.DoubleDataType
 import com.github.hauner.openapi.core.model.datatypes.FloatDataType

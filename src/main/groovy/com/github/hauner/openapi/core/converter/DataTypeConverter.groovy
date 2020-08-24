@@ -23,7 +23,7 @@ import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.converter.mapping.Mapping
 import com.github.hauner.openapi.core.model.DataTypes
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
-import com.github.hauner.openapi.core.model.datatypes.BooleanDataType
+import io.openapiprocessor.core.model.datatypes.BooleanDataType
 import com.github.hauner.openapi.core.model.datatypes.ComposedObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import com.github.hauner.openapi.core.model.datatypes.LocalDateDataType
@@ -257,8 +257,7 @@ class DataTypeConverter {
                     constraints: constraints, deprecated: schemaInfo.deprecated)
                 break
             case 'boolean':
-                simpleType = new BooleanDataType (
-                    constraints: constraints, deprecated: schemaInfo.deprecated)
+                simpleType = new BooleanDataType (constraints, schemaInfo.deprecated)
                 break
             case 'string':
                 simpleType = createStringDataType (schemaInfo, constraints, dataTypes)

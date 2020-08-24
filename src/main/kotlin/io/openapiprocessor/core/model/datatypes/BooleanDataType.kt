@@ -14,42 +14,42 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'boolean' maps to java Boolean.
  *
  * @author Martin Hauner
  */
-class BooleanDataType extends DataTypeBase {
+class BooleanDataType(
 
-    DataTypeConstraints constraints
+    private val constraints: DataTypeConstraints? = null,
+    private val deprecated: Boolean = false
 
-    @Override
-    String getName () {
-        'Boolean'
+): DataType {
+
+    override fun getName(): String {
+        return "Boolean"
     }
 
-    @Override
-    String getPackageName () {
-        'java.lang'
+    override fun getPackageName(): String {
+        return "java.lang"
     }
 
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
+    override fun getImports(): Set<String> {
+        return setOf(getPackageName() + "." + getName())
     }
 
-    @Override
-    Set<String> getReferencedImports () {
-        []
+    override fun getReferencedImports(): Set<String> {
+        return emptySet()
     }
 
-    @Override
-    DataTypeConstraints getConstraints() {
-        constraints
+    override fun getConstraints(): DataTypeConstraints? {
+        return constraints
+    }
+
+    override fun isDeprecated(): Boolean {
+        return deprecated
     }
 
 }
