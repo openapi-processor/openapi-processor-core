@@ -27,10 +27,10 @@ class ComposedObjectDataType(
     private val pkg: String,
     private val of: String,
     private val items: List<DataType> = emptyList(),
-    private val constraints: DataTypeConstraints? = null,
-    private val deprecated: Boolean = false
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-): DataType {
+): DataTypeBase(constraints, deprecated) {
 
     override fun getName(): String {
         return type
@@ -49,14 +49,6 @@ class ComposedObjectDataType(
             .map { it.getImports() }
             .flatten()
             .toSet()
-    }
-
-    override fun getConstraints(): DataTypeConstraints? {
-        return constraints
-    }
-
-    override fun isDeprecated(): Boolean {
-        return deprecated
     }
 
     override fun isMultiOf(): Boolean {
