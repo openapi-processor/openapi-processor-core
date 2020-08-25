@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
-import com.github.hauner.openapi.core.model.datatypes.CollectionDataType
+import io.openapiprocessor.core.model.datatypes.CollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.HttpMethod
 import spock.lang.Specification
@@ -27,8 +27,7 @@ class EndpointMethodResponseSpec extends Specification {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200'    : [
                 new Response (contentType: 'application/json',
-                    responseType: new CollectionDataType (
-                        new StringDataType (), null, false))
+                    responseType: new CollectionDataType (new StringDataType ()))
             ]
         ]).initEndpointResponses ()
 
@@ -45,16 +44,13 @@ class EndpointMethodResponseSpec extends Specification {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200'    : [
                 new Response (contentType: 'application/json',
-                    responseType: new CollectionDataType (
-                        new StringDataType (), null, false)),
+                    responseType: new CollectionDataType (new StringDataType ())),
                 new Response (contentType: 'application/xml',
-                    responseType: new CollectionDataType (
-                        new StringDataType (), null, false))
+                    responseType: new CollectionDataType (new StringDataType ()))
             ],
             'default': [
                 new Response (contentType: 'text/plain',
-                    responseType: new CollectionDataType (
-                        new StringDataType (), null, false))
+                    responseType: new CollectionDataType (new StringDataType ()))
             ]
         ]).initEndpointResponses ()
 

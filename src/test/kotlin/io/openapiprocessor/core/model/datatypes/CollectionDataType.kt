@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
-import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'array' maps to Collection<>.
@@ -26,10 +22,9 @@ import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
  * @author Martin Hauner
  * @author Bastian Wilhelm
  */
-class CollectionDataType extends MappedCollectionDataType {
-
-    CollectionDataType(DataType item, DataTypeConstraints constraints = null, boolean deprecated = false) {
-        super(Collection.name, Collection.packageName, item, constraints, deprecated)
-    }
-
-}
+class CollectionDataType(
+    item: DataType
+): MappedCollectionDataType(
+    Collection::class.java.name,
+    Collection::class.java.packageName,
+    item)
