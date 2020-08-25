@@ -21,7 +21,7 @@ import com.github.hauner.openapi.core.model.Interface
 import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
 import io.openapiprocessor.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import io.openapiprocessor.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.parameters.MultipartParameter
 import com.github.hauner.openapi.core.model.parameters.Parameter

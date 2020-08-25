@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.test
 
 import com.github.hauner.openapi.core.model.Response
-import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import io.openapiprocessor.core.model.datatypes.NoneDataType
 
 /**
  * test only. simpler setup of an empty response.

@@ -14,37 +14,30 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-
+package io.openapiprocessor.core.model.datatypes
 /**
  * OpenAPI no type.
  *
  * @author Martin Hauner
  */
-class NoneDataType extends DataTypeBase {
+class NoneDataType(): DataTypeBase(null, false) {
 
-    private String type = 'void'
+    private var type = "void"
 
-    @Override
-    String getName () {
-        type
+    private constructor(type: String): this() {
+        this.type = type
     }
 
-    @Override
-    String getPackageName () {
-        null
+    override fun getName(): String {
+        return type
     }
 
-    @Override
-    Set<String> getImports () {
-        []
+    override fun getPackageName(): String {
+        return ""
     }
 
-    @Override
-    Set<String> getReferencedImports () {
-        []
+    override fun getImports(): Set<String> {
+        return emptySet()
     }
 
     /**
@@ -52,8 +45,8 @@ class NoneDataType extends DataTypeBase {
      *
      * @return
      */
-    DataType wrappedInResult () {
-        new NoneDataType(type: type.capitalize ())
+    fun wrappedInResult(): DataType {
+        return NoneDataType(type.capitalize ())
     }
 
 }

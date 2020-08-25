@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.model
 
 import io.openapiprocessor.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import io.openapiprocessor.core.model.datatypes.NoneDataType
 
 /**
  * Endpoint response properties.

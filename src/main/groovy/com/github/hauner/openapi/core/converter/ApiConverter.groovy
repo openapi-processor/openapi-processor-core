@@ -32,7 +32,7 @@ import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
 import com.github.hauner.openapi.core.model.RequestBody as ModelRequestBody
 import io.openapiprocessor.core.model.datatypes.MappedDataType
-import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import io.openapiprocessor.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.Response as ModelResponse
 import io.openapiprocessor.core.model.datatypes.DataType

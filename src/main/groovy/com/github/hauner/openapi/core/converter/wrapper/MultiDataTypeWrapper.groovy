@@ -25,7 +25,7 @@ import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
-import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import io.openapiprocessor.core.model.datatypes.NoneDataType
 
 /**
  * replaces a collection wrapper with the 'multi' data mapping.

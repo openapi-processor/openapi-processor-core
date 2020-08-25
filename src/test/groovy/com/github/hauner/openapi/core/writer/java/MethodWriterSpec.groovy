@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.converter.ApiOptions
-import com.github.hauner.openapi.core.model.datatypes.NoneDataType
+import io.openapiprocessor.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ResultDataType
 import com.github.hauner.openapi.core.model.parameters.Parameter
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
