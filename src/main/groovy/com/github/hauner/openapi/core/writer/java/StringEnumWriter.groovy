@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.support.Identifier
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 

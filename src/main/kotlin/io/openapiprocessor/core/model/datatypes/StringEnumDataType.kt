@@ -14,46 +14,29 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'string' with enum constraint maps to enum class.
  *
  * @author Martin Hauner
  */
-class StringEnumDataType extends DataTypeBase {
+class StringEnumDataType(
 
-    String type
-    String pkg = 'unknown'
-    List<String> values = []
-    DataTypeConstraints constraints
+    private val type: String,
+    private val pkg: String,
+    private val values: List<String> = emptyList(),
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-    @Override
-    String getName () {
-        type
+): DataTypeBase(constraints, deprecated) {
+
+    override fun getName(): String {
+        return type
     }
 
-    @Override
-    String getPackageName () {
-        pkg
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints() {
-        constraints
+    override fun getPackageName(): String {
+        return pkg
     }
 
 }

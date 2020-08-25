@@ -23,7 +23,7 @@ import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
-import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import com.github.hauner.openapi.core.test.Sl4jMockRule
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
@@ -188,8 +188,10 @@ Bar class!
         )
 
         def dt = new DataTypes()
-        dt.add (new StringEnumDataType(pkg: "${opts.packageName}.model", type: 'Foo'))
-        dt.add (new StringEnumDataType(pkg: "${opts.packageName}.model", type: 'Bar'))
+        dt.add (new StringEnumDataType(
+            'Foo', "${opts.packageName}.model", [], null, false))
+        dt.add (new StringEnumDataType(
+            'Bar', "${opts.packageName}.model", [], null, false))
         def api = new Api(dt)
 
         when:
@@ -311,7 +313,8 @@ class Foo {
         )
 
         def dt = new DataTypes()
-        dt.add (new StringEnumDataType(pkg: "${opts.packageName}.model", type: 'Foo'))
+        dt.add (new StringEnumDataType(
+            'Foo', "${opts.packageName}.model", [], null, false))
         def api = new Api(dt)
 
         when:

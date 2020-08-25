@@ -39,7 +39,7 @@ import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.OffsetDateTimeDataType
 import com.github.hauner.openapi.core.model.datatypes.LazyDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
-import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 
 /**
@@ -288,11 +288,11 @@ class DataTypeConverter {
         // in case of an inline definition the name may be lowercase, make sure the enum
         // class gets an uppercase name!
         def enumType = new StringEnumDataType (
-            type: info.name.capitalize (),
-            pkg: [options.packageName, 'model'].join ('.'),
-            values: info.enumValues,
-            constraints: constraints,
-            deprecated: info.deprecated)
+            info.name.capitalize (),
+            [options.packageName, 'model'].join ('.'),
+            info.enumValues as List<String>,
+            constraints,
+            info.deprecated)
 
         dataTypes.add (enumType)
         enumType

@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.model
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 
 /**
  * Container for Java data types from OpenAPI '#/component/schemas'.
