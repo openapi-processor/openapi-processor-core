@@ -28,7 +28,7 @@ import com.github.hauner.openapi.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.ResultDataType
-import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse

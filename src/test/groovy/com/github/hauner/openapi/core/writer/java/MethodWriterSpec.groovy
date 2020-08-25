@@ -32,7 +32,7 @@ import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter

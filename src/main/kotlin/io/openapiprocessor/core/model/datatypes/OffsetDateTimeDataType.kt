@@ -22,8 +22,10 @@ package io.openapiprocessor.core.model.datatypes
  * @author Martin Hauner
  */
 class OffsetDateTimeDataType(
+
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
+
 ): DataTypeBase(constraints, deprecated) {
 
     override fun getName(): String {

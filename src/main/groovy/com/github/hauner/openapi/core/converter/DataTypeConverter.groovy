@@ -38,7 +38,7 @@ import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.OffsetDateTimeDataType
 import com.github.hauner.openapi.core.model.datatypes.LazyDataType
-import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 
@@ -277,7 +277,7 @@ class DataTypeConverter {
 
     private DataType createStringDataType (SchemaInfo info, DataTypeConstraints constraints, DataTypes dataTypes) {
         if (!info.isEnum()) {
-            return new StringDataType (constraints: constraints, deprecated: info.deprecated)
+            return new StringDataType (constraints, info.deprecated)
         }
 
         // in case of an inline definition the name may be lowercase, make sure the enum

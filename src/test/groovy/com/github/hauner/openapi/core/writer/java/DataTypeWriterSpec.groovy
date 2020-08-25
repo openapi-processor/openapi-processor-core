@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import com.github.hauner.openapi.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ListDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.StringDataType
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.AssertHelper.extractImports
@@ -161,7 +161,7 @@ public class Bar {
     void "writes deprecated property" () {
         def pkg = 'com.github.hauner.openapi'
         def dataType = new ObjectDataType (type: 'Book', properties: [
-            isbn: new StringDataType(deprecated: true)
+            isbn: new StringDataType(null, true)
         ], pkg: pkg)
 
         when:
@@ -178,7 +178,7 @@ public class Bar {
     void "writes deprecated property getters & setters" () {
         def pkg = 'com.github.hauner.openapi'
         def dataType = new ObjectDataType (type: 'Book', properties: [
-            isbn: new StringDataType(deprecated: true)
+            isbn: new StringDataType(null, true)
         ], pkg: pkg)
 
         when:

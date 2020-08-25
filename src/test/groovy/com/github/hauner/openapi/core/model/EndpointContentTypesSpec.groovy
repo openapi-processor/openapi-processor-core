@@ -1,7 +1,7 @@
 package com.github.hauner.openapi.core.model
 
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.StringDataType
 import spock.lang.Specification
 
 import static io.openapiprocessor.core.model.Builder.endpoint

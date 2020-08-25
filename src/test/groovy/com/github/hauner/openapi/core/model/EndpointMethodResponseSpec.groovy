@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.model
 
 import io.openapiprocessor.core.model.datatypes.CollectionDataType
-import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.HttpMethod
 import spock.lang.Specification
 

@@ -27,7 +27,7 @@ import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.StringDataType
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -80,7 +80,7 @@ class BeanValidationFactorySpec extends Specification {
         constraints.minLength = minLength
         constraints.maxLength = maxLength
 
-        def dataType = new StringDataType(constraints: constraints)
+        def dataType = new StringDataType(constraints, false)
 
         when:
         def imports = validation.collectImports (dataType)
@@ -320,7 +320,7 @@ class BeanValidationFactorySpec extends Specification {
                 return new DoubleDataType(constraints, false)
 
             case StringDataType:
-                return new StringDataType(constraints: constraints)
+                return new StringDataType(constraints, false)
 
             case MappedCollectionDataType:
                 return new MappedCollectionDataType(

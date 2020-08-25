@@ -14,43 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'string' maps to java String.
  *
  * @author Martin Hauner
  */
-class StringDataType extends DataTypeBase {
+class StringDataType(
 
-    DataTypeConstraints constraints
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-    @Override
-    String getName () {
-        'String'
+): DataTypeBase(constraints, deprecated) {
+
+    override fun getName(): String {
+        return "String"
     }
 
-    @Override
-    String getPackageName () {
-        'java.lang'
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints() {
-        constraints
+    override fun getPackageName(): String {
+        return "java.lang"
     }
 
 }
