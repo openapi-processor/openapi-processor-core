@@ -14,35 +14,24 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'string' with format 'date-time' maps to java OffsetDateTime.
  *
  * @author Martin Hauner
  */
-class OffsetDateTimeDataType extends DataTypeBase {
+class OffsetDateTimeDataType(
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
+): DataTypeBase(constraints, deprecated) {
 
-    @Override
-    String getName () {
-        return 'OffsetDateTime'
+    override fun getName(): String {
+        return "OffsetDateTime"
     }
 
-    @Override
-    String getPackageName () {
-        'java.time'
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
+    override fun getPackageName(): String {
+        return "java.time"
     }
 
 }

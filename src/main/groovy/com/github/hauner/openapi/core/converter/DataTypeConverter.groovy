@@ -36,7 +36,7 @@ import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
-import com.github.hauner.openapi.core.model.datatypes.OffsetDateTimeDataType
+import io.openapiprocessor.core.model.datatypes.OffsetDateTimeDataType
 import com.github.hauner.openapi.core.model.datatypes.LazyDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
@@ -266,7 +266,7 @@ class DataTypeConverter {
                 simpleType = new LocalDateDataType (constraints, schemaInfo.deprecated)
                 break
             case 'string/date-time':
-                simpleType = new OffsetDateTimeDataType (deprecated: schemaInfo.deprecated)
+                simpleType = new OffsetDateTimeDataType (constraints, schemaInfo.deprecated)
                 break
             default:
                 throw new UnknownDataTypeException(schemaInfo.name, schemaInfo.type, schemaInfo.format)
