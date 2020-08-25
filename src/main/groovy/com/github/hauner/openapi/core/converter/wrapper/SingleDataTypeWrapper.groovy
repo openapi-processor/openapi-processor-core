@@ -25,7 +25,7 @@ import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
-import com.github.hauner.openapi.core.model.datatypes.SingleDataType
+import io.openapiprocessor.core.model.datatypes.SingleDataType
 
 /**
  * wraps the data type with the 'singe' data mapping.
@@ -66,9 +66,9 @@ class SingleDataTypeWrapper {
         }
 
         def wrappedType = new SingleDataType (
-            type: targetType.name,
-            pkg: targetType.pkg,
-            dataType: checkNone (dataType)
+            targetType.name,
+            targetType.pkg,
+            checkNone (dataType)
         )
 
         return wrappedType

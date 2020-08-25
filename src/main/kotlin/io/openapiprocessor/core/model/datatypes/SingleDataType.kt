@@ -14,45 +14,35 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * Single data type wrapper. Assumes a single generic parameter.
  *
  * @author Martin Hauner
  */
-class SingleDataType extends DataTypeBase {
+class SingleDataType(
 
-    String type
-    String pkg = 'unknown'
-    private DataType dataType
+    private val type: String,
+    private val pkg: String,
+    private val dataType: DataType
 
-    @Override
-    String getName () {
-        "$type<${dataType.name}>"
+): DataType {
+
+    override fun getName(): String {
+        return "$type<${dataType.getName()}>"
     }
 
-    @Override
-    String getPackageName () {
-        pkg
+    override fun getPackageName(): String {
+        return pkg
     }
 
-    @Override
-    Set<String> getImports () {
-        [[packageName, type].join ('.')] + dataType.imports
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.$type") + dataType.getImports()
     }
 
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints () {
-        null
+    override fun getReferencedImports(): Set<String> {
+        return emptySet()
     }
 
 }
