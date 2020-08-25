@@ -25,7 +25,7 @@ import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
-import com.github.hauner.openapi.core.model.datatypes.ResultDataType
+import io.openapiprocessor.core.model.datatypes.ResultDataType
 
 /**
  * wraps the result data type with the mapped result type.

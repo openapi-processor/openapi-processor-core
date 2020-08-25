@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
-import com.github.hauner.openapi.core.model.datatypes.ResultDataType
+import io.openapiprocessor.core.model.datatypes.ResultDataType
 
 /**
  * The responses that can be returned by an endpoint method for one (successful) response.
