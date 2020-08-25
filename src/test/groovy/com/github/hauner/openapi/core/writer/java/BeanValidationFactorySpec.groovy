@@ -25,7 +25,7 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
-import com.github.hauner.openapi.core.model.datatypes.LongDataType
+import io.openapiprocessor.core.model.datatypes.LongDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import spock.lang.Specification
@@ -309,7 +309,7 @@ class BeanValidationFactorySpec extends Specification {
                 return new IntegerDataType(constraints, false)
 
             case LongDataType:
-                return new LongDataType(constraints: constraints)
+                return new LongDataType(constraints, false)
 
             case FloatDataType:
                 return new FloatDataType(constraints, false)

@@ -35,7 +35,7 @@ import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
-import com.github.hauner.openapi.core.model.datatypes.LongDataType
+import io.openapiprocessor.core.model.datatypes.LongDataType
 import com.github.hauner.openapi.core.model.datatypes.OffsetDateTimeDataType
 import com.github.hauner.openapi.core.model.datatypes.LazyDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
@@ -246,8 +246,7 @@ class DataTypeConverter {
                 simpleType = new IntegerDataType (constraints, schemaInfo.deprecated)
                 break
             case 'integer/int64':
-                simpleType = new LongDataType (
-                    constraints: constraints, deprecated: schemaInfo.deprecated)
+                simpleType = new LongDataType (constraints, schemaInfo.deprecated)
                 break
             case 'number':
             case 'number/float':

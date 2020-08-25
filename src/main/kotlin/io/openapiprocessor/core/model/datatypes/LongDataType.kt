@@ -14,42 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'integer' with format 'int64' maps to java Long.
  *
  * @author Martin Hauner
  */
-class LongDataType extends DataTypeBase {
+class LongDataType(
 
-    DataTypeConstraints constraints
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-    @Override
-    String getName () {
-        'Long'
+): DataTypeBase(constraints, deprecated) {
+
+    override fun getName(): String {
+        return "Long"
     }
 
-    @Override
-    String getPackageName () {
-        'java.lang'
-    }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints() {
-        constraints
+    override fun getPackageName(): String {
+        return "java.lang"
     }
 
 }
