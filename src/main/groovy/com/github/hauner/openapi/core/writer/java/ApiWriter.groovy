@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.Interface
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import com.google.googlejavaformat.java.Formatter
 import com.google.googlejavaformat.java.JavaFormatterOptions

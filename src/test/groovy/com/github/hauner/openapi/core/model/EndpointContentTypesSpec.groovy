@@ -1,6 +1,6 @@
 package com.github.hauner.openapi.core.model
 
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import spock.lang.Specification
 
@@ -41,10 +41,10 @@ class EndpointContentTypesSpec extends Specification {
         def endpoint = endpoint('/foo') {
             bodies {
                 content ('multipart/form-data') {
-                    data (new ObjectDataType (properties: [
+                    data (new ObjectDataType ('Foo', '', [
                         foo: new StringDataType (),
                         bar: new StringDataType ()
-                    ]))
+                    ], null, false))
                 }
             }
             responses ('204') {

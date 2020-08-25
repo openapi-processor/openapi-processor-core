@@ -21,7 +21,7 @@ import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.DataTypes
 import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.MappedDataType
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import com.github.hauner.openapi.core.test.Sl4jMockRule
@@ -152,8 +152,10 @@ Bar interface!
         )
 
         def dt = new DataTypes()
-        dt.add (new ObjectDataType(pkg: "${opts.packageName}.model", type: 'Foo'))
-        dt.add (new ObjectDataType(pkg: "${opts.packageName}.model", type: 'Bar'))
+        dt.add (new ObjectDataType('Foo', "${opts.packageName}.model", [:],
+            null, false))
+        dt.add (new ObjectDataType('Bar', "${opts.packageName}.model", [:],
+            null, false))
         def api = new Api(dt)
 
         when:
@@ -226,9 +228,12 @@ Bar enum!
         )
 
         def dt = new DataTypes()
-        dt.add (new ObjectDataType(pkg: "${opts.packageName}.model", type: 'Foo'))
-        dt.add (new ObjectDataType(pkg: "${opts.packageName}.model", type: 'Bar'))
-        dt.add (new MappedDataType('Type', 'mapped', [], null, false))
+        dt.add (new ObjectDataType('Foo', "${opts.packageName}.model", [:],
+            null, false))
+        dt.add (new ObjectDataType('Bar', "${opts.packageName}.model", [:],
+            null, false))
+        dt.add (new MappedDataType('Type', 'mapped', [],
+            null, false))
         dt.add ('simple', new StringDataType())
         def api = new Api(dt)
 
@@ -284,7 +289,8 @@ interface Foo {
         )
 
         def dt = new DataTypes()
-        dt.add (new ObjectDataType(pkg: "${opts.packageName}.model", type: 'Foo'))
+        dt.add (new ObjectDataType('Foo', "${opts.packageName}.model", [:],
+            null, false))
         def api = new Api(dt)
 
         when:

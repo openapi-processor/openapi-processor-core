@@ -24,7 +24,7 @@ import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.MappedMapDataType
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 
 /**

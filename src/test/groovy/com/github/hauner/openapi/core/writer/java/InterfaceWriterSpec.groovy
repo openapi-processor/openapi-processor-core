@@ -26,7 +26,7 @@ import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.ResultDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.parameters.ParameterBase
@@ -200,10 +200,10 @@ import annotation.Parameter;
             '200': [new Response (contentType: 'application/json', responseType: new NoneDataType())]
         ], parameters: [
             new QueryParameter(name: 'foo', required: false, dataType: new ObjectDataType (
-                pkg: 'model', type: 'Foo', properties: [
+                'Foo', 'model', [
                     foo1: new StringDataType (),
                     foo2: new StringDataType ()
-                ]
+                ], null, false
             ))
         ])
 
@@ -279,7 +279,7 @@ import com.github.hauner.openapi.Bar;
                 '200': [
                     new Response (
                         contentType: 'application/json',
-                        responseType: new ObjectDataType (type: type, pkg: pkg))
+                        responseType: new ObjectDataType (type, pkg, [:], null, false))
                 ]
             ]).initEndpointResponses ()
         ])
@@ -306,10 +306,10 @@ import ${pkg}.${type};
                 '200': [
                     new Response (
                         contentType: 'application/json',
-                        responseType: new ObjectDataType (type: type, pkg: pkg)),
+                        responseType: new ObjectDataType (type, pkg, [:], null, false)),
                     new Response (
                         contentType: 'text/plain',
-                        responseType: new ObjectDataType (type: type2, pkg: pkg2))
+                        responseType: new ObjectDataType (type2, pkg2, [:], null, false))
                 ]
             ]).initEndpointResponses ()
         ])

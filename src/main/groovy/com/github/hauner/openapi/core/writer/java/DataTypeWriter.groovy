@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.converter.ApiOptions
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.support.Identifier
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
@@ -51,7 +51,7 @@ class DataTypeWriter {
         }
         target.write ("public class ${dataType.type} {\n\n")
 
-        def propertyNames = dataType.properties.keySet ()
+        def propertyNames = dataType.objectProperties.keySet ()
         propertyNames.each {
             def javaPropertyName = Identifier.toCamelCase (it)
             def propDataType = dataType.getObjectProperty (it)
@@ -124,7 +124,7 @@ class DataTypeWriter {
         imports.addAll (dataType.referencedImports)
 
         if (apiOptions.beanValidation) {
-            for (DataType propDataType : dataType.properties.values ()) {
+            for (DataType propDataType : dataType.objectProperties.values ()) {
                 imports.addAll (beanValidationFactory.collectImports (propDataType))
             }
         }

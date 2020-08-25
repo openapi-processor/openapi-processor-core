@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.converter
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.DataTypes
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.test.TestSchema
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import io.openapiprocessor.core.parser.RefResolver
@@ -122,10 +122,10 @@ class DataTypeConverterSpec extends Specification {
 
         then:
         assert dt.size () == 2
-        def bar = dt.find ('Bar')
-        bar.properties['val'].name == 'String'
-        def foo = dt.find ('Foo')
-        foo.properties['bar'] == bar
+        def bar = dt.find ('Bar') as ObjectDataType
+        bar.objectProperties['val'].name == 'String'
+        def foo = dt.find ('Foo') as ObjectDataType
+        foo.objectProperties['bar'] == bar
     }
 
     void "converts simple array schema to Array[]" () {
@@ -194,7 +194,7 @@ paths:
         def itf = api.interfaces.first ()
         def ep = itf.endpoints.first ()
         def rsp = ep.getFirstResponse ('200')
-        def props = rsp.responseType.properties
+        def props = (rsp.responseType as ObjectDataType).objectProperties
         rsp.responseType.name == 'InlineResponse200'
         rsp.responseType.packageName == "${options.packageName}.model"
         props.size () == 2
@@ -245,13 +245,13 @@ components:
 
         and:
         def dataTypes = api.models
-        def book = dataTypes.find ('Book')
+        def book = dataTypes.find ('Book') as ObjectDataType
         assert book.name == 'Book'
         assert book.packageName == "${options.packageName}.model"
-        assert book.properties.size () == 2
-        def isbn = book.properties.get('isbn')
+        assert book.objectProperties.size () == 2
+        def isbn = book.objectProperties.get('isbn')
         assert isbn.name == 'String'
-        def title = book.properties.get('title')
+        def title = book.objectProperties.get('title')
         assert title.name == 'String'
     }
 
@@ -398,7 +398,7 @@ paths:
         def ep = itf.endpoints.first ()
         def rsp = ep.getFirstResponse ('200')
         def rt = rsp.responseType as ObjectDataType
-        def keys = rt.properties.keySet ()
+        def keys = rt.objectProperties.keySet ()
 
         keys[0] == 'b'
         keys[1] == 'a'

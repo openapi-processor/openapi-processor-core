@@ -30,7 +30,7 @@ import io.openapiprocessor.core.model.datatypes.LocalDateDataType
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.MappedMapDataType
-import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
@@ -200,10 +200,11 @@ class DataTypeConverter {
         )
 
         objectType = new ObjectDataType (
-            type: schemaInfo.name,
-            pkg: [options.packageName, 'model'].join ('.'),
-            constraints: constraints,
-            deprecated: schemaInfo.deprecated
+            schemaInfo.name,
+            [options.packageName, 'model'].join ('.'),
+            [:],
+            constraints,
+            schemaInfo.deprecated
         )
 
         schemaInfo.eachProperty { String propName, SchemaInfo propDataTypeInfo ->
