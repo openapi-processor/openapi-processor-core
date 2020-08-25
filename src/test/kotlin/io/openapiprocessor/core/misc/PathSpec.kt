@@ -28,8 +28,10 @@ class PathSpec: StringSpec({
 
     "convert source to url on windows os".config(tags = setOf(WindowsOnly)) {
         forAll(
-            row("file:////C:/somewhere/openapi-processor-samples/samples", "file:////C:/somewhere/openapi-processor-samples/samples"),
-            row("C:\\somewhere\\openapi-processor-samples\\samples", "file:/C:/somewhere/openapi-processor-samples/samples")
+            row("file:////C:/somewhere/openapi-processor-samples/samples",
+                "file:////C:/somewhere/openapi-processor-samples/samples"),
+            row("C:\\somewhere\\openapi-processor-samples\\samples",
+                "file:/C:/somewhere/openapi-processor-samples/samples")
         ) { source, url ->
             toURL(source).toString() shouldBe url
         }
@@ -37,9 +39,12 @@ class PathSpec: StringSpec({
 
     "convert source to url on unix-like os".config(tags = setOf(OtherOnly)) {
         forAll(
-            row("file:///somewhere/openapi-processor-samples/samples", "file:/somewhere/openapi-processor-samples/samples"),
-            row("https:///somewhere/openapi-processor-samples/samples", "https:/somewhere/openapi-processor-samples/samples"),
-            row("/somewhere/openapi-processor-samples/samples", "file:/somewhere/openapi-processor-samples/samples")
+            row("file:///somewhere/openapi-processor-samples/samples",
+                "file:/somewhere/openapi-processor-samples/samples"),
+            row("https:///somewhere/openapi-processor-samples/samples",
+                "https:/somewhere/openapi-processor-samples/samples"),
+            row("/somewhere/openapi-processor-samples/samples",
+                "file:/somewhere/openapi-processor-samples/samples")
         ) { source, url ->
             toURL(source).toString() shouldBe url
         }
