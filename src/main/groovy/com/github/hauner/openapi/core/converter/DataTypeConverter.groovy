@@ -26,7 +26,7 @@ import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.BooleanDataType
 import io.openapiprocessor.core.model.datatypes.ComposedObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
-import com.github.hauner.openapi.core.model.datatypes.LocalDateDataType
+import io.openapiprocessor.core.model.datatypes.LocalDateDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedMapDataType
@@ -263,7 +263,7 @@ class DataTypeConverter {
                 simpleType = createStringDataType (schemaInfo, constraints, dataTypes)
                 break
             case 'string/date':
-                simpleType = new LocalDateDataType (deprecated: schemaInfo.deprecated)
+                simpleType = new LocalDateDataType (constraints, schemaInfo.deprecated)
                 break
             case 'string/date-time':
                 simpleType = new OffsetDateTimeDataType (deprecated: schemaInfo.deprecated)

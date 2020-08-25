@@ -14,33 +14,26 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI type 'string' with format 'date' maps to java LocalDate.
  *
  * @author Martin Hauner
  */
-class LocalDateDataType extends DataTypeBase {
+class LocalDateDataType(
 
-    @Override
-    String getName () {
-        return 'LocalDate'
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
+
+): DataTypeBase(constraints, deprecated) {
+
+    override fun getName(): String {
+        return "LocalDate"
     }
 
-    @Override
-    String getPackageName () {
-        'java.time'
+    override fun getPackageName(): String {
+        return "java.time"
     }
-
-    @Override
-    Set<String> getImports () {
-        [[packageName, name].join ('.')]
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
+    
 }
