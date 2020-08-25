@@ -28,8 +28,8 @@ import io.openapiprocessor.core.model.datatypes.ComposedObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.model.datatypes.LocalDateDataType
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
-import com.github.hauner.openapi.core.model.datatypes.MappedDataType
-import com.github.hauner.openapi.core.model.datatypes.MappedMapDataType
+import io.openapiprocessor.core.model.datatypes.MappedDataType
+import io.openapiprocessor.core.model.datatypes.MappedMapDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
@@ -105,10 +105,11 @@ class DataTypeConverter {
         TargetType targetType = getMappedDataType (schemaInfo)
         if (targetType) {
             objectType = new MappedDataType (
-                type: targetType.name,
-                pkg: targetType.pkg,
-                genericTypes: targetType.genericNames,
-                deprecated: schemaInfo.deprecated
+                targetType.name,
+                targetType.pkg,
+                targetType.genericNames,
+                null,
+                schemaInfo.deprecated
             )
             return objectType
         }
@@ -172,18 +173,20 @@ class DataTypeConverter {
                 case Map.name:
                 case 'org.springframework.util.MultiValueMap':
                     objectType = new MappedMapDataType (
-                        type: targetType.name,
-                        pkg: targetType.pkg,
-                        genericTypes: targetType.genericNames,
-                        deprecated: schemaInfo.deprecated
+                        targetType.name,
+                        targetType.pkg,
+                        targetType.genericNames,
+                        null,
+                        schemaInfo.deprecated
                     )
                     return objectType
                 default:
                     objectType = new MappedDataType (
-                        type: targetType.name,
-                        pkg: targetType.pkg,
-                        genericTypes: targetType.genericNames,
-                        deprecated: schemaInfo.deprecated
+                        targetType.name,
+                        targetType.pkg,
+                        targetType.genericNames,
+                        null,
+                        schemaInfo.deprecated
                     )
 
                     // probably not required anymore
@@ -217,9 +220,11 @@ class DataTypeConverter {
         TargetType targetType = getMappedDataType (schemaInfo)
         if (targetType) {
             def simpleType = new MappedDataType (
-                type: targetType.name,
-                pkg: targetType.pkg,
-                genericTypes: targetType.genericNames
+                targetType.name,
+                targetType.pkg,
+                targetType.genericNames,
+                null,
+                schemaInfo.deprecated
             )
             return simpleType
         }

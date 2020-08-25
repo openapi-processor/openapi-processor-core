@@ -20,7 +20,7 @@ import com.github.hauner.openapi.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.DataTypes
 import com.github.hauner.openapi.core.model.Interface
-import com.github.hauner.openapi.core.model.datatypes.MappedDataType
+import io.openapiprocessor.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.datatypes.StringEnumDataType
@@ -226,7 +226,7 @@ Bar enum!
         def dt = new DataTypes()
         dt.add (new ObjectDataType(pkg: "${opts.packageName}.model", type: 'Foo'))
         dt.add (new ObjectDataType(pkg: "${opts.packageName}.model", type: 'Bar'))
-        dt.add (new MappedDataType(pkg: "mapped", type: 'Type'))
+        dt.add (new MappedDataType('Type', 'mapped', [], null, false))
         dt.add ('simple', new StringDataType())
         def api = new Api(dt)
 

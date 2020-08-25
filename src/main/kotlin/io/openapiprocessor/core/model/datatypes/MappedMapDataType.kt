@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI schema mapped to a map java type.
@@ -24,5 +24,10 @@ package com.github.hauner.openapi.core.model.datatypes
  *
  * @author Martin Hauner
  */
-class MappedMapDataType extends MappedDataType {
-}
+class MappedMapDataType(
+    type: String,
+    pkg: String,
+    genericTypes: List<String> = emptyList(),
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
+) : MappedDataType(type, pkg, genericTypes, constraints, deprecated)

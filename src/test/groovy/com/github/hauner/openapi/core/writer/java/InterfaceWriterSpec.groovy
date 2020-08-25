@@ -24,7 +24,7 @@ import com.github.hauner.openapi.core.model.EndpointResponse
 import com.github.hauner.openapi.core.model.Interface
 import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
-import com.github.hauner.openapi.core.model.datatypes.MappedDataType
+import io.openapiprocessor.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.ResultDataType
@@ -252,7 +252,8 @@ import annotation.Body;
             new RequestBody (
                 contentType: 'plain/text',
                 dataType: new MappedDataType (
-                    pkg: 'com.github.hauner.openapi', type: 'Bar'),
+                    'Bar', 'com.github.hauner.openapi', [],
+                    null, false),
                 required: true
             )
         ])

@@ -23,7 +23,7 @@ import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
-import com.github.hauner.openapi.core.model.datatypes.MappedMapDataType
+import io.openapiprocessor.core.model.datatypes.MappedMapDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 

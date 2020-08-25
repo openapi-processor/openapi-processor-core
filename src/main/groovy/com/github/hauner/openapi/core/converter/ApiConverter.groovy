@@ -31,7 +31,7 @@ import com.github.hauner.openapi.core.model.DataTypes
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
 import com.github.hauner.openapi.core.model.RequestBody as ModelRequestBody
-import com.github.hauner.openapi.core.model.datatypes.MappedDataType
+import io.openapiprocessor.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.Response as ModelResponse
@@ -233,9 +233,11 @@ class  ApiConverter {
         TargetType tt = tm.targetType
 
         def addType = new MappedDataType (
-            type: tt.name,
-            pkg: tt.pkg,
-            genericTypes: tt.genericNames
+            tt.name,
+            tt.pkg,
+            tt.genericNames,
+            null,
+            false
         )
 
         def parameter = new Parameter () {

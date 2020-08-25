@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.MappedDataType
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -23,7 +24,7 @@ class MappedDataTypeSpec extends Specification {
 
     @Unroll
     void "get name of type with (optional) generic parameters" () {
-        def type = new MappedDataType(pkg: 'model', type: 'Foo', genericTypes: generics)
+        def type = new MappedDataType('Foo', 'model', generics, null, false)
 
         expect:
         type.name == typeName
@@ -37,7 +38,7 @@ class MappedDataTypeSpec extends Specification {
 
     @Unroll
     void "get imports of type with (optional) generic parameters" () {
-        def type = new MappedDataType(pkg: 'model', type: 'Foo', genericTypes: generics)
+        def type = new MappedDataType('Foo', 'model', generics, null, false)
 
         expect:
         type.imports == imports as Set
