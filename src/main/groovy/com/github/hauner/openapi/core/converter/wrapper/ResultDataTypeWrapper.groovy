@@ -64,9 +64,9 @@ class ResultDataTypeWrapper {
 
         } else {
             def resultType = new ResultDataType (
-                type: targetType.name,
-                pkg: targetType.pkg,
-                dataType: checkNone (dataType)
+                targetType.name,
+                targetType.pkg,
+                checkNone (dataType)
             )
             return resultType
         }

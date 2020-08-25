@@ -265,9 +265,9 @@ class MethodWriterSpec extends Specification {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '204': [new Response(responseType:
                 new ResultDataType (
-                    type: 'ResultWrapper',
-                    pkg: 'http',
-                    dataType: new NoneDataType ()
+                    'ResultWrapper',
+                    'http',
+                    new NoneDataType ()
                         .wrappedInResult ()
                 ))]
         ])
@@ -309,16 +309,16 @@ class MethodWriterSpec extends Specification {
             '200' : [
                 new Response (contentType: 'application/json',
                     responseType: new ResultDataType (
-                        type: 'ResultWrapper',
-                        pkg: 'http',
-                        dataType: new StringDataType ()))
+                        'ResultWrapper',
+                        'http',
+                        new StringDataType ()))
             ],
             'default': [
                 new Response (contentType: 'text/plain',
                     responseType: new ResultDataType (
-                        type: 'ResultWrapper',
-                        pkg: 'http',
-                        dataType: new StringDataType ()))
+                        'ResultWrapper',
+                        'http',
+                        new StringDataType ()))
             ]
         ])
 

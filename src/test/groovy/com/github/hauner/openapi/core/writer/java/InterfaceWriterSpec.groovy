@@ -132,9 +132,9 @@ import annotation.MappingC;
                 '200': [
                     new Response (responseType:
                         new ResultDataType (
-                            type: 'ResultWrapper',
-                            pkg: 'http',
-                            dataType: new NoneDataType ()
+                            'ResultWrapper',
+                            'http',
+                            new NoneDataType ()
                         ))
                 ]]).initEndpointResponses ()
         ])

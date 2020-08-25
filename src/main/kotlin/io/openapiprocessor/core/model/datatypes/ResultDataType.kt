@@ -59,8 +59,8 @@ class ResultDataType(
         return "$type<?>"
     }
 
-    override fun getImportsMulti(): Set<String> {
-        return setOf("${getPackageName()}.$type"))
+    fun getImportsMulti(): Set<String> {
+        return setOf("${getPackageName()}.$type")
     }
 
 }
