@@ -30,7 +30,7 @@ import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
-import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
+import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import com.github.hauner.openapi.core.model.parameters.QueryParameter
@@ -156,10 +156,10 @@ class MethodWriterSpec extends Specification {
 """
 
         where:
-        collection                                                               | response
-        new ArrayDataType (new StringDataType (), null, false)                   | 'String[]'
-        new MappedCollectionDataType (type: 'List', item: new StringDataType ()) | 'List<String>'
-        new MappedCollectionDataType (type: 'Set', item: new StringDataType ())  | 'Set<String>'
+        collection                                                                    | response
+        new ArrayDataType (new StringDataType (), null, false)                        | 'String[]'
+        new MappedCollectionDataType ('List', '', new StringDataType (), null, false) | 'List<String>'
+        new MappedCollectionDataType ('Set', '', new StringDataType (), null, false)  | 'Set<String>'
     }
 
     void "writes parameter annotation" () {

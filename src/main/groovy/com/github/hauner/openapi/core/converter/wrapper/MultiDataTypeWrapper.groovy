@@ -24,7 +24,7 @@ import io.openapiprocessor.core.converter.mapping.Mapping
 import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.model.datatypes.DataType
-import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
+import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 
 /**
@@ -73,9 +73,11 @@ class MultiDataTypeWrapper {
         DataType item = dataType.item
 
         def multiType = new MappedCollectionDataType (
-            type: targetType.name,
-            pkg: targetType.pkg,
-            item: item
+            targetType.name,
+            targetType.pkg,
+            item,
+            null,
+            false
         )
         return multiType
     }

@@ -27,7 +27,7 @@ import io.openapiprocessor.core.model.datatypes.BooleanDataType
 import io.openapiprocessor.core.model.datatypes.ComposedObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.model.datatypes.LocalDateDataType
-import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
+import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedDataType
 import com.github.hauner.openapi.core.model.datatypes.MappedMapDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
@@ -147,10 +147,11 @@ class DataTypeConverter {
 
         if (targetType) {
             def mappedDataType = new MappedCollectionDataType (
-                type: targetType.name,
-                pkg: targetType.pkg,
-                item: item,
-                deprecated: schemaInfo.deprecated
+                targetType.name,
+                targetType.pkg,
+                item,
+                constraints,
+                schemaInfo.deprecated
             )
             return mappedDataType
         }

@@ -27,7 +27,8 @@ class EndpointMethodResponseSpec extends Specification {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200'    : [
                 new Response (contentType: 'application/json',
-                    responseType: new CollectionDataType (item: new StringDataType ()))
+                    responseType: new CollectionDataType (
+                        new StringDataType (), null, false))
             ]
         ]).initEndpointResponses ()
 
@@ -44,13 +45,16 @@ class EndpointMethodResponseSpec extends Specification {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200'    : [
                 new Response (contentType: 'application/json',
-                    responseType: new CollectionDataType (item: new StringDataType ())),
+                    responseType: new CollectionDataType (
+                        new StringDataType (), null, false)),
                 new Response (contentType: 'application/xml',
-                    responseType: new CollectionDataType (item: new StringDataType ()))
+                    responseType: new CollectionDataType (
+                        new StringDataType (), null, false))
             ],
             'default': [
                 new Response (contentType: 'text/plain',
-                    responseType: new CollectionDataType (item: new StringDataType ()))
+                    responseType: new CollectionDataType (
+                        new StringDataType (), null, false))
             ]
         ]).initEndpointResponses ()
 

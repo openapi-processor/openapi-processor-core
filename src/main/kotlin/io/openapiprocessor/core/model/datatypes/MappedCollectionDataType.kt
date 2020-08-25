@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
-
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI schema collection mapped to a java type. The java type is expected to have a single
@@ -25,37 +22,26 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  *
  * @author Martin Hauner
  */
-class MappedCollectionDataType extends DataTypeBase {
+open class MappedCollectionDataType(
 
-    String type
-    String pkg = 'unknown'
+    private val type: String,
+    private val pkg: String,
+    private val item: DataType,
+    constraints: DataTypeConstraints? = null,
+    deprecated: Boolean = false
 
-    protected DataType item
-    protected DataTypeConstraints constraints
+): DataTypeBase(constraints, deprecated) {
 
-    @Override
-    String getName () {
-        "${type}<${item.name}>"
+    override fun getName(): String {
+        return "${type}<${item.getName()}>"
     }
 
-    @Override
-    String getPackageName () {
-        pkg
+    override fun getPackageName(): String {
+        return pkg
     }
 
-    @Override
-    Set<String> getImports () {
-        [[packageName, type].join('.')] + item.imports
-    }
-
-    @Override
-    Set<String> getReferencedImports () {
-        []
-    }
-
-    @Override
-    DataTypeConstraints getConstraints () {
-        constraints
+    override fun getImports(): Set<String> {
+        return setOf(getPackageName() + "." + type) + item.getImports()
     }
 
 }

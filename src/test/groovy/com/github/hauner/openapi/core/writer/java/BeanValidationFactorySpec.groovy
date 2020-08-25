@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.model.datatypes.DataTypeBase
-import com.github.hauner.openapi.core.model.datatypes.MappedCollectionDataType
+import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import com.github.hauner.openapi.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.DataType
@@ -133,9 +133,11 @@ class BeanValidationFactorySpec extends Specification {
         constraints.maxItems = maxItems
 
         DataType dataType = new MappedCollectionDataType(
-            type: Collection.name,
-            pkg: Collection.packageName,
-            constraints: constraints)
+            Collection.name,
+            Collection.packageName,
+            new StringDataType (),
+            constraints,
+            false)
 
         when:
         def imports = validation.collectImports (dataType)
@@ -322,9 +324,11 @@ class BeanValidationFactorySpec extends Specification {
 
             case MappedCollectionDataType:
                 return new MappedCollectionDataType(
-                    type: Collection.name,
-                    pkg: Collection.packageName,
-                    constraints: constraints
+                    Collection.name,
+                    Collection.packageName,
+                    new StringDataType (),
+                    constraints,
+                    false
                 )
         }
         null

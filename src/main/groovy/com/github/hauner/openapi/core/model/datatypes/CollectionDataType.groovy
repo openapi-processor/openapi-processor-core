@@ -16,6 +16,10 @@
 
 package com.github.hauner.openapi.core.model.datatypes
 
+import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
+
 /**
  * OpenAPI type 'array' maps to Collection<>.
  *
@@ -24,9 +28,8 @@ package com.github.hauner.openapi.core.model.datatypes
  */
 class CollectionDataType extends MappedCollectionDataType {
 
-    CollectionDataType() {
-        pkg = Collection.packageName
-        type = Collection.name
+    CollectionDataType(DataType item, DataTypeConstraints constraints = null, boolean deprecated = false) {
+        super(Collection.name, Collection.packageName, item, constraints, deprecated)
     }
 
 }
