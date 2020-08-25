@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.converter.ApiOptions
-import com.github.hauner.openapi.core.model.datatypes.ListDataType
+import io.openapiprocessor.core.model.datatypes.ListDataType
 import com.github.hauner.openapi.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.model.datatypes.StringDataType
 import spock.lang.Specification
@@ -74,7 +74,7 @@ import external.Isbn;
 
     void "writes import of generic list type" () {
         def dataType = new ObjectDataType (type: 'Book', properties: [
-            'authors': new ListDataType (item: new StringDataType())
+            'authors': new ListDataType (new StringDataType())
         ])
 
         when:

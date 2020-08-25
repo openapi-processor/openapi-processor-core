@@ -17,14 +17,15 @@
 package io.openapiprocessor.core.model.datatypes
 
 /**
- * OpenAPI type 'array' maps to Collection<>.
+ * OpenAPI type 'array' maps to List<>.
  *
  * @author Martin Hauner
  * @author Bastian Wilhelm
  */
-class CollectionDataType(
+class ListDataType(
     item: DataType
 ): MappedCollectionDataType(
-    Collection::class.java.simpleName,
-    Collection::class.java.packageName,
-    item)
+    List::class.java.simpleName,
+    List::class.java.packageName,
+    item
+)
