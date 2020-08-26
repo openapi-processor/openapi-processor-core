@@ -21,18 +21,17 @@ import io.kotest.core.Tags
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.extensions.TagExtension
 
-object WindowsOnly: Tag()
-object OtherOnly: Tag()
+object Windows: Tag()
+object NotWindows: Tag()
 
 object SystemTagExtension: TagExtension {
 
     override fun tags(): Tags {
+
         return if(isWindows()) {
-            Tags.include(WindowsOnly)
-                .exclude(OtherOnly)
+            Tags.exclude(NotWindows)
         } else {
-            Tags.include(OtherOnly)
-                .exclude(WindowsOnly)
+            Tags.exclude(Windows)
         }
     }
 

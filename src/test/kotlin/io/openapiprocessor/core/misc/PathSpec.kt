@@ -20,13 +20,13 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import io.openapiprocessor.core.OtherOnly
-import io.openapiprocessor.core.WindowsOnly
+import io.openapiprocessor.core.NotWindows
+import io.openapiprocessor.core.Windows
 
 
 class PathSpec: StringSpec({
 
-    "convert source to url on windows os".config(tags = setOf(WindowsOnly)) {
+    "convert source to url on windows os".config(tags = setOf(Windows)) {
         forAll(
             row("file:////C:/somewhere/openapi-processor-samples/samples",
                 "file:////C:/somewhere/openapi-processor-samples/samples"),
@@ -37,7 +37,7 @@ class PathSpec: StringSpec({
         }
     }
 
-    "convert source to url on unix-like os".config(tags = setOf(OtherOnly)) {
+    "convert source to url on unix-like os".config(tags = setOf(NotWindows)) {
         forAll(
             row("file:///somewhere/openapi-processor-samples/samples",
                 "file:/somewhere/openapi-processor-samples/samples"),
