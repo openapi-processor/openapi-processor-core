@@ -32,6 +32,9 @@ object SystemTagExtension: TagExtension {
 
 }
 
+/**
+ * kotest config
+ */
 object ProjectConfig: AbstractProjectConfig() {
     override fun extensions() = listOf(SystemTagExtension)
 }
