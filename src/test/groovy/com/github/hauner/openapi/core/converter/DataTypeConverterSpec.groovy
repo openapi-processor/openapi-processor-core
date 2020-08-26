@@ -19,6 +19,7 @@ package com.github.hauner.openapi.core.converter
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.Api
 import com.github.hauner.openapi.core.model.DataTypes
+import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.test.TestSchema
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException

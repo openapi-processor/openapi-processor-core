@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.framework.FrameworkAnnotations

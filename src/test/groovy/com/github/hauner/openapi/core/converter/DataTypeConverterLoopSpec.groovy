@@ -18,6 +18,7 @@ package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.datatypes.LazyDataType
+import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import spock.lang.Specification
 
@@ -69,9 +70,9 @@ components:
         rt instanceof ObjectDataType
         sf instanceof LazyDataType
         sf.name == 'Self'
-        sf.packageName == 'processor.model'
-        sf.imports == ['processor.model.Self'] as Set
-        sf.referencedImports == ['processor.model.Self'] as Set
+        sf.packageName == 'io.openapiprocessor.generated.model'
+        sf.imports == ['io.openapiprocessor.generated.model.Self'] as Set
+        sf.referencedImports == ['io.openapiprocessor.generated.model.Self'] as Set
     }
 
 }

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter
+package io.openapiprocessor.core.converter
 
 import io.openapiprocessor.core.converter.mapping.Mapping
 
 /**
- * Options of the generatr.
+ * Options of the processor.
  *
  * @author Martin Hauner
  * @author Bastian Wilhelm
@@ -29,13 +29,13 @@ class ApiOptions {
     /**
      * the path to the open api yaml file.
      */
-    String apiPath
+    lateinit var apiPath: String
 
     /**
      * the destination folder for generating interfaces & models. This is the parent of the
      * {@link #packageName} folder tree.
      */
-    String targetDir
+    lateinit var targetDir: String
 
     /**
      * the root package of the generated interfaces/model. The package folder tree will be created
@@ -44,12 +44,12 @@ class ApiOptions {
      * - interfaces => "${packageName}.api"
      * - models => "${packageName}.model"
      */
-    String packageName = 'processor'
+    var packageName = "io.openapiprocessor.generated"
 
     /**
      * provide enabling Bean Validation (JSR303) annotations. Default is false (disabled)
      */
-    boolean beanValidation = false
+    var beanValidation = false
 
     /**
      * provide additional type mapping information to map OpenAPI types to java types. The list can
@@ -62,6 +62,6 @@ class ApiOptions {
      * override parameter/response type mappings or to add additional parameters on a single
      * endpoint.
      */
-    List<Mapping> typeMappings = []
+    var typeMappings: List<Mapping> = emptyList()
 
 }

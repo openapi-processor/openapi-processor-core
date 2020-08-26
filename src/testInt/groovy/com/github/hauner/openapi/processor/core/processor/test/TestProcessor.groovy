@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.processor.core.processor.test
 
 import com.github.hauner.openapi.core.converter.ApiConverter
-import com.github.hauner.openapi.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.ApiOptions
 import com.github.hauner.openapi.core.framework.FrameworkBase
 import io.openapiprocessor.core.parser.OpenApi
 import io.openapiprocessor.core.parser.Parser
