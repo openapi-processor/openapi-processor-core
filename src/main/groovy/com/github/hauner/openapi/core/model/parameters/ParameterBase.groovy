@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.model.parameters
 
 import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.parameters.ParameterConstraints
 
 abstract class ParameterBase implements Parameter {
     String name

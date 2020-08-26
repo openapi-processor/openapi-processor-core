@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.parameters
+package io.openapiprocessor.core.model.parameters
 
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 
@@ -24,16 +24,17 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  * @author Martin Hauner
  * @author Bastian Wilhelm
  */
-class ParameterConstraints {
+class ParameterConstraints(
 
-    DataTypeConstraints constraints
+    val constraints: DataTypeConstraints
 
-    boolean hasDefault() {
-        constraints?.defaultValue != null
+) {
+
+    fun hasDefault(): Boolean {
+        return constraints.defaultValue != null
     }
 
-    def getDefault() {
-        constraints.default
-    }
+    val default
+    get() = constraints.getDefault()
 
 }
