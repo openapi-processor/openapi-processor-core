@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
+import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.CollectionDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.HttpMethod
@@ -26,8 +27,8 @@ class EndpointMethodResponseSpec extends Specification {
     void "creates single success/other content type groups" () {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200'    : [
-                new Response (contentType: 'application/json',
-                    responseType: new CollectionDataType (new StringDataType ()))
+                new Response ('application/json',
+                    new CollectionDataType (new StringDataType ()))
             ]
         ]).initEndpointResponses ()
 
@@ -43,14 +44,14 @@ class EndpointMethodResponseSpec extends Specification {
     void "groups response content types to multiple success/other content type groups" () {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200'    : [
-                new Response (contentType: 'application/json',
-                    responseType: new CollectionDataType (new StringDataType ())),
-                new Response (contentType: 'application/xml',
-                    responseType: new CollectionDataType (new StringDataType ()))
+                new Response ('application/json',
+                    new CollectionDataType (new StringDataType ())),
+                new Response ('application/xml',
+                    new CollectionDataType (new StringDataType ()))
             ],
             'default': [
-                new Response (contentType: 'text/plain',
-                    responseType: new CollectionDataType (new StringDataType ()))
+                new Response ('text/plain',
+                    new CollectionDataType (new StringDataType ()))
             ]
         ]).initEndpointResponses ()
 

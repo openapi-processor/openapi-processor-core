@@ -22,7 +22,7 @@ import io.openapiprocessor.core.model.datatypes.ResultDataType
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.Endpoint
-import com.github.hauner.openapi.core.model.Response
+import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.BooleanDataType
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
@@ -33,7 +33,7 @@ import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.parameters.QueryParameter
-import com.github.hauner.openapi.core.test.EmptyResponse
+import io.openapiprocessor.core.model.test.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
 import io.openapiprocessor.core.model.HttpMethod
@@ -94,7 +94,7 @@ class MethodWriterSpec extends Specification {
     @Unroll
     void "writes simple data type response (#type)" () {
         def endpoint = createEndpoint (path: "/$type", method: HttpMethod.GET, responses: [
-            '200': [new Response(contentType: 'text/plain', responseType: responseType)]
+            '200': [new Response('text/plain', responseType)]
         ])
 
         when:
@@ -119,8 +119,8 @@ class MethodWriterSpec extends Specification {
     void "writes inline object data type response" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200': [
-                new Response (contentType: 'application/json',
-                    responseType: new ObjectDataType (
+                new Response ('application/json',
+                    new ObjectDataType (
                         'InlineObjectResponse', '', [
                         foo1: new StringDataType (),
                         foo2: new StringDataType ()
@@ -141,7 +141,7 @@ class MethodWriterSpec extends Specification {
     void "writes method with Collection response type" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200': [
-                new Response (contentType: 'application/json', responseType: collection)
+                new Response ('application/json', collection)
             ]
         ])
 
@@ -251,7 +251,7 @@ class MethodWriterSpec extends Specification {
 
     void "writes method with void response type wrapped by result wrapper" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '204': [new Response(responseType:
+            '204': [new Response("",
                 new ResultDataType (
                     'ResultWrapper',
                     'http',
@@ -273,12 +273,10 @@ class MethodWriterSpec extends Specification {
     void "writes method with 'Object' response when it has multiple result content types (200, default)" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200' : [
-                new Response (contentType: 'application/json',
-                    responseType: new StringDataType ())
+                new Response ('application/json', new StringDataType ())
             ],
             'default': [
-                new Response (contentType: 'text/plain',
-                    responseType: new StringDataType ())
+                new Response ('text/plain', new StringDataType ())
             ]
         ])
 
@@ -295,15 +293,15 @@ class MethodWriterSpec extends Specification {
     void "writes method with '?' response when it has multiple result contents types & wrapper result type" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200' : [
-                new Response (contentType: 'application/json',
-                    responseType: new ResultDataType (
+                new Response ('application/json',
+                    new ResultDataType (
                         'ResultWrapper',
                         'http',
                         new StringDataType ()))
             ],
             'default': [
-                new Response (contentType: 'text/plain',
-                    responseType: new ResultDataType (
+                new Response ( 'text/plain',
+                    new ResultDataType (
                         'ResultWrapper',
                         'http',
                         new StringDataType ()))

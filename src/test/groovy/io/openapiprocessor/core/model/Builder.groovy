@@ -18,12 +18,12 @@ package io.openapiprocessor.core.model
 
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
-import com.github.hauner.openapi.core.model.Response
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.parameters.MultipartParameter
 import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.test.EmptyResponse
 
 class Builder {
 
@@ -194,10 +194,7 @@ class ResponsesBuilder {
     }
 
     void empty() {
-        def rp = new Response()
-        rp.contentType = null
-        rp.responseType = new NoneDataType()
-        responses.add (rp)
+        responses.add (new EmptyResponse())
     }
 
     List<Response> build () {
@@ -215,10 +212,7 @@ class ResponseBuilder {
     }
 
     Response build () {
-        def rp = new Response()
-        rp.contentType = content
-        rp.responseType = response
-        rp
+        new Response(content, response ?: new NoneDataType ())
     }
 
 }

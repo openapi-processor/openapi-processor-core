@@ -23,7 +23,7 @@ import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.EndpointResponse
 import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.RequestBody
-import com.github.hauner.openapi.core.model.Response
+import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
@@ -31,7 +31,7 @@ import io.openapiprocessor.core.model.datatypes.ResultDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.parameters.ParameterBase
 import io.openapiprocessor.core.model.parameters.QueryParameter
-import com.github.hauner.openapi.core.test.EmptyResponse
+import io.openapiprocessor.core.model.test.EmptyResponse
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.writer.java.NullImportFilter
 import spock.lang.Specification
@@ -130,7 +130,7 @@ import annotation.MappingC;
         def apiItf = new Interface (name: 'name', endpoints: [
             new Endpoint(path: 'path', method: HttpMethod.GET, responses: [
                 '200': [
-                    new Response (responseType:
+                    new Response ("",
                         new ResultDataType (
                             'ResultWrapper',
                             'http',
@@ -171,7 +171,7 @@ import annotation.Parameter;
 
     void "does not write parameter annotation import of a parameter that does not want the annotation" () {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200': [new Response (contentType: 'application/json', responseType: new NoneDataType())]
+            '200': [new Response ('application/json', new NoneDataType())]
         ], parameters: [
             new ParameterBase ('foo',
                 new StringDataType(null, false),
@@ -198,7 +198,7 @@ import annotation.Parameter;
 
     void "writes import of request parameter data type" () {
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200': [new Response (contentType: 'application/json', responseType: new NoneDataType())]
+            '200': [new Response ( 'application/json', new NoneDataType())]
         ], parameters: [
             new QueryParameter('foo', new ObjectDataType (
                 'Foo', 'model', [
@@ -275,9 +275,8 @@ import com.github.hauner.openapi.Bar;
         def apiItf = new Interface (name: 'name', endpoints: [
             new Endpoint(path: 'path', method: HttpMethod.GET, responses: [
                 '200': [
-                    new Response (
-                        contentType: 'application/json',
-                        responseType: new ObjectDataType (type, pkg, [:], null, false))
+                    new Response ('application/json',
+                        new ObjectDataType (type, pkg, [:], null, false))
                 ]
             ]).initEndpointResponses ()
         ])
@@ -302,12 +301,10 @@ import ${pkg}.${type};
         def apiItf = new Interface (name: 'name', endpoints: [
             new Endpoint (path: 'path', method: HttpMethod.GET, responses: [
                 '200': [
-                    new Response (
-                        contentType: 'application/json',
-                        responseType: new ObjectDataType (type, pkg, [:], null, false)),
-                    new Response (
-                        contentType: 'text/plain',
-                        responseType: new ObjectDataType (type2, pkg2, [:], null, false))
+                    new Response ('application/json',
+                        new ObjectDataType (type, pkg, [:], null, false)),
+                    new Response ('text/plain',
+                        new ObjectDataType (type2, pkg2, [:], null, false))
                 ]
             ]).initEndpointResponses ()
         ])
@@ -377,7 +374,7 @@ import annotation.MappingC;
     void "filters unnecessary 'java.lang' imports"() {
         def apiItf = new Interface (name: 'name', endpoints: [
             new Endpoint(path: 'path', method: HttpMethod.GET, responses: [
-                '200': [new Response(contentType: 'plain/text', responseType: new StringDataType())]
+                '200': [new Response('plain/text', new StringDataType())]
             ])
         ])
 

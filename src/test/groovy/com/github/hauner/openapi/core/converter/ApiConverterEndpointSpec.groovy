@@ -142,10 +142,8 @@ paths:
         def rsp = ep.getFirstResponse ('204')
         ep.path == '/ping'
         ep.method == HttpMethod.GET
-        !rsp.contentType
-        rsp.responseType instanceof NoneDataType
+        rsp.empty
     }
-
 
     void "uses default interface name when no interface-name-tag is given" () {
         def openApi = parse (

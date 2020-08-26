@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
+import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.ResultDataType
 
 /**

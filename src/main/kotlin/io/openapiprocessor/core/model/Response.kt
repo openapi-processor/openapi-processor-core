@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model
+package io.openapiprocessor.core.model
 
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
@@ -24,17 +24,15 @@ import io.openapiprocessor.core.model.datatypes.NoneDataType
  *
  * @author Martin Hauner
  */
-class Response {
+open class Response(
+    val contentType: String,
+    val responseType: DataType
+) {
 
-    String contentType
-    DataType responseType
+    val imports
+    get() = responseType.getImports()
 
-    Set<String> getImports () {
-        responseType.imports
-    }
-
-    boolean isEmpty() {
-        responseType instanceof NoneDataType
-    }
+    val empty
+    get() = responseType is NoneDataType
 
 }

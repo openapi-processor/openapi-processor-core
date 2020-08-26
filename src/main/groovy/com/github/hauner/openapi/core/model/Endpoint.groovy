@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
+import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.parameters.MultipartParameter
 import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.parameters.Parameter
@@ -98,7 +99,7 @@ class Endpoint {
 
         def contentTypes = new HashSet<String>()
         responses.each {
-            if (!it.contentType) {
+            if (it.empty) {
                 return
             }
 

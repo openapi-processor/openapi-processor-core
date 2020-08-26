@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.test
+package io.openapiprocessor.core.model.test
 
-import com.github.hauner.openapi.core.model.Response
+import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 
 /**
  * test only. simpler setup of an empty response.
  */
-class EmptyResponse extends Response {
-
-    EmptyResponse() {
-        contentType = null
-        responseType = new NoneDataType()
-    }
-
-}
+class EmptyResponse: Response("?", NoneDataType())

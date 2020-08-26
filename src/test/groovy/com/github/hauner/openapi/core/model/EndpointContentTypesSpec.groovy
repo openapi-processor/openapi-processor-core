@@ -70,11 +70,17 @@ class EndpointContentTypesSpec extends Specification {
     void "provides producing content types" () {
         def endpoint = endpoint('/foo') {
             responses ('200') {
-                content ('text/plain') {}
-                content ('application/json') {}
+                content ('text/plain') {
+                    response (new StringDataType())
+                }
+                content ('application/json') {
+                    response (new StringDataType())
+                }
             }
             responses ('401') {
-                content ('text/plain') {}
+                content ('text/plain') {
+                    response (new StringDataType())
+                }
             }
         }
 

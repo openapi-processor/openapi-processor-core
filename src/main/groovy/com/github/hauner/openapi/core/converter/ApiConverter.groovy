@@ -36,7 +36,7 @@ import io.openapiprocessor.core.model.RequestBody as ModelRequestBody
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.Response as ModelResponse
+import io.openapiprocessor.core.model.Response as ModelResponse
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.parser.OpenApi
 import groovy.util.logging.Slf4j
@@ -322,10 +322,7 @@ class  ApiConverter {
             DataType singleDataType = singleDataTypeWrapper.wrap (dataType, info)
             DataType resultDataType = dataTypeWrapper.wrap (singleDataType, info)
 
-            def resp = new ModelResponse (
-                responseType: resultDataType)
-
-            return [resp]
+            return [new ModelResponse ("?", resultDataType)]
         }
 
         def responses = []
@@ -350,11 +347,7 @@ class  ApiConverter {
             }
             DataType resultDataType = dataTypeWrapper.wrap (changedType, info)
 
-            def resp = new ModelResponse (
-                contentType: contentType,
-                responseType: resultDataType)
-
-            responses.add (resp)
+            responses.add (new ModelResponse (contentType, resultDataType))
         }
 
         responses
