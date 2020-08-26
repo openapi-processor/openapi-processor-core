@@ -22,6 +22,7 @@ import com.github.hauner.openapi.core.converter.wrapper.ResultDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.SingleDataTypeWrapper
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.parameters.Parameter as ModelParameter
+import io.openapiprocessor.core.converter.MultipartResponseBodyException
 import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.Mapping
 import io.openapiprocessor.core.converter.mapping.TargetType

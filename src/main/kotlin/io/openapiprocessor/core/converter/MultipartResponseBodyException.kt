@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter
+package io.openapiprocessor.core.converter
 
 /**
  * thrown when the ApiConverter hits a multipart/form-data response body where
@@ -22,18 +22,13 @@ package com.github.hauner.openapi.core.converter
  *
  * @author Martin Hauner
  */
-class MultipartResponseBodyException extends RuntimeException {
+class MultipartResponseBodyException(
 
-    String path
+    private val path: String
 
-    MultipartResponseBodyException(String path) {
-        super()
-        this.path = path
-    }
+): RuntimeException() {
 
-    @Override
-    String getMessage () {
-        "the schema of the multipart response body of ${path} should be an object!"
-    }
+    override val message: String
+        get() = "the schema of the multipart response body of $path should be an object!"
 
 }

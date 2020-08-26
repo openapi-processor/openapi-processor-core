@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import io.openapiprocessor.core.converter.MultipartResponseBodyException
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.framework.Framework
