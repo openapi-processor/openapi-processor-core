@@ -19,13 +19,12 @@ package com.github.hauner.openapi.core.writer.java
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ResultDataType
-import com.github.hauner.openapi.core.model.parameters.Parameter
-import com.github.hauner.openapi.core.model.parameters.ParameterBase
+import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.parameters.ParameterBase
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Response
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.BooleanDataType
-import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.DoubleDataType
 import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
@@ -33,7 +32,7 @@ import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
-import com.github.hauner.openapi.core.model.parameters.QueryParameter
+import io.openapiprocessor.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
@@ -166,19 +165,8 @@ class MethodWriterSpec extends Specification {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '204': [new EmptyResponse ()]
         ], parameters: [
-            new ParameterBase () {
-                String getName () {
-                    "foo"
-                }
-
-                DataType getDataType () {
-                    new StringDataType ()
-                }
-
-                @Override
-                boolean isRequired () {
-                    true
-                }
+            new ParameterBase ('foo', new StringDataType(null, false),
+                true, false) {
             }
         ])
 
@@ -248,7 +236,7 @@ class MethodWriterSpec extends Specification {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '204': [new EmptyResponse ()]
         ], parameters: [
-            new QueryParameter(name: '_fo-o', required: true, dataType: new StringDataType())
+            new QueryParameter('_fo-o', new StringDataType(), true, false)
         ])
 
         when:

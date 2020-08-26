@@ -16,8 +16,9 @@
 
 package com.github.hauner.openapi.core.model
 
-import com.github.hauner.openapi.core.model.parameters.MultipartParameter
-import com.github.hauner.openapi.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.parameters.MultipartParameter
+import io.openapiprocessor.core.model.RequestBody
+import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.HttpMethod
 
 /**

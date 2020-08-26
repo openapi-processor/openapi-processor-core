@@ -74,7 +74,7 @@ class InterfaceWriter {
                     imports.addAll (beanValidationFactory.collectImports (p.dataType))
                 }
 
-                if (p.withAnnotation()) {
+                if (p.withAnnotation) {
                     imports.add (annotations.getAnnotation (p).fullyQualifiedName)
                 }
 

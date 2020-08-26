@@ -18,7 +18,7 @@ package com.github.hauner.openapi.processor.core.processor.test
 
 import com.github.hauner.openapi.core.framework.FrameworkAnnotation
 import com.github.hauner.openapi.core.framework.FrameworkAnnotations
-import com.github.hauner.openapi.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.HttpMethod
 
 /**

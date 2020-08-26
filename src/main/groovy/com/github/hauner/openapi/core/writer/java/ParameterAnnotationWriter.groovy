@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.writer.java;
+package com.github.hauner.openapi.core.writer.java
 
-import com.github.hauner.openapi.core.model.parameters.Parameter;
+import io.openapiprocessor.core.model.parameters.Parameter
 
 /**
  * parameter annotation writer interface.

@@ -22,15 +22,15 @@ import com.github.hauner.openapi.core.framework.FrameworkAnnotations
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.EndpointResponse
 import com.github.hauner.openapi.core.model.Interface
-import com.github.hauner.openapi.core.model.RequestBody
+import io.openapiprocessor.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.ResultDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
-import com.github.hauner.openapi.core.model.parameters.ParameterBase
-import com.github.hauner.openapi.core.model.parameters.QueryParameter
+import io.openapiprocessor.core.model.parameters.ParameterBase
+import io.openapiprocessor.core.model.parameters.QueryParameter
 import com.github.hauner.openapi.core.test.EmptyResponse
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.writer.java.NullImportFilter
@@ -155,7 +155,7 @@ http.ResultWrapper;
         def apiItf = new Interface (name: 'name', endpoints: [
             new Endpoint(path: 'path', method: HttpMethod.GET, responses: ['200': [new EmptyResponse()]],
                 parameters: [
-                    new QueryParameter(name: 'any', dataType: new StringDataType())
+                    new QueryParameter('any', new StringDataType(), false, false)
                 ])
         ])
 
@@ -173,12 +173,13 @@ import annotation.Parameter;
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200': [new Response (contentType: 'application/json', responseType: new NoneDataType())]
         ], parameters: [
-            new ParameterBase () {
-                { name = 'foo'; dataType = new StringDataType() }
+            new ParameterBase ('foo',
+                new StringDataType(null, false),
+                false, false) {
 
                 @Override
-                boolean withAnnotation () {
-                    false
+                boolean getWithAnnotation () {
+                    return false
                 }
             }
         ])
@@ -199,12 +200,12 @@ import annotation.Parameter;
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200': [new Response (contentType: 'application/json', responseType: new NoneDataType())]
         ], parameters: [
-            new QueryParameter(name: 'foo', required: false, dataType: new ObjectDataType (
+            new QueryParameter('foo', new ObjectDataType (
                 'Foo', 'model', [
                     foo1: new StringDataType (),
                     foo2: new StringDataType ()
                 ], null, false
-            ))
+            ), false, false)
         ])
 
         def apiItf = new Interface (name: 'name', endpoints: [endpoint])
@@ -226,11 +227,8 @@ import model.Foo;
             new Endpoint(path: '/foo', method: HttpMethod.GET, responses: [
                 '200': [new EmptyResponse()]
             ], requestBodies: [
-                new RequestBody (
-                    name: 'body',
-                    contentType: 'plain/text',
-                    dataType: new StringDataType (),
-                    required: true
+                new RequestBody ('body', 'plain/text', new StringDataType (),
+                    true, false
                 )
             ])
         ])
@@ -249,12 +247,12 @@ import annotation.Body;
         def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200': [new EmptyResponse ()]
         ], requestBodies: [
-            new RequestBody (
-                contentType: 'plain/text',
-                dataType: new MappedDataType (
+            new RequestBody ('body', 'plain/text',
+                new MappedDataType (
                     'Bar', 'com.github.hauner.openapi', [],
                     null, false),
-                required: true
+                true,
+                false
             )
         ])
 

@@ -18,13 +18,12 @@ package io.openapiprocessor.core.model
 
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
-import com.github.hauner.openapi.core.model.RequestBody
 import com.github.hauner.openapi.core.model.Response
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import com.github.hauner.openapi.core.model.parameters.MultipartParameter
-import com.github.hauner.openapi.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.parameters.MultipartParameter
+import io.openapiprocessor.core.model.parameters.Parameter
 
 class Builder {
 
@@ -155,7 +154,7 @@ class MultipartBuilder {
 
     List<Parameter> build () {
         data.objectProperties.collect {
-            new MultipartParameter (name: it.key, dataType: it.value)
+            new MultipartParameter (it.key, it.value, false, false)
         }
     }
 
@@ -170,10 +169,12 @@ class BodyBuilder {
     }
 
     RequestBody build () {
-        def body = new RequestBody()
-        body.contentType = content
-        body.dataType = data
-        body
+        new RequestBody(
+            'body',
+            content,
+            data ?: new NoneDataType (),
+            false,
+            false)
     }
 
 }

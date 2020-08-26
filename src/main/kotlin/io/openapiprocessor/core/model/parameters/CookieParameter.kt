@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.parameters
+package io.openapiprocessor.core.model.parameters
+
+import io.openapiprocessor.core.model.datatypes.DataType
 
 /**
- * OpenAPI query parameter.
- *
- * extend {@code ParameterBase} to implement framework specific handling.
+ * OpenAPI cookie parameter mode.
  *
  * @author Martin Hauner
  */
-class QueryParameter extends ParameterBase {
-}
+class CookieParameter(
+
+    name: String,
+    dataType: DataType,
+    required: Boolean = false,
+    deprecated: Boolean = false
+
+): ParameterBase(name, dataType, required, deprecated)

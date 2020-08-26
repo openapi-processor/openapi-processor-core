@@ -234,7 +234,7 @@ paths:
         request.required
         request.dataType.name == 'HttpServletRequest'
         request.dataType.packageName == 'javax.servlet.http'
-        !request.withAnnotation ()
+        !request.withAnnotation
     }
 
     @Ignore("the openapi parser ignores parameters with unknown types")

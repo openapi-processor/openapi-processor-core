@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original authors
+ * Copyright 2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model
+package io.openapiprocessor.core.model.parameters
 
-import com.github.hauner.openapi.core.model.parameters.ParameterBase
+import io.openapiprocessor.core.model.datatypes.DataType
 
 /**
- * Endpoint request body properties.
+ * OpenAPI header parameter model.
  *
  * @author Martin Hauner
  */
-class RequestBody extends ParameterBase {
+class HeaderParameter(
 
-    String contentType
+    name: String,
+    dataType: DataType,
+    required: Boolean = false,
+    deprecated: Boolean = false
 
-}
+): ParameterBase(name, dataType, required, deprecated)

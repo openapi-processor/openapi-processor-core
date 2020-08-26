@@ -16,14 +16,14 @@
 
 package com.github.hauner.openapi.core.framework
 
-import com.github.hauner.openapi.core.model.RequestBody
-import com.github.hauner.openapi.core.model.parameters.AdditionalParameter
-import com.github.hauner.openapi.core.model.parameters.CookieParameter
-import com.github.hauner.openapi.core.model.parameters.HeaderParameter
-import com.github.hauner.openapi.core.model.parameters.MultipartParameter
-import com.github.hauner.openapi.core.model.parameters.Parameter
-import com.github.hauner.openapi.core.model.parameters.PathParameter
-import com.github.hauner.openapi.core.model.parameters.QueryParameter
+import io.openapiprocessor.core.model.RequestBody
+import io.openapiprocessor.core.model.parameters.AdditionalParameter
+import io.openapiprocessor.core.model.parameters.CookieParameter
+import io.openapiprocessor.core.model.parameters.HeaderParameter
+import io.openapiprocessor.core.model.parameters.MultipartParameter
+import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.parameters.PathParameter
+import io.openapiprocessor.core.model.parameters.QueryParameter
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.parser.Parameter as ParserParameter
 
@@ -38,65 +38,37 @@ class FrameworkBase implements Framework {
 
     @Override
         Parameter createQueryParameter (ParserParameter parameter, DataType dataType) {
-        new QueryParameter (
-            name: parameter.name,
-            required: parameter.required,
-            deprecated: parameter.deprecated,
-            dataType: dataType)
+        new QueryParameter (parameter.name, dataType, parameter.required, parameter.deprecated)
     }
 
     @Override
     Parameter createHeaderParameter (ParserParameter parameter, DataType dataType) {
-        new HeaderParameter (
-            name: parameter.name,
-            required: parameter.required,
-            deprecated: parameter.deprecated,
-            dataType: dataType)
+        new HeaderParameter (parameter.name, dataType, parameter.required, parameter.deprecated)
     }
 
     @Override
     Parameter createCookieParameter (ParserParameter parameter, DataType dataType) {
-        new CookieParameter (
-            name: parameter.name,
-            required: parameter.required,
-            deprecated: parameter.deprecated,
-            dataType: dataType)
+        new CookieParameter (parameter.name, dataType, parameter.required, parameter.deprecated)
     }
 
     @Override
     Parameter createPathParameter (ParserParameter parameter, DataType dataType) {
-        new PathParameter (
-            name: parameter.name,
-            required: parameter.required,
-            deprecated: parameter.deprecated,
-            dataType: dataType)
+        new PathParameter (parameter.name, dataType, parameter.required, parameter.deprecated)
     }
 
     @Override
     Parameter createMultipartParameter (ParserParameter parameter, DataType dataType) {
-        new MultipartParameter (
-            name: parameter.name,
-            required: parameter.required,
-            deprecated: parameter.deprecated,
-            dataType: dataType)
+        new MultipartParameter (parameter.name, dataType, parameter.required, parameter.deprecated)
     }
 
     @Override
     Parameter createAdditionalParameter (ParserParameter parameter, DataType dataType) {
-        new AdditionalParameter (
-            name: parameter.name,
-            required: parameter.required,
-            dataType: dataType)
+        new AdditionalParameter (parameter.name, dataType, parameter.required, false)
     }
 
     @Override
     RequestBody createRequestBody (String contentType, boolean required, DataType dataType) {
-        new RequestBody (
-            name: 'body',
-            required: required,
-            dataType: dataType,
-            contentType: contentType
-        )
+        new RequestBody ('body', contentType, dataType, required, false)
     }
 
 }
