@@ -26,15 +26,15 @@ import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
  */
 class ParameterConstraints(
 
-    val constraints: DataTypeConstraints
+    val constraints: DataTypeConstraints?
 
 ) {
 
     fun hasDefault(): Boolean {
-        return constraints.defaultValue != null
+        return constraints?.defaultValue != null
     }
 
     val default
-    get() = constraints.getDefault()
+    get() = constraints?.getDefault()
 
 }

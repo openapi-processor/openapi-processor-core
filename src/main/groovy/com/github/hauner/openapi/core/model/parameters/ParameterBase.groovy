@@ -42,7 +42,7 @@ abstract class ParameterBase implements Parameter {
      */
     @Override
     ParameterConstraints getConstraints() {
-        new ParameterConstraints(constraints: dataType.constraints)
+        new ParameterConstraints(dataType.constraints)
     }
 
     /**
