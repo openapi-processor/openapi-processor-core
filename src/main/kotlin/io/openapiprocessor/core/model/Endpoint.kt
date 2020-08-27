@@ -37,8 +37,8 @@ class Endpoint(
 //    boolean deprecated
 
     // todo
-    /*private*/ val parameters: MutableList<Parameter> = mutableListOf() // todo not mutable
-    /*private*/ val requestBodies: MutableList<RequestBody> = mutableListOf() // todo not mutable
+    /*private val*/ var parameters: MutableList<Parameter> = mutableListOf() // todo not mutable
+    /*private val*/ var requestBodies: MutableList<RequestBody> = mutableListOf() // todo not mutable
     private /*val*/ var responses: MutableMap<String, List<Response>>  = mutableMapOf()
 
     // grouped responses
