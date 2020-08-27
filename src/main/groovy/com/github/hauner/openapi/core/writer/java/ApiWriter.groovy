@@ -24,6 +24,7 @@ import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import com.google.googlejavaformat.java.Formatter
 import com.google.googlejavaformat.java.JavaFormatterOptions
 import groovy.util.logging.Slf4j
+import io.openapiprocessor.core.writer.java.PathWriter
 
 import java.nio.file.Files
 import java.nio.file.Path

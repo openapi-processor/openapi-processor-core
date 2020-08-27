@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.writer.java
+package io.openapiprocessor.core.writer.java
 
+import java.io.OutputStreamWriter
 import java.nio.file.Files
 import java.nio.file.Path
 
 /**
  * Path based Writer
  *
- * @author Martin Haner
+ * @author Martin Hauner
  */
-class PathWriter extends OutputStreamWriter {
+class PathWriter(target: Path): OutputStreamWriter(Files.newOutputStream(target))
 
-    PathWriter(Path target) throws IOException {
-        super(Files.newOutputStream (target));
-    }
-
-}
