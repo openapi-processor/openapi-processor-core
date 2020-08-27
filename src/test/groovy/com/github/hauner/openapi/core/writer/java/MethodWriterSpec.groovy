@@ -37,6 +37,7 @@ import io.openapiprocessor.core.model.test.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 import spock.lang.Specification
 import spock.lang.Unroll
 

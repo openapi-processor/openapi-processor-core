@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.writer.java
+package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.model.parameters.Parameter
+import java.io.Writer
 
 /**
  * parameter annotation writer interface.
@@ -25,6 +26,6 @@ import io.openapiprocessor.core.model.parameters.Parameter
  */
 interface ParameterAnnotationWriter {
 
-    void write (Writer target, Parameter parameter)
+    fun write (target: Writer, parameter: Parameter)
 
 }

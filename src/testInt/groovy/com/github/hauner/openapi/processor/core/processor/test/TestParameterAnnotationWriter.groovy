@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.processor.core.processor.test
 
 import io.openapiprocessor.core.model.parameters.Parameter
-import com.github.hauner.openapi.core.writer.java.ParameterAnnotationWriter
+import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 
 /**
  * simple {@link ParameterAnnotationWriter} implementation for testing.
