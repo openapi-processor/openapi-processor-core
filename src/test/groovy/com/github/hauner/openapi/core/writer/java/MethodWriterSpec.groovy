@@ -59,6 +59,7 @@ class MethodWriterSpec extends Specification {
             properties.operationId as String ?: null,
             properties.deprecated as boolean ?: false
         )
+        ep.parameters = properties.parameters ?: []
         ep.responses = properties.responses ?: [:]
         ep.initEndpointResponses ()
     }

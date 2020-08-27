@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.model
 
 import io.openapiprocessor.core.model.DataTypes
+import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.DataType
 
 /**

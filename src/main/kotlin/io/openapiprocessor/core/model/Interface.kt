@@ -14,36 +14,40 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model
+package io.openapiprocessor.core.model
 
-import io.openapiprocessor.core.model.Endpoint
-import io.openapiprocessor.core.support.Identifier
+import io.openapiprocessor.core.support.toClass
 
 /**
  * Java interface properties.
  *
  * @author Martin Hauner
  */
-class Interface {
-    String pkg = 'unknown'
-    String name = 'unknown'
+class Interface(
 
-    List<Endpoint> endpoints = []
+    val name: String,
+    private val pkg: String,
+    val endpoints: List<Endpoint> = emptyList()
 
-    Endpoint getEndpoint(String endpoint) {
-        endpoints.find { it.path == endpoint }
+) {
+
+    fun getEndpoint(path: String): Endpoint {
+        return endpoints.find { it.path == path }!!
     }
 
-    String getPackageName() {
-        pkg
+    fun getPackageName(): String {
+        return pkg
     }
 
-    String getInterfaceName() {
-        !name.isEmpty () ? Identifier.toClass (name) + "Api" : "Api"
+    fun getInterfaceName(): String {
+        return if (name.isNotEmpty())
+            toClass (name) + "Api"
+        else
+            "Api"
     }
 
-    String toString () {
-        "$pkg.$name"
+    override fun toString(): String {
+        return "$pkg.$name"
     }
 
 }

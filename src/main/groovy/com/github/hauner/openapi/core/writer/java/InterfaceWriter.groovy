@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import com.github.hauner.openapi.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Endpoint
-import com.github.hauner.openapi.core.model.Interface
+import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.ImportFilter
 

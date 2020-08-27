@@ -21,7 +21,7 @@ import com.github.hauner.openapi.core.framework.FrameworkAnnotation
 import com.github.hauner.openapi.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
-import com.github.hauner.openapi.core.model.Interface
+import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.MappedDataType
@@ -55,7 +55,7 @@ class InterfaceWriterSpec extends Specification {
     def target = new StringWriter ()
 
     void "writes 'generated' comment" () {
-        def apiItf = new Interface ()
+        def apiItf = new Interface ("", "", [])
 
         when:
         writer.write (target, apiItf)
@@ -66,7 +66,7 @@ class InterfaceWriterSpec extends Specification {
 
     void "writes 'package'" () {
         def pkg = 'com.github.hauner.openapi'
-        def apiItf = new Interface (pkg: pkg)
+        def apiItf = new Interface ("", pkg, [])
 
         when:
         writer.write (target, apiItf)
@@ -82,9 +82,9 @@ package $pkg;
     void "writes mapping import" () {
         annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Mapping', pkg: 'annotation')
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: '/foo', method: HttpMethod.GET, responses: [
-                '200': [new EmptyResponse()]])
+        def apiItf = new Interface ('name', "pkg", [
+            new Endpoint('/foo', HttpMethod.GET, null, false, [
+                '200': [new EmptyResponse()]]).initEndpointResponses ()
         ])
 
         when:
@@ -104,10 +104,13 @@ import annotation.Mapping;
             new FrameworkAnnotation(name: 'MappingC', pkg: 'annotation')
         ]
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: 'path', method: HttpMethod.GET, responses: ['200': [new EmptyResponse()]]),
-            new Endpoint(path: 'path', method: HttpMethod.PUT, responses: ['200': [new EmptyResponse()]]),
-            new Endpoint(path: 'path', method: HttpMethod.POST, responses: ['200': [new EmptyResponse()]])
+        def apiItf = new Interface ('name', "pkg", [
+            new Endpoint('path', HttpMethod.GET, null, false, ['200': [new EmptyResponse()]])
+                .initEndpointResponses (),
+            new Endpoint('path', HttpMethod.PUT, null, false, ['200': [new EmptyResponse()]])
+                .initEndpointResponses (),
+            new Endpoint('path', HttpMethod.POST, null, false, ['200': [new EmptyResponse()]])
+                .initEndpointResponses ()
         ])
 
         when:
@@ -127,8 +130,8 @@ import annotation.MappingC;
     }
 
     void "writes result wrapper data type import" () {
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: 'path', method: HttpMethod.GET, responses: [
+        def apiItf = new Interface ('name', 'pkg', [
+            new Endpoint('path', HttpMethod.GET, null, false, [
                 '200': [
                     new Response ("",
                         new ResultDataType (
@@ -152,11 +155,10 @@ http.ResultWrapper;
     void "writes parameter annotation import" () {
         annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Parameter', pkg: 'annotation')
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: 'path', method: HttpMethod.GET, responses: ['200': [new EmptyResponse()]],
-                parameters: [
-                    new QueryParameter('any', new StringDataType(), false, false)
-                ])
+        def apiItf = new Interface ('name', 'pkg', [
+            new Endpoint('path', HttpMethod.GET, null, false,
+                [new QueryParameter('any', new StringDataType(), false, false)],
+                ['200': [new EmptyResponse()]]).initEndpointResponses ()
         ])
 
         when:
@@ -170,9 +172,7 @@ import annotation.Parameter;
     }
 
     void "does not write parameter annotation import of a parameter that does not want the annotation" () {
-        def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200': [new Response ('application/json', new NoneDataType())]
-        ], parameters: [
+        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, [
             new ParameterBase ('foo',
                 new StringDataType(null, false),
                 false, false) {
@@ -182,9 +182,11 @@ import annotation.Parameter;
                     return false
                 }
             }
-        ])
+        ], [
+            '200': [new Response ('application/json', new NoneDataType())]
+        ]).initEndpointResponses ()
 
-        def apiItf = new Interface (name: 'name', endpoints: [endpoint])
+        def apiItf = new Interface ('name', 'pkg', [endpoint])
 
         when:
         writer.write (target, apiItf)
@@ -197,18 +199,18 @@ import annotation.Parameter;
     }
 
     void "writes import of request parameter data type" () {
-        def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200': [new Response ( 'application/json', new NoneDataType())]
-        ], parameters: [
+        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, [
             new QueryParameter('foo', new ObjectDataType (
                 'Foo', 'model', [
                     foo1: new StringDataType (),
                     foo2: new StringDataType ()
                 ], null, false
             ), false, false)
-        ])
+        ], [
+            '200': [new Response ( 'application/json', new NoneDataType())]
+        ]).initEndpointResponses ()
 
-        def apiItf = new Interface (name: 'name', endpoints: [endpoint])
+        def apiItf = new Interface ('name', 'pkg', [endpoint])
 
         when:
         writer.write (target, apiItf)
@@ -223,14 +225,15 @@ import model.Foo;
     void "writes request body annotation import" () {
         annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Body', pkg: 'annotation')
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: '/foo', method: HttpMethod.GET, responses: [
-                '200': [new EmptyResponse()]
-            ], requestBodies: [
+        def apiItf = new Interface ('name', 'pkg', [
+            new Endpoint ('/foo', HttpMethod.GET, null, false, [
+            ], [
                 new RequestBody ('body', 'plain/text', new StringDataType (),
                     true, false
                 )
-            ])
+            ], [
+                '200': [new EmptyResponse ()]
+            ]).initEndpointResponses ()
         ])
 
         when:
@@ -244,9 +247,7 @@ import annotation.Body;
     }
 
     void "writes import of request body data type" () {
-        def endpoint = new Endpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200': [new EmptyResponse ()]
-        ], requestBodies: [
+        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, [], [
             new RequestBody ('body', 'plain/text',
                 new MappedDataType (
                     'Bar', 'com.github.hauner.openapi', [],
@@ -254,9 +255,11 @@ import annotation.Body;
                 true,
                 false
             )
-        ])
+        ], [
+            '200': [new EmptyResponse ()]
+        ]).initEndpointResponses ()
 
-        def apiItf = new Interface (name: 'name', endpoints: [endpoint])
+        def apiItf = new Interface ('name', 'pkg', [endpoint])
 
         when:
         writer.write (target, apiItf)
@@ -272,8 +275,8 @@ import com.github.hauner.openapi.Bar;
         def pkg = 'model.package'
         def type = 'Model'
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: 'path', method: HttpMethod.GET, responses: [
+        def apiItf = new Interface ('name', 'pkg', [
+            new Endpoint('path', HttpMethod.GET, null, false, [
                 '200': [
                     new Response ('application/json',
                         new ObjectDataType (type, pkg, [:], null, false))
@@ -298,8 +301,8 @@ import ${pkg}.${type};
         def pkg2 = 'model.package2'
         def type2 = 'Model2'
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint (path: 'path', method: HttpMethod.GET, responses: [
+        def apiItf = new Interface ('name', 'pkg', [
+            new Endpoint ('path', HttpMethod.GET, null, false, [
                 '200': [
                     new Response ('application/json',
                         new ObjectDataType (type, pkg, [:], null, false)),
@@ -353,10 +356,13 @@ import java.lang.Deprecated;
             new FrameworkAnnotation(name: 'MappingA', pkg: 'annotation')
         ]
 
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: 'path', method: HttpMethod.GET, responses: ['200': [new EmptyResponse()]]),
-            new Endpoint(path: 'path', method: HttpMethod.PUT, responses: ['200': [new EmptyResponse()]]),
-            new Endpoint(path: 'path', method: HttpMethod.POST, responses: ['200': [new EmptyResponse()]])
+        def apiItf = new Interface ('name', 'pkg', [
+            new Endpoint('path', HttpMethod.GET, null, false, ['200': [new EmptyResponse()]])
+                .initEndpointResponses (),
+            new Endpoint('path', HttpMethod.PUT, null, false, ['200': [new EmptyResponse()]])
+                .initEndpointResponses (),
+            new Endpoint('path', HttpMethod.POST, null, false, ['200': [new EmptyResponse()]])
+                .initEndpointResponses ()
         ])
 
         when:
@@ -372,10 +378,10 @@ import annotation.MappingC;
     }
 
     void "filters unnecessary 'java.lang' imports"() {
-        def apiItf = new Interface (name: 'name', endpoints: [
-            new Endpoint(path: 'path', method: HttpMethod.GET, responses: [
+        def apiItf = new Interface ('name', 'pkg', [
+            new Endpoint('path', HttpMethod.GET, null, false, [
                 '200': [new Response('plain/text', new StringDataType())]
-            ])
+            ]).initEndpointResponses ()
         ])
 
         when:
@@ -389,7 +395,7 @@ import java.lang.String;
     }
 
     void "writes 'interface' block" () {
-        def apiItf = new Interface (name: 'name', endpoints: [])
+        def apiItf = new Interface ('name', 'pkg', [])
 
         when:
         writer.write (target, apiItf)
@@ -404,9 +410,9 @@ public interface NameApi {
 
     void "writes methods" () {
         def endpoints = [
-            new Endpoint(path: 'path1', method: HttpMethod.GET, responses: ['200': [new EmptyResponse()]])
+            new Endpoint('path1', HttpMethod.GET, null, false, ['200': [new EmptyResponse()]])
                 .initEndpointResponses (),
-            new Endpoint(path: 'path2', method: HttpMethod.GET, responses: ['200': [new EmptyResponse()]])
+            new Endpoint( 'path2', HttpMethod.GET, null, false, ['200': [new EmptyResponse()]])
                 .initEndpointResponses ()
         ]
 
@@ -416,7 +422,7 @@ public interface NameApi {
             target.write ("// ${e.path}\n")
         }
 
-        def apiItf = new Interface (name: 'name', endpoints: endpoints)
+        def apiItf = new Interface ('name', 'pkg', endpoints)
 
         when:
         writer.write (target, apiItf)

@@ -31,7 +31,7 @@ import io.openapiprocessor.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.Endpoint
-import com.github.hauner.openapi.core.model.Interface
+import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.RequestBody as ModelRequestBody
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
@@ -128,10 +128,7 @@ class  ApiConverter {
             return itf
         }
 
-        itf = new Interface (
-            pkg: [options.packageName, 'api'].join ('.'),
-            name: targetInterfaceName
-        )
+        itf = new Interface (targetInterfaceName, [options.packageName, 'api'].join ('.'), [])
 
         interfaces.put (targetInterfaceName, itf)
         itf

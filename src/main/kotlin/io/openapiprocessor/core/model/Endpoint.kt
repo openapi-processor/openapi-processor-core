@@ -28,13 +28,48 @@ import io.openapiprocessor.core.model.parameters.Parameter
 class Endpoint(
     val path: String,
     val method: HttpMethod,
-    val operationId: String?,
-    val deprecated: Boolean
+    val operationId: String? = null,
+    val deprecated: Boolean = false
 ) {
-//    String path
-//    HttpMethod method
-//    String operationId
-//    boolean deprecated
+
+    @Deprecated("groovy to kotlin")
+    constructor(
+        path: String,
+        method: HttpMethod,
+        operationId: String?,
+        deprecated: Boolean = false,
+        responses: MutableMap<String, List<Response>>
+    ): this(path, method, operationId, deprecated) {
+        this.responses = responses
+    }
+
+    @Deprecated("groovy to kotlin")
+    constructor(
+        path: String,
+        method: HttpMethod,
+        operationId: String?,
+        deprecated: Boolean = false,
+        parameters: MutableList<Parameter>,
+        responses: MutableMap<String, List<Response>>
+    ): this(path, method, operationId, deprecated) {
+        this.parameters = parameters
+        this.responses = responses
+    }
+
+    @Deprecated("groovy to kotlin")
+    constructor(
+        path: String,
+        method: HttpMethod,
+        operationId: String?,
+        deprecated: Boolean = false,
+        parameters: MutableList<Parameter>,
+        requestBodies: MutableList<RequestBody>,
+        responses: MutableMap<String, List<Response>>
+    ): this(path, method, operationId, deprecated) {
+        this.parameters = parameters
+        this.requestBodies = requestBodies
+        this.responses = responses
+    }
 
     // todo
     /*private val*/ var parameters: MutableList<Parameter> = mutableListOf() // todo not mutable
@@ -171,10 +206,18 @@ class Endpoint(
     }
 
     private fun getSuccessResponses(): Set<Response> {
-        return responses
+        val result = mutableMapOf<String, Response>()
+
+        responses
             .filterKeys { it.startsWith("2") }
             .values
             .flatten()
+            .forEach {
+                result[it.contentType] = it
+            }
+
+        return result
+            .values
             .toSet()
     }
 
@@ -187,3 +230,19 @@ class Endpoint(
     }
 
 }
+
+/*
+    private Set<Response> getSuccessResponses () {
+        Map<String, Response> result = [:]
+
+        responses.findAll {
+            it.key.startsWith ('2')
+        }.each {
+            it.value.each {
+                result.put (it.contentType, it)
+            }
+        }
+
+        result.values () as Set<Response>
+    }
+ */

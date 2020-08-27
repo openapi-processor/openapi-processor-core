@@ -17,7 +17,6 @@
 package io.openapiprocessor.core.model
 
 
-import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
@@ -55,9 +54,7 @@ class InterfaceBuilder {
     }
 
     Interface build() {
-        def itf = new Interface(name: name)
-        itf.endpoints = endpoints
-        return itf
+        new Interface(name, 'pkg', endpoints)
     }
 
 }
@@ -98,9 +95,7 @@ class EndpointBuilder {
     }
 
     Endpoint build () {
-        def ep = new Endpoint(path: path)
-        ep.method = method
-        ep.deprecated = deprecated
+        def ep = new Endpoint(path, method, null, deprecated)
         ep.requestBodies.addAll (bodies)
         ep.parameters.addAll (parameters)
         responses.each { status, values ->

@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import io.openapiprocessor.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
-import com.github.hauner.openapi.core.model.Interface
+import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
@@ -91,8 +91,8 @@ class ApiWriterSpec extends Specification {
         )
 
         def api = new Api(interfaces: [
-            new Interface(pkg: "${opts.packageName}.api", name: 'Foo'),
-            new Interface(pkg: "${opts.packageName}.api", name: 'Bar')
+            new Interface('Foo', "${opts.packageName}.api", []),
+            new Interface('Bar', "${opts.packageName}.api", [])
         ])
 
         when:
@@ -124,7 +124,7 @@ Bar interface!
         )
 
         def api = new Api(interfaces: [
-            new Interface(pkg: "${opts.packageName}.api", name: 'foo-bar'),
+            new Interface('foo-bar', "${opts.packageName}.api", [])
         ])
 
         when:
@@ -260,7 +260,7 @@ Bar enum!
         )
 
         def api = new Api(interfaces: [
-            new Interface(pkg: "${opts.packageName}.api", name: 'Foo')
+            new Interface('Foo', "${opts.packageName}.api", [])
         ])
 
         when:

@@ -34,7 +34,7 @@ class EndpointContentTypesSpec extends Specification {
         }
 
         expect:
-        endpoint.consumesContentTypes == ['text/plain', 'application/json'].sort ()
+        endpoint.consumesContentTypes.sort() == ['text/plain', 'application/json'].sort ()
     }
 
     void "provides consuming content type for multipart/form-data" () {
@@ -85,7 +85,7 @@ class EndpointContentTypesSpec extends Specification {
         }
 
         expect:
-        endpoint.getProducesContentTypes ('200') == ['text/plain', 'application/json'].sort ()
+        endpoint.getProducesContentTypes ('200').sort () == ['text/plain', 'application/json'].sort ()
     }
 
 }
