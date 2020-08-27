@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.converter
 
 import io.openapiprocessor.core.framework.Framework
-import com.github.hauner.openapi.core.framework.FrameworkBase
+import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.converter.ApiOptions
 import spock.lang.Specification
 

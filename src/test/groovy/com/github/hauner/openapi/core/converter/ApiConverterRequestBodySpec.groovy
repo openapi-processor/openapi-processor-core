@@ -21,7 +21,7 @@ import io.openapiprocessor.core.converter.MultipartResponseBodyException
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.framework.Framework
-import com.github.hauner.openapi.core.framework.FrameworkBase
+import io.openapiprocessor.core.framework.FrameworkBase
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse

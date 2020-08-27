@@ -31,3 +31,5 @@ interface Parameter {
     fun isDeprecated(): Boolean
 
 }
+
+// todo properties

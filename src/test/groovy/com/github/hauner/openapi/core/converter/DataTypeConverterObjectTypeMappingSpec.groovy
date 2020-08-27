@@ -23,7 +23,7 @@ import io.openapiprocessor.core.converter.mapping.ParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.ResponseTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.framework.Framework
-import com.github.hauner.openapi.core.framework.FrameworkBase
+import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.model.Api
 import spock.lang.Specification
 import spock.lang.Unroll
