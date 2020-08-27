@@ -22,7 +22,7 @@ import io.openapiprocessor.core.converter.mapping.AmbiguousTypeMappingException
 import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
 import io.openapiprocessor.core.converter.mapping.Mapping
-import com.github.hauner.openapi.core.model.DataTypes
+import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.BooleanDataType
 import io.openapiprocessor.core.model.datatypes.ComposedObjectDataType

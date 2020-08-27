@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.Api
-import com.github.hauner.openapi.core.model.DataTypes
+import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.test.TestSchema
@@ -122,7 +122,7 @@ class DataTypeConverterSpec extends Specification {
         converter.convert (new SchemaInfo (name: 'Foo', schema: fooSchema, resolver: resolver), dt)
 
         then:
-        assert dt.size () == 2
+        assert dt.dataTypes.size () == 2
         def bar = dt.find ('Bar') as ObjectDataType
         bar.objectProperties['val'].name == 'String'
         def foo = dt.find ('Foo') as ObjectDataType
@@ -203,7 +203,7 @@ paths:
         props.get ('title').name == 'String'
 
         and:
-        api.models.size () == 1
+        api.models.dataTypes.size () == 1
         api.models.find ('InlineResponse200') is rsp.responseType
     }
 
@@ -242,7 +242,7 @@ components:
             .convert (openApi)
 
         then:
-        api.models.size () == 1
+        api.models.dataTypes.size () == 1
 
         and:
         def dataTypes = api.models
@@ -298,7 +298,7 @@ components:
             .convert (openApi)
 
         then:
-        api.models.size () == 1
+        api.models.dataTypes.size () == 1
 
         and:
         def dataTypes = api.models
@@ -351,7 +351,7 @@ components:
             .convert (openApi)
 
         then:
-        api.models.size () == 2
+        api.models.dataTypes.size () == 2
 
         and:
         def dataTypes = api.models

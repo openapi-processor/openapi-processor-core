@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Api
-import com.github.hauner.openapi.core.model.DataTypes
+import io.openapiprocessor.core.model.DataTypes
 import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType

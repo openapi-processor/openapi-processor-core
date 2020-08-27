@@ -29,7 +29,7 @@ import io.openapiprocessor.core.converter.mapping.Mapping
 import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.model.Api
-import com.github.hauner.openapi.core.model.DataTypes
+import io.openapiprocessor.core.model.DataTypes
 import com.github.hauner.openapi.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.RequestBody as ModelRequestBody

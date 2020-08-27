@@ -20,7 +20,7 @@ import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.framework.FrameworkBase
-import com.github.hauner.openapi.core.model.DataTypes
+import io.openapiprocessor.core.model.DataTypes
 import com.github.hauner.openapi.core.test.TestSchema
 import spock.lang.Specification
 import spock.lang.Unroll

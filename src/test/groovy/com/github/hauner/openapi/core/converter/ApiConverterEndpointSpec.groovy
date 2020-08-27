@@ -18,9 +18,8 @@ package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.model.Api
-import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.model.datatypes.NoneDataType
 import com.github.hauner.openapi.core.test.ModelAsserts
+import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.HttpMethod
 import spock.lang.Specification
 
@@ -61,7 +60,7 @@ components:
             .convert (openApi)
 
         then:
-        api.models.size () == 1
+        api.models.dataTypes.size () == 1
         api.interfaces.size () == 1
 
         and:
