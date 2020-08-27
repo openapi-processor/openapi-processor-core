@@ -29,7 +29,7 @@ class ResultDataType(
 
 ): DataType {
 
-
+    // todo multi check inside?
     override fun getName(): String {
         return "$type<${dataType.getName()}>"
     }

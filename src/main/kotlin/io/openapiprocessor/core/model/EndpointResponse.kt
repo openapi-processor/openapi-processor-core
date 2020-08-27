@@ -75,7 +75,7 @@ class EndpointResponse(
     val contentTypes: List<String>
         get() {
             val result = mutableListOf<String>()
-            if (main.contentType != null) {
+            if (!main.empty) {
                 result.add(main.contentType)
             }
 
