@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.framework
+package io.openapiprocessor.core.framework
 
-import io.openapiprocessor.core.framework.FrameworkAnnotation
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.HttpMethod
 
@@ -33,7 +32,7 @@ interface FrameworkAnnotations {
      * @param httpMethod requested http method
      * @return annotation details
      */
-    FrameworkAnnotation getAnnotation (HttpMethod httpMethod)
+    fun getAnnotation(httpMethod: HttpMethod): FrameworkAnnotation
 
     /**
      * provides the details of the requested method parameter annotation.
@@ -41,6 +40,6 @@ interface FrameworkAnnotations {
      * @param parameter requested parameter
      * @return annotation details
      */
-    FrameworkAnnotation getAnnotation (Parameter parameter)
+    fun getAnnotation(parameter: Parameter): FrameworkAnnotation
 
 }
