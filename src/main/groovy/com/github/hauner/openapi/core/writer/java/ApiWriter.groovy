@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
-import com.github.hauner.openapi.core.model.Api
+import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType

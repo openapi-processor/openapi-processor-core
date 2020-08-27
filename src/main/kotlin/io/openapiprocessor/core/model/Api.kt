@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model
+package io.openapiprocessor.core.model
 
-import io.openapiprocessor.core.model.DataTypes
-import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.DataType
 
 /**
@@ -25,34 +23,22 @@ import io.openapiprocessor.core.model.datatypes.DataType
  *
  * @author Martin Hauner
  */
-class Api {
-
-    List<Interface> interfaces = []
+class Api(
+    private /*val*/ var interfaces: List<Interface> = emptyList(),
 
     /**
      * named data types (i.e. $ref) used in the OpenAPI description.
      */
-    private DataTypes models
+    private val models: DataTypes = DataTypes()  // todo rename to dataTypes
+) {
 
-    Api() {
-        this.models = new DataTypes()
-    }
-
-    Api(DataTypes models) {
-        this.models = models
-    }
-
-    DataTypes getModels() {
-        models
-    }
-
-    @Deprecated // only used from test
-    void setModels(List<DataType> dataTypes) {
+    @Deprecated("only used from test")
+    fun setModels(dataTypes: List<DataType>) {
         models.add(dataTypes)
     }
 
-    Interface getInterface(String name) {
-        interfaces.find { it.name.toLowerCase () == name.toLowerCase () }
+    fun getInterface(name: String): Interface {
+        return interfaces.find { it.name.toLowerCase () == name.toLowerCase () }!!
     }
 
 }

@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.test
 
-import com.github.hauner.openapi.core.model.Api
+import io.openapiprocessor.core.model.Api
 
 trait ModelAsserts {
     Api api

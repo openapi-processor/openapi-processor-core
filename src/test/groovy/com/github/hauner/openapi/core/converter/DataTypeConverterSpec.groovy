@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.converter
 
 import com.github.hauner.openapi.core.framework.Framework
-import com.github.hauner.openapi.core.model.Api
+import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType

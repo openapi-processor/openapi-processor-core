@@ -28,7 +28,7 @@ import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.Mapping
 import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TypeMapping
-import com.github.hauner.openapi.core.model.Api
+import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.Interface

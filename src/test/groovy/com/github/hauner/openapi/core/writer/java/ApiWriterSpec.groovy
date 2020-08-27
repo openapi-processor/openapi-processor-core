@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
-import com.github.hauner.openapi.core.model.Api
+import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.MappedDataType
@@ -156,7 +156,7 @@ Bar interface!
             null, false))
         dt.add (new ObjectDataType('Bar', "${opts.packageName}.model", [:],
             null, false))
-        def api = new Api(dt)
+        def api = new Api([], dt)
 
         when:
         new ApiWriter (opts, Stub(InterfaceWriter), dataTypeWriter, Stub(StringEnumWriter), false)
@@ -194,7 +194,7 @@ Bar class!
             'Foo', "${opts.packageName}.model", [], null, false))
         dt.add (new StringEnumDataType(
             'Bar', "${opts.packageName}.model", [], null, false))
-        def api = new Api(dt)
+        def api = new Api([], dt)
 
         when:
         new ApiWriter (opts, Stub(InterfaceWriter), Stub(DataTypeWriter), enumWriter, false)
@@ -235,7 +235,7 @@ Bar enum!
         dt.add (new MappedDataType('Type', 'mapped', [],
             null, false))
         dt.add ('simple', new StringDataType())
-        def api = new Api(dt)
+        def api = new Api([], dt)
 
         when:
         new ApiWriter (opts, Stub(InterfaceWriter), dataTypeWriter, Stub(StringEnumWriter), false)
@@ -291,7 +291,7 @@ interface Foo {
         def dt = new DataTypes()
         dt.add (new ObjectDataType('Foo', "${opts.packageName}.model", [:],
             null, false))
-        def api = new Api(dt)
+        def api = new Api([], dt)
 
         when:
         new ApiWriter (opts, Stub(InterfaceWriter), dataTypeWriter, Stub(StringEnumWriter))
@@ -321,7 +321,7 @@ class Foo {
         def dt = new DataTypes()
         dt.add (new StringEnumDataType(
             'Foo', "${opts.packageName}.model", [], null, false))
-        def api = new Api(dt)
+        def api = new Api([], dt)
 
         when:
         new ApiWriter (opts, Stub(InterfaceWriter), Stub(DataTypeWriter), enumWriter)
