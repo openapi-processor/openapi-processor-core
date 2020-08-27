@@ -46,8 +46,8 @@ class ResultDataType(
         return emptySet()
     }
 
-    override fun isMultiOf(): Boolean {
-        return dataType.isMultiOf()
+    override fun isComposed(): Boolean {
+        return dataType.isComposed()
     }
 
     /**

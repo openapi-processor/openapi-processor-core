@@ -89,7 +89,7 @@ class EndpointResponse(
      * if this response has multiple types.
      */
     private fun hasMultipleResponses(): Boolean {
-        if (main.responseType.isMultiOf()) {
+        if (main.responseType.isComposed()) {
             return true
         }
         return errors.isNotEmpty()

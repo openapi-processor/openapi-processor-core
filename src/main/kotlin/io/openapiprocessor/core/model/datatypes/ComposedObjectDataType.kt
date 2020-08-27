@@ -51,7 +51,7 @@ class ComposedObjectDataType(
             .toSet()
     }
 
-    override fun isMultiOf(): Boolean {
+    override fun isComposed(): Boolean {
         return of != "allOf"
     }
 

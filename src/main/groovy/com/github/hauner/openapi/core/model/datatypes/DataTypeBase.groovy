@@ -35,7 +35,7 @@ abstract class DataTypeBase implements DataType {
     }
 
     @Override
-    boolean isMultiOf () {
+    boolean isComposed () {
         false
     }
 

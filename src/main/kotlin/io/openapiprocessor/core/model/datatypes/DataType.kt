@@ -71,8 +71,7 @@ interface DataType {
     /**
      * is this a composed type, i.e. allOf, anyOf, oneOf ?
      */
-    // TODO rename to composed?
-    fun isMultiOf(): Boolean {
+    fun isComposed(): Boolean {
         return false
     }
 
