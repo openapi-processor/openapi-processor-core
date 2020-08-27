@@ -21,7 +21,7 @@ import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
 import com.github.hauner.openapi.core.framework.Framework
 import com.github.hauner.openapi.core.framework.FrameworkAnnotations
 import com.github.hauner.openapi.core.writer.java.MappingAnnotationWriter
-import com.github.hauner.openapi.core.writer.java.SimpleWriter
+import io.openapiprocessor.core.writer.java.SimpleWriter
 import com.github.hauner.openapi.core.test.ModelAsserts
 import com.github.hauner.openapi.core.writer.java.InterfaceWriter
 import com.github.hauner.openapi.core.writer.java.MethodWriter

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.writer.java
+package io.openapiprocessor.core.writer.java
+
+import java.io.Writer
 
 /**
  * basic writer interface.
@@ -23,6 +25,6 @@ package com.github.hauner.openapi.core.writer.java
  */
 interface SimpleWriter {
 
-    void write (Writer target)
+    fun write (target: Writer)
 
 }

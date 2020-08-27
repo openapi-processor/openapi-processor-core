@@ -34,6 +34,7 @@ import io.openapiprocessor.core.model.parameters.QueryParameter
 import io.openapiprocessor.core.model.test.EmptyResponse
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.writer.java.NullImportFilter
+import io.openapiprocessor.core.writer.java.SimpleWriter
 import spock.lang.Specification
 
 import java.util.stream.Collectors

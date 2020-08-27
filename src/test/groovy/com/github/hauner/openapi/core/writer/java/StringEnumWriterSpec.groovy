@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.writer.java.SimpleWriter
 import spock.lang.Specification
 
 class StringEnumWriterSpec extends Specification {

@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.processor.core.processor.test
 
-import com.github.hauner.openapi.core.writer.java.SimpleWriter
+import io.openapiprocessor.core.writer.java.SimpleWriter
 
 /**
  * Writer for a simple header of the generated interfaces & classes.
