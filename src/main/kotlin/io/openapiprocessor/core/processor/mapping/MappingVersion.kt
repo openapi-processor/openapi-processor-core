@@ -20,7 +20,6 @@ package io.openapiprocessor.core.processor.mapping
  *
  * @author Martin Hauner
  */
-// MappingVersion ??
-interface VersionedMapping {
+interface MappingVersion {
     val v2: Boolean
 }

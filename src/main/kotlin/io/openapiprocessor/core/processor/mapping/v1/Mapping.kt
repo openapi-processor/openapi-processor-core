@@ -16,7 +16,7 @@
 
 package io.openapiprocessor.core.processor.mapping.v1
 
-import io.openapiprocessor.core.processor.mapping.VersionedMapping
+import io.openapiprocessor.core.processor.mapping.MappingVersion
 
 /**
  * *the* Schema of the mapping yaml
@@ -41,7 +41,7 @@ class Mapping(
      */
     val map: Map = Map()
 
-): VersionedMapping {
+): MappingVersion {
 
     override val v2: Boolean
         get() = false

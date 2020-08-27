@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.openapiprocessor.core.processor.mapping.v1.Mapping
-import io.openapiprocessor.core.processor.mapping.VersionedMapping
+import io.openapiprocessor.core.processor.mapping.MappingVersion
 import io.openapiprocessor.core.processor.mapping.v1.Parameter
 import io.openapiprocessor.core.processor.mapping.v1.ParameterDeserializer
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
@@ -44,7 +44,7 @@ import io.openapiprocessor.core.processor.mapping.version.Mapping as VersionMapp
 class MappingReader {
     private var log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
-    fun read(typeMappings: String?): VersionedMapping? {
+    fun read(typeMappings: String?): MappingVersion? {
         if (typeMappings.isNullOrEmpty()) {
             return null
         }

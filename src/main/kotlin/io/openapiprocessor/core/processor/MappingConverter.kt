@@ -19,7 +19,7 @@ package io.openapiprocessor.core.processor
 import io.openapiprocessor.core.converter.mapping.Mapping
 import io.openapiprocessor.core.processor.mapping.v1.MappingConverter as MappingConverterV1
 import io.openapiprocessor.core.processor.mapping.v1.Mapping as MappingV1
-import io.openapiprocessor.core.processor.mapping.VersionedMapping
+import io.openapiprocessor.core.processor.mapping.MappingVersion
 import io.openapiprocessor.core.processor.mapping.v2.MappingConverter as MappingConverterV2
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
@@ -31,7 +31,7 @@ import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
  */
 class MappingConverter {
 
-   fun convert(source: VersionedMapping?): List<Mapping> {
+   fun convert(source: MappingVersion?): List<Mapping> {
        if (source == null) {
            return emptyList()
        }
