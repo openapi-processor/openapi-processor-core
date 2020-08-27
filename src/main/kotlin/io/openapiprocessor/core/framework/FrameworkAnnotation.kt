@@ -14,42 +14,34 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.framework
+package io.openapiprocessor.core.framework
 
 /**
  * details of an annotation.
  *
  * @author Martin Hauner
  */
-class FrameworkAnnotation {
-    private String name
-    private String pkg
+open class FrameworkAnnotation(
 
     /**
-     * The plain name of the annotation for this parameter (ie. without the @).
-     *
-     * @return the name of the annotation
+     * The plain name of the annotation of this parameter (ie. without the @).
      */
-    String getName () {
-        name
-    }
+    private val name: String,
+
+    private val pkg: String
+
+) {
 
     /**
      * The fully qualified class name of the annotation.
-     *
-     * @return the fully qualified class name of the annotation
      */
-    String getFullyQualifiedName () {
-        "${pkg}.${name}"
-    }
+    val fullyQualifiedName: String
+        get() = "${pkg}.${name}"
 
     /**
      * The full annotation name with a leading @.
-     *
-     * @return the full annotation name with a leading @
      */
-    String getAnnotationName () {
-        "@${name}"
-    }
+    val annotationName: String
+        get() = "@${name}"
 
 }

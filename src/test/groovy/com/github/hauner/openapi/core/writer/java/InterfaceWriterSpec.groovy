@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
-import com.github.hauner.openapi.core.framework.FrameworkAnnotation
+import io.openapiprocessor.core.framework.FrameworkAnnotation
 import com.github.hauner.openapi.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
@@ -81,7 +81,7 @@ package $pkg;
     }
 
     void "writes mapping import" () {
-        annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Mapping', pkg: 'annotation')
+        annotations.getAnnotation (_) >> new FrameworkAnnotation('Mapping', 'annotation')
 
         def apiItf = new Interface ('name', "pkg", [
             new Endpoint('/foo', HttpMethod.GET, null, false, [
@@ -100,9 +100,9 @@ import annotation.Mapping;
 
     void "writes multiple mapping imports" () {
         annotations.getAnnotation (_) >>> [
-            new FrameworkAnnotation(name: 'MappingA', pkg: 'annotation'),
-            new FrameworkAnnotation(name: 'MappingB', pkg: 'annotation'),
-            new FrameworkAnnotation(name: 'MappingC', pkg: 'annotation')
+            new FrameworkAnnotation('MappingA', 'annotation'),
+            new FrameworkAnnotation('MappingB', 'annotation'),
+            new FrameworkAnnotation('MappingC', 'annotation')
         ]
 
         def apiItf = new Interface ('name', "pkg", [
@@ -154,7 +154,7 @@ http.ResultWrapper;
     }
 
     void "writes parameter annotation import" () {
-        annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Parameter', pkg: 'annotation')
+        annotations.getAnnotation (_) >> new FrameworkAnnotation('Parameter', 'annotation')
 
         def apiItf = new Interface ('name', 'pkg', [
             new Endpoint('path', HttpMethod.GET, null, false,
@@ -224,7 +224,7 @@ import model.Foo;
     }
 
     void "writes request body annotation import" () {
-        annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Body', pkg: 'annotation')
+        annotations.getAnnotation (_) >> new FrameworkAnnotation('Body', 'annotation')
 
         def apiItf = new Interface ('name', 'pkg', [
             new Endpoint ('/foo', HttpMethod.GET, null, false, [
@@ -352,9 +352,9 @@ import java.lang.Deprecated;
 
     void "sorts imports as strings"() {
         annotations.getAnnotation (_) >>> [
-            new FrameworkAnnotation(name: 'MappingC', pkg: 'annotation'),
-            new FrameworkAnnotation(name: 'MappingB', pkg: 'annotation'),
-            new FrameworkAnnotation(name: 'MappingA', pkg: 'annotation')
+            new FrameworkAnnotation('MappingC', 'annotation'),
+            new FrameworkAnnotation('MappingB', 'annotation'),
+            new FrameworkAnnotation('MappingA', 'annotation')
         ]
 
         def apiItf = new Interface ('name', 'pkg', [
