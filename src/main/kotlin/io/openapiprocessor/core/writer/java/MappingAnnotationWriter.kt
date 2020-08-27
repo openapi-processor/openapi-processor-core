@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.writer.java
+package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
+import java.io.Writer
 
 /**
  * mapping annotation writer interface.
@@ -26,6 +27,6 @@ import io.openapiprocessor.core.model.EndpointResponse
  */
 interface MappingAnnotationWriter {
 
-    void write (Writer target, Endpoint endpoint, EndpointResponse endpointResponse)
+    fun write (target: Writer, endpoint: Endpoint, endpointResponse: EndpointResponse)
 
 }

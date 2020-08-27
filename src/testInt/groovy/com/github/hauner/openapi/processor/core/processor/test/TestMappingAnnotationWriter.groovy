@@ -18,7 +18,7 @@ package com.github.hauner.openapi.processor.core.processor.test
 
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
-import com.github.hauner.openapi.core.writer.java.MappingAnnotationWriter
+import io.openapiprocessor.core.writer.java.MappingAnnotationWriter
 
 /**
  * simple {@link MappingAnnotationWriter} implementation for testing.
