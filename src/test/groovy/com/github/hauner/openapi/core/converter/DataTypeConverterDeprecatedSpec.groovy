@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.converter
 
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.TypeMapping
-import com.github.hauner.openapi.core.framework.Framework
+import io.openapiprocessor.core.framework.Framework
 import com.github.hauner.openapi.core.framework.FrameworkBase
 import io.openapiprocessor.core.model.DataTypes
 import com.github.hauner.openapi.core.test.TestSchema

@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.framework
 
+import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.CookieParameter
@@ -28,7 +29,7 @@ import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.parser.Parameter as ParserParameter
 
 /**
- * default implementation of {@link Framework}.
+ * default implementation of {@link io.openapiprocessor.core.framework.Framework}.
  *
  * extend and override where necessary.
  *

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.framework
+package io.openapiprocessor.core.framework
 
 import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.parameters.Parameter
@@ -33,7 +33,7 @@ interface Framework {
      * @param DataType data type of the parameter
      * @return a query {@link Parameter}
      */
-    Parameter createQueryParameter(ParserParameter parameter, DataType dataType)
+    fun createQueryParameter(parameter: ParserParameter, dataType: DataType): Parameter
 
     /**
      * create a model header parameter.
@@ -42,7 +42,7 @@ interface Framework {
      * @param DataType data type of the parameter
      * @return a header {@link Parameter}
      */
-    Parameter createHeaderParameter(ParserParameter parameter, DataType dataType)
+    fun createHeaderParameter(parameter: ParserParameter, dataType: DataType): Parameter
 
     /**
      * create a model cookie parameter.
@@ -51,7 +51,7 @@ interface Framework {
      * @param DataType data type of the parameter
      * @return a cookie {@link Parameter}
      */
-    Parameter createCookieParameter(ParserParameter parameter, DataType dataType)
+    fun createCookieParameter(parameter: ParserParameter, dataType: DataType): Parameter
 
     /**
      * create a model path parameter.
@@ -60,7 +60,7 @@ interface Framework {
      * @param DataType data type of the parameter
      * @return a path {@link Parameter}
      */
-    Parameter createPathParameter(ParserParameter parameter, DataType dataType)
+    fun createPathParameter(parameter: ParserParameter, dataType: DataType): Parameter
 
     /**
      * create a model multipart parameter.
@@ -69,7 +69,7 @@ interface Framework {
      * @param DataType data type of the parameter
      * @return a multipart {@link Parameter}
      */
-    Parameter createMultipartParameter(ParserParameter parameter, DataType dataType)
+    fun createMultipartParameter(parameter: ParserParameter, dataType: DataType): Parameter
 
     /**
      * create a model additional parameter.
@@ -78,7 +78,7 @@ interface Framework {
      * @param DataType data type of the parameter
      * @return an additional {@link Parameter}
      */
-    Parameter createAdditionalParameter(ParserParameter parameter, DataType dataType)
+    fun createAdditionalParameter(parameter: ParserParameter, dataType: DataType): Parameter
 
     /**
      * create a model request body.
@@ -87,6 +87,6 @@ interface Framework {
      * @param DataType data type of the parameter
      * @return an additional {@link RequestBody}
      */
-    RequestBody createRequestBody(String contentType, boolean required, DataType dataType)
+    fun createRequestBody(contentType: String, required: Boolean, dataType: DataType): RequestBody
 
 }

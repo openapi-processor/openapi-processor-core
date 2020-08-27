@@ -18,7 +18,7 @@ package com.github.hauner.openapi.core.converter
 
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
-import com.github.hauner.openapi.core.framework.Framework
+import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.writer.java.MappingAnnotationWriter
 import io.openapiprocessor.core.writer.java.SimpleWriter

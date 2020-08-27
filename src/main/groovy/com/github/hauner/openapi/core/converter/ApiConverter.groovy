@@ -20,7 +20,7 @@ import com.github.hauner.openapi.core.converter.mapping.MappingFinder
 import com.github.hauner.openapi.core.converter.wrapper.MultiDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.ResultDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.SingleDataTypeWrapper
-import com.github.hauner.openapi.core.framework.Framework
+import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.parameters.Parameter as ModelParameter
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.MultipartResponseBodyException
