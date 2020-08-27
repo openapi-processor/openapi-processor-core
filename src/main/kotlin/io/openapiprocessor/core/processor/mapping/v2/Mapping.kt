@@ -18,7 +18,7 @@ package io.openapiprocessor.core.processor.mapping.v2
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
+import io.openapiprocessor.core.processor.mapping.VersionedMapping
 
 /**
  * *the* v2 Schema of the mapping yaml
@@ -46,8 +46,7 @@ data class Mapping(
 
 ): VersionedMapping {
 
-    override fun isV2(): Boolean {
-        return version.startsWith("v2")
-    }
+    override val v2: Boolean
+        get() = version.startsWith("v2")
 
 }

@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.github.hauner.openapi.core.processor.mapping;
+package io.openapiprocessor.core.processor.mapping
 
 /**
  * check for mapping format
  *
  * @author Martin Hauner
  */
-public interface VersionedMapping {
-
-    boolean isV2();
-
+// MappingVersion ??
+interface VersionedMapping {
+    val v2: Boolean
 }

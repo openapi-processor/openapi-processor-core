@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.openapiprocessor.core.processor.mapping.v1.Mapping
-import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
+import io.openapiprocessor.core.processor.mapping.VersionedMapping
 import io.openapiprocessor.core.processor.mapping.v1.Parameter
 import io.openapiprocessor.core.processor.mapping.v1.ParameterDeserializer
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2

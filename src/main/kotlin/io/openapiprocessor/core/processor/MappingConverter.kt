@@ -19,7 +19,7 @@ package io.openapiprocessor.core.processor
 import io.openapiprocessor.core.converter.mapping.Mapping
 import io.openapiprocessor.core.processor.mapping.v1.MappingConverter as MappingConverterV1
 import io.openapiprocessor.core.processor.mapping.v1.Mapping as MappingV1
-import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
+import io.openapiprocessor.core.processor.mapping.VersionedMapping
 import io.openapiprocessor.core.processor.mapping.v2.MappingConverter as MappingConverterV2
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
@@ -36,7 +36,7 @@ class MappingConverter {
            return emptyList()
        }
 
-        return if (source.isV2) {
+        return if (source.v2) {
             val converter = MappingConverterV2()
             converter.convert (source as MappingV2)
         } else {

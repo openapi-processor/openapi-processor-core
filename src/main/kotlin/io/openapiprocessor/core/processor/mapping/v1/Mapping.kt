@@ -16,7 +16,7 @@
 
 package io.openapiprocessor.core.processor.mapping.v1
 
-import com.github.hauner.openapi.core.processor.mapping.VersionedMapping
+import io.openapiprocessor.core.processor.mapping.VersionedMapping
 
 /**
  * *the* Schema of the mapping yaml
@@ -43,8 +43,7 @@ class Mapping(
 
 ): VersionedMapping {
 
-    override fun isV2(): Boolean {
-        return false
-    }
+    override val v2: Boolean
+        get() = false
 
 }
