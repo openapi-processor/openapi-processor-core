@@ -30,9 +30,9 @@ open class Response(
 ) {
 
     val imports
-    get() = responseType.getImports()
+        get() = responseType.getImports()
 
     val empty
-    get() = responseType is NoneDataType
+        get() = responseType is NoneDataType
 
 }

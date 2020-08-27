@@ -21,7 +21,7 @@ import com.github.hauner.openapi.core.writer.java.MappingAnnotationWriter as Cor
 import com.github.hauner.openapi.core.writer.java.ParameterAnnotationWriter as CoreParameterAnnotationWriter
 import io.openapiprocessor.core.converter.ApiOptions
 import com.github.hauner.openapi.core.model.Endpoint
-import com.github.hauner.openapi.core.model.EndpointResponse
+import io.openapiprocessor.core.model.EndpointResponse
 import io.openapiprocessor.core.support.Identifier
 
 /**

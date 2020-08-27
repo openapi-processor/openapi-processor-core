@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import com.github.hauner.openapi.core.model.Endpoint
-import com.github.hauner.openapi.core.model.EndpointResponse
+import io.openapiprocessor.core.model.EndpointResponse
 
 /**
  * mapping annotation writer interface.

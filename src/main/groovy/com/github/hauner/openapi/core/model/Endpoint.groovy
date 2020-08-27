@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
+import io.openapiprocessor.core.model.EndpointResponse
 import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.parameters.MultipartParameter
 import io.openapiprocessor.core.model.RequestBody
@@ -156,7 +157,7 @@ class Endpoint {
         Set<Response> oks = successResponses
         Set<Response> errors = errorResponses
         oks.collect {
-            new EndpointResponse(main: it, errors: errors)
+            new EndpointResponse(it, errors)
         }
     }
 
