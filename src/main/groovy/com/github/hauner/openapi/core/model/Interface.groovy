@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.model
 
+import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.support.Identifier
 
 /**

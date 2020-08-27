@@ -30,7 +30,7 @@ import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import com.github.hauner.openapi.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
-import com.github.hauner.openapi.core.model.Endpoint
+import io.openapiprocessor.core.model.Endpoint
 import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.RequestBody as ModelRequestBody
 import io.openapiprocessor.core.model.datatypes.MappedDataType
@@ -138,10 +138,7 @@ class  ApiConverter {
     }
 
     private Endpoint createEndpoint (String path, Operation operation, DataTypes dataTypes, RefResolver resolver) {
-        Endpoint ep = new Endpoint (
-            path: path, method: operation.method,
-            operationId: operation.operationId,
-            deprecated: operation.deprecated)
+        Endpoint ep = new Endpoint (path, operation.method, operation.operationId, operation.deprecated)
 
         try {
             collectParameters (operation.parameters, ep, dataTypes, resolver)

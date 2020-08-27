@@ -21,7 +21,7 @@ import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ResultDataType
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.parameters.ParameterBase
-import com.github.hauner.openapi.core.model.Endpoint
+import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.BooleanDataType
@@ -53,7 +53,14 @@ class MethodWriterSpec extends Specification {
 
     @Deprecated // use endpoint() builder
     private Endpoint createEndpoint (Map properties) {
-        new Endpoint(properties).initEndpointResponses ()
+        def ep = new Endpoint(
+            properties.path as String ?: '',
+            properties.method as HttpMethod ?: HttpMethod.GET,
+            properties.operationId as String ?: null,
+            properties.deprecated as boolean ?: false
+        )
+        ep.responses = properties.responses ?: [:]
+        ep.initEndpointResponses ()
     }
 
     void "writes mapping annotation" () {

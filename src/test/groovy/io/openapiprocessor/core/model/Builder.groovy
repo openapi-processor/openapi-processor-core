@@ -16,7 +16,7 @@
 
 package io.openapiprocessor.core.model
 
-import com.github.hauner.openapi.core.model.Endpoint
+
 import com.github.hauner.openapi.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
