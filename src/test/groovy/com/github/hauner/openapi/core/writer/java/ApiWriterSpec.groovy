@@ -175,45 +175,6 @@ Bar class!
 """
     }
 
-    @Ignore
-    void "generates model enum sources in model target folder"() {
-        def enumWriter = Stub (StringEnumWriter) {
-            write (_ as Writer, _ as StringEnumDataType) >> {
-                Writer writer = it.get(0)
-                writer.write ('Foo enum!\n')
-            } >> {
-                Writer writer = it.get(0)
-                writer.write ('Bar enum!\n')
-            }
-        }
-
-        def opts = new ApiOptions(
-            packageName: 'com.github.hauner.openapi',
-            targetDir: [target.root.toString (), 'java', 'src'].join (File.separator)
-        )
-
-        def dt = new DataTypes()
-        dt.add (new StringEnumDataType(
-            'Foo', "${opts.packageName}.model", [], null, false))
-        dt.add (new StringEnumDataType(
-            'Bar', "${opts.packageName}.model", [], null, false))
-        def api = new Api([], dt)
-
-        when:
-        new ApiWriter (opts, Stub(InterfaceWriter), Stub(DataTypeWriter), enumWriter, false)
-            .write (api)
-
-        then:
-        def fooSource = new File(getModelPath (opts.targetDir, 'Foo.java'))
-        fooSource.text == """\
-Foo enum!
-"""
-        def barSource = new File(getModelPath (opts.targetDir, 'Bar.java'))
-        barSource.text == """\
-Bar enum!
-"""
-    }
-
     void "generates model for object data types only" () {
         def dataTypeWriter = Mock (DataTypeWriter) {
             write (_ as Writer, _ as ObjectDataType) >> {
@@ -304,37 +265,6 @@ interface Foo {
         def fooSource = new File(getModelPath (opts.targetDir, 'Foo.java'))
         fooSource.text == """\
 class Foo {
-}
-"""
-    }
-
-    @Ignore
-    void "re-formats model enum sources"() {
-        def enumWriter = Stub (StringEnumWriter) {
-            write (_ as Writer, _ as StringEnumDataType) >> {
-                Writer writer = it.get(0)
-                writer.write ('    enum   Foo   {   }')
-            }
-        }
-
-        def opts = new ApiOptions(
-            packageName: 'com.github.hauner.openapi',
-            targetDir: [target.root.toString (), 'java', 'src'].join (File.separator)
-        )
-
-        def dt = new DataTypes()
-        dt.add (new StringEnumDataType(
-            'Foo', "${opts.packageName}.model", [], null, false))
-        def api = new Api([], dt)
-
-        when:
-        new ApiWriter (opts, Stub(InterfaceWriter), Stub(DataTypeWriter), enumWriter)
-            .write (api)
-
-        then:
-        def fooSource = new File(getModelPath (opts.targetDir, 'Foo.java'))
-        fooSource.text == """\
-enum Foo {
 }
 """
     }
