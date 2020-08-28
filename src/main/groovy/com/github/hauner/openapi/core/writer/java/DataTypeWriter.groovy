@@ -19,9 +19,10 @@ package com.github.hauner.openapi.core.writer.java
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.support.Identifier
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.SimpleWriter
+
+import static io.openapiprocessor.core.writer.java.Identifier.toCamelCase
 
 /**
  * Writer for POJO classes.
@@ -54,13 +55,13 @@ class DataTypeWriter {
 
         def propertyNames = dataType.objectProperties.keySet ()
         propertyNames.each {
-            def javaPropertyName = Identifier.toCamelCase (it)
+            def javaPropertyName = toCamelCase (it)
             def propDataType = dataType.getObjectProperty (it)
             target.write (getProp (it, javaPropertyName, propDataType))
         }
 
         propertyNames.each {
-            def javaPropertyName = Identifier.toCamelCase (it)
+            def javaPropertyName = toCamelCase (it)
             def propDataType = dataType.getObjectProperty (it)
             target.write (getGetter (javaPropertyName, propDataType))
             target.write (getSetter (javaPropertyName, propDataType))

@@ -16,13 +16,14 @@
 
 package com.github.hauner.openapi.core.writer.java
 
-import io.openapiprocessor.core.model.parameters.Parameter
-import io.openapiprocessor.core.writer.java.MappingAnnotationWriter as CoreMappingAnnotationWriter
-import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter as CoreParameterAnnotationWriter
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
-import io.openapiprocessor.core.support.Identifier
+import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.writer.java.MappingAnnotationWriter as CoreMappingAnnotationWriter
+import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter as CoreParameterAnnotationWriter
+
+import static io.openapiprocessor.core.writer.java.Identifier.toCamelCase
 
 /**
  * Writer for Java interface methods, i.e. endpoints.
@@ -58,7 +59,7 @@ class MethodWriter {
 
     private String createMethodName (Endpoint endpoint, EndpointResponse endpointResponse) {
         if (endpoint.operationId != null) {
-            return Identifier.toCamelCase (endpoint.operationId)
+            return toCamelCase (endpoint.operationId)
         }
 
         def tokens = endpoint.path.tokenize ('/')
@@ -67,7 +68,7 @@ class MethodWriter {
             tokens += endpointResponse.contentType.tokenize ('/')
         }
 
-        tokens = tokens.collect { Identifier.toCamelCase (it).capitalize () }
+        tokens = tokens.collect { toCamelCase (it).capitalize () }
         def name = tokens.join ('')
         "${endpoint.method.method}${name}"
     }
@@ -86,7 +87,7 @@ class MethodWriter {
                 methodDefinition += " ${annotation}"
             }
 
-            methodDefinition += " ${it.dataType.name} ${Identifier.toCamelCase (it.name)}"
+            methodDefinition += " ${it.dataType.name} ${toCamelCase (it.name)}"
             methodDefinition.trim()
         }
 

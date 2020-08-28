@@ -50,7 +50,7 @@ import io.openapiprocessor.core.parser.RefResolver
 import io.openapiprocessor.core.parser.RequestBody
 import io.openapiprocessor.core.parser.Response
 import io.openapiprocessor.core.parser.Schema
-import io.openapiprocessor.core.support.Identifier
+import io.openapiprocessor.core.writer.java.Identifier
 
 /**
  * Converts the open api model to a new model that is better suited for generating source files

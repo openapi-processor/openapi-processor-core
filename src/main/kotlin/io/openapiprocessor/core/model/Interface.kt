@@ -16,7 +16,7 @@
 
 package io.openapiprocessor.core.model
 
-import io.openapiprocessor.core.support.toClass
+import io.openapiprocessor.core.writer.java.toClass
 
 /**
  * Java interface properties.

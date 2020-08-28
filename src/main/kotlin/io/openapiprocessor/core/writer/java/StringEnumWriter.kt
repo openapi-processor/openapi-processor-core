@@ -18,7 +18,6 @@ package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
-import io.openapiprocessor.core.support.toEnum
 import java.io.Writer
 
 /**
