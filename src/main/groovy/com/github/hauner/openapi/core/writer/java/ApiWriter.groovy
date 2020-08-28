@@ -25,6 +25,7 @@ import com.google.googlejavaformat.java.Formatter
 import com.google.googlejavaformat.java.JavaFormatterOptions
 import groovy.util.logging.Slf4j
 import io.openapiprocessor.core.writer.java.PathWriter
+import io.openapiprocessor.core.writer.java.StringEnumWriter
 
 import java.nio.file.Files
 import java.nio.file.Path

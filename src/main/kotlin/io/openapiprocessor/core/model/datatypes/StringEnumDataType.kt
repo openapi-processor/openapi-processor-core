@@ -25,7 +25,7 @@ class StringEnumDataType(
 
     private val type: String,
     private val pkg: String,
-    private val values: List<String> = emptyList(),
+    val values: List<String> = emptyList(),
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
 

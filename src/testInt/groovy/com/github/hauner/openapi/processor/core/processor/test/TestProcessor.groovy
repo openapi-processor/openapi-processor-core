@@ -28,7 +28,7 @@ import com.github.hauner.openapi.core.writer.java.BeanValidationFactory
 import com.github.hauner.openapi.core.writer.java.DataTypeWriter
 import com.github.hauner.openapi.core.writer.java.InterfaceWriter
 import com.github.hauner.openapi.core.writer.java.MethodWriter
-import com.github.hauner.openapi.core.writer.java.StringEnumWriter
+import io.openapiprocessor.core.writer.java.StringEnumWriter
 import groovy.util.logging.Slf4j
 import io.openapiprocessor.api.OpenApiProcessor
 

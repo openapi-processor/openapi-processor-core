@@ -18,12 +18,13 @@ package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.writer.java.SimpleWriter
+import io.openapiprocessor.core.writer.java.StringEnumWriter
 import spock.lang.Specification
 
 class StringEnumWriterSpec extends Specification {
     def headerWriter = Mock SimpleWriter
 
-    def writer = new StringEnumWriter(headerWriter: headerWriter)
+    def writer = new StringEnumWriter(headerWriter)
     def target = new StringWriter ()
 
     void "writes 'generated' comment" () {

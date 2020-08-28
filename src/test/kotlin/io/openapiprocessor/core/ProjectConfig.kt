@@ -7,8 +7,12 @@ package io.openapiprocessor.core
 
 import io.kotest.core.Tag
 import io.kotest.core.Tags
+import io.kotest.core.TestConfiguration
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.extensions.TagExtension
+import io.openapiprocessor.core.support.deleteRecursively
+import java.nio.file.Files
+import java.nio.file.Path
 
 object Windows: Tag()
 object NotWindows: Tag()
@@ -38,3 +42,13 @@ object SystemTagExtension: TagExtension {
 object ProjectConfig: AbstractProjectConfig() {
     override fun extensions() = listOf(SystemTagExtension)
 }
+
+
+fun TestConfiguration.tempFolder(prefix: String? = "oap-"): Path {
+   val folder = Files.createTempDirectory(prefix)
+   afterSpec {
+       folder.deleteRecursively()
+   }
+   return folder
+}
+
