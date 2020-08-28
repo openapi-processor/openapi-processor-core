@@ -16,7 +16,7 @@
 
 @file:JvmName("Identifier")
 
-package io.openapiprocessor.core.support
+package io.openapiprocessor.core.writer.java
 
 import java.lang.Character.isJavaIdentifierPart
 import java.lang.Character.isJavaIdentifierStart

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.support
+package io.openapiprocessor.core.writer.java
 
 import spock.lang.Specification
 import spock.lang.Unroll
