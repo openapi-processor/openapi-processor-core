@@ -28,8 +28,8 @@ import io.openapiprocessor.core.model.HttpMethod
  */
 class TestFrameworkAnnotations implements FrameworkAnnotations {
 
-    static def MAPPING = new FrameworkAnnotation(name: 'Mapping', pkg: 'annotation')
-    static def PARAMETER = new FrameworkAnnotation(name: 'Parameter', pkg: 'annotation')
+    static def MAPPING = new FrameworkAnnotation('Mapping', 'annotation')
+    static def PARAMETER = new FrameworkAnnotation('Parameter', 'annotation')
 
     @Override
     FrameworkAnnotation getAnnotation (HttpMethod httpMethod) {

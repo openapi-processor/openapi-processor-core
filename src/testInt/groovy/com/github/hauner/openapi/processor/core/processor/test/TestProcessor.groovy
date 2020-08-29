@@ -83,7 +83,7 @@ class TestProcessor implements OpenApiProcessor {
                     beanValidationFactory: beanValidationFactory,
                     apiOptions: options
                 ),
-                new StringEnumWriter(headerWriter: headerWriter)
+                new StringEnumWriter(headerWriter)
             )
 
             writer.write (api)

@@ -48,33 +48,39 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
         target.write (values.joinToString (",\n") + ";\n\n")
         target.write("    private final String value;\n\n")
 
-        target.write ("""\
-    private ${dataType.getName()}(String value) {
-        this.value = value;
-    }
+        target.write (
+            """
+            |    private ${dataType.getName()}(String value) {
+            |        this.value = value;
+            |    }
+            |
+            |
+            """.trimMargin())
 
-""")
+        target.write(
+            """
+            |    @JsonValue
+            |    public String getValue() {
+            |        return this.value;
+            |    }
+            |
+            |
+            """.trimMargin())
 
-        target.write("""\
-    @JsonValue
-    public String getValue() {
-        return this.value;
-    }
-
-""")
-
-        target.write("""\
-    @JsonCreator
-    public static ${dataType.getName()} fromValue(String value) {
-        for (${dataType.getName()} val : ${dataType.getName()}.values()) {
-            if (val.value.equals(value)) {
-                return val;
-            }
-        }
-        throw new IllegalArgumentException(value);
-    }
-
-""")
+        target.write(
+            """
+            |    @JsonCreator
+            |    public static ${dataType.getName()} fromValue(String value) {
+            |        for (${dataType.getName()} val : ${dataType.getName()}.values()) {
+            |            if (val.value.equals(value)) {
+            |                return val;
+            |            }
+            |        }
+            |        throw new IllegalArgumentException(value);
+            |    }
+            |
+            |
+            """.trimMargin())
 
         target.write ("}\n")
     }

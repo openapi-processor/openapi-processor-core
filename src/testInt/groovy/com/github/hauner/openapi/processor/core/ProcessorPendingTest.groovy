@@ -31,7 +31,7 @@ class ProcessorPendingTest extends ProcessorTestBase {
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
         return [
-            new TestSet(name: 'response-content-single', processor: new TestProcessor(), parser: ParserType.SWAGGER),
+            new TestSet(name: 'params-enum', processor: new TestProcessor(), parser: ParserType.SWAGGER),
 //            new TestSet(name: 'params-request-body-multipart-form-data', processor: new TestProcessor(), parser: ParserType.SWAGGER),
 
 //            new TestSet(name: 'ref-into-another-file-path', processor: new TestProcessor(), parser: ParserType.SWAGGER),

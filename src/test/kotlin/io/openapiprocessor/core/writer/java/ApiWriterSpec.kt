@@ -77,10 +77,10 @@ class ApiWriterSpec: StringSpec({
 
         // then:
         textOf("Foo.java") shouldBe """
-            enum Foo {
-            }
-
-            """.trimIndent()
+            |enum Foo {
+            |}
+            |
+            """.trimMargin()
     }
 
 })
