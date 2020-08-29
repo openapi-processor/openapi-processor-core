@@ -24,7 +24,7 @@ import io.openapiprocessor.core.parser.Parser
 import io.openapiprocessor.core.processor.MappingConverter
 import io.openapiprocessor.core.processor.MappingReader
 import com.github.hauner.openapi.core.writer.java.ApiWriter
-import com.github.hauner.openapi.core.writer.java.BeanValidationFactory
+import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import com.github.hauner.openapi.core.writer.java.DataTypeWriter
 import com.github.hauner.openapi.core.writer.java.InterfaceWriter
 import com.github.hauner.openapi.core.writer.java.MethodWriter

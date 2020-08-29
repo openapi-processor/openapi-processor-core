@@ -20,6 +20,7 @@ import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.Interface
+import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.ImportFilter
 import io.openapiprocessor.core.writer.java.SimpleWriter

@@ -1,44 +1,53 @@
 /*
- * Copyright 2019-2020 the original authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright © 2019-2020 https://github.com/openapi-processor/openapi-processor-core
+ * PDX-License-Identifier: Apache-2.0
  */
 
 package io.openapiprocessor.core.model.datatypes
 
 /**
  * OpenAPI constraint details of a data type.
- *
- * @author Martin Hauner
- * @author Bastian Wilhelm
  */
 class DataTypeConstraints(
 
-    var defaultValue: Any? = null,
-    var nullable: Boolean? = null,
-    var minLength: Int? = null,
-    var maxLength: Int? = null,
-    var minimum: Number? = null,
-    var exclusiveMinimum: Boolean? = null,
-    var maximum: Number? = null,
-    var exclusiveMaximum: Boolean? = null,
-    var minItems: Int? = null,
-    var maxItems: Int? = null
+    var /*val*/ defaultValue: Any? = null, // todo rename to default
+    var /*val*/ nullable: Boolean = false,
+    var /*val*/ minLength: Int = 0,
+    var /*val*/ maxLength: Int? = null,
+    var /*val*/ minimum: Number? = null,
+    var /*val*/ exclusiveMinimum: Boolean = false,
+    var /*val*/ maximum: Number? = null,
+    var /*val*/ exclusiveMaximum: Boolean = false,
+    var /*val*/ minItems: Int = 0,
+    var /*val*/ maxItems: Int? = null
 
 ) {
 
-    fun getDefault(): Any? {
-        return defaultValue
-    }
+    fun getDefault(): Any? = defaultValue
+
+    fun hasItemConstraints(): Boolean = minItems != 0 || maxItems != null
+
+    val itemConstraints: SizeConstraints
+        get() = SizeConstraints(minItems, maxItems)
+
+    fun hasLengthConstraints(): Boolean = minLength != 0 || maxLength != null
+
+    val lengthConstraints: SizeConstraints
+        get() = SizeConstraints(minLength, maxLength)
+
+    val minimumConstraint: NumberConstraint
+        get() = NumberConstraint(minimum!!, exclusiveMinimum)
+
+    val maximumConstraint: NumberConstraint
+        get() = NumberConstraint(maximum!!, exclusiveMaximum)
 
 }
+
+data class SizeConstraints(val min: Int, val max: Int?) {
+
+    val hasMin = min > 0
+    val hasMax = max != null
+
+}
+
+data class NumberConstraint(val value: Number, val exclusive: Boolean)

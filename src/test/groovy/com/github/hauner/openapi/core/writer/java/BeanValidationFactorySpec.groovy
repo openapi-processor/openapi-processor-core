@@ -28,6 +28,7 @@ import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -76,9 +77,10 @@ class BeanValidationFactorySpec extends Specification {
 
     @Unroll
     void "applies @Size to String (minLength: #minLength, maxLength: #maxLength)" () {
-        def constraints = new DataTypeConstraints ()
-        constraints.minLength = minLength
-        constraints.maxLength = maxLength
+        def constraints = new DataTypeConstraints (
+            minLength: minLength,
+            maxLength: maxLength
+        )
 
         def dataType = new StringDataType(constraints, false)
 
@@ -92,19 +94,24 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         minLength | maxLength || resultImports | resultAnnotations
-        null      | null      || []            | ""
         0         | null      || []            | ""
         1         | null      || [SIZE]        | "@Size(min = 1)"
-        null      | 0         || [SIZE]        | "@Size(max = 0)"
-        null      | 2         || [SIZE]        | "@Size(max = 2)"
         1         | 2         || [SIZE]        | "@Size(min = 1, max = 2)"
+//      minLength defaults to 0 if not set
+//      null      | null      || []            | ""
+//      null      | 0         || [SIZE]        | "@Size(max = 0)"
+//      null      | 2         || [SIZE]        | "@Size(max = 2)"
+        0         | null      || []            | ""
+        0         | 0         || [SIZE]        | "@Size(max = 0)"
+        0         | 2         || [SIZE]        | "@Size(max = 2)"
     }
 
     @Unroll
     void "applies @Size to Array (minItems: #minItems, maxItems: #maxItems)" () {
-        def constraints = new DataTypeConstraints ()
-        constraints.minItems = minItems
-        constraints.maxItems = maxItems
+        def constraints = new DataTypeConstraints (
+            minItems: minItems,
+            maxItems: maxItems
+        )
 
         DataType dataType = new ArrayDataType(new NoneDataType(), constraints, false)
 
@@ -118,19 +125,24 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         minItems | maxItems || resultImports | resultAnnotations
-        null     | null     || []            | ""
         0        | null     || []            | ""
         1        | null     || [SIZE]        | "@Size(min = 1)"
-        null     | 0        || [SIZE]        | "@Size(max = 0)"
-        null     | 2        || [SIZE]        | "@Size(max = 2)"
         1        | 2        || [SIZE]        | "@Size(min = 1, max = 2)"
+//      minItems defaults to 0 if not set
+//      null     | null     || []            | ""
+//      null     | 0        || [SIZE]        | "@Size(max = 0)"
+//      null     | 2        || [SIZE]        | "@Size(max = 2)"
+        0        | null     || []            | ""
+        0        | 0        || [SIZE]        | "@Size(max = 0)"
+        0        | 2        || [SIZE]        | "@Size(max = 2)"
     }
 
     @Unroll
     void "applies @Size to Collection (minItems: #minItems, maxItems: #maxItems)" () {
-        def constraints = new DataTypeConstraints ()
-        constraints.minItems = minItems
-        constraints.maxItems = maxItems
+        def constraints = new DataTypeConstraints (
+            minItems: minItems,
+            maxItems: maxItems
+        )
 
         DataType dataType = new MappedCollectionDataType(
             Collection.name,
@@ -149,18 +161,23 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         minItems | maxItems || resultImports    | resultAnnotations
-        null     | null     || []       | ""
         0        | null     || []       | ""
         1        | null     || [SIZE] | "@Size(min = 1)"
-        null     | 0        || [SIZE] | "@Size(max = 0)"
-        null     | 2        || [SIZE] | "@Size(max = 2)"
         1        | 2        || [SIZE] | "@Size(min = 1, max = 2)"
+//      minItems defaults to 0 if not set
+//      null     | null     || []            | ""
+//      null     | 0        || [SIZE]        | "@Size(max = 0)"
+//      null     | 2        || [SIZE]        | "@Size(max = 2)"
+        0        | null     || []            | ""
+        0        | 0        || [SIZE]        | "@Size(max = 0)"
+        0        | 2        || [SIZE]        | "@Size(max = 2)"
     }
 
     @Unroll
     void "applies @NotNull (nullable: #nullable, type: #type)" () {
-        def constraints = new DataTypeConstraints ()
-        constraints.nullable = nullable
+        def constraints = new DataTypeConstraints (
+            nullable: nullable
+        )
 
         DataType dataType = createDataType (type, constraints)
 
@@ -174,22 +191,24 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         type                     | nullable || resultImports | resultAnnotations
-        IntegerDataType          | null     || []            | ""
+//      nullable defaults to false if not set
+//      IntegerDataType          | null     || []            | ""
         IntegerDataType          | true     || []            | ""
         IntegerDataType          | false    || [NOT_NULL]    | "@NotNull"
-        StringDataType           | null     || []            | ""
+//      StringDataType           | null     || []            | ""
         StringDataType           | true     || []            | ""
         StringDataType           | false    || [NOT_NULL]    | "@NotNull"
-        MappedCollectionDataType | null     || []            | ""
+//      MappedCollectionDataType | null     || []            | ""
         MappedCollectionDataType | true     || []            | ""
         MappedCollectionDataType | false    || [NOT_NULL]    | "@NotNull"
     }
 
     @Unroll
     void "applies @DecimalMin (minimum: #minimum, exclusiveMinimum: #exclusiveMinimum, type: #type)" () {
-        def constraints = new DataTypeConstraints ()
-        constraints.minimum = minimum
-        constraints.exclusiveMinimum = exclusiveMinimum
+        def constraints = new DataTypeConstraints (
+            minimum: minimum,
+            exclusiveMinimum: exclusiveMinimum
+        )
 
         DataType dataType = createDataType (type, constraints)
 
@@ -203,39 +222,41 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         type            | minimum | exclusiveMinimum || resultImports | resultAnnotations
-        IntegerDataType | null    | null             || []            | ""
+//      exclusiveMinimum defaults to false if not set
+//      IntegerDataType | null    | null             || []            | ""
         IntegerDataType | null    | true             || []            | ""
         IntegerDataType | null    | false            || []            | ""
-        IntegerDataType | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+//      IntegerDataType | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
         IntegerDataType | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
         IntegerDataType | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
         IntegerDataType | 0       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "0")'
-        LongDataType    | null    | null             || []            | ""
+//      LongDataType    | null    | null             || []            | ""
         LongDataType    | null    | true             || []            | ""
         LongDataType    | null    | false            || []            | ""
-        LongDataType    | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+//      LongDataType    | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
         LongDataType    | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
         LongDataType    | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        FloatDataType   | null    | null             || []            | ""
+//      FloatDataType   | null    | null             || []            | ""
         FloatDataType   | null    | true             || []            | ""
         FloatDataType   | null    | false            || []            | ""
-        FloatDataType   | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+//      FloatDataType   | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
         FloatDataType   | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
         FloatDataType   | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        DoubleDataType  | null    | null             || []            | ""
+//      DoubleDataType  | null    | null             || []            | ""
         DoubleDataType  | null    | true             || []            | ""
         DoubleDataType  | null    | false            || []            | ""
-        DoubleDataType  | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
+//      DoubleDataType  | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
         DoubleDataType  | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
         DoubleDataType  | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        StringDataType  | 1       | null             || []            | ""
+//      StringDataType  | 1       | null             || []            | ""
     }
 
     @Unroll
     void "applies @DecimalMax (maximum: #maximum, exclusiveMaximum: #exclusiveMaximum, type: #type)" () {
-        def constraints = new DataTypeConstraints ()
-        constraints.maximum = maximum
-        constraints.exclusiveMaximum = exclusiveMaximum
+        def constraints = new DataTypeConstraints (
+            maximum: maximum,
+            exclusiveMaximum: exclusiveMaximum
+        )
 
         DataType dataType = createDataType (type, constraints)
 
@@ -249,32 +270,33 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         type            | maximum | exclusiveMaximum || resultImports | resultAnnotations
-        IntegerDataType | null    | null             || []            | ""
+//      exclusiveMaximum defaults to false if not set
+//      IntegerDataType | null    | null             || []            | ""
         IntegerDataType | null    | true             || []            | ""
         IntegerDataType | null    | false            || []            | ""
-        IntegerDataType | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+//      IntegerDataType | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
         IntegerDataType | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
         IntegerDataType | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
         IntegerDataType | 0       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "0")'
-        LongDataType    | null    | null             || []            | ""
+//      LongDataType    | null    | null             || []            | ""
         LongDataType    | null    | true             || []            | ""
         LongDataType    | null    | false            || []            | ""
-        LongDataType    | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+//      LongDataType    | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
         LongDataType    | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
         LongDataType    | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        FloatDataType   | null    | null             || []            | ""
+//      FloatDataType   | null    | null             || []            | ""
         FloatDataType   | null    | true             || []            | ""
         FloatDataType   | null    | false            || []            | ""
-        FloatDataType   | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+//      FloatDataType   | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
         FloatDataType   | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
         FloatDataType   | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        DoubleDataType  | null    | null             || []            | ""
+//      DoubleDataType  | null    | null             || []            | ""
         DoubleDataType  | null    | true             || []            | ""
         DoubleDataType  | null    | false            || []            | ""
-        DoubleDataType  | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
+//      DoubleDataType  | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
         DoubleDataType  | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
         DoubleDataType  | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        StringDataType  | 1       | null             || []            | ""
+//      StringDataType  | 1       | null             || []            | ""
     }
 
     @Unroll

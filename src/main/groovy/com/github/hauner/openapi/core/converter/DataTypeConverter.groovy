@@ -144,7 +144,7 @@ class DataTypeConverter {
             defaultValue: schemaInfo.defaultValue,
             nullable: schemaInfo.nullable,
             minItems: schemaInfo.minItems,
-            maxItems: schemaInfo.maxItems,
+            maxItems: schemaInfo.maxItems
         )
 
         if (targetType) {
@@ -241,10 +241,10 @@ class DataTypeConverter {
             nullable: schemaInfo.nullable,
             minLength: schemaInfo.minLength,
             maxLength: schemaInfo.maxLength,
-            maximum: schemaInfo.maximum,
-            exclusiveMaximum: schemaInfo.exclusiveMaximum,
             minimum: schemaInfo.minimum,
             exclusiveMinimum: schemaInfo.exclusiveMinimum,
+            maximum: schemaInfo.maximum,
+            exclusiveMaximum: schemaInfo.exclusiveMaximum
         )
 
         def simpleType

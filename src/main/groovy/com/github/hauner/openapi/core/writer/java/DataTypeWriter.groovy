@@ -19,6 +19,7 @@ package com.github.hauner.openapi.core.writer.java
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.SimpleWriter
 

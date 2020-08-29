@@ -106,15 +106,15 @@ class Schema(private val schema: SwaggerSchema<*>): ParserSchema {
 
     override fun getNullable(): Boolean = schema.nullable ?: false
 
-    override fun getMinLength(): Int? = schema.minLength
+    override fun getMinLength(): Int? = schema.minLength ?: 0
 
     override fun getMaxLength(): Int? = schema.maxLength
 
-    override fun getMinItems(): Int? = schema.minItems
+    override fun getMinItems(): Int? = schema.minItems ?: 0
 
     override fun getMaxItems(): Int? = schema.maxItems
 
-    override fun getMaximum (): Number? = schema.maximum
+    override fun getMaximum(): Number? = schema.maximum
 
     override fun isExclusiveMaximum(): Boolean = schema.exclusiveMaximum ?: false
 

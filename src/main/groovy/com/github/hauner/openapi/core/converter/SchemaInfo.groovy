@@ -165,19 +165,19 @@ class SchemaInfo implements MappingSchema {
     /**
      * get nullable value.
      *
-     * @return nullable value or null
+     * @return nullable, true or false
      */
     def getNullable () {
-        schema.nullable
+        schema.nullable ?: false
     }
 
     /**
      * get minLength value.
      *
-     * @return minLength value or null
+     * @return minLength value >= 0
      */
     def getMinLength () {
-        schema.minLength
+        schema.minLength ?: 0
     }
 
     /**
