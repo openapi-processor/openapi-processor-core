@@ -2,4 +2,3 @@ items:
   - generated/api/Api.java
   - generated/model/Bar.java
   - generated/model/Foo.java
-  - generated/model/Self.java

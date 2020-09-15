@@ -15,7 +15,7 @@ public class Bar {
     @JsonProperty("foos")
     private Foo[] foos;
 
-    public Foo getBar() {
+    public String getBar() {
         return bar;
     }
 
