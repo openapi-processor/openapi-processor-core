@@ -112,7 +112,7 @@ class SchemaInfo implements MappingSchema {
     SchemaInfo buildForItem () {
         new SchemaInfo (
             path: path,
-            name: schema.item.type,
+            name: schema.item.ref ?: schema.item.type,
             schema: schema.item,
            resolver: resolver)
     }
