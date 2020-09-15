@@ -14,4 +14,4 @@ fun Path.deleteRecursively() =
         .forEach(Files::delete)
 
 val Path.text: String
-    get() = Files.readString(this)
+    get() = String(Files.readAllBytes(this))
