@@ -76,9 +76,9 @@ class SchemaInfo implements MappingSchema {
     }
 
     /**
-     * Factory method to create a {@code DataTypeInfo} with the $ref name (without "path").
+     * Factory method to create a {@link SchemaInfo} with the $ref name (without "path").
      *
-     * @return a new DataTypeInfo
+     * @return a new {@link SchemaInfo}
      */
     SchemaInfo buildForRef () {
         new SchemaInfo (
@@ -89,12 +89,12 @@ class SchemaInfo implements MappingSchema {
     }
 
     /**
-     * Factory method to create an inline {@code DataTypeInfo} with (property) name and (property)
+     * Factory method to create an inline {@link SchemaInfo} with (property) name and (property)
      * schema.
      *
      * @param nestedName the property name
      * @param nestedSchema the property schema
-     * @return a new DataTypeInfo
+     * @return a new {@link SchemaInfo}
      */
     SchemaInfo buildForNestedType (String nestedName, Schema nestedSchema) {
         new SchemaInfo (
@@ -105,9 +105,9 @@ class SchemaInfo implements MappingSchema {
     }
 
     /**
-     * Factory method to create an {@code DataTypeInfo} of the item type of an array schema.
+     * Factory method to create an {@link SchemaInfo} of the item type of an array schema.
      *
-     * @return s new DataTypeInfo
+     * @return a new {@link SchemaInfo}
      */
     SchemaInfo buildForItem () {
         new SchemaInfo (
