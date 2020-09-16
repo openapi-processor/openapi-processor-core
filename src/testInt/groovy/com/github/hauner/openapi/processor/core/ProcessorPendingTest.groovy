@@ -31,11 +31,8 @@ class ProcessorPendingTest extends ProcessorTestBase {
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
         return [
-            new TestSet(name: 'bean-validation', processor: new TestProcessor(), parser: ParserType.OPENAPI4J),
-//            new TestSet(name: 'params-request-body-multipart-form-data', processor: new TestProcessor(), parser: ParserType.SWAGGER),
-
-//            new TestSet(name: 'ref-into-another-file-path', processor: new TestProcessor(), parser: ParserType.SWAGGER),
-//            new TestSet(name: 'ref-into-another-file-path', processor: new TestProcessor(), parser: ParserType.OPENAPI4J)
+            new TestSet(name: 'ref-array-items-nested', processor: new TestProcessor(), parser: ParserType.OPENAPI4J),
+            new TestSet(name: 'ref-array-items-nested', processor: new TestProcessor(), parser: ParserType.SWAGGER)
         ]
     }
 
