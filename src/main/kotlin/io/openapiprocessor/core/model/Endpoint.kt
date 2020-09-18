@@ -36,7 +36,7 @@ class Endpoint(
     constructor(
         path: String,
         method: HttpMethod,
-        operationId: String?,
+        operationId: String? = null,
         deprecated: Boolean = false,
         responses: MutableMap<String, List<Response>>
     ): this(path, method, operationId, deprecated) {
@@ -47,7 +47,7 @@ class Endpoint(
     constructor(
         path: String,
         method: HttpMethod,
-        operationId: String?,
+        operationId: String? = null,
         deprecated: Boolean = false,
         parameters: MutableList<Parameter>,
         responses: MutableMap<String, List<Response>>
@@ -60,7 +60,7 @@ class Endpoint(
     constructor(
         path: String,
         method: HttpMethod,
-        operationId: String?,
+        operationId: String? = null,
         deprecated: Boolean = false,
         parameters: MutableList<Parameter>,
         requestBodies: MutableList<RequestBody>,
@@ -84,6 +84,7 @@ class Endpoint(
         responses[httpStatus] = statusResponses
     }
 
+    // todo move lists init to constructor then run this from constructor
     // fluent
     fun initEndpointResponses (): Endpoint {
         endpointResponses = createEndpointResponses ()

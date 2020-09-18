@@ -37,6 +37,8 @@ import io.openapiprocessor.core.model.test.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.writer.java.BeanValidationFactory
+import io.openapiprocessor.core.writer.java.MethodWriter
 import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -47,9 +49,10 @@ class MethodWriterSpec extends Specification {
     def apiOptions = new ApiOptions()
 
     def writer = new MethodWriter (
-        apiOptions: apiOptions,
-        mappingAnnotationWriter: new TestMappingAnnotationWriter(),
-        parameterAnnotationWriter: new TestParameterAnnotationWriter())
+        apiOptions,
+        new TestMappingAnnotationWriter(),
+        new TestParameterAnnotationWriter(),
+        Stub (BeanValidationFactory))
     def target = new StringWriter ()
 
     @Deprecated // use endpoint() builder

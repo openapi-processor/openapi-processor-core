@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.writer.java
 
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.Interface
@@ -23,7 +25,7 @@ import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import com.google.googlejavaformat.java.Formatter
 import com.google.googlejavaformat.java.JavaFormatterOptions
-import groovy.util.logging.Slf4j
+import io.openapiprocessor.core.writer.java.InterfaceWriter
 import io.openapiprocessor.core.writer.java.PathWriter
 import io.openapiprocessor.core.writer.java.StringEnumWriter
 
@@ -101,6 +103,7 @@ class ApiWriter {
         writer.write (format (raw.toString ()))
     }
 
+    @CompileStatic
     private void writeDataType (Writer writer, ObjectDataType dataType) {
         def raw = new StringWriter ()
         dataTypeWriter.write (raw, dataType)

@@ -16,10 +16,6 @@ class ResponsesBuilder {
         responses[status] = builder.build()
     }
 
-//    fun none() {
-//        responses.add (EmptyResponse())
-//    }
-
     fun build(): Map<String, List<Response>> {
         return responses
     }

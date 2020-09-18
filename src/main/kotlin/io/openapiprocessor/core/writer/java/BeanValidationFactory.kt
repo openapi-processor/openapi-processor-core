@@ -10,7 +10,7 @@ import io.openapiprocessor.core.model.datatypes.*
 /**
  * creates bean validation imports and annotations.
  */
-class BeanValidationFactory {
+open class BeanValidationFactory {
 
     fun collectImports(dataType: DataType): Set<String> {
         val imports = mutableSetOf<String>()

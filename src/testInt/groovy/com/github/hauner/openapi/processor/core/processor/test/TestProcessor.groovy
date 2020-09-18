@@ -26,8 +26,9 @@ import io.openapiprocessor.core.processor.MappingReader
 import com.github.hauner.openapi.core.writer.java.ApiWriter
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import com.github.hauner.openapi.core.writer.java.DataTypeWriter
-import com.github.hauner.openapi.core.writer.java.InterfaceWriter
-import com.github.hauner.openapi.core.writer.java.MethodWriter
+import io.openapiprocessor.core.writer.java.DefaultImportFilter
+import io.openapiprocessor.core.writer.java.InterfaceWriter
+import io.openapiprocessor.core.writer.java.MethodWriter
 import io.openapiprocessor.core.writer.java.StringEnumWriter
 import groovy.util.logging.Slf4j
 import io.openapiprocessor.api.OpenApiProcessor
@@ -67,16 +68,15 @@ class TestProcessor implements OpenApiProcessor {
 
             def writer = new ApiWriter (options,
                 new InterfaceWriter(
-                    headerWriter: headerWriter,
-                    methodWriter: new MethodWriter(
-                        mappingAnnotationWriter: new TestMappingAnnotationWriter (),
-                        parameterAnnotationWriter: new TestParameterAnnotationWriter (),
-                        beanValidationFactory: beanValidationFactory,
-                        apiOptions: options
-                    ),
-                    beanValidationFactory: beanValidationFactory,
-                    annotations: annotations,
-                    apiOptions: options
+                    options,
+                    headerWriter,
+                    new MethodWriter(options,
+                        new TestMappingAnnotationWriter (),
+                        new TestParameterAnnotationWriter (),
+                        beanValidationFactory),
+                    annotations,
+                    beanValidationFactory,
+                    new DefaultImportFilter()
                 ),
                 new DataTypeWriter(
                     headerWriter: headerWriter,

@@ -20,11 +20,14 @@ import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkAnnotations
+import io.openapiprocessor.core.writer.java.BeanValidationFactory
+import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.MappingAnnotationWriter
+import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 import io.openapiprocessor.core.writer.java.SimpleWriter
 import com.github.hauner.openapi.core.test.ModelAsserts
-import com.github.hauner.openapi.core.writer.java.InterfaceWriter
-import com.github.hauner.openapi.core.writer.java.MethodWriter
+import io.openapiprocessor.core.writer.java.InterfaceWriter
+import io.openapiprocessor.core.writer.java.MethodWriter
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -96,13 +99,21 @@ paths:
 """)
 
         when:
-        api = new ApiConverter (new ApiOptions(), Stub (Framework))
+        def opts = new ApiOptions()
+        api = new ApiConverter (opts, Stub (Framework))
             .convert (openApi)
 
         def w = new InterfaceWriter (
-            headerWriter: Stub (SimpleWriter),
-            methodWriter: new MethodWriter(mappingAnnotationWriter: Stub (MappingAnnotationWriter)),
-            annotations: Stub (FrameworkAnnotations))
+            opts,
+            Stub (SimpleWriter),
+            new MethodWriter(
+                new ApiOptions(),
+                Stub (MappingAnnotationWriter),
+                Stub (ParameterAnnotationWriter),
+                Stub (BeanValidationFactory)),
+            Stub (FrameworkAnnotations),
+            new BeanValidationFactory(),
+            new DefaultImportFilter())
         def writer = new StringWriter()
         w.write (writer, api.interfaces.get (0))
 
