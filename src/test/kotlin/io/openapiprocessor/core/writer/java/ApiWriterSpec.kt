@@ -6,7 +6,6 @@
 package io.openapiprocessor.core.writer.java
 
 import com.github.hauner.openapi.core.writer.java.ApiWriter
-import com.github.hauner.openapi.core.writer.java.DataTypeWriter
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec

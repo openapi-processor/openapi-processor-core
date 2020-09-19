@@ -25,6 +25,7 @@ import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import com.google.googlejavaformat.java.Formatter
 import com.google.googlejavaformat.java.JavaFormatterOptions
+import io.openapiprocessor.core.writer.java.DataTypeWriter
 import io.openapiprocessor.core.writer.java.InterfaceWriter
 import io.openapiprocessor.core.writer.java.PathWriter
 import io.openapiprocessor.core.writer.java.StringEnumWriter

@@ -25,7 +25,7 @@ import io.openapiprocessor.core.processor.MappingConverter
 import io.openapiprocessor.core.processor.MappingReader
 import com.github.hauner.openapi.core.writer.java.ApiWriter
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
-import com.github.hauner.openapi.core.writer.java.DataTypeWriter
+import io.openapiprocessor.core.writer.java.DataTypeWriter
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.InterfaceWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
@@ -79,9 +79,9 @@ class TestProcessor implements OpenApiProcessor {
                     new DefaultImportFilter()
                 ),
                 new DataTypeWriter(
-                    headerWriter: headerWriter,
-                    beanValidationFactory: beanValidationFactory,
-                    apiOptions: options
+                    options,
+                    headerWriter,
+                    beanValidationFactory
                 ),
                 new StringEnumWriter(headerWriter)
             )
