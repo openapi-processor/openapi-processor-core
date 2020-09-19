@@ -17,6 +17,9 @@
 package io.openapiprocessor.core.model
 
 import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.StringEnumDataType
+import java.util.function.Consumer
 
 /**
  * Root of the internal model used to generate the api.
@@ -39,6 +42,18 @@ class Api(
 
     fun getInterface(name: String): Interface {
         return interfaces.find { it.name.toLowerCase () == name.toLowerCase () }!!
+    }
+
+    fun forEachInterface(action: Consumer<Interface>) {
+        interfaces.forEach(action)
+    }
+
+    fun forEachObjectDataType(action: Consumer<ObjectDataType>) {
+        models.getObjectDataTypes().forEach(action)
+    }
+
+    fun forEachEnumDataType(action: Consumer<StringEnumDataType>) {
+        models.getEnumDataTypes().forEach(action)
     }
 
 }

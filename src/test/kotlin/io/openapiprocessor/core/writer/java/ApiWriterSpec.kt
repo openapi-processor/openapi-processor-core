@@ -5,7 +5,6 @@
 
 package io.openapiprocessor.core.writer.java
 
-import com.github.hauner.openapi.core.writer.java.ApiWriter
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
@@ -113,7 +112,7 @@ class ApiWriterSpec: StringSpec({
         Files.createDirectories(options.getSourceDir("model"))
 
         shouldNotThrowAny {
-            ApiWriter (options, stub(), stub(), stub())
+            ApiWriter(options, stub(), stub(), stub())
                 .write (Api())
         }
     }
@@ -130,7 +129,7 @@ class ApiWriterSpec: StringSpec({
         ))
 
         // when:
-        ApiWriter (options, itfWriter, stub(), stub(), false)
+        ApiWriter(options, itfWriter, stub(), stub(), false)
             .write (api)
 
         // then:
@@ -150,7 +149,7 @@ class ApiWriterSpec: StringSpec({
         ))
 
         // when:
-        ApiWriter (options, itfWriter, stub(), stub(), false)
+        ApiWriter(options, itfWriter, stub(), stub(), false)
             .write (api)
 
         // then:
@@ -169,7 +168,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(models = dt)
 
         // when:
-        ApiWriter (options, stub(), dtWriter, stub(), false)
+        ApiWriter(options, stub(), dtWriter, stub(), false)
             .write (api)
 
         // then:
@@ -187,7 +186,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(models = dt)
 
         // when:
-        ApiWriter (options, stub(), dtWriter, stub(), false)
+        ApiWriter(options, stub(), dtWriter, stub(), false)
             .write (api)
 
         // then:
@@ -203,7 +202,7 @@ class ApiWriterSpec: StringSpec({
         }
 
         // when:
-        ApiWriter (options, itfWriter, stub(), stub(), true)
+        ApiWriter(options, itfWriter, stub(), stub(), true)
             .write (Api(listOf(
                 `interface`("Foo", options.getSourceDir("api").toString()) {}
             )))
@@ -227,7 +226,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(models = dt)
 
         // when:
-        ApiWriter (options, stub(), dtWriter, stub(), true)
+        ApiWriter(options, stub(), dtWriter, stub(), true)
             .write (api)
 
         // then:
