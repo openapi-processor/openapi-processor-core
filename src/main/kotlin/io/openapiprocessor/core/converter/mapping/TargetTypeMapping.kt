@@ -16,8 +16,6 @@
 
 package io.openapiprocessor.core.converter.mapping
 
-import io.openapiprocessor.core.converter.mapping.TargetType
-
 /**
  * provider of target type information.
  *
@@ -25,6 +23,6 @@ import io.openapiprocessor.core.converter.mapping.TargetType
  */
 interface TargetTypeMapping {
 
-    fun getTargetType (): TargetType
+    fun getTargetType (): TargetType?
 
 }

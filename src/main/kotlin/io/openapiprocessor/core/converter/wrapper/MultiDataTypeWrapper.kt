@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.wrapper
+package io.openapiprocessor.core.converter.wrapper
 
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.SchemaInfo
-import io.openapiprocessor.core.converter.mapping.AmbiguousTypeMappingException
-import io.openapiprocessor.core.converter.mapping.Mapping
-import io.openapiprocessor.core.converter.mapping.TargetType
-import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
+import io.openapiprocessor.core.converter.mapping.*
+import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
@@ -35,15 +32,10 @@ import io.openapiprocessor.core.model.datatypes.NoneDataType
  *
  * @author Martin Hauner
  */
-class MultiDataTypeWrapper {
-
-    private ApiOptions options
-    private MappingFinder finder
-
-    MultiDataTypeWrapper (ApiOptions options) {
-        this.options = options
-        this.finder = new MappingFinder(options.typeMappings)
-    }
+class MultiDataTypeWrapper(
+    private val options: ApiOptions,
+    private val finder: MappingFinder = MappingFinder(options.typeMappings)
+) {
 
     /**
      * replaces an (converted) array data type with a multi data type (like {@code Flux< >})
@@ -56,68 +48,64 @@ class MultiDataTypeWrapper {
      * @param schemaInfo the open api type with context information
      * @return the resulting java data type
      */
-    DataType wrap (DataType dataType, SchemaInfo schemaInfo) {
-        if (!schemaInfo.isArray ()) {
+    fun wrap(dataType: DataType, schemaInfo: SchemaInfo): DataType {
+        if (!schemaInfo.isArray()) {
             return dataType
         }
 
-        def targetType = getMultiDataType (schemaInfo)
-        if (!targetType) {
+        val targetType = getMultiDataType(schemaInfo)
+        if (targetType == null) {
             return dataType
         }
 
-        if (targetType.typeName == 'plain') {
+        if (targetType.typeName == "plain") {
             return dataType
         }
 
-        DataType item = dataType.item
-
-        def multiType = new MappedCollectionDataType (
-            targetType.name,
-            targetType.pkg,
-            item,
+        return MappedCollectionDataType(
+            targetType.getName(),
+            targetType.getPkg(),
+            (dataType as ArrayDataType).item,
             null,
             false
         )
-        return multiType
     }
 
-    private TargetType getMultiDataType (SchemaInfo info) {
+    private fun getMultiDataType(info: SchemaInfo): TargetType? {
         // check endpoint multi mapping
-        List<Mapping> endpointMatches = finder.findEndpointMultiMapping (info)
+        val endpointMatches = finder.findEndpointMultiMapping(info)
 
-        if (!endpointMatches.empty) {
+        if (endpointMatches.isNotEmpty()) {
 
-            if (endpointMatches.size () != 1) {
-                throw new AmbiguousTypeMappingException (endpointMatches)
+            if (endpointMatches.size != 1) {
+                throw AmbiguousTypeMappingException (endpointMatches.map { it as TypeMapping })
             }
 
-            TargetType target = (endpointMatches.first() as TargetTypeMapping).targetType
-            if (target) {
+            val target = (endpointMatches.first() as TargetTypeMapping).getTargetType()
+            if (target != null) {
                 return target
             }
         }
 
         // find global multi mapping
-        List<Mapping> typeMatches = finder.findMultiMapping (info)
+        val typeMatches = finder.findMultiMapping(info)
         if (typeMatches.isEmpty ()) {
             return null
         }
 
-        if (typeMatches.size () != 1) {
-            throw new AmbiguousTypeMappingException (typeMatches)
+        if (typeMatches.size != 1) {
+            throw AmbiguousTypeMappingException (typeMatches.map { it as TypeMapping })
         }
 
-        def match = typeMatches.first () as TargetTypeMapping
-        return match.targetType
+        val match = typeMatches.first () as TargetTypeMapping
+        return match.getTargetType()
     }
 
-    private DataType checkNone (DataType dataType) {
-        if (dataType instanceof NoneDataType) {
+    private fun checkNone(dataType: DataType): DataType {
+        if (dataType is NoneDataType) {
             return dataType.wrappedInResult ()
         }
-
-        dataType
+        return dataType
     }
 
 }

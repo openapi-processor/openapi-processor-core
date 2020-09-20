@@ -24,7 +24,7 @@ package io.openapiprocessor.core.model.datatypes
  */
 class ArrayDataType(
 
-    private val item: DataType,
+    val item: DataType,
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
 
