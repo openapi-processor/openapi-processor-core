@@ -31,6 +31,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.nio.file.Paths
 
 /**
  * Root writer for the generated api files.
@@ -142,7 +143,7 @@ class ApiWriter(
         val root = options.targetDir
         val pkg = listOf(root, apiPkg).joinToString("/")
 
-        val target = Path.of (toURL(pkg).toURI())
+        val target = Paths.get (toURL(pkg).toURI())
         Files.createDirectories(target)
         return target
     }
