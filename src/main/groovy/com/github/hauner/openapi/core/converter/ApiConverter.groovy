@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.converter
 import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.wrapper.MultiDataTypeWrapper
 import io.openapiprocessor.core.converter.wrapper.ResultDataTypeWrapper
-import com.github.hauner.openapi.core.converter.wrapper.SingleDataTypeWrapper
+import io.openapiprocessor.core.converter.wrapper.SingleDataTypeWrapper
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.parameters.Parameter as ModelParameter
@@ -83,7 +83,7 @@ class  ApiConverter {
 
         dataTypeConverter = new DataTypeConverter(this.options)
         dataTypeWrapper = new ResultDataTypeWrapper(this.options, new MappingFinder(this.options.typeMappings))
-        singleDataTypeWrapper = new SingleDataTypeWrapper(this.options)
+        singleDataTypeWrapper = new SingleDataTypeWrapper(this.options, new MappingFinder(this.options.typeMappings))
         multiDataTypeWrapper = new MultiDataTypeWrapper(this.options, new MappingFinder(this.options.typeMappings))
         mappingFinder = new MappingFinder(this.options.typeMappings)
     }
