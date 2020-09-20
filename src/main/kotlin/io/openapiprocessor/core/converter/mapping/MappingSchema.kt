@@ -31,4 +31,6 @@ interface MappingSchema {
     fun getType(): String
     fun getFormat(): String?
 
+    fun isPrimitive(): Boolean
+    fun isArray(): Boolean
 }

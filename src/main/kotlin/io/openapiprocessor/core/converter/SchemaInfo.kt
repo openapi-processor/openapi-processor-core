@@ -264,11 +264,11 @@ class SchemaInfo(
 
     }
 
-    fun isPrimitive(): Boolean {
+    override fun isPrimitive(): Boolean {
         return listOf("boolean", "int", "number", "string").contains(schema?.getType())
     }
 
-    fun isArray(): Boolean {
+    override fun isArray(): Boolean {
         return schema?.getType().equals("array")
     }
 

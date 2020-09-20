@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.converter.wrapper
 
 import io.openapiprocessor.core.converter.ApiOptions
-import com.github.hauner.openapi.core.converter.mapping.MappingFinder
+import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.AmbiguousTypeMappingException
 import io.openapiprocessor.core.converter.mapping.Mapping
@@ -39,7 +39,7 @@ class ResultDataTypeWrapper {
 
     ResultDataTypeWrapper (ApiOptions options) {
         this.options = options
-        this.finder = new MappingFinder(typeMappings: options.typeMappings)
+        this.finder = new MappingFinder(options.typeMappings)
     }
 
     /**
