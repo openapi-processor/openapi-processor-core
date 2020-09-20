@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.converter.mapping
 
-import com.github.hauner.openapi.core.converter.SchemaInfo
+import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.AmbiguousTypeMappingException
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping

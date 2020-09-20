@@ -20,6 +20,7 @@ import com.github.hauner.openapi.core.converter.mapping.MappingFinder
 import com.github.hauner.openapi.core.converter.wrapper.MultiDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.ResultDataTypeWrapper
 import com.github.hauner.openapi.core.converter.wrapper.SingleDataTypeWrapper
+import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.parameters.Parameter as ModelParameter
 import io.openapiprocessor.core.converter.ApiOptions
@@ -170,10 +171,11 @@ class  ApiConverter {
             def mediaType = requestBodyEntry.value
 
             def info = new SchemaInfo (
-                path: ep.path,
-                name: getInlineRequestBodyName (ep.path),
-                schema: mediaType.schema,
-                resolver: resolver)
+                ep.path,
+                getInlineRequestBodyName (ep.path),
+                "",
+                mediaType.schema,
+                resolver)
 
             if (contentType == MULTIPART) {
                 ep.parameters.addAll (createMultipartParameter (info, requestBody.required))
@@ -202,10 +204,11 @@ class  ApiConverter {
 
     private ModelParameter createParameter (String path, Parameter parameter, DataTypes dataTypes, RefResolver resolver) {
         def info = new SchemaInfo (
-            path: path,
-            name: parameter.name,
-            schema: parameter.schema,
-            resolver: resolver)
+            path,
+            parameter.name,
+            "",
+            parameter.schema,
+            resolver)
 
         DataType dataType = dataTypeConverter.convert (info, dataTypes)
 
@@ -310,7 +313,7 @@ class  ApiConverter {
 
     private List<ModelResponse> createResponses (String path, String httpStatus, Response response, DataTypes dataTypes, RefResolver resolver) {
         if (!response.content) {
-            def info = new SchemaInfo (path: path)
+            def info = new SchemaInfo (path, "", "", null, resolver)
 
             DataType dataType = new NoneDataType()
             DataType singleDataType = singleDataTypeWrapper.wrap (dataType, info)
@@ -326,11 +329,11 @@ class  ApiConverter {
             def schema = mediaType.schema
 
             def info = new SchemaInfo (
-                path: path,
-                contentType: contentType,
-                name: getInlineResponseName (path, httpStatus),
-                schema: schema,
-                resolver: resolver)
+                path,
+                getInlineResponseName (path, httpStatus),
+                contentType,
+                schema,
+                resolver)
 
             DataType dataType = dataTypeConverter.convert (info, dataTypes)
             DataType changedType

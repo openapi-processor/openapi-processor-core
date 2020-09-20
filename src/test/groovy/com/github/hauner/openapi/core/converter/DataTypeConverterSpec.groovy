@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
@@ -39,7 +40,9 @@ class DataTypeConverterSpec extends Specification {
         def schema = new TestSchema (type: type, format: format)
 
         when:
-        def datatype = converter.convert (new SchemaInfo (name: javaType, schema: schema), new DataTypes())
+        def datatype = converter.convert (
+            new SchemaInfo ("", javaType, "", schema, Stub(RefResolver)),
+            new DataTypes())
 
         then:
         datatype.name == javaType
@@ -64,8 +67,8 @@ class DataTypeConverterSpec extends Specification {
 
         when:
         def datatype = converter.convert (
-            new SchemaInfo (name: javaType, schema: schema), new DataTypes()
-        )
+            new SchemaInfo ("", javaType, "", schema, Stub(RefResolver)),
+            new DataTypes())
 
         then:
         datatype.name == javaType
@@ -87,7 +90,8 @@ class DataTypeConverterSpec extends Specification {
         def schema = new TestSchema (type: type, format: format)
 
         when:
-        converter.convert (new SchemaInfo (schema: schema), new DataTypes())
+        converter.convert (new SchemaInfo ("", "", "", schema, Stub (RefResolver)),
+            new DataTypes())
 
         then:
         def e = thrown(UnknownDataTypeException)
@@ -118,8 +122,12 @@ class DataTypeConverterSpec extends Specification {
         }
 
         when:
-        converter.convert (new SchemaInfo (name: 'Bar', schema: barSchema), dt)
-        converter.convert (new SchemaInfo (name: 'Foo', schema: fooSchema, resolver: resolver), dt)
+        converter.convert (
+            new SchemaInfo ("", 'Bar', "", barSchema, Stub(RefResolver)),
+            dt)
+        converter.convert (
+            new SchemaInfo ("", 'Foo', "", fooSchema, resolver),
+            dt)
 
         then:
         assert dt.dataTypes.size () == 2

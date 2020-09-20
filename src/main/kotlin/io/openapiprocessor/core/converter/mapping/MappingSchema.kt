@@ -29,6 +29,6 @@ interface MappingSchema {
     fun getContentType(): String
 
     fun getType(): String
-    fun getFormat(): String
+    fun getFormat(): String?
 
 }

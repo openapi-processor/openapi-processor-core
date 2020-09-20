@@ -17,11 +17,13 @@
 package com.github.hauner.openapi.core.converter
 
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.model.DataTypes
 import com.github.hauner.openapi.core.test.TestSchema
+import io.openapiprocessor.core.parser.RefResolver
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -36,8 +38,8 @@ class DataTypeConverterDeprecatedSpec extends Specification {
 
         when:
         def datatype = converter.convert (
-            new SchemaInfo (schema: schema), new DataTypes()
-        )
+            new SchemaInfo ("", "", "", schema, Stub(RefResolver)),
+            new DataTypes())
 
         then:
         datatype.deprecated == result
