@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.converter.wrapper
+package io.openapiprocessor.core.converter.wrapper
 
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.SchemaInfo
-import io.openapiprocessor.core.converter.mapping.AmbiguousTypeMappingException
-import io.openapiprocessor.core.converter.mapping.Mapping
-import io.openapiprocessor.core.converter.mapping.TargetType
-import io.openapiprocessor.core.converter.mapping.TargetTypeMapping
+import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ResultDataType
@@ -32,15 +28,10 @@ import io.openapiprocessor.core.model.datatypes.ResultDataType
  *
  * @author Martin Hauner
  */
-class ResultDataTypeWrapper {
-
-    private ApiOptions options
-    private MappingFinder finder
-
-    ResultDataTypeWrapper (ApiOptions options) {
-        this.options = options
-        this.finder = new MappingFinder(options.typeMappings)
-    }
+class ResultDataTypeWrapper(
+    private val options: ApiOptions,
+    private val finder: MappingFinder = MappingFinder(options.typeMappings)
+) {
 
     /**
      * wraps a (converted) result data type with the configured result java data type like
@@ -52,62 +43,61 @@ class ResultDataTypeWrapper {
      * @param schemaInfo the open api type with context information
      * @return the resulting java data type
      */
-    DataType wrap (DataType dataType, SchemaInfo schemaInfo) {
-        TargetType targetType = getMappedResultDataType (schemaInfo)
-
-        if (!targetType) {
+    fun wrap(dataType: DataType, schemaInfo: SchemaInfo): DataType{
+        val targetType = getMappedResultDataType(schemaInfo)
+        if (targetType == null) {
             return dataType
         }
 
-        if (targetType.typeName == 'plain') {
+        if (targetType.typeName == "plain") {
             return dataType
 
         } else {
-            def resultType = new ResultDataType (
-                targetType.name,
-                targetType.pkg,
+            val resultType = ResultDataType (
+                targetType.getName(),
+                targetType.getPkg(),
                 checkNone (dataType)
             )
             return resultType
         }
     }
 
-    private DataType checkNone (DataType dataType) {
-        if (dataType instanceof NoneDataType) {
+    private fun checkNone(dataType: DataType): DataType {
+        if (dataType is NoneDataType) {
             return dataType.wrappedInResult ()
         }
 
-        dataType
+        return dataType
     }
 
-    private TargetType getMappedResultDataType (SchemaInfo info) {
+    private fun getMappedResultDataType(info: SchemaInfo): TargetType? {
         // check endpoint result mapping
-        List<Mapping> endpointMatches = finder.findEndpointResultMapping (info)
+        val endpointMatches = finder.findEndpointResultMapping(info)
 
-        if (!endpointMatches.empty) {
+        if (endpointMatches.isNotEmpty()) {
 
-            if (endpointMatches.size () != 1) {
-                throw new AmbiguousTypeMappingException (endpointMatches)
+            if (endpointMatches.size != 1) {
+                throw AmbiguousTypeMappingException (endpointMatches.map { it as TypeMapping })
             }
 
-            TargetType target = (endpointMatches.first() as TargetTypeMapping).targetType
-            if (target) {
+            val target = (endpointMatches.first() as TargetTypeMapping).getTargetType()
+            if (target != null) {
                 return target
             }
         }
 
         // find global result mapping
-        List<Mapping> typeMatches = finder.findResultMapping (info)
+        val typeMatches = finder.findResultMapping(info)
         if (typeMatches.isEmpty ()) {
             return null
         }
 
-        if (typeMatches.size () != 1) {
-            throw new AmbiguousTypeMappingException (typeMatches)
+        if (typeMatches.size != 1) {
+            throw AmbiguousTypeMappingException(typeMatches.map { it as TypeMapping })
         }
 
-        def match = typeMatches.first () as TargetTypeMapping
-        return match.targetType
+        val match = typeMatches.first () as TargetTypeMapping
+        return match.getTargetType()
     }
 
 }
