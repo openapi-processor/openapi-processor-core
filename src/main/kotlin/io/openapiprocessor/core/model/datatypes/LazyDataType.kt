@@ -14,44 +14,39 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.core.model.datatypes
+package io.openapiprocessor.core.model.datatypes
 
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.model.DataTypes
-import io.openapiprocessor.core.model.datatypes.DataType
 
 /**
  * OpenAPI $ref type that is lazily evaluated. It is used to break loops in the schema definitions.
  *
- * @autor Martin Hauner
+ * @author Martin Hauner
  */
-class LazyDataType extends DataTypeBase {
+class LazyDataType(
+    private val info: SchemaInfo,
+    private val dataTypes: DataTypes
+): DataTypeBase() {
 
-    private DataTypes dataTypes
-    private SchemaInfo info
-
-    @Override
-    String getName () {
-        dataType.name
+    override fun getName(): String {
+        return getDataType().getName()
     }
 
-    @Override
-    String getPackageName () {
-        dataType.packageName
+    override fun getPackageName(): String {
+        return  getDataType().getPackageName()
     }
 
-    @Override
-    Set<String> getImports () {
-        dataType.imports
+    override fun getImports(): Set<String> {
+        return getDataType().getImports()
     }
 
-    @Override
-    Set<String> getReferencedImports () {
-        dataType.referencedImports
+    override fun getReferencedImports(): Set<String> {
+        return getDataType().getReferencedImports()
     }
 
-    private DataType getDataType () {
-        dataTypes.find (info.name)
+    private fun getDataType(): DataType {
+        return dataTypes.find (info.getName())
     }
 
 }

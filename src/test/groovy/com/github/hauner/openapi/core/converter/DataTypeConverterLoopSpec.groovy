@@ -17,7 +17,7 @@
 package com.github.hauner.openapi.core.converter
 
 import io.openapiprocessor.core.framework.Framework
-import com.github.hauner.openapi.core.model.datatypes.LazyDataType
+import io.openapiprocessor.core.model.datatypes.LazyDataType
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import spock.lang.Specification

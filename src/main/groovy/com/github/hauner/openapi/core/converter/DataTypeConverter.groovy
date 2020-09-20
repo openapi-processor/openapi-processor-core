@@ -39,7 +39,7 @@ import io.openapiprocessor.core.model.datatypes.FloatDataType
 import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.OffsetDateTimeDataType
-import com.github.hauner.openapi.core.model.datatypes.LazyDataType
+import io.openapiprocessor.core.model.datatypes.LazyDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
@@ -75,7 +75,7 @@ class DataTypeConverter {
      */
     DataType convert (SchemaInfo schemaInfo, DataTypes dataTypes) {
         if (isLoop (schemaInfo)) {
-            return new LazyDataType (info: schemaInfo, dataTypes: dataTypes)
+            return new LazyDataType (schemaInfo, dataTypes)
         }
 
         push (schemaInfo)
