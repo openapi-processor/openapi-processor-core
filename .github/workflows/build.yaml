@@ -44,7 +44,6 @@ jobs:
     - name: gradle check
       run: ./gradlew check
 
-
   publish:
     needs: [test]
     name: publish snapshot
@@ -65,8 +64,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: cache SonarCloud
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: |
+            ${{ runner.os }}-sonar
+
       - name: publish snapshot to ojo
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: ./gradlew publishSnapshot
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew publishSnapshot sonarqube
