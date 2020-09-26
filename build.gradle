@@ -190,6 +190,9 @@ sonarqube {
     property "sonar.projectKey", "openapi-processor_openapi-processor-core"
     property "sonar.organization", "openapi-processor"
     property "sonar.host.url", "https://sonarcloud.io"
+
+    properties["sonar.tests"] += sourceSets.testInt.allSource.srcDirs
+    properties["sonar.coverageReportPaths"] = "$buildDir/reports/jacoco/test"
   }
 }
 
