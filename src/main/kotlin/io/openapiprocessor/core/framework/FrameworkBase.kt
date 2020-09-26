@@ -34,7 +34,7 @@ import io.openapiprocessor.core.parser.Parameter as ParserParameter
  *
  * @author Martin Hauner
  */
-class FrameworkBase: Framework {
+open class FrameworkBase: Framework {
 
     override fun createQueryParameter(parameter: ParserParameter, dataType: DataType): Parameter {
         return QueryParameter(parameter.getName(), dataType,
