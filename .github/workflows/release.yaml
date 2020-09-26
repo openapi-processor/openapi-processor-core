@@ -25,6 +25,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: set up jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
       - name: publish release to bintray
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
