@@ -27,7 +27,7 @@ class Interface(
 
     val name: String,
     private val pkg: String,
-    val endpoints: List<Endpoint> = emptyList()
+    val endpoints: MutableList/*List*/<Endpoint> = mutableListOf<Endpoint>()
 
 ) {
 

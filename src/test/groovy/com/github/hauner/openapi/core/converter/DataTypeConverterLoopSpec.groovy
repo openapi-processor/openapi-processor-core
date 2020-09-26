@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import io.openapiprocessor.core.converter.ApiConverter
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.datatypes.LazyDataType
 import io.openapiprocessor.core.converter.ApiOptions

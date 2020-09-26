@@ -16,6 +16,8 @@
 
 package com.github.hauner.openapi.core.converter
 
+import io.openapiprocessor.core.converter.ApiConverter
+import io.openapiprocessor.core.converter.ApiConverterKt
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.Api
 import com.github.hauner.openapi.core.test.ModelAsserts
@@ -165,7 +167,7 @@ paths:
             .convert (openApi)
 
         then:
-        api.interfaces.get (0).name == ApiConverter.INTERFACE_DEFAULT_NAME
+        api.interfaces.get (0).name == ApiConverterKt.INTERFACE_DEFAULT_NAME
     }
 
     void "keeps order of endpoints"() {

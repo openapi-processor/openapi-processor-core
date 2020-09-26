@@ -44,6 +44,14 @@ class Api(
         return interfaces.find { it.name.toLowerCase () == name.toLowerCase () }!!
     }
 
+    fun setInterfaces(ifs: List<Interface>) {
+        interfaces = ifs
+    }
+
+    fun getDataTypes(): DataTypes {
+        return models
+    }
+
     fun forEachInterface(action: Consumer<Interface>) {
         interfaces.forEach(action)
     }

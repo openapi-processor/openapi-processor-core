@@ -19,6 +19,7 @@ package com.github.hauner.openapi.core.converter
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
+import io.openapiprocessor.core.converter.ApiConverter
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
