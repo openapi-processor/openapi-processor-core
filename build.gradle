@@ -148,10 +148,16 @@ tasks.withType(Test) {
 
 
 jacoco {
-    toolVersion = "0.8.5"
+    toolVersion = "0.8.6"
 }
 
-project.jacocoTestReport {
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+        csv.enabled false
+    }
+
     getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
 }
 
