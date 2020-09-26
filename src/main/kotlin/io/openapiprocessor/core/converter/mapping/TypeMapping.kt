@@ -90,3 +90,7 @@ class TypeMapping (
     }
 
 }
+
+fun List<Mapping>.toTypeMapping(): List<TypeMapping> {
+    return map { it as TypeMapping }
+}

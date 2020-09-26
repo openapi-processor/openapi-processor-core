@@ -78,7 +78,7 @@ class MultiDataTypeWrapper(
         if (endpointMatches.isNotEmpty()) {
 
             if (endpointMatches.size != 1) {
-                throw AmbiguousTypeMappingException (endpointMatches.map { it as TypeMapping })
+                throw AmbiguousTypeMappingException(endpointMatches.toTypeMapping())
             }
 
             val target = (endpointMatches.first() as TargetTypeMapping).getTargetType()
@@ -94,7 +94,7 @@ class MultiDataTypeWrapper(
         }
 
         if (typeMatches.size != 1) {
-            throw AmbiguousTypeMappingException (typeMatches.map { it as TypeMapping })
+            throw AmbiguousTypeMappingException(typeMatches.toTypeMapping())
         }
 
         val match = typeMatches.first () as TargetTypeMapping

@@ -16,6 +16,7 @@
 
 package com.github.hauner.openapi.core.converter
 
+import io.openapiprocessor.core.converter.DataTypeConverter
 import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.wrapper.MultiDataTypeWrapper
 import io.openapiprocessor.core.converter.wrapper.ResultDataTypeWrapper
@@ -81,7 +82,7 @@ class  ApiConverter {
 //            this.options = new DefaultApiOptions()
 //        }
 
-        dataTypeConverter = new DataTypeConverter(this.options)
+        dataTypeConverter = new DataTypeConverter(this.options, new MappingFinder(this.options.typeMappings))
         dataTypeWrapper = new ResultDataTypeWrapper(this.options, new MappingFinder(this.options.typeMappings))
         singleDataTypeWrapper = new SingleDataTypeWrapper(this.options, new MappingFinder(this.options.typeMappings))
         multiDataTypeWrapper = new MultiDataTypeWrapper(this.options, new MappingFinder(this.options.typeMappings))

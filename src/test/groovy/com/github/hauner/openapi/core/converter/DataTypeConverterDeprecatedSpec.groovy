@@ -17,7 +17,9 @@
 package com.github.hauner.openapi.core.converter
 
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.DataTypeConverter
 import io.openapiprocessor.core.converter.SchemaInfo
+import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkBase
@@ -33,7 +35,7 @@ class DataTypeConverterDeprecatedSpec extends Specification {
 
     @Unroll
     void "converts primitive deprecated schema(#type, #format) to datatype" () {
-        def converter = new DataTypeConverter(new ApiOptions())
+        def converter = new DataTypeConverter(new ApiOptions(), new MappingFinder())
         def schema = new TestSchema (type: type, format: format, deprecated: deprecated)
 
         when:

@@ -254,7 +254,7 @@ class SchemaInfo(
      *
      * @return a new {@link SchemaInfo}
      */
-    private fun buildForItem(): SchemaInfo {
+    fun buildForItem(): SchemaInfo {
         return SchemaInfo(
             path = path,
             name = schema?.getItem()?.getRef() ?: schema?.getItem()?.getType()!!,

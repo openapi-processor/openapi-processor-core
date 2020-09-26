@@ -16,7 +16,9 @@
 
 package com.github.hauner.openapi.core.converter
 
+import io.openapiprocessor.core.converter.DataTypeConverter
 import io.openapiprocessor.core.converter.SchemaInfo
+import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
@@ -32,8 +34,7 @@ import spock.lang.Unroll
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse
 
 class DataTypeConverterSpec extends Specification {
-    def converter = new DataTypeConverter(new ApiOptions())
-
+    def converter = new DataTypeConverter(new ApiOptions(), new MappingFinder())
 
     @Unroll
     void "converts schema(#type, #format) to #javaType" () {
