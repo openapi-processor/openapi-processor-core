@@ -191,8 +191,6 @@ sonarqube {
     property "sonar.organization", "openapi-processor"
     property "sonar.host.url", "https://sonarcloud.io"
     property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
-//    property "sonar.jacoco.reportPaths", "$buildDir/reports/jacoco/test"
-//    property "sonar.coverageReportPaths", "$buildDir/reports/jacoco/test"
   }
 }
 
