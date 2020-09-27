@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory
 class Parser {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
-    fun parse(processorOptions: Map<String, Any>): OpenApi {
+    fun parse(processorOptions: Map<String, *>): OpenApi {
         val apiPath: String = processorOptions["apiPath"].toString()
 
         when(val parser= processorOptions["parser"]?.toString()) {
