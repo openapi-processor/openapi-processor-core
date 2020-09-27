@@ -42,7 +42,6 @@ fun toCamelCase(src: String): String {
     return joinCamelCase(joinSingleCharWords(splitAtWordBreaks(src)))
 }
 
-
 /**
  * converts a source string to a valid (camel case) java *class* identifier. One way, ie it is
  * not reversible.
@@ -180,39 +179,55 @@ private fun splitAtWordBreaks(src: String): List<String> {
     val words = ArrayList<String>()
     val current = StringBuilder()
 
-    // clear illegal characters at at the beginning
-    val trimmed = src.trimStart {
-        !isValidStart(it)
-    }
-
+    val trimmed = src.trimInvalidStart()
     trimmed.forEachIndexed { idx, c ->
 
-        if (idx != 0 && isWordBreak(c)) {
-            if (current.isEmpty()) {
-                if (isValid(c)) {
-                    current.append(c)
-                }
-            } else /* part.isNotEmpty() */ {
-                words.add(current.toString())
-                current.clear()
-
-                if (isValid(c)) {
-                    current.append(c)
-                }
-            }
-
-        } else {
+        if (idx == 0 || c.isNoWordBreak()) {
             current.append(c)
+            return@forEachIndexed
         }
+
+        if(current.isNotEmpty()) {
+            words.add(current)
+            current.clear()
+        }
+
+        current.appendValid(c)
     }
 
     if(current.isNotEmpty()) {
-        words.add(current.toString())
+        words.add(current)
     }
 
     return words
 }
 
+private fun ArrayList<String>.add(builder: StringBuilder) {
+    add(builder.toString())
+}
+
+private fun String.trimInvalidStart(): String {
+    return this.trimStart {
+        !isValidStart(it)
+    }
+}
+
+private fun StringBuilder.appendValid(c: Char): StringBuilder {
+    if (isValid(c)) {
+        append(c)
+    }
+    return this
+}
+
+private fun Char.isNoWordBreak(): Boolean {
+    return !isWordBreak()
+}
+
+private fun Char.isWordBreak(): Boolean {
+    return isWordBreakChar(this)
+        || this.isUpperCase()
+        || !isJavaIdentifierPart(this)
+}
 
 private val INVALID_WORD_BREAKS = listOf(' ', '-')
 private val VALID_WORD_BREAKS = listOf('_')
@@ -224,10 +239,6 @@ private fun isValid(c: Char): Boolean {
 
 private fun isValidStart(c: Char): Boolean {
     return isJavaIdentifierStart(c) && !isValidWordBreak(c)
-}
-
-private fun isWordBreak(c: Char): Boolean {
-    return isWordBreakChar(c) || c.isUpperCase() || !isJavaIdentifierPart(c)
 }
 
 private fun isWordBreakChar(c: Char): Boolean {
