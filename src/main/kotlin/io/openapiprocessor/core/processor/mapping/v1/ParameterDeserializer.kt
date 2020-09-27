@@ -42,9 +42,9 @@ class ParameterDeserializer: StdDeserializer<Parameter>(Parameter::class.java) {
 
         if (props != null && isAdditionalParameter(props)) {
             val add = props["add"] as String
-            val `as` = props["as"] as String
+            val az = props["as"] as String
             val generics: List<String>? = props["generics"] as List<String>?
-            return AdditionalParameter(add, `as`, generics)
+            return AdditionalParameter(add, az, generics)
         }
 
         throw IOException("unknown parameter type at: " + p?.tokenLocation.toString ())
