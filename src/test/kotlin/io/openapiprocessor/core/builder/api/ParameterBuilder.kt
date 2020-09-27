@@ -30,7 +30,7 @@ class ParameterBuilder {
 //import io.openapiprocessor.core.model.Response
 //import io.openapiprocessor.core.model.datatypes.DataType
 //import io.openapiprocessor.core.model.datatypes.NoneDataType
-//import io.openapiprocessor.core.model.test.EmptyResponse
+//import io.openapiprocessor.core.model.EmptyResponse
 //
 //class ResponseBuilder() {
 //    private val responses: MutableList<Response> = mutableListOf()

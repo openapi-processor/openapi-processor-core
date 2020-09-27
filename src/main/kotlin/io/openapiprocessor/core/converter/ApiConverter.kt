@@ -24,10 +24,6 @@ import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.parameters.Parameter as ModelParameter
 import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
-import io.openapiprocessor.core.model.Api
-import io.openapiprocessor.core.model.DataTypes
-import io.openapiprocessor.core.model.Endpoint
-import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.RequestBody as ModelRequestBody
 import io.openapiprocessor.core.model.datatypes.MappedDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
@@ -37,6 +33,7 @@ import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.parser.OpenApi
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
 import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
+import io.openapiprocessor.core.model.*
 import io.openapiprocessor.core.parser.Operation
 import io.openapiprocessor.core.parser.Parameter
 import io.openapiprocessor.core.parser.RefResolver
@@ -300,7 +297,7 @@ class  ApiConverter(
             val singleDataType = singleDataTypeWrapper.wrap (dataType, info)
             val resultDataType = dataTypeWrapper.wrap (singleDataType, info)
 
-            return listOf(ModelResponse ("?", resultDataType))
+            return listOf(EmptyResponse (responseType = resultDataType))
         }
 
         val responses = mutableListOf<ModelResponse>()

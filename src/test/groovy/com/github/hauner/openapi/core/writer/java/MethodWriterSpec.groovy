@@ -33,7 +33,7 @@ import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.parameters.QueryParameter
-import io.openapiprocessor.core.model.test.EmptyResponse
+import io.openapiprocessor.core.model.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
 import io.openapiprocessor.core.model.HttpMethod

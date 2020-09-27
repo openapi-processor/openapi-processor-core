@@ -33,6 +33,6 @@ open class Response(
         get() = responseType.getImports()
 
     val empty
-        get() = responseType is NoneDataType
+        get() = contentType == "?"
 
 }

@@ -22,7 +22,6 @@ import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.parameters.MultipartParameter
 import io.openapiprocessor.core.model.parameters.Parameter
-import io.openapiprocessor.core.model.test.EmptyResponse
 
 class Builder {
 

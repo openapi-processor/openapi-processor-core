@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.model.test
+package io.openapiprocessor.core.model
 
-import io.openapiprocessor.core.model.Response
+import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 
 /**
- * test only. simpler setup of an empty response.
+ * simpler setup of an empty response.
  */
-class EmptyResponse: Response("?", NoneDataType())
+class EmptyResponse(contentType: String = "?", responseType: DataType = NoneDataType()):
+    Response(contentType, responseType)
