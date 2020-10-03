@@ -1,12 +1,16 @@
 :badge-license: https://img.shields.io/badge/License-Apache%202.0-blue.svg?labelColor=313A42
 :badge-ci: https://github.com/openapi-processor/openapi-processor-core/workflows/ci/badge.svg
 :oaps-ci: https://github.com/openapi-processor/openapi-processor-core/actions?query=workflow%3Aci
+:sonar-coverage: https://sonarcloud.io/api/project_badges/measure?project=openapi-processor_openapi-processor-core&metric=coverage
+:sonar: https://sonarcloud.io/dashboard?id=openapi-processor_openapi-processor-core
+
 :oaps-license: https://github.com/openapi-processor/openapi-processor-core/blob/master/LICENSE
 :oap-docs: https://docs.openapiprocessor.io
 :openapi: https://www.openapis.org/
 
 // badges
 link:{oaps-ci}[image:{badge-ci}[]]
+link:{sonar}[image:{sonar-coverage}[]]
 //link:{oaps-license}[image:{badge-license}[]]
 
 // does not center on github
