@@ -25,7 +25,7 @@ class DefaultImportFilter: ImportFilter {
 
     /**
      * removes (unnecessary) imports from the given list of imports. It removes classes from the
-     * same package and from from java.lang.
+     * same package and from java.lang.
      *
      * @param currentPackageName the package of the current class
      * @param imports list of imports

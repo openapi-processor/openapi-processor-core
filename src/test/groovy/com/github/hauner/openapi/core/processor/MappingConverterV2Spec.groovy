@@ -282,6 +282,40 @@ map:
         parameter.mapping.genericTypeNames == []
     }
 
+    void "reads endpoint add mapping with annotation" () {
+        String yaml = """\
+openapi-processor-mapping: v2.0
+    
+map:
+  paths:
+    /foo:
+      parameters:
+        - add: foo => io.micronaut.http.annotation.RequestAttribute(ANY) java.lang.String
+          annotations:
+            - bar 
+"""
+
+        when:
+        def mapping = reader.read (yaml)
+        def mappings = converter.convert (mapping)
+
+        then:
+        mappings.size () == 1
+
+        def endpoint = mappings.first () as EndpointTypeMapping
+        endpoint.path == '/foo'
+        endpoint.typeMappings.size () == 1
+
+        def parameter = endpoint.typeMappings.first () as AddParameterTypeMapping
+        parameter.parameterName == 'foo'
+        parameter.mapping.sourceTypeName == null
+        parameter.mapping.sourceTypeFormat == null
+        parameter.mapping.targetTypeName == 'java.lang.String'
+        parameter.mapping.genericTypeNames == []
+        parameter.annotation.type == 'io.micronaut.http.annotation.RequestAttribute'
+        parameter.annotation.parameters == '(ANY)'
+    }
+
     void "reads endpoint response type mapping" () {
         String yaml = """\
 openapi-processor-mapping: v2.0

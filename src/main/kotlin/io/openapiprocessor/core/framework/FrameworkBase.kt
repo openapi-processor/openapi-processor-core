@@ -17,6 +17,7 @@
 package io.openapiprocessor.core.framework
 
 import io.openapiprocessor.core.model.RequestBody
+import io.openapiprocessor.core.model.datatypes.AnnotationDataType
 import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.CookieParameter
 import io.openapiprocessor.core.model.parameters.HeaderParameter
@@ -61,9 +62,11 @@ open class FrameworkBase: Framework {
             parameter.isRequired(), parameter.isDeprecated())
     }
 
-    override fun createAdditionalParameter(parameter: ParserParameter, dataType: DataType): Parameter {
+    override fun createAdditionalParameter(parameter: ParserParameter, dataType: DataType,
+       annotationDataType: AnnotationDataType?): Parameter {
+
         return AdditionalParameter(parameter.getName(), dataType,
-            parameter.isRequired(), false)
+            annotationDataType, parameter.isRequired(), false)
     }
 
     override fun createRequestBody(contentType: String, required: Boolean, dataType: DataType): RequestBody {

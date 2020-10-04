@@ -16,24 +16,17 @@
 
 package io.openapiprocessor.core.converter
 
-import io.openapiprocessor.core.converter.mapping.MappingFinder
+import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.converter.wrapper.MultiDataTypeWrapper
 import io.openapiprocessor.core.converter.wrapper.ResultDataTypeWrapper
 import io.openapiprocessor.core.converter.wrapper.SingleDataTypeWrapper
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.parameters.Parameter as ModelParameter
-import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
-import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.model.RequestBody as ModelRequestBody
-import io.openapiprocessor.core.model.datatypes.MappedDataType
-import io.openapiprocessor.core.model.datatypes.NoneDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.Response as ModelResponse
-import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.parser.OpenApi
-import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
-import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
 import io.openapiprocessor.core.model.*
+import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.parser.Operation
 import io.openapiprocessor.core.parser.Parameter
 import io.openapiprocessor.core.parser.RefResolver
@@ -216,6 +209,17 @@ class  ApiConverter(
             false
         )
 
+        var annotationType: AnnotationDataType? = null
+        if (mapping.annotation != null) {
+            val at = TargetType(mapping.annotation.type, emptyList())
+
+            annotationType = AnnotationDataType(
+                at.getName(),
+                at.getPkg(),
+                mapping.annotation.parameters
+            )
+        }
+
         val parameter = object: Parameter {
 
             override fun getIn(): String {
@@ -239,7 +243,7 @@ class  ApiConverter(
             }
         }
 
-        return framework.createAdditionalParameter (parameter, addType)
+        return framework.createAdditionalParameter (parameter, addType, annotationType)
     }
 
     private fun createRequestBody(contentType: String, info: SchemaInfo, required: Boolean, dataTypes: DataTypes): ModelRequestBody {

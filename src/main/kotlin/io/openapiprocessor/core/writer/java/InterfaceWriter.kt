@@ -20,6 +20,7 @@ import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.Interface
+import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import java.io.Writer
 
 /**
@@ -78,6 +79,10 @@ class InterfaceWriter(
 
                 if (p.withAnnotation) {
                     imports.add (annotations.getAnnotation (p).fullyQualifiedName)
+                }
+
+                if (p is AdditionalParameter && p.annotationDataType != null) {
+                    imports.addAll (p.annotationDataType.getImports())
                 }
 
                 imports.addAll (p.dataTypeImports)
