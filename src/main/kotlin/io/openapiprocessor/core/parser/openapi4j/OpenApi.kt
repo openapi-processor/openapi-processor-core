@@ -28,18 +28,22 @@ import org.openapi4j.parser.model.v3.Path as O4jPath
  *
  * @author Martin Hauner
  */
-class OpenApi(private val api: O4jOpenApi, private val validations: ValidationResults): ParserOpenApi {
+class OpenApi(
+    private val api: O4jOpenApi,
+    private val validations: ValidationResults,
+): ParserOpenApi {
+    private val refResolver: RefResolverNative = RefResolverNative(api)
 
     override fun getPaths(): Map<String, ParserPath> {
         val paths = linkedMapOf<String, ParserPath>()
 
         api.paths.forEach { (name: String, value: O4jPath) ->
             var path = value
-            if (isRef(value)) {
-                path = resolve (path)
+            if (path.isRef) {
+                path = refResolver.resolve(path)
             }
 
-            paths[name] = Path(name, path)
+            paths[name] = Path(name, path, refResolver)
         }
 
         return paths
@@ -48,14 +52,6 @@ class OpenApi(private val api: O4jOpenApi, private val validations: ValidationRe
     override fun getRefResolver(): ParserRefResolver = RefResolver (api)
 
     override fun printWarnings() {
-    }
-
-    private fun resolve(path: O4jPath): O4jPath {
-        return path.getReference (api.context).getMappedContent (O4jPath::class.java)
-    }
-
-    private fun isRef(path: O4jPath): Boolean {
-        return path.ref != null
     }
 
 }

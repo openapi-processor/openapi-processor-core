@@ -30,7 +30,11 @@ import org.openapi4j.parser.model.v3.Response as O4jResponse
  *
  * @author Martin Hauner
  */
-class Operation(private val method: HttpMethod, private val operation: O4jOperation): ParserOperation {
+class Operation(
+    private val method: HttpMethod,
+    private val operation: O4jOperation,
+    private val refResolver: RefResolverNative
+): ParserOperation {
 
     override fun getMethod(): HttpMethod = method
 
@@ -42,7 +46,12 @@ class Operation(private val method: HttpMethod, private val operation: O4jOperat
         val parameters = mutableListOf<ParserParameter>()
 
         operation.parameters?.map { p: O4jParameter ->
-            parameters.add(Parameter(p))
+            var param = p
+            if(p.isRef) {
+                param = refResolver.resolve(p)
+            }
+
+            parameters.add(Parameter(param))
         }
 
         return parameters
