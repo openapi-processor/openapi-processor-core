@@ -26,7 +26,11 @@ import org.openapi4j.parser.model.v3.Path as Oa4jPath
  *
  * @author Martin Hauner
  */
-class Path(private val path: String, private val info: Oa4jPath): ParserPath {
+class Path(
+    private val path: String,
+    private val info: Oa4jPath,
+    private val refResolver: RefResolverNative
+): ParserPath {
 
     override fun getPath(): String = path
 
@@ -36,7 +40,7 @@ class Path(private val path: String, private val info: Oa4jPath): ParserPath {
         HttpMethod.values().map {
             val op = info.getOperation(it.method)
             if (op != null) {
-                ops.add (Operation(it, op))
+                ops.add (Operation(it, op, refResolver))
             }
         }
 

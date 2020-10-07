@@ -43,7 +43,7 @@ class OpenApi(
                 path = refResolver.resolve(path)
             }
 
-            paths[name] = Path(name, path)
+            paths[name] = Path(name, path, refResolver)
         }
 
         return paths

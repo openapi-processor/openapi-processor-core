@@ -23,16 +23,17 @@ import com.github.hauner.openapi.test.TestSet
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import spock.lang.Ignore
 
-//@Ignore
+@Ignore
 @RunWith(Parameterized)
 class ProcessorPendingTest extends ProcessorTestBase {
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
         return [
-            new TestSet(name: 'ref-array-items-nested', processor: new TestProcessor(), parser: ParserType.OPENAPI4J),
-            new TestSet(name: 'ref-array-items-nested', processor: new TestProcessor(), parser: ParserType.SWAGGER)
+            new TestSet(name: 'ref-parameter', processor: new TestProcessor(), parser: ParserType.OPENAPI4J),
+            new TestSet(name: 'ref-parameter', processor: new TestProcessor(), parser: ParserType.SWAGGER)
         ]
     }
 
