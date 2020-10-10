@@ -17,10 +17,10 @@
 package io.openapiprocessor.core.parser.swagger
 
 import io.openapiprocessor.core.misc.toURL
-import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import io.swagger.v3.parser.OpenAPIV3Parser
 import io.swagger.v3.parser.core.models.ParseOptions
 import io.swagger.v3.parser.core.models.SwaggerParseResult
+import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 
 const val SCHEME_RESOURCE = "resource:"
 
@@ -35,10 +35,10 @@ open class Parser {
         val opts = ParseOptions()
         // loads $refs to other files into #/components/schema and replaces the $refs to the
         // external files with $refs to #/components/schema.
-        opts.setResolve(true)
+        opts.isResolve = true
 
         val result: SwaggerParseResult = OpenAPIV3Parser()
-                  .readLocation (preparePath (apiPath), null, opts)
+                  .readLocation(preparePath(apiPath), null, opts)
 
         return OpenApi(result)
     }
@@ -49,16 +49,16 @@ open class Parser {
         // If it is something different (or nothing) it tries to find the given path as-is on the
         // file system. If that fails it tries to load the path as resource.
 
-        if (isResource (path)) {
+        if (isResource(path)) {
             // strip resource: (only used by tests) to load test files from the resources
-            return path.substring (SCHEME_RESOURCE.length)
+            return path.substring(SCHEME_RESOURCE.length)
         }
 
         return toURL(path).toString ()
     }
 
     private fun isResource(path: String): Boolean {
-        return path.startsWith (SCHEME_RESOURCE)
+        return path.startsWith(SCHEME_RESOURCE)
     }
 
 }
