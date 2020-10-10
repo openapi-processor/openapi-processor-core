@@ -42,7 +42,7 @@ class OpenApi(private val result: SwaggerParseResult): ParserOpenApi {
         return paths
     }
 
-    override fun getRefResolver(): ParserRefResolver = RefResolver (result.openAPI.components)
+    override fun getRefResolver(): ParserRefResolver = RefResolver (result.openAPI)
 
     override fun printWarnings() {
         print (result.messages)

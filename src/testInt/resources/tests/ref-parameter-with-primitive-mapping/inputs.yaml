@@ -1,0 +1,4 @@
+items:
+  - inputs/openapi.yaml
+  - inputs/primitive.yaml
+  - inputs/mapping.yaml

@@ -1,0 +1,9 @@
+openapi-processor-spring: v2
+
+options:
+  package-name: generated
+
+map:
+  types:
+    - type: UUID => java.util.UUID
+    - type: UUID_EX => java.util.UUID
