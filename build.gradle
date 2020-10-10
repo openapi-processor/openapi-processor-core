@@ -1,4 +1,5 @@
 plugins {
+    id 'antlr'
     id 'jacoco'
     id 'groovy'
     id 'java-library'
@@ -18,7 +19,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-
 ext {
     processorApiVersion = '1.1.0'
     jacksonVersion = '2.11.3'
@@ -26,7 +26,6 @@ ext {
     bintrayUser = project.findProperty ('BINTRAY_USER') ?: System.getenv ("BINTRAY_USER") ?: 'n/a'
     bintrayKey =  project.findProperty ('BINTRAY_KEY') ?: System.getenv ("BINTRAY_KEY") ?: 'n/a'
 }
-
 
 repositories {
     mavenCentral()
@@ -66,6 +65,19 @@ testSets {
 
 check.dependsOn testInt
 
+sourceSets {
+    main {
+        java {
+            srcDir 'build/antlr'
+        }
+    }
+}
+
+generateGrammarSource {
+    arguments += ['-package', 'io.openapiprocessor.core.processor.mapping.v2.parser']
+    outputDirectory = new File("$buildDir/antlr/io/openapiprocessor/core/processor/mapping/v2/parser".toString())
+}
+
 compileTestGroovy {
     dependsOn 'compileKotlin'
     classpath += files(compileKotlin.destinationDir)
@@ -76,6 +88,8 @@ compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+compileKotlin.dependsOn generateGrammarSource
+
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
@@ -83,6 +97,8 @@ compileTestKotlin {
 dependencies {
     components.all(JacksonPlatformRule)
     components.all(KotlinPlatformRule)
+
+    antlr 'org.antlr:antlr4:4.8'
 
     compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
@@ -108,6 +124,7 @@ dependencies {
 
     testImplementation 'org.codehaus.groovy:groovy:2.5.12'
     testImplementation 'org.codehaus.groovy:groovy-nio:2.5.12'
+
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.1') {
         exclude group: 'com.google.guava'

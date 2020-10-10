@@ -17,6 +17,7 @@
 package io.openapiprocessor.core.framework
 
 import io.openapiprocessor.core.model.RequestBody
+import io.openapiprocessor.core.model.datatypes.AnnotationDataType
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.parser.Parameter as ParserParameter
@@ -30,7 +31,7 @@ interface Framework {
      * create a model query parameter.
      *
      * @param parameter an OpenAPI query parameter
-     * @param DataType data type of the parameter
+     * @param dataType data type of the parameter
      * @return a query {@link Parameter}
      */
     fun createQueryParameter(parameter: ParserParameter, dataType: DataType): Parameter
@@ -39,7 +40,7 @@ interface Framework {
      * create a model header parameter.
      *
      * @param parameter an OpenAPI header parameter
-     * @param DataType data type of the parameter
+     * @param dataType data type of the parameter
      * @return a header {@link Parameter}
      */
     fun createHeaderParameter(parameter: ParserParameter, dataType: DataType): Parameter
@@ -48,7 +49,7 @@ interface Framework {
      * create a model cookie parameter.
      *
      * @param parameter an OpenAPI cookie parameter
-     * @param DataType data type of the parameter
+     * @param dataType data type of the parameter
      * @return a cookie {@link Parameter}
      */
     fun createCookieParameter(parameter: ParserParameter, dataType: DataType): Parameter
@@ -57,7 +58,7 @@ interface Framework {
      * create a model path parameter.
      *
      * @param parameter an OpenAPI path parameter
-     * @param DataType data type of the parameter
+     * @param dataType data type of the parameter
      * @return a path {@link Parameter}
      */
     fun createPathParameter(parameter: ParserParameter, dataType: DataType): Parameter
@@ -66,7 +67,7 @@ interface Framework {
      * create a model multipart parameter.
      *
      * @param parameter an OpenAPI multipart parameter
-     * @param DataType data type of the parameter
+     * @param dataType data type of the parameter
      * @return a multipart {@link Parameter}
      */
     fun createMultipartParameter(parameter: ParserParameter, dataType: DataType): Parameter
@@ -75,16 +76,19 @@ interface Framework {
      * create a model additional parameter.
      *
      * @param parameter an OpenAPI additional parameter
-     * @param DataType data type of the parameter
+     * @param dataType data type of the parameter
+     * @param annotationDataType additional annotation
      * @return an additional {@link Parameter}
      */
-    fun createAdditionalParameter(parameter: ParserParameter, dataType: DataType): Parameter
+    fun createAdditionalParameter(parameter: ParserParameter, dataType: DataType,
+        annotationDataType: AnnotationDataType? = null): Parameter
 
     /**
      * create a model request body.
      *
-     * @param parameter an OpenAPI additional parameter
-     * @param DataType data type of the parameter
+     * @param contentType an OpenAPI request body content type
+     * @param required the request body is required
+     * @param dataType data type of the request body
      * @return an additional {@link RequestBody}
      */
     fun createRequestBody(contentType: String, required: Boolean, dataType: DataType): RequestBody

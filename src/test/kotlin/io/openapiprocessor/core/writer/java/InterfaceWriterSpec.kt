@@ -20,6 +20,7 @@ import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.datatypes.*
+import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.parameters.ParameterBase
 import java.io.StringWriter
@@ -169,6 +170,58 @@ class InterfaceWriterSpec: StringSpec({
         val imports = extractImports(target)
         imports shouldContain "import model.Foo;"
     }
+
+    "writes additional parameter annotation import" {
+        every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(
+            "Parameter", "annotation")
+
+        val itf = `interface` {
+            endpoint ("/foo") {
+                parameters {
+                    any(AdditionalParameter(
+                        "bar",
+                        StringDataType(),
+                        AnnotationDataType("Bar", "bar", "()")
+                    ))
+                }
+            }
+        }
+
+        // when:
+        writer.write(target, itf)
+
+        // then:
+        val imports = extractImports(target)
+        imports shouldContain "import bar.Bar;"
+    }
+
+
+    /*
+    void "writes additional parameter annotation import" () {
+//        annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Parameter', pkg: 'annotation')
+
+        def itf = intrface ('Foo') {
+            endpoint ('/foo') {
+                parameters {
+                    add {
+                        name ('bar')
+                        type (new StringDataType())
+                        annotation (new AnnotationDataType (pkg: 'bar', type: 'Bar', parameters: '()'))
+                    }
+                }
+            }
+        }
+
+        when:
+        writer.write (target, itf)
+
+        then:
+        def result = extractImports (target.toString ())
+        result.contains("""\
+import bar.Bar;
+""")
+    }
+     */
 
     "writes request body annotation import" {
         every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(

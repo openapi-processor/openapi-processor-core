@@ -19,10 +19,12 @@ package com.github.hauner.openapi.core.converter
 import io.openapiprocessor.core.converter.ApiConverter
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
+import io.openapiprocessor.core.converter.mapping.Annotation
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.converter.mapping.UnknownParameterTypeException
+import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import spock.lang.Ignore
 import spock.lang.Specification
 
@@ -215,8 +217,8 @@ paths:
                 new AddParameterTypeMapping (
                     'request', new TypeMapping (
                         null,
-                        'javax.servlet.http.HttpServletRequest')
-                )
+                        'javax.servlet.http.HttpServletRequest'),
+                    null)
             ])
         ])
 
@@ -236,6 +238,50 @@ paths:
         request.dataType.name == 'HttpServletRequest'
         request.dataType.packageName == 'javax.servlet.http'
         !request.withAnnotation
+    }
+
+    void "adds additional request parameter with annotation from endpoint mapping" () {
+        def openApi = parse (
+"""\
+openapi: 3.0.2
+info:
+  title: test additional parameter annotation
+  version: 1.0.0
+
+paths:
+  /foo:
+    get:
+      responses:
+        '204':
+          description: empty
+"""
+        )
+
+        def options = new ApiOptions(packageName: 'pkg', typeMappings: [
+            new EndpointTypeMapping('/foo', [
+                new AddParameterTypeMapping (
+                    'foo', new TypeMapping (
+                        null,
+                        'java.lang.String'),
+                    new Annotation("bar.Bar", "(anything)"))
+            ])
+        ])
+
+        when:
+        def api = new ApiConverter (options, new FrameworkBase ())
+            .convert (openApi)
+
+        then:
+        def itf = api.interfaces.first ()
+        def ep = itf.endpoints.first ()
+        def foo = ep.parameters[0] as AdditionalParameter
+
+        foo.name == 'foo'
+        foo.dataType.name == 'String'
+        foo.dataType.packageName == 'java.lang'
+        foo.annotationDataType?.name == 'Bar'
+        foo.annotationDataType?.packageName == 'bar'
+        foo.annotationDataType?.parameters == '(anything)'
     }
 
     @Ignore("the openapi parser ignores parameters with unknown types")

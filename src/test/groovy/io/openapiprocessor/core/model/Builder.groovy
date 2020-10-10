@@ -16,12 +16,14 @@
 
 package io.openapiprocessor.core.model
 
-
+import io.openapiprocessor.core.model.datatypes.AnnotationDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.MultipartParameter
 import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.parameters.QueryParameter
 
 class Builder {
 
@@ -82,6 +84,15 @@ class EndpointBuilder {
         code()
         bodies.addAll (builder.buildBodies ())
         parameters.addAll (builder.buildParameters ())
+    }
+
+    void parameters (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ParametersBuilder) Closure init) {
+        def builder = new ParametersBuilder()
+        def code = init.rehydrate (builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        def params = builder.build ()
+        parameters.addAll (params)
     }
 
     void responses (String httpStatus, @DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ResponsesBuilder) Closure init) {
@@ -173,6 +184,74 @@ class BodyBuilder {
 
 }
 
+
+class ParametersBuilder {
+    private List<Parameter> parameters = []
+
+    void query (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = QueryParameterBuilder) Closure init) {
+        def builder = new QueryParameterBuilder()
+        def code = init.rehydrate (builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        def parameter = builder.build ()
+        parameters.add (parameter)
+    }
+
+    void add (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = AddParameterBuilder) Closure init) {
+        def builder = new AddParameterBuilder()
+        def code = init.rehydrate (builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        def parameter = builder.build ()
+        parameters.add (parameter)
+    }
+
+    List<Parameter> build () {
+        parameters
+    }
+
+}
+
+class QueryParameterBuilder {
+    private String name
+    private DataType type
+
+    void name (String name) {
+        this.name = name
+    }
+
+    void type (DataType dataType) {
+        this.type = dataType
+    }
+
+    QueryParameter build () {
+        new QueryParameter(name: name, dataType: dataType)
+    }
+
+}
+
+class AddParameterBuilder {
+    private String name
+    private DataType type
+    private AnnotationDataType annotationType
+
+    void name (String name) {
+        this.name = name
+    }
+
+    void type (DataType dataType) {
+        this.type = dataType
+    }
+
+    void annotation (AnnotationDataType dataType) {
+        annotationType = dataType
+    }
+
+    AdditionalParameter build () {
+        new AdditionalParameter (name, type, annotationType, true, false)
+    }
+
+}
 
 
 class ResponsesBuilder {

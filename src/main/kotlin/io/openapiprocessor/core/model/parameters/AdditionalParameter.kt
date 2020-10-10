@@ -16,6 +16,7 @@
 
 package io.openapiprocessor.core.model.parameters
 
+import io.openapiprocessor.core.model.datatypes.AnnotationDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 
 /**
@@ -27,6 +28,7 @@ class AdditionalParameter(
 
     name: String,
     dataType: DataType,
+    val annotationDataType: AnnotationDataType? = null,
     required: Boolean = false,
     deprecated: Boolean = false
 
@@ -34,5 +36,8 @@ class AdditionalParameter(
 
     override val withAnnotation: Boolean
         get() = false
+
+    val additionalAnnotation: Boolean
+        get() = annotationDataType != null
 
 }
