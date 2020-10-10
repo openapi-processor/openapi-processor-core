@@ -214,7 +214,7 @@ class DataTypeConverter(
 
         var typeFormat = schemaInfo.getType()
         if (schemaInfo.getFormat() != null) {
-            typeFormat += "/" + schemaInfo.getFormat()
+            typeFormat += ":" + schemaInfo.getFormat()
         }
 
         // todo factory method in SchemaInfo
@@ -231,22 +231,22 @@ class DataTypeConverter(
 
         return when(typeFormat) {
             "integer",
-            "integer/int32" ->
+            "integer:int32" ->
                 IntegerDataType(constraints, schemaInfo.getDeprecated())
-            "integer/int64" ->
+            "integer:int64" ->
                 LongDataType(constraints, schemaInfo.getDeprecated())
             "number",
-            "number/float" ->
+            "number:float" ->
                 FloatDataType(constraints, schemaInfo.getDeprecated())
-            "number/double" ->
+            "number:double" ->
                 DoubleDataType(constraints, schemaInfo.getDeprecated())
             "boolean" ->
                 BooleanDataType(constraints, schemaInfo.getDeprecated())
             "string" ->
                 createStringDataType(schemaInfo, constraints, dataTypes)
-            "string/date" ->
+            "string:date" ->
                 LocalDateDataType(constraints, schemaInfo.getDeprecated())
-            "string/date-time" ->
+            "string:date-time" ->
                 OffsetDateTimeDataType (constraints, schemaInfo.getDeprecated())
             else ->
                 throw UnknownDataTypeException(schemaInfo.getName(), schemaInfo.getType(),
