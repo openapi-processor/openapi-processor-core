@@ -1,0 +1,25 @@
+openapi: 3.0.2
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /uuid:
+    get:
+      parameters:
+        - in: query
+          name:  uuid
+          schema:
+            $ref: '#/components/schemas/UUID'
+        - in: query
+          name:  uuidex
+          schema:
+            $ref: 'primitive.yaml#/UUID_EX'
+      responses:
+        '204':
+          description: none
+
+components:
+  schemas:
+    UUID:
+      type: string
