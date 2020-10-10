@@ -25,6 +25,7 @@ import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.model.Api
+import io.openapiprocessor.core.parser.ParserType
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -73,6 +74,54 @@ paths:
         def parameter = ep.parameters.first ()
         parameter.dataType.packageName == 'java.time'
         parameter.dataType.name == 'ZonedDateTime'
+    }
+
+    void "converts named primitive type to java type via global type mapping" () {
+        def openApi = parse ("""\
+openapi: 3.0.2
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /uuid:
+    get:
+      parameters:
+        - in: query
+          name:  uuid
+          schema:
+            \$ref: '#/components/schemas/UUID'
+      responses:
+        '204':
+          description: none
+
+components:
+  schemas:          
+    UUID:
+      type: string
+""", parser)
+
+        when:
+        def options = new ApiOptions(
+            packageName: 'pkg',
+            typeMappings: [
+                new TypeMapping (
+                    'UUID',
+                    'java.util.UUID')
+            ])
+
+        Api api = new ApiConverter (options, new FrameworkBase ())
+            .convert (openApi)
+
+        then:
+        def itf = api.interfaces.first ()
+        def ep = itf.endpoints.first ()
+        def parameter = ep.parameters.first ()
+        parameter.dataType.packageName == 'java.util'
+        parameter.dataType.name == 'UUID'
+
+        where:
+        parser << [ParserType.SWAGGER, ParserType.OPENAPI4J]
     }
 
     void "throws when there are multiple global mappings for a simple type" () {
