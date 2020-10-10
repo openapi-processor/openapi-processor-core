@@ -213,8 +213,8 @@ class DataTypeConverter(
         }
 
         var typeFormat = schemaInfo.getType()
-        if (schemaInfo.getFormat() != null) {
-            typeFormat += "/" + schemaInfo.getFormat()
+        if (isSupportedFormat(schemaInfo.getFormat())) {
+            typeFormat += ":" + schemaInfo.getFormat()
         }
 
         // todo factory method in SchemaInfo
@@ -231,27 +231,40 @@ class DataTypeConverter(
 
         return when(typeFormat) {
             "integer",
-            "integer/int32" ->
+            "integer:int32" ->
                 IntegerDataType(constraints, schemaInfo.getDeprecated())
-            "integer/int64" ->
+            "integer:int64" ->
                 LongDataType(constraints, schemaInfo.getDeprecated())
             "number",
-            "number/float" ->
+            "number:float" ->
                 FloatDataType(constraints, schemaInfo.getDeprecated())
-            "number/double" ->
+            "number:double" ->
                 DoubleDataType(constraints, schemaInfo.getDeprecated())
             "boolean" ->
                 BooleanDataType(constraints, schemaInfo.getDeprecated())
             "string" ->
                 createStringDataType(schemaInfo, constraints, dataTypes)
-            "string/date" ->
+            "string:date" ->
                 LocalDateDataType(constraints, schemaInfo.getDeprecated())
-            "string/date-time" ->
+            "string:date-time" ->
                 OffsetDateTimeDataType (constraints, schemaInfo.getDeprecated())
             else ->
                 throw UnknownDataTypeException(schemaInfo.getName(), schemaInfo.getType(),
                     schemaInfo.getFormat())
         }
+    }
+
+    private fun isSupportedFormat(format: String?): Boolean {
+        if(format == null)
+            return false
+
+        return format in listOf(
+            "int32",
+            "int64",
+            "float",
+            "double",
+            "date",
+            "date-time")
     }
 
     private fun createStringDataType(info: SchemaInfo, constraints: DataTypeConstraints, dataTypes: DataTypes): DataType {
