@@ -33,7 +33,9 @@ class ProcessorEndToEndTest extends ProcessorTestBase {
     static def testSets = TestSet.ALL + [
         'deprecated',
         'ref-into-another-file-path',
-        'ref-parameter'
+        'ref-is-relative-to-current-file',
+        'ref-parameter',
+        'ref-parameter-with-primitive-mapping',
     ]
 
     @Parameterized.Parameters(name = "{0}")
