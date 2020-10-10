@@ -284,13 +284,21 @@ class IoMatcher(schema: MappingSchema): BaseVisitor(schema) {
 class TypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: TypeMapping): Boolean {
-        return if(schema.isPrimitive()) {
-            mapping.sourceTypeName == schema.getType()
-            && mapping.sourceTypeFormat == schema.getFormat()
-        } else if(schema.isArray()) {
-            mapping.sourceTypeName == "array"
-        } else {
-            mapping.sourceTypeName == schema.getName()
+        if (mapping.sourceTypeName == schema.getName()) {
+            return true
+        }
+
+        return when {
+            schema.isPrimitive() -> {
+                mapping.sourceTypeName == schema.getType()
+             && mapping.sourceTypeFormat == schema.getFormat()
+            }
+            schema.isArray() -> {
+                mapping.sourceTypeName == "array"
+            }
+            else -> {
+                false
+            }
         }
     }
 
