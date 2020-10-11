@@ -40,10 +40,6 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     fun convert(): List<Mapping> {
-        return convert(mapping)
-    }
-
-    fun convert(mapping: MappingV2): List<Mapping> {
         val result = ArrayList<Mapping>()
 
         if(mapping.map.result != null) {
