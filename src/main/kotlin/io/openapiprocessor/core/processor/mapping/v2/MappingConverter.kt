@@ -205,7 +205,13 @@ class MappingConverter(val mapping: MappingV2) {
             generics = typeGenerics
         }
 
-        return ToType(name, generics)
+        return ToType(name, resolvePackageVariable(generics))
+    }
+
+    private fun resolvePackageVariable(source: List<String>): List<String> {
+        return source.map {
+            it.replace("{package-name}", mapping.options.packageName)
+        }
     }
 
 }
