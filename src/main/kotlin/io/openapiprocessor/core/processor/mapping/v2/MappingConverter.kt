@@ -28,18 +28,18 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information
- *  into the format used by {@link com.github.hauner.openapi.spring.converter.DataTypeConverter}.
+ *  into the format used by [io.openapiprocessor.core.converter.DataTypeConverter].
  *
  *  @author Martin Hauner
  */
-class MappingConverter {
+class MappingConverter(val mapping: MappingV2) {
     companion object {
         private const val SEPARATOR_TYPE = " => "
         private const val SEPARATOR_FORMAT = ":"
         private val PATTERN_GENERICS = "(\\S+?)\\s*<(.+?)>".toPattern()
     }
 
-    fun convert(mapping: MappingV2): List<Mapping> {
+    fun convert(): List<Mapping> {
         val result = ArrayList<Mapping>()
 
         if(mapping.map.result != null) {
@@ -201,7 +201,13 @@ class MappingConverter {
             generics = typeGenerics
         }
 
-        return ToType(name, generics)
+        return ToType(name, resolvePackageVariable(generics))
+    }
+
+    private fun resolvePackageVariable(source: List<String>): List<String> {
+        return source.map {
+            it.replace("{package-name}", mapping.options.packageName)
+        }
     }
 
 }
