@@ -28,7 +28,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information
- *  into the format used by {@link com.github.hauner.openapi.spring.converter.DataTypeConverter}.
+ *  into the format used by [io.openapiprocessor.core.converter.DataTypeConverter].
  *
  *  @author Martin Hauner
  */
