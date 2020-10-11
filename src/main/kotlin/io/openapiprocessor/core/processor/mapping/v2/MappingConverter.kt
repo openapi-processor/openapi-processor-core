@@ -32,11 +32,15 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker
  *
  *  @author Martin Hauner
  */
-class MappingConverter {
+class MappingConverter(val mapping: MappingV2) {
     companion object {
         private const val SEPARATOR_TYPE = " => "
         private const val SEPARATOR_FORMAT = ":"
         private val PATTERN_GENERICS = "(\\S+?)\\s*<(.+?)>".toPattern()
+    }
+
+    fun convert(): List<Mapping> {
+        return convert(mapping)
     }
 
     fun convert(mapping: MappingV2): List<Mapping> {

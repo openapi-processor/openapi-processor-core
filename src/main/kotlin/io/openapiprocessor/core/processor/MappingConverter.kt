@@ -37,7 +37,7 @@ class MappingConverter {
        }
 
        return if (source.v2) {
-           MappingConverterV2().convert(source as MappingV2)
+           MappingConverterV2(source as MappingV2).convert()
        } else {
            MappingConverterV1().convert(source as MappingV1)
        }
