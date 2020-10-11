@@ -25,7 +25,7 @@ import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information
- *  into the format used by [com.github.hauner.openapi.core.converter.DataTypeConverter].
+ *  into the format used by [io.openapiprocessor.core.converter.DataTypeConverter].
  *
  *  @author Martin Hauner
  */
