@@ -36,6 +36,7 @@ class ProcessorEndToEndTest extends ProcessorTestBase {
         'ref-is-relative-to-current-file',
         'ref-parameter',
         'ref-parameter-with-primitive-mapping',
+        'response-content-multiple-no-content'
     ]
 
     @Parameterized.Parameters(name = "{0}")

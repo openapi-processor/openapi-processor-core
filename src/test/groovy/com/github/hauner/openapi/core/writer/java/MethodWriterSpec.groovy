@@ -307,6 +307,29 @@ class MethodWriterSpec extends Specification {
 """
     }
 
+    void "writes method with success response type when it has only empty error responses" () {
+        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
+            '200' : [
+                new Response ('application/json', new StringDataType ())
+            ],
+            '400': [
+                new EmptyResponse ()
+            ],
+            '500': [
+                new EmptyResponse ()
+            ]
+        ])
+
+        when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        then:
+        target.toString () == """\
+    @CoreMapping
+    String getFoo();
+"""
+    }
+
     void "writes method with 'Object' response when it has multiple result content types (200, default)" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200' : [

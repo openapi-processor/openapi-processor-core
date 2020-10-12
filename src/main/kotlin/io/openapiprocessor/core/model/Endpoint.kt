@@ -227,6 +227,7 @@ class Endpoint(
             .filterKeys { !it.startsWith("2") }
             .values
             .map { it.first() }
+            .filter { !it.empty }
             .toSet()
     }
 
