@@ -35,9 +35,12 @@ class ToExtractor: ToBaseListener() {
         ctx.typeArguments ()
             ?.typeArgumentList ()
             ?.typeArgument ()
-            ?.filter { it.type() != null }
             ?.forEach {
-                typeArguments.add(it.type ().text)
+                if (it.text == "?") {
+                    typeArguments.add("?")
+                } else if (it.type() != null) {
+                    typeArguments.add(it.type ().text)
+                }
             }
     }
 
