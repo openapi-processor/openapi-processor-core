@@ -44,7 +44,7 @@ open class MappedDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf("${getPackageName()}.$type") + genericTypes
+        return setOf("${getPackageName()}.$type") + genericTypes.filter { it != "?" }
     }
 
     private fun getGenericTypeNames(): List<String> {
