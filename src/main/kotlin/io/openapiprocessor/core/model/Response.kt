@@ -17,7 +17,6 @@
 package io.openapiprocessor.core.model
 
 import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.NoneDataType
 
 /**
  * Endpoint response properties.
