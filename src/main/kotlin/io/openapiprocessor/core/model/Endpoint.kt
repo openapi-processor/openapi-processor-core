@@ -119,7 +119,6 @@ class Endpoint(
      *
      * @return the list of content types
      */
-    // only called by tests?
     fun getConsumesContentTypes(): List<String> {
         val contentTypes = requestBodies
             .map { it.contentType }
