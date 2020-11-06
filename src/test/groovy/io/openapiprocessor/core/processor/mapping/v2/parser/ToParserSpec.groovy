@@ -35,7 +35,7 @@ class ToParserSpec extends Specification {
         'io.openapiprocessor.Foo'         | 'io.openapiprocessor.Foo' | []
         '  io . openapiprocessor .  Foo ' | 'io.openapiprocessor.Foo' | []
         'A<>'                             | 'A'                       | []
-        'A<?>'                            | 'A'                       | []
+        'A<?>'                            | 'A'                       | ['?']
         'A<b.B, c.C>'                     | 'A'                       | ['b.B', 'c.C']
         'A<B, C>'                         | 'A'                       | ['B', 'C']
     }

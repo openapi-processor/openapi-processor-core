@@ -32,6 +32,7 @@ class MappedDataTypeSpec extends Specification {
         where:
         generics                                 | typeName
         []                                       | 'Foo'
+        ['?']                                    | 'Foo<?>'
         ['java.lang.String']                     | 'Foo<String>'
         ['java.lang.String', 'java.lang.String'] | 'Foo<String, String>'
     }
@@ -46,6 +47,7 @@ class MappedDataTypeSpec extends Specification {
         where:
         generics                                 | imports
         []                                       | ['model.Foo']
+        ['?']                                    | ['model.Foo']
         ['java.lang.String']                     | ['model.Foo', 'java.lang.String']
         ['java.lang.String', 'java.lang.String'] | ['model.Foo', 'java.lang.String']
     }
