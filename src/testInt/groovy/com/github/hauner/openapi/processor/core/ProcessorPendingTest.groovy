@@ -25,15 +25,15 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import spock.lang.Ignore
 
-@Ignore
+//@Ignore
 @RunWith(Parameterized)
 class ProcessorPendingTest extends ProcessorTestBase {
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
         return [
-            new TestSet(name: 'response-content-multiple-no-content', processor: new TestProcessor(), parser: ParserType.SWAGGER),
-            new TestSet(name: 'response-content-multiple-no-content', processor: new TestProcessor(), parser: ParserType.OPENAPI4J)
+            new TestSet(name: 'ref-loop-array', processor: new TestProcessor(), parser: ParserType.SWAGGER),
+            new TestSet(name: 'ref-loop-array', processor: new TestProcessor(), parser: ParserType.OPENAPI4J)
         ]
     }
 
