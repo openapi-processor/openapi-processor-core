@@ -34,6 +34,7 @@ class ProcessorEndToEndTest extends ProcessorTestBase {
         'deprecated',
         'ref-into-another-file-path',
         'ref-is-relative-to-current-file',
+        'ref-loop-array',
         'ref-parameter',
         'ref-parameter-with-primitive-mapping',
         'response-content-multiple-no-content'
