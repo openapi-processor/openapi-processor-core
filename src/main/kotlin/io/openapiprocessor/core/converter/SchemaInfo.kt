@@ -255,13 +255,18 @@ class SchemaInfo(
      * @return a new {@link SchemaInfo}
      */
     fun buildForItem(): SchemaInfo {
+        val name = if (schema?.getItem()?.getRef() != null) {
+            getRefName(schema.getItem())
+        } else {
+            schema?.getItem()?.getType()
+        }
+
         return SchemaInfo(
             path = path,
-            name = schema?.getItem()?.getRef() ?: schema?.getItem()?.getType()!!,
+            name = name!!,
             schema = schema?.getItem(),
             resolver = resolver
         )
-
     }
 
     override fun isPrimitive(): Boolean {
