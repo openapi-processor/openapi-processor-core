@@ -76,6 +76,56 @@ paths:
         parameter.dataType.name == 'ZonedDateTime'
     }
 
+    void "primitive type dose not match primitive global type mapping with format" () {
+        def openApi = parse ("""\
+openapi: 3.0.2
+
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /foo:
+    get:
+      parameters:
+        - in: query
+          name: foo
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        200:
+          description: response
+          content:
+            application/*:
+              schema:
+                type: string
+                format: binary
+
+""")
+
+        when:
+        def options = new ApiOptions(
+            packageName: 'pkg',
+            typeMappings: [
+                new TypeMapping (
+                    'string',
+                    'binary',
+                    'io.openapiprocessor.Bar')
+            ])
+
+        Api api = new ApiConverter (options, new FrameworkBase ())
+            .convert (openApi)
+
+        then:
+        def itf = api.interfaces.first ()
+        def ep = itf.endpoints.first ()
+        def parameter = ep.parameters.first ()
+        parameter.dataType.packageName == 'java.lang'
+        parameter.dataType.name == 'String[]'
+    }
+
     void "converts named primitive type to java type via global type mapping" () {
         def openApi = parse ("""\
 openapi: 3.0.2

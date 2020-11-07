@@ -284,23 +284,30 @@ class IoMatcher(schema: MappingSchema): BaseVisitor(schema) {
 class TypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: TypeMapping): Boolean {
-        if (mapping.sourceTypeName == schema.getName()) {
+        // try to match by name first, the format must match to avoid matching primitive
+        // and primitive with format e.g. string should not match string:binary
+        if (matchesName(mapping) && matchesFormat(mapping)) {
             return true
         }
 
         return when {
             schema.isPrimitive() -> {
-                mapping.sourceTypeName == schema.getType()
-             && mapping.sourceTypeFormat == schema.getFormat()
+                matchesType(mapping) && matchesFormat(mapping)
             }
             schema.isArray() -> {
-                mapping.sourceTypeName == "array"
+                matchesArray(mapping)
             }
             else -> {
+                // nop
                 false
             }
         }
     }
+
+    private fun matchesName(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getName()
+    private fun matchesType(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getType()
+    private fun matchesArray(mapping: TypeMapping): Boolean = mapping.sourceTypeName == "array"
+    private fun matchesFormat(mapping: TypeMapping): Boolean = mapping.sourceTypeFormat == schema.getFormat()
 
 }
 
