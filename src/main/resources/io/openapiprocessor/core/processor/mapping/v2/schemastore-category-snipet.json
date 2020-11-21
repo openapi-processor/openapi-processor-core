@@ -1,0 +1,8 @@
+{
+  "name": "OpenAPI Processor Mapping JSON v2",
+  "description": "Schema for the OpenAPI Processor mapping file in the version 2",
+  "fileMatch": [
+    "mapping.yaml"
+  ],
+  "url": "https://raw.githubusercontent.com/openapi-processor/openapi-processor-core/<BRANCH>/src/main/resources/io/openapiprocessor/core/processor/mapping/v2/mapping.schema.json"
+}

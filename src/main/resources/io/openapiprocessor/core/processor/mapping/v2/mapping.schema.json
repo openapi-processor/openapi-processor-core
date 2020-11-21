@@ -1,0 +1,174 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"openapi-processor-mapping": {
+			"type": "string",
+			"enum": [
+				"v2"
+			],
+			"description": "Version of the mapping schema. For version 2 of the schema only v2 is allowed"
+		},
+		"options": {
+			"type": "object",
+			"description": "Options for the generation process",
+			"additionalProperties": false,
+			"properties": {
+				"package-name": {
+					"type": "string",
+					"description": "The base package name of the generates sources. Default value is 'io.openapiprocessor.generated'."
+				},
+				"bean-validation": {
+					"type": "boolean",
+					"description": "Enable bean validation support. Default is 'false'"
+				}
+			}
+		},
+		"map": {
+			"type": "object",
+			"description": "Different type mapping options for the generation process",
+			"additionalProperties": false,
+			"properties": {
+				"result": {
+					"type": "string",
+					"description": "Wrapper type for the result. E.g. 'org.springframework.http.ResponseEntity'."
+				},
+				"single": {
+					"type": "string",
+					"description": "Wrapper for object types (non array like types). E.g. 'reactor.core.publisher.Mono'."
+				},
+				"multi": {
+					"type": "string",
+					"description": "Wrapper for array like types. E.g. 'reactor.core.publisher.Flux'."
+				},
+				"types": {
+					"$ref": "#/definitions/TypeMappings",
+					"description": "Array of global type mappings."
+				},
+				"parameters": {
+					"$ref": "#/definitions/ParameterTypeMappings",
+					"description": "Array of global parameter type mappings."
+				},
+				"responses": {
+					"$ref": "#/definitions/ResponseTypeMappings",
+					"description": "Array of global response type mappings."
+				},
+				"paths": {
+					"type": "object",
+					"description": "Object for path specific type mappings. The property names are the paths.",
+					"additionalProperties": false,
+					"patternProperties": {
+						"^/": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"exclude": {
+									"type": "boolean",
+									"description": "Exclude the path from the generation process. The default is 'false'"
+								},
+								"result": {
+									"type": "string",
+									"description": "Wrapper type for the result. E.g. 'org.springframework.http.ResponseEntity'."
+								},
+								"single": {
+									"type": "string",
+									"description": "Wrapper for object types (non array like types). E.g. 'reactor.core.publisher.Mono'."
+								},
+								"multi": {
+									"type": "string",
+									"description": "Wrapper for array like types. E.g. 'reactor.core.publisher.Flux'."
+								},
+								"types": {
+									"$ref": "#/definitions/TypeMappings",
+									"description": "Array of path specific type mappings."
+								},
+								"parameters": {
+									"$ref": "#/definitions/ParameterTypeMappings",
+									"description": "Array of path specific parameter type mappings."
+								},
+								"responses": {
+									"$ref": "#/definitions/ResponseTypeMappings",
+									"description": "Array of path specific response type mappings."
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"TypeMappings": {
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"properties": {
+					"type": {
+						"$ref": "#/definitions/TypeMappingString",
+						"description": "Type mapping definition (type => type). E.g. array => java.util.List<java.lang.Integer>"
+					},
+					"generics": {
+						"$ref": "#/definitions/GenericsArray"
+					}
+				},
+				"required": [
+					"type"
+				]
+			}
+		},
+		"ParameterTypeMappings": {
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"properties": {
+					"name": {
+						"$ref": "#/definitions/TypeMappingString",
+						"description": "Parameter type mapping definition (name => type). E.g. pathDateParameter => java.time.ZonedDateTime"
+					},
+					"generics": {
+						"$ref": "#/definitions/GenericsArray"
+					}
+				},
+				"required": [
+					"name"
+				]
+			}
+		},
+		"ResponseTypeMappings": {
+			"type": "array",
+			"minItems": 1,
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"properties": {
+					"content": {
+						"$ref": "#/definitions/TypeMappingString",
+						"description": "Response type mapping definition (response type => type). E.g. application/vnd.something => com.github.hauner.openapi.Something"
+					},
+					"generics": {
+						"$ref": "#/definitions/GenericsArray"
+					}
+				},
+				"required": [
+					"content"
+				]
+			}
+		},
+		"TypeMappingString": {
+			"type": "string",
+			"pattern": "\\S+ => \\S+"
+		},
+		"GenericsArray": {
+			"type": "array",
+			"description": "Array of generic parameter types. The generic parameters can be inlined in the type mapping",
+			"items": {
+				"type": "string"
+			}
+		}
+	}
+}
