@@ -1,0 +1,205 @@
+{
+  "$id": "https://openapiprocessor.io/schemas/mapping/mapping-v2.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON Schema for openapi-processor mapping.yaml v2",
+  "description": "openapi-processor configuration and type mappings",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "openapi-processor-mapping": {
+      "description": "version of the mapping format.",
+      "type": "string",
+      "enum": ["v2"]
+    },
+    "options": {
+      "$ref": "#/definitions/Options"
+    },
+    "map": {
+      "$ref": "#/definitions/Map"
+    }
+  },
+  "required": [
+    "openapi-processor-mapping",
+    "options"
+  ],
+  "definitions": {
+    "Options": {
+      "description": "general processor configuration options.",
+      "type": "object",
+      "properties": {
+        "package-name": {
+          "description": "java root package name to use in the generated source files.",
+          "type": "string",
+          "default": "io.openapiprocessor.generated"
+        },
+        "bean-validation": {
+          "description": "enable bean validation annotations for OpenAPI constraints.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "Map": {
+      "description": "global & path specific mapping rules.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Mappings"
+        }, {
+          "properties": {
+            "paths": {
+              "$ref": "#/definitions/Paths"
+            }
+          }
+        }
+      ]
+    },
+    "Paths": {
+      "description": "path specific mappings.",
+      "type": "object",
+      "patternProperties": {
+        "^/": {
+          "description": "a path.",
+          "allOf": [{
+              "$ref": "#/definitions/Exclude"
+            }, {
+              "$ref": "#/definitions/Mappings"
+            }
+          ]
+        }
+      }
+    },
+    "Mappings": {
+      "description": "mapping rules.",
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ResultMapping"
+        },
+        "single": {
+          "$ref": "#/definitions/SingleMapping"
+        },
+        "multi": {
+          "$ref": "#/definitions/MultiMapping"
+        },
+        "types": {
+          "$ref": "#/definitions/TypeMappings"
+        },
+        "parameters": {
+          "$ref": "#/definitions/ParameterMappings"
+        },
+        "responses": {
+          "$ref": "#/definitions/ResponseMappings"
+        }
+      }
+    },
+    "ResultMapping": {
+      "description": "wrapper object of a http response.",
+      "type": "string",
+      "examples": [
+        "result: org.springframework.http.ResponseEntity"
+      ]
+    },
+    "SingleMapping": {
+      "description": "reactive wrapper of single types.",
+      "type": "string",
+      "examples": [
+        "single: reactor.core.publisher.Mono"
+      ]
+    },
+    "MultiMapping": {
+      "description": "reactive wrapper of array types.",
+      "type": "string",
+      "examples": [
+        "reactor.core.publisher.Flux"
+      ]
+    },
+    "TypeMappings": {
+      "description": "basic type mappings.",
+      "type": "array",
+      "minItems": 1,
+      "items": [{
+        "description": "maps a schema to a a Java type.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/TypeMappingFormat"
+          },
+          "generics": {
+            "$ref": "#/definitions/TypeMappingGenerics"
+          }
+        }
+      }]
+    },
+    "ParameterMappings": {
+      "description": "parameter type mappings.",
+      "type": "array",
+      "minItems": 1,
+      "items": [{
+        "description": "maps a parameter name to a Java type.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/definitions/TypeMappingFormat"
+          },
+          "generics": {
+            "$ref": "#/definitions/TypeMappingGenerics"
+          }
+        }
+      }],
+      "required": [
+        "name"
+      ],
+      "examples": [
+        "name: foo => io.openapiprocessor.Foo"
+      ]
+    },
+    "ResponseMappings": {
+      "description": "response (content) type mappings.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "description": "maps a content type to a Java type.",
+        "type": "object",
+        "properties": {
+          "content": {
+            "$ref": "#/definitions/TypeMappingFormat"
+          },
+          "generics": {
+            "$ref": "#/definitions/TypeMappingGenerics"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "examples": [
+          "content: application/json => io.openapiprocessor.Foo"
+        ]
+      }
+    },
+    "Exclude": {
+      "description": "generate endpoint to a separate 'Excluded' interface.",
+      "type": "object",
+      "properties": {
+        "exclude": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TypeMappingFormat": {
+      "description": "schema => fully qualified Java type.",
+      "type": "string",
+      "pattern": "^.+\\s+=>\\s+.+$",
+      "examples": [
+        "array => java.util.Collection",
+        "FooSchema => io.openapiprocessor.Foo"
+      ]
+    },
+    "TypeMappingGenerics": {
+      "description": "fully qualified Java types used as generic parameters of the type mapping.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
