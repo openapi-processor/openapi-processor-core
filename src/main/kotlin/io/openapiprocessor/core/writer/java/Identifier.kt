@@ -39,7 +39,7 @@ import java.lang.Character.isJavaIdentifierStart
  * @author Martin Hauner
  */
 fun toCamelCase(src: String): String {
-    return joinCamelCase(joinSingleCharWords(splitAtWordBreaks(src)))
+    return joinCamelCase(splitAtWordBreaks(src))
 }
 
 /**
@@ -81,9 +81,8 @@ fun toClass(src: String): String {
  * @author Martin Hauner
  */
 fun toEnum(src: String): String {
-    return joinEnum(joinSingleCharWords(splitAtWordBreaks(src)))
+    return joinEnum(splitAtWordBreaks(src))
 }
-
 
 /**
  * joins the given words to a single camel case string.
@@ -95,7 +94,7 @@ fun toEnum(src: String): String {
  *
  * @author Martin Hauner
  */
-private fun joinCamelCase(words: ArrayList<String>): String {
+private fun joinCamelCase(words: List<String>): String {
     val sb = StringBuilder()
 
     words.forEachIndexed { idx, p ->
@@ -121,7 +120,7 @@ private fun joinCamelCase(words: ArrayList<String>): String {
  *
  * @author Martin Hauner
  */
-private fun joinEnum(words: ArrayList<String>): String {
+private fun joinEnum(words: List<String>): String {
     val result = words.joinToString("_") { it.toUpperCase() }
 
     if (result.isEmpty()) {
@@ -129,42 +128,6 @@ private fun joinEnum(words: ArrayList<String>): String {
     }
 
     return result
-}
-
-/**
- * joins two words if at least one has only a single character.
- *
- * this tries to avoid identifiers with multiple uppercase characters in a row.
- *
- * @param words a list of words
- * @return a list of words
- *
- * @author Martin Hauner
- */
-private fun joinSingleCharWords(words: List<String>): ArrayList<String> {
-    val merged = ArrayList<String>()
-    val current = StringBuilder()
-
-    words.forEachIndexed { idx, p ->
-        if (idx == 0) {
-            current.append(p)
-        } else {
-            if (current.last().isUpperCase() && (current.length == 1 || p.length == 1)) {
-                current.append(p)
-            } else {
-                merged.add(current.toString())
-                current.clear()
-                current.append(p)
-            }
-        }
-    }
-
-
-    if (current.isNotEmpty()) {
-        merged.add(current.toString())
-    }
-
-    return merged
 }
 
 /**
@@ -182,7 +145,7 @@ private fun splitAtWordBreaks(src: String): List<String> {
     val trimmed = src.trimInvalidStart()
     trimmed.forEachIndexed { idx, c ->
 
-        if (idx == 0 || c.isNoWordBreak()) {
+        if (idx == 0 || !src.isWordBreak(idx)) {
             current.append(c)
             return@forEachIndexed
         }
@@ -219,13 +182,33 @@ private fun StringBuilder.appendValid(c: Char): StringBuilder {
     return this
 }
 
+private fun String.isWordBreak(idx: Int): Boolean {
+    return this.isForcedBreak(idx)
+        || this.isCaseBreak(idx)
+}
+
+private fun String.isForcedBreak(idx: Int): Boolean {
+    return this[idx].isWordBreak()
+}
+
+// detect existing camel case word breaks
+private fun String.isCaseBreak(idx: Int): Boolean {
+    if (idx == 0)
+        return false
+
+    val prev = this[idx - 1]
+    val curr = this[idx]
+
+    return prev.isLowerCase()
+        && curr.isUpperCase()
+}
+
 private fun Char.isNoWordBreak(): Boolean {
     return !isWordBreak()
 }
 
 private fun Char.isWordBreak(): Boolean {
     return isWordBreakChar(this)
-        || this.isUpperCase()
         || !isJavaIdentifierPart(this)
 }
 
