@@ -48,6 +48,7 @@ class IdentifierSpec extends Specification {
         "a-foo-bar"      | "aFooBar"      | "AFooBar"      | "A_FOO_BAR"
         "a foo-bar"      | "aFooBar"      | "AFooBar"      | "A_FOO_BAR"
         'api/some/thing' | 'apiSomeThing' | "ApiSomeThing" | "API_SOME_THING"
+        "_fo-o"          | 'foO'          | 'FoO'          | "FO_O"
 
         // word break at underscore, it is valid but unwanted except for enums
         "_ab"            | "ab"           | "Ab"           | "AB"

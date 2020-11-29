@@ -145,7 +145,7 @@ private fun splitAtWordBreaks(src: String): List<String> {
     val trimmed = src.trimInvalidStart()
     trimmed.forEachIndexed { idx, c ->
 
-        if (idx == 0 || !src.isWordBreak(idx)) {
+        if (idx == 0 || !trimmed.isWordBreak(idx)) {
             current.append(c)
             return@forEachIndexed
         }
