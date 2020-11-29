@@ -109,11 +109,15 @@ class ApiWriter(
     }
 
     private fun format(raw: String): String {
-        if (formatter == null) {
-            return raw
-        }
+        try {
+            if (formatter == null) {
+                return raw
+            }
 
-        return correctLineFeed(formatter!!.formatSource(raw))
+            return correctLineFeed(formatter!!.formatSource(raw))
+        } catch (e: Exception) {
+            throw FormattingException(raw, e)
+        }
     }
 
     // put line feed before last closing }
