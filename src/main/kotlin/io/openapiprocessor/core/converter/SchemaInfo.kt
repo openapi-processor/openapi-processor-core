@@ -203,13 +203,13 @@ class SchemaInfo(
     }
 
     /**
-     * iterate over items
+     * iterate over composed items
      */
     fun eachItemOf(action: (info: SchemaInfo) -> Unit) {
         schema?.getItems()?.forEachIndexed { index, schema ->
             action(SchemaInfo(
                 path = path,
-                name = "${name}-of-${index}",
+                name = "${name}_${itemOf()!!.capitalize()}_${index}",
                 schema = schema,
                 resolver = resolver
             ))
