@@ -346,7 +346,7 @@ class  ApiConverter(
         var targetInterfaceName = INTERFACE_DEFAULT_NAME
 
         if((op.hasTags())) {
-            targetInterfaceName = op.getFirstTag()!!
+            targetInterfaceName = toClass(op.getFirstTag()!!)
         }
 
         if (excluded) {

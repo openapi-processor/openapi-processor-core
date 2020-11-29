@@ -74,11 +74,46 @@ paths:
             .convert (openApi)
 
         then:
-        assertInterfaces ('ping', 'pong')
+        assertInterfaces ('Ping', 'Pong')
         assertPingEndpoints ('/a', '/c')
         assertPongEndpoints ('/b')
     }
 
+    void "groups endpoints into interfaces by valid tag identifier" () {
+        def openApi = parse (
+"""\
+openapi: 3.0.2
+info:
+  title: API
+  version: 1.0.0
+
+paths:
+  /a:
+    get:
+      tags:
+        - test_api
+      responses:
+        '204':
+          description: none
+  /b:
+    get:
+      tags:
+        - test-api
+      responses:
+        '204':
+          description: none
+
+""")
+
+        when:
+        api = new ApiConverter (new ApiOptions(), Stub (Framework))
+            .convert (openApi)
+
+        then:
+        def actual = api.interfaces
+        assert actual.size () == 1
+        assert actual.first ().name == "TestApi"
+    }
 
     @Unroll
     void "groups endpoints with method #method into interfaces" () {
@@ -119,7 +154,7 @@ paths:
         w.write (writer, api.interfaces.get (0))
 
         then:
-        assertInterfaces (method)
+        assertInterfaces (method.capitalize ())
         assertEndpoints (method,'/a')
 
         where:
