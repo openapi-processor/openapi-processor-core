@@ -20,8 +20,8 @@ java {
 }
 
 ext {
-    processorApiVersion = '1.1.0'
-    jacksonVersion = '2.11.3'
+    processorApiVersion = '1.2.0'
+    jacksonVersion = '2.12.0'
 
     bintrayUser = project.findProperty ('BINTRAY_USER') ?: System.getenv ("BINTRAY_USER") ?: 'n/a'
     bintrayKey =  project.findProperty ('BINTRAY_KEY') ?: System.getenv ("BINTRAY_KEY") ?: 'n/a'
@@ -98,7 +98,7 @@ dependencies {
     components.all(JacksonPlatformRule)
     components.all(KotlinPlatformRule)
 
-    antlr 'org.antlr:antlr4:4.8'
+    antlr 'org.antlr:antlr4:4.9'
 
     compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
@@ -113,7 +113,7 @@ dependencies {
         exclude group: 'com.google.guava'
     }
 
-    implementation ('com.google.guava:guava:29.0-jre') {
+    implementation ('com.google.guava:guava:30.0-jre') {
         exclude group: 'com.google.guava'
         exclude group: 'com.google.j2objc'
         exclude group: 'com.google.code.findbugs'
@@ -126,7 +126,7 @@ dependencies {
     testImplementation 'org.codehaus.groovy:groovy-nio:2.5.12'
 
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
-    testImplementation ('io.openapiprocessor:openapi-processor-test:1.0.1') {
+    testImplementation ('io.openapiprocessor:openapi-processor-test:2020.1.0') {
         exclude group: 'com.google.guava'
     }
 
@@ -148,8 +148,8 @@ dependencies {
         exclude group: 'junit'
     }
     testImplementation("io.mockk:mockk:1.10.2")
-    testImplementation("io.kotest:kotest-runner-junit5:4.2.5")
-    testImplementation 'net.bytebuddy:byte-buddy:1.10.16'
+    testImplementation("io.kotest:kotest-runner-junit5:4.3.1")
+    testImplementation 'net.bytebuddy:byte-buddy:1.10.18'
     testImplementation 'ch.qos.logback:logback-classic:1.2.3'
 }
 
