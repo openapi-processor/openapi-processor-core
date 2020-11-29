@@ -34,10 +34,7 @@ class IdentifierSpec extends Specification {
         // first char should be lowercase
         "a"              | "a"            | "A"            | "A"
         "A"              | "a"            | "A"            | "A"
-
-        //
         "AA"             | "aa"           | "Aa"           | "AA"
-        "AAFoo"          | "aaFoo"        | "AaFoo"        | "AA_FOO"
 
         // invalid chars are stripped
         "1a"             | "a"            | "A"            | "A"
@@ -46,30 +43,29 @@ class IdentifierSpec extends Specification {
         // word break at invalid characters
         "a foo"          | "aFoo"         | "AFoo"         | "A_FOO"
         "a-foo"          | "aFoo"         | "AFoo"         | "A_FOO"
+        "FOO-bar"        | "fooBar"       | "FooBar"       | "FOO_BAR"
         "a foo bar"      | "aFooBar"      | "AFooBar"      | "A_FOO_BAR"
         "a-foo-bar"      | "aFooBar"      | "AFooBar"      | "A_FOO_BAR"
         "a foo-bar"      | "aFooBar"      | "AFooBar"      | "A_FOO_BAR"
         'api/some/thing' | 'apiSomeThing' | "ApiSomeThing" | "API_SOME_THING"
+        "_fo-o"          | 'foO'          | 'FoO'          | "FO_O"
 
-        // word break at underscore, it is valid but unwanted
+        // word break at underscore, it is valid but unwanted except for enums
         "_ab"            | "ab"           | "Ab"           | "AB"
         "a_b"            | "aB"           | "AB"           | "A_B"
         "a_foo"          | "aFoo"         | "AFoo"         | "A_FOO"
+        "A_A"            | "aA"           | "AA"           | "A_A"
+        "FOO_FOO"        | "fooFoo"       | "FooFoo"       | "FOO_FOO"
+
+        // word break at case change: lower to upper, preserve camel case
+        "fooBar"         | "fooBar"       | "FooBar"       | "FOO_BAR"
+        "fooBAr"         | "fooBar"       | "FooBar"       | "FOO_BAR"
+        "fooBAR"         | "fooBar"       | "FooBar"       | "FOO_BAR"
 
         // final result is empty
         " "              | "invalid"      | "Invalid"      | "INVALID"
         "_"              | "invalid"      | "Invalid"      | "INVALID"
         "-"              | "invalid"      | "Invalid"      | "INVALID"
-
-        // word break at uppercase
-        "fooBar"         | "fooBar"       | "FooBar"       | "FOO_BAR"
-
-        // upper case only at word break
-        "fooBAr"         | "fooBar"       | "FooBar"       | "FOO_BAR"
-        "fooBAR"         | "fooBar"       | "FooBar"       | "FOO_BAR"
-        "FOO-bar"        | "fooBar"       | "FooBar"       | "FOO_BAR"
-        "FOOBar"         | "fooBar"       | "FooBar"       | "FOO_BAR"
-        "FOObar"         | "foObar"       | "FoObar"       | "FO_OBAR"
     }
 
 }
