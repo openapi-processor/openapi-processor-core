@@ -4,21 +4,21 @@ info:
   version: 1.0.0
 
 paths:
-  /endpoint/nullable:
+  /endpoint/required:
     get:
       tags:
         - endpoint
       parameters:
         - in: query
-          name: nullable-false
+          name: required-false
+          required: false
           schema:
             type: string
-            nullable: false
         - in: query
-          name: nullable-true
+          name: required-true
+          required: true
           schema:
             type: string
-            nullable: true
       responses:
         '204':
           description: empty
@@ -151,13 +151,14 @@ components:
       properties:
         prop1:
           type: string
-          nullable: false
         prop2:
           type: integer
           format: int32
           maximum: 3
         prop3:
           $ref: '#/components/schemas/Obj2'
+      required:
+        - prop1
     Obj2:
       type: object
       properties:
