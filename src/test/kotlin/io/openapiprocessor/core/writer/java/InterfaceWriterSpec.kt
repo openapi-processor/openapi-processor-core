@@ -225,34 +225,6 @@ class InterfaceWriterSpec: StringSpec({
         imports shouldContain "import bar.Bar;"
     }
 
-
-    /*
-    void "writes additional parameter annotation import" () {
-//        annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Parameter', pkg: 'annotation')
-
-        def itf = intrface ('Foo') {
-            endpoint ('/foo') {
-                parameters {
-                    add {
-                        name ('bar')
-                        type (new StringDataType())
-                        annotation (new AnnotationDataType (pkg: 'bar', type: 'Bar', parameters: '()'))
-                    }
-                }
-            }
-        }
-
-        when:
-        writer.write (target, itf)
-
-        then:
-        def result = extractImports (target.toString ())
-        result.contains("""\
-import bar.Bar;
-""")
-    }
-     */
-
     "writes request body annotation import" {
         every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(
             "Body", "annotation")
