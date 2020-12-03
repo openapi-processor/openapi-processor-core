@@ -17,6 +17,7 @@
 package io.openapiprocessor.core.model
 
 import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import java.util.function.Consumer
@@ -58,6 +59,10 @@ class Api(
 
     fun forEachObjectDataType(action: Consumer<ObjectDataType>) {
         models.getObjectDataTypes().forEach(action)
+    }
+
+    fun forEachModelDataType(action: Consumer<ModelDataType>) {
+        models.getModelDataTypes().forEach(action)
     }
 
     fun forEachEnumDataType(action: Consumer<StringEnumDataType>) {

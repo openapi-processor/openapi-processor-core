@@ -218,7 +218,7 @@ class ApiWriterSpec: StringSpec({
     "re-formats model sources" {
         val dtWriter = io.mockk.mockk<DataTypeWriter>()
         every { dtWriter.write(any(), any()) } answers {
-            arg<Writer>(0).write("  class \n  ${arg<ObjectDataType>(1).getName()} {   }\n")
+            arg<Writer>(0).write("  class \n  ${arg<ModelDataType>(1).getName()} {   }\n")
         }
 
         val dt = DataTypes()

@@ -16,10 +16,7 @@
 
 package io.openapiprocessor.core.model
 
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.MappedDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.model.datatypes.*
 
 /**
  * Container of data types from OpenAPI '#/component/schemas'.
@@ -49,6 +46,21 @@ class DataTypes {
     fun getObjectDataTypes(): Collection<ObjectDataType> {
         return types.values
             .filterIsInstance<ObjectDataType>()
+            .toList()
+    }
+
+    /**
+     * provides the *object* data types (model classes) used by the api endpoints.
+     * For this objects the processor will create POJOs classes.
+     *
+     * experimental: will probably replace getObjectDataTypes().
+     *
+     * @return list of object data types
+     */
+    fun getModelDataTypes(): Collection<ModelDataType> {
+        return types.values
+            .filterIsInstance<ModelDataType>()
+            .filter { it.isModel() }
             .toList()
     }
 
