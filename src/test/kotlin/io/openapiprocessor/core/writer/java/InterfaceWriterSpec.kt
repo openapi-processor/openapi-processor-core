@@ -131,6 +131,34 @@ class InterfaceWriterSpec: StringSpec({
         imports shouldContain "import annotation.Parameter;"
     }
 
+    "writes parameter @NotNull validation annotation import" {
+        options.beanValidation = true
+
+        every { annotations.getAnnotation(any<HttpMethod>()) } returns FrameworkAnnotation(
+            "Mapping", "annotation")
+        every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(
+            "Parameter", "annotation")
+
+        val itf = `interface` {
+            endpoint("/foo") {
+                parameters {
+                    query("bar", StringDataType()) {
+                        required()
+                    }
+                }
+
+                responses { status("200") }
+            }
+        }
+
+        // when:
+        writer.write(target, itf)
+
+        // then:
+        val imports = extractImports(target)
+        imports shouldContain "import javax.validation.constraints.NotNull;"
+    }
+
     "does not write parameter annotation import of a parameter that does not need an annotation" {
         val itf = `interface` {
             endpoint("/foo") {

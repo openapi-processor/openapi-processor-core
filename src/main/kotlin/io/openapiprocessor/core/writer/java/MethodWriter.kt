@@ -87,7 +87,8 @@ open class MethodWriter(
             var methodDefinition = ""
 
             if (apiOptions.beanValidation) {
-                methodDefinition += " " + beanValidationFactory.createAnnotations(it.dataType)
+                methodDefinition += " " + beanValidationFactory
+                    .createAnnotations(it.dataType, it.required)
             }
 
             val annotation = createParameterAnnotation (it)

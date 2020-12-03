@@ -12,14 +12,14 @@ import io.openapiprocessor.core.model.datatypes.*
  */
 open class BeanValidationFactory {
 
-    fun collectImports(dataType: DataType): Set<String> {
+    fun collectImports(dataType: DataType, required: Boolean = false): Set<String> {
         val imports = mutableSetOf<String>()
 
         if (dataType.isObject()) {
             imports.add("javax.validation.Valid")
         }
 
-        if (dataType.hasNotNullableConstraint()) {
+        if (required) {
             imports.add("javax.validation.constraints.NotNull")
         }
 
@@ -38,14 +38,14 @@ open class BeanValidationFactory {
         return imports
     }
 
-    fun createAnnotations(dataType: DataType): String {
+    fun createAnnotations(dataType: DataType, required: Boolean = false): String {
         val annotations = mutableListOf<String>()
 
         if (dataType.isObject()) {
             annotations.add(createValidAnnotation())
         }
 
-        if (dataType.hasNotNullableConstraint()) {
+        if (required) {
             annotations.add(createNotNullAnnotation())
         }
 
