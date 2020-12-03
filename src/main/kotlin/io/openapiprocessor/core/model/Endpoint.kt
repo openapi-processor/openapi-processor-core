@@ -79,12 +79,12 @@ class Endpoint(
     // grouped responses
     lateinit var endpointResponses: List<EndpointResponse>// = emptyList()
 
-    // todo
+    // todo move to constructor
     fun addResponses(httpStatus: String, statusResponses: List<Response>) {
         responses[httpStatus] = statusResponses
     }
 
-    // todo move lists init to constructor then run this from constructor
+    // todo move addResponse() to constructor then run this from constructor
     // fluent
     fun initEndpointResponses (): Endpoint {
         endpointResponses = createEndpointResponses ()
