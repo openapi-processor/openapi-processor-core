@@ -109,6 +109,8 @@ class InterfaceWriterSpec: StringSpec({
 
     "writes parameter annotation import" {
         every { annotations.getAnnotation(any<HttpMethod>()) } returns FrameworkAnnotation(
+            "Mapping", "annotation")
+        every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(
             "Parameter", "annotation")
 
         val itf = `interface` {
