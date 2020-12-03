@@ -3,3 +3,4 @@ items:
   - generated/model/One.java
   - generated/model/Two.java
   - generated/model/Three.java
+  - generated/model/FooAllOf.java
