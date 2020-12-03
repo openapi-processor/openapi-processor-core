@@ -37,7 +37,8 @@ class ProcessorEndToEndTest extends ProcessorTestBase {
         'ref-loop-array',
         'ref-parameter',
         'ref-parameter-with-primitive-mapping',
-        'response-content-multiple-no-content'
+        'response-content-multiple-no-content',
+        'schema-composed-allof'
     ]
 
     @Parameterized.Parameters(name = "{0}")
