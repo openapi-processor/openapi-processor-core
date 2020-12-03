@@ -53,6 +53,7 @@ class DataTypeWriterSpec: StringSpec({
         target.toString() shouldContain
             """    
             |    @NotNull
+            |    @JsonProperty("foo")
             |    private String foo;
             |
             """.trimMargin()

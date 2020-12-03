@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 
 public class Obj2 {
 
-    @JsonProperty("prop4")
     @Size(max = 10)
+    @JsonProperty("prop4")
     private String prop4;
 
     public String getProp4() {

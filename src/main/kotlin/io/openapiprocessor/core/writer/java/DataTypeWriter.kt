@@ -78,8 +78,6 @@ class DataTypeWriter(
             result += "    @Deprecated\n"
         }
 
-        result += "    @JsonProperty(\"${propertyName}\")\n"
-
         if(apiOptions.beanValidation) {
             val annotations = validationAnnotations.createAnnotations(propDataType, required)
             if (annotations.isNotEmpty()) {
@@ -87,6 +85,7 @@ class DataTypeWriter(
             }
         }
 
+        result += "    @JsonProperty(\"${propertyName}\")\n"
         result += "    private ${propDataType.getName()} ${javaPropertyName};\n\n"
         return result
     }
