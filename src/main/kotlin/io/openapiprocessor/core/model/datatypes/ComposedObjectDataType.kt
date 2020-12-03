@@ -55,4 +55,18 @@ class ComposedObjectDataType(
         return of != "allOf"
     }
 
+    fun getProperties(): Map<String, DataType> {
+        val properties = linkedMapOf<String, DataType>()
+
+        if (of == "allOf") {
+            items.forEach {
+                if (it is ObjectDataType) {
+                    properties.putAll(it.getObjectProperties())
+                }
+            }
+        }
+
+        return properties
+    }
+
 }
