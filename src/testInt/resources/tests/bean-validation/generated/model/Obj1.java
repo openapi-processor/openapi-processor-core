@@ -17,13 +17,11 @@ public class Obj1 {
     private String prop1;
 
     @JsonProperty("prop2")
-    @NotNull
     @DecimalMax(value = "3")
     private Integer prop2;
 
     @JsonProperty("prop3")
     @Valid
-    @NotNull
     private Obj2 prop3;
 
     public String getProp1() {
