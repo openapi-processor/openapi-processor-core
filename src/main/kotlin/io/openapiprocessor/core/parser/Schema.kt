@@ -49,6 +49,8 @@ interface Schema {
     // default false
     fun isDeprecated(): Boolean
 
+    fun getRequired(): List<String>
+
     // default false
     fun getNullable(): Boolean
     fun getMinLength(): Int?

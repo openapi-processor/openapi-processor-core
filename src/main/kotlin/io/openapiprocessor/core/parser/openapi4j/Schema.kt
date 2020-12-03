@@ -94,6 +94,8 @@ class Schema(val schema: O4jSchema) : ParserSchema {
 
     override fun isDeprecated(): Boolean = schema.deprecated ?: false
 
+    override fun getRequired(): List<String> = schema.requiredFields ?: emptyList()
+
     override fun getNullable(): Boolean = schema.nullable ?: false
 
     override fun getMinLength(): Int? = schema.minLength ?: 0

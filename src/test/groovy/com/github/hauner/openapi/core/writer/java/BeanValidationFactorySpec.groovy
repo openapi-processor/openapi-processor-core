@@ -175,15 +175,11 @@ class BeanValidationFactorySpec extends Specification {
 
     @Unroll
     void "applies @NotNull (required: #required, type: #type)" () {
-        def constraints = new DataTypeConstraints (
-            required: required
-        )
-
-        DataType dataType = createDataType (type, constraints)
+        DataType dataType = createDataType (type, new DataTypeConstraints ())
 
         when:
-        def imports = validation.collectImports (dataType, true)
-        def annotations = validation.createAnnotations (dataType, true)
+        def imports = validation.collectImports (dataType, required)
+        def annotations = validation.createAnnotations (dataType, required)
 
         then:
         imports.containsAll (resultImports)
