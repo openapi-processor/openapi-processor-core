@@ -132,19 +132,8 @@ class DataTypeWriter(
         if (apiOptions.beanValidation) {
             val properties = dataType.getProperties()
             properties.forEach { (propName, propDataType) ->
-                val javaPropertyName = toCamelCase(propName)
-
                 imports.addAll(validationAnnotations.collectImports(
-                        propDataType,
-                        dataType.isRequired(propName)))
-            }
-
-
-            val propertyNames = dataType.getProperties().keys
-            propertyNames.forEach {
-                val propDataType = dataType.getObjectProperty(it)
-                imports.addAll(validationAnnotations.collectImports(
-                    propDataType, dataType.isRequired(it)))
+                        propDataType, dataType.isRequired(propName)))
             }
         }
 

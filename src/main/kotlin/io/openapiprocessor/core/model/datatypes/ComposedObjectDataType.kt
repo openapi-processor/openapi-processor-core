@@ -74,4 +74,8 @@ class ComposedObjectDataType(
         return properties
     }
 
+    override fun isRequired(prop: String): Boolean {
+        return getConstraints()?.isRequired(prop) ?: false
+    }
+
 }

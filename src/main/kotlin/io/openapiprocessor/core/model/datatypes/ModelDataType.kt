@@ -11,4 +11,6 @@ interface ModelDataType: DataType {
 
     fun getProperties(): Map<String, DataType>
 
+    fun isRequired(prop: String): Boolean
+
 }
