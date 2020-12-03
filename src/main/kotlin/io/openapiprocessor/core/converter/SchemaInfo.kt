@@ -112,6 +112,10 @@ class SchemaInfo(
         return schema?.isDeprecated()!!
     }
 
+    fun getRequired(): List<String> {
+        return schema?.getRequired()!!
+    }
+
     /**
      * get nullable value.
      *

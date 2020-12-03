@@ -181,7 +181,8 @@ class DataTypeConverter(
         }
 
         val constraints = DataTypeConstraints(
-            nullable = schemaInfo.getNullable()
+            nullable = schemaInfo.getNullable(),
+            required = schemaInfo.getRequired()
         )
 
         val objectType = ObjectDataType (

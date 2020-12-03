@@ -59,4 +59,8 @@ class ObjectDataType(
         return properties
     }
 
+    fun isRequired(prop: String): Boolean {
+        return getConstraints()?.isRequired(prop) ?: false
+    }
+
 }

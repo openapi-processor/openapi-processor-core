@@ -16,36 +16,35 @@ import javax.validation.constraints.Size;
 
 public interface EndpointApi {
 
-    @Mapping("/endpoint/nullable")
-    void getEndpointNullable(
-            @NotNull @Parameter String nullableFalse, @Parameter String nullableTrue);
+    @Mapping("/endpoint/required")
+    void getEndpointRequired(
+            @Parameter String requiredFalse, @NotNull @Parameter String requiredTrue);
 
     @Mapping("/endpoint/length")
     void getEndpointLength(
-            @NotNull @Size(min = 2) @Parameter String minLength,
-            @NotNull @Size(max = 4) @Parameter String maxLength,
-            @NotNull @Size(min = 2, max = 4) @Parameter String minMaxLength);
+            @Size(min = 2) @Parameter String minLength,
+            @Size(max = 4) @Parameter String maxLength,
+            @Size(min = 2, max = 4) @Parameter String minMaxLength);
 
     @Mapping("/endpoint/minmax")
     void getEndpointMinmax(
-            @NotNull @DecimalMin(value = "10") @Parameter Integer min,
-            @NotNull @DecimalMin(value = "10", inclusive = false) @Parameter Integer minEx,
-            @NotNull @DecimalMax(value = "20") @Parameter Integer max,
-            @NotNull @DecimalMax(value = "20", inclusive = false) @Parameter Integer maxEx,
-            @NotNull @DecimalMin(value = "10") @DecimalMax(value = "20") @Parameter Integer minMax,
-            @NotNull
-                    @DecimalMin(value = "10", inclusive = false)
+            @DecimalMin(value = "10") @Parameter Integer min,
+            @DecimalMin(value = "10", inclusive = false) @Parameter Integer minEx,
+            @DecimalMax(value = "20") @Parameter Integer max,
+            @DecimalMax(value = "20", inclusive = false) @Parameter Integer maxEx,
+            @DecimalMin(value = "10") @DecimalMax(value = "20") @Parameter Integer minMax,
+            @DecimalMin(value = "10", inclusive = false)
                     @DecimalMax(value = "20", inclusive = false)
                     @Parameter
                     Integer minMaxEx);
 
     @Mapping("/endpoint/items")
     void getEndpointItems(
-            @NotNull @Size(min = 2) @Parameter String[] min,
-            @NotNull @Size(max = 4) @Parameter String[] max,
-            @NotNull @Size(min = 2, max = 4) @Parameter String[] minMax);
+            @Size(min = 2) @Parameter String[] min,
+            @Size(max = 4) @Parameter String[] max,
+            @Size(min = 2, max = 4) @Parameter String[] minMax);
 
     @Mapping("/endpoint/obj")
-    void postEndpointObj(@Valid @NotNull @Parameter Obj1 body);
+    void postEndpointObj(@Valid @Parameter Obj1 body);
 
 }

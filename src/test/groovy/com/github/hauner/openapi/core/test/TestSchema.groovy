@@ -62,4 +62,9 @@ class TestSchema implements Schema {
         defaultValue
     }
 
+    @Override
+    List<String> getRequired () {
+        []
+    }
+
 }

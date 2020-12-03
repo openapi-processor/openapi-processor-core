@@ -47,8 +47,8 @@ class BeanValidationFactorySpec extends Specification {
         def dataType = new ObjectDataType('Foo', '', [:], null, false)
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         imports == resultImports as Set<String>
@@ -56,15 +56,15 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         resultImports     | resultAnnnotation
-        [VALID, NOT_NULL] | "@Valid @NotNull"
+        [VALID]           | "@Valid"
     }
 
     void "does not apply @Valid to non Object types" () {
         def dataType = new OtherDataType()
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         imports == resultImports as Set<String>
@@ -72,7 +72,7 @@ class BeanValidationFactorySpec extends Specification {
 
         where:
         resultImports | resultAnnnotation
-        [NOT_NULL]    | "@NotNull"
+        []            | ""
     }
 
     @Unroll
@@ -85,8 +85,8 @@ class BeanValidationFactorySpec extends Specification {
         def dataType = new StringDataType(constraints, false)
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         containsImports (imports, resultImports)
@@ -116,8 +116,8 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = new ArrayDataType(new NoneDataType(), constraints, false)
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         imports.containsAll (resultImports)
@@ -152,8 +152,8 @@ class BeanValidationFactorySpec extends Specification {
             false)
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         imports.containsAll (resultImports)
@@ -174,33 +174,25 @@ class BeanValidationFactorySpec extends Specification {
     }
 
     @Unroll
-    void "applies @NotNull (nullable: #nullable, type: #type)" () {
-        def constraints = new DataTypeConstraints (
-            nullable: nullable
-        )
-
-        DataType dataType = createDataType (type, constraints)
+    void "applies @NotNull (required: #required, type: #type)" () {
+        DataType dataType = createDataType (type, new DataTypeConstraints ())
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, required)
+        def annotations = validation.createAnnotations (dataType, required)
 
         then:
         imports.containsAll (resultImports)
         annotations.contains (resultAnnotations)
 
         where:
-        type                     | nullable || resultImports | resultAnnotations
-//      nullable defaults to false if not set
-//      IntegerDataType          | null     || []            | ""
-        IntegerDataType          | true     || []            | ""
-        IntegerDataType          | false    || [NOT_NULL]    | "@NotNull"
-//      StringDataType           | null     || []            | ""
-        StringDataType           | true     || []            | ""
-        StringDataType           | false    || [NOT_NULL]    | "@NotNull"
-//      MappedCollectionDataType | null     || []            | ""
-        MappedCollectionDataType | true     || []            | ""
-        MappedCollectionDataType | false    || [NOT_NULL]    | "@NotNull"
+        type                     | required || resultImports | resultAnnotations
+        IntegerDataType          | false    || []            | ""
+        IntegerDataType          | true     || [NOT_NULL]    | "@NotNull"
+        StringDataType           | false    || []            | ""
+        StringDataType           | true     || [NOT_NULL]    | "@NotNull"
+        MappedCollectionDataType | false    || []            | ""
+        MappedCollectionDataType | true     || [NOT_NULL]    | "@NotNull"
     }
 
     @Unroll
@@ -213,8 +205,8 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = createDataType (type, constraints)
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         imports.containsAll (resultImports)
@@ -261,8 +253,8 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = createDataType (type, constraints)
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         imports.containsAll (resultImports)
@@ -310,8 +302,8 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = new DoubleDataType (constraints, false)
 
         when:
-        def imports = validation.collectImports (dataType)
-        def annotations = validation.createAnnotations (dataType)
+        def imports = validation.collectImports (dataType, false)
+        def annotations = validation.createAnnotations (dataType, false)
 
         then:
         imports.containsAll (resultImports)

@@ -109,6 +109,8 @@ class InterfaceWriterSpec: StringSpec({
 
     "writes parameter annotation import" {
         every { annotations.getAnnotation(any<HttpMethod>()) } returns FrameworkAnnotation(
+            "Mapping", "annotation")
+        every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(
             "Parameter", "annotation")
 
         val itf = `interface` {
@@ -127,6 +129,34 @@ class InterfaceWriterSpec: StringSpec({
         // then:
         val imports = extractImports(target)
         imports shouldContain "import annotation.Parameter;"
+    }
+
+    "writes parameter @NotNull validation annotation import" {
+        options.beanValidation = true
+
+        every { annotations.getAnnotation(any<HttpMethod>()) } returns FrameworkAnnotation(
+            "Mapping", "annotation")
+        every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(
+            "Parameter", "annotation")
+
+        val itf = `interface` {
+            endpoint("/foo") {
+                parameters {
+                    query("bar", StringDataType()) {
+                        required()
+                    }
+                }
+
+                responses { status("200") }
+            }
+        }
+
+        // when:
+        writer.write(target, itf)
+
+        // then:
+        val imports = extractImports(target)
+        imports shouldContain "import javax.validation.constraints.NotNull;"
     }
 
     "does not write parameter annotation import of a parameter that does not need an annotation" {
@@ -194,34 +224,6 @@ class InterfaceWriterSpec: StringSpec({
         val imports = extractImports(target)
         imports shouldContain "import bar.Bar;"
     }
-
-
-    /*
-    void "writes additional parameter annotation import" () {
-//        annotations.getAnnotation (_) >> new FrameworkAnnotation(name: 'Parameter', pkg: 'annotation')
-
-        def itf = intrface ('Foo') {
-            endpoint ('/foo') {
-                parameters {
-                    add {
-                        name ('bar')
-                        type (new StringDataType())
-                        annotation (new AnnotationDataType (pkg: 'bar', type: 'Bar', parameters: '()'))
-                    }
-                }
-            }
-        }
-
-        when:
-        writer.write (target, itf)
-
-        then:
-        def result = extractImports (target.toString ())
-        result.contains("""\
-import bar.Bar;
-""")
-    }
-     */
 
     "writes request body annotation import" {
         every { annotations.getAnnotation(any<Parameter>()) } returns FrameworkAnnotation(

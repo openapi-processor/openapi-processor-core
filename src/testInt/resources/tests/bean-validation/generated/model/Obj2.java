@@ -6,14 +6,12 @@
 package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class Obj2 {
 
-    @JsonProperty("prop4")
-    @NotNull
     @Size(max = 10)
+    @JsonProperty("prop4")
     private String prop4;
 
     public String getProp4() {

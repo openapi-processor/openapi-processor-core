@@ -56,7 +56,7 @@ class DataTypeWriter(
         propertyNames.forEach {
             val javaPropertyName = toCamelCase(it)
             val propDataType = dataType.getObjectProperty(it)
-            target.write(getProp(it, javaPropertyName, propDataType))
+            target.write(getProp(it, javaPropertyName, propDataType, dataType.isRequired(it)))
         }
 
         propertyNames.forEach {
@@ -69,21 +69,23 @@ class DataTypeWriter(
         target.write ("}\n")
     }
 
-    private fun getProp(propertyName: String, javaPropertyName: String, propDataType: DataType): String  {
+    private fun getProp(
+        propertyName: String, javaPropertyName: String,
+        propDataType: DataType, required: Boolean): String {
+
         var result = ""
         if (propDataType.isDeprecated()) {
             result += "    @Deprecated\n"
         }
 
-        result += "    @JsonProperty(\"${propertyName}\")\n"
-
         if(apiOptions.beanValidation) {
-            val beanValidationAnnotations = validationAnnotations.createAnnotations(propDataType)
-            if (beanValidationAnnotations.isNotEmpty()) {
-                result += "    $beanValidationAnnotations\n"
+            val annotations = validationAnnotations.createAnnotations(propDataType, required)
+            if (annotations.isNotEmpty()) {
+                result += "    $annotations\n"
             }
         }
 
+        result += "    @JsonProperty(\"${propertyName}\")\n"
         result += "    private ${propDataType.getName()} ${javaPropertyName};\n\n"
         return result
     }
@@ -129,8 +131,11 @@ class DataTypeWriter(
         imports.addAll(dataType.getReferencedImports())
 
         if (apiOptions.beanValidation) {
-            dataType.getObjectProperties().values.forEach {
-                imports.addAll(validationAnnotations.collectImports(it))
+            val propertyNames = dataType.getObjectProperties().keys
+            propertyNames.forEach {
+                val propDataType = dataType.getObjectProperty(it)
+                imports.addAll(validationAnnotations.collectImports(
+                    propDataType, dataType.isRequired(it)))
             }
         }
 

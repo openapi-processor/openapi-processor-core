@@ -12,18 +12,16 @@ import javax.validation.constraints.NotNull;
 
 public class Obj1 {
 
-    @JsonProperty("prop1")
     @NotNull
+    @JsonProperty("prop1")
     private String prop1;
 
-    @JsonProperty("prop2")
-    @NotNull
     @DecimalMax(value = "3")
+    @JsonProperty("prop2")
     private Integer prop2;
 
-    @JsonProperty("prop3")
     @Valid
-    @NotNull
+    @JsonProperty("prop3")
     private Obj2 prop3;
 
     public String getProp1() {
