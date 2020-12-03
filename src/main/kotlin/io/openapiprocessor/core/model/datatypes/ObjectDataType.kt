@@ -30,7 +30,7 @@ class ObjectDataType(
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints, deprecated), ModelDataType {
 
     override fun getName(): String {
         return type
@@ -55,7 +55,16 @@ class ObjectDataType(
         return properties[name]!!
     }
 
+    @Deprecated("do not override groovys getProperties()", ReplaceWith("getProperties()"))
     fun getObjectProperties(): Map<String, DataType> {
+        return getProperties()
+    }
+
+    override fun isModel(): Boolean {
+        return true
+    }
+
+    override fun getProperties(): Map<String, DataType> {
         return properties
     }
 

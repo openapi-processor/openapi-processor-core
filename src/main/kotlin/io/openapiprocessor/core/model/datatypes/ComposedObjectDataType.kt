@@ -30,7 +30,7 @@ class ComposedObjectDataType(
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints, deprecated), ModelDataType {
 
     override fun getName(): String {
         return type
@@ -51,17 +51,22 @@ class ComposedObjectDataType(
             .toSet()
     }
 
+    // todo find better name
     override fun isComposed(): Boolean {
         return of != "allOf"
     }
 
-    fun getProperties(): Map<String, DataType> {
+    override fun isModel(): Boolean {
+        return of == "allOf"
+    }
+
+    override fun getProperties(): Map<String, DataType> {
         val properties = linkedMapOf<String, DataType>()
 
         if (of == "allOf") {
             items.forEach {
                 if (it is ObjectDataType) {
-                    properties.putAll(it.getObjectProperties())
+                    properties.putAll(it.getProperties())
                 }
             }
         }

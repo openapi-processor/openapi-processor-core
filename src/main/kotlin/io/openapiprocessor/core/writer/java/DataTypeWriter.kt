@@ -18,7 +18,7 @@ package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.ModelDataType
 import java.io.Writer
 
 /**
@@ -33,7 +33,7 @@ class DataTypeWriter(
     private val validationAnnotations: BeanValidationFactory = BeanValidationFactory()
 ) {
 
-    fun write(target: Writer, dataType: ObjectDataType) {
+    fun write(target: Writer, dataType: ModelDataType) {
         headerWriter.write(target)
         target.write("package ${dataType.getPackageName()};\n\n")
 
@@ -52,16 +52,14 @@ class DataTypeWriter(
 
         target.write("public class ${dataType.getName()} {\n\n")
 
-        val propertyNames = dataType.getObjectProperties().keys
-        propertyNames.forEach {
-            val javaPropertyName = toCamelCase(it)
-            val propDataType = dataType.getObjectProperty(it)
-            target.write(getProp(it, javaPropertyName, propDataType))
+        val properties = dataType.getProperties()
+        properties.forEach { (propName, propDataType) ->
+            val javaPropertyName = toCamelCase(propName)
+            target.write(getProp(propName, javaPropertyName, propDataType))
         }
 
-        propertyNames.forEach {
-            val javaPropertyName = toCamelCase(it)
-            val propDataType = dataType.getObjectProperty(it)
+        properties.forEach { (propName, propDataType) ->
+            val javaPropertyName = toCamelCase(propName)
             target.write(getGetter(javaPropertyName, propDataType))
             target.write(getSetter(javaPropertyName, propDataType))
         }
@@ -122,14 +120,14 @@ class DataTypeWriter(
         return result
     }
 
-    private fun collectImports(packageName: String, dataType: ObjectDataType): List<String> {
+    private fun collectImports(packageName: String, dataType: ModelDataType): List<String> {
         val imports = mutableSetOf<String>()
         imports.add("com.fasterxml.jackson.annotation.JsonProperty")
 
         imports.addAll(dataType.getReferencedImports())
 
         if (apiOptions.beanValidation) {
-            dataType.getObjectProperties().values.forEach {
+            dataType.getProperties().values.forEach {
                 imports.addAll(validationAnnotations.collectImports(it))
             }
         }

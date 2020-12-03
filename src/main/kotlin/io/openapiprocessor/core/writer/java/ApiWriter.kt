@@ -21,9 +21,9 @@ import com.google.googlejavaformat.java.JavaFormatterOptions
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.Interface
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.misc.toURL
+import io.openapiprocessor.core.model.datatypes.ModelDataType
 import java.io.BufferedWriter
 import java.io.StringWriter
 import java.io.Writer
@@ -73,7 +73,7 @@ class ApiWriter(
     }
 
     private fun writeObjectDataTypes(api: Api) {
-        api.forEachObjectDataType {
+        api.forEachModelDataType {
             val target = modelFolder.resolve ("${it.getName()}.java")
             val writer = BufferedWriter(PathWriter(target))
             writeDataType(writer, it)
@@ -96,7 +96,7 @@ class ApiWriter(
         writer.write(format(raw.toString()))
     }
 
-    private fun writeDataType(writer: Writer, dataType: ObjectDataType) {
+    private fun writeDataType(writer: Writer, dataType: ModelDataType) {
         val raw = StringWriter()
         dataTypeWriter.write(raw, dataType)
         writer.write(format(raw.toString ()))
