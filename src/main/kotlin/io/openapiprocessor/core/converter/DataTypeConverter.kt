@@ -18,24 +18,7 @@ package io.openapiprocessor.core.converter
 
 import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.model.DataTypes
-import io.openapiprocessor.core.model.datatypes.ArrayDataType
-import io.openapiprocessor.core.model.datatypes.BooleanDataType
-import io.openapiprocessor.core.model.datatypes.ComposedObjectDataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
-import io.openapiprocessor.core.model.datatypes.LocalDateDataType
-import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
-import io.openapiprocessor.core.model.datatypes.MappedDataType
-import io.openapiprocessor.core.model.datatypes.MappedMapDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DoubleDataType
-import io.openapiprocessor.core.model.datatypes.FloatDataType
-import io.openapiprocessor.core.model.datatypes.IntegerDataType
-import io.openapiprocessor.core.model.datatypes.LongDataType
-import io.openapiprocessor.core.model.datatypes.OffsetDateTimeDataType
-import io.openapiprocessor.core.model.datatypes.LazyDataType
-import io.openapiprocessor.core.model.datatypes.StringDataType
-import io.openapiprocessor.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.model.datatypes.*
 import java.util.*
 
 /**
@@ -79,8 +62,11 @@ class DataTypeConverter(
         } else if (schemaInfo.isObject ()) {
             result = createObjectDataType (schemaInfo, dataTypes)
 
+        } else if (schemaInfo.isTypeLess()) {
+            result = createNoDataType(schemaInfo, dataTypes)
+
         } else {
-            result = createSimpleDataType (schemaInfo, dataTypes)
+            result = createSimpleDataType(schemaInfo, dataTypes)
         }
 
         pop()
@@ -253,6 +239,19 @@ class DataTypeConverter(
                 throw UnknownDataTypeException(schemaInfo.getName(), schemaInfo.getType(),
                     schemaInfo.getFormat())
         }
+    }
+
+    private fun createNoDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
+        val constraints = DataTypeConstraints(
+            nullable = schemaInfo.getNullable(),
+            required = schemaInfo.getRequired()
+        )
+
+        return NoDataType(
+            schemaInfo.getName(),
+            constraints = constraints,
+            deprecated = schemaInfo.getDeprecated()
+        )
     }
 
     private fun isSupportedFormat(format: String?): Boolean {
