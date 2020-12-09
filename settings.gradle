@@ -1,1 +1,4 @@
 rootProject.name = 'openapi-processor-core'
+
+//includeBuild ("../openapi-processor-api")
+//includeBuild ("../openapi-processor-test")
