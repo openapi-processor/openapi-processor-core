@@ -46,7 +46,7 @@ class SchemaInfo(
     /**
      * the OpenAPI schema
      */
-    private val schema: Schema?,
+    private val schema: Schema?, // todo not null
 
     /**
      * resolver of $ref'erences
