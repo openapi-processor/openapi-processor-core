@@ -274,7 +274,7 @@ class SchemaInfo(
     }
 
     override fun isPrimitive(): Boolean {
-        return listOf("boolean", "int", "number", "string").contains(schema?.getType())
+        return listOf("boolean", "integer", "number", "string").contains(schema?.getType())
     }
 
     override fun isArray(): Boolean {
@@ -287,6 +287,10 @@ class SchemaInfo(
 
     fun isComposedObject(): Boolean {
         return schema?.getType().equals("composed")
+    }
+
+    fun isTypeLess(): Boolean {
+        return schema?.getType() == null
     }
 
     fun isRefObject(): Boolean {

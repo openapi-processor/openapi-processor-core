@@ -46,6 +46,7 @@ class ComposedObjectDataType(
 
     override fun getReferencedImports(): Set<String> {
         return items
+            .filterIsInstance<ObjectDataType>()
             .map { it.getImports() }
             .flatten()
             .toSet()

@@ -1,0 +1,29 @@
+openapi: 3.0.2
+info:
+  title: allOf of $ref and schema without type
+  version: 1.0.0
+
+paths:
+  /all-of-no-type:
+    get:
+      responses:
+        '200':
+          description: object response with allOf of $ref and schema without type
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  foo:
+                    allOf:
+                      - readOnly: true
+                      - $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+
+    Foo:
+      type: object
+      properties:
+        foo:
+          type: string
