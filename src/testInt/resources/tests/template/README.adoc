@@ -1,0 +1,7 @@
+== template
+
+this is a template for a new integration test.
+
+=== usage
+
+- copy it & adjust the files as needed.
