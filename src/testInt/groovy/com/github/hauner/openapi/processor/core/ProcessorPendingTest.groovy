@@ -25,7 +25,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import spock.lang.Ignore
 
-//@Ignore
+@Ignore
 @RunWith(Parameterized)
 class ProcessorPendingTest extends ProcessorTestBase {
 
