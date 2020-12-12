@@ -31,7 +31,9 @@ import org.junit.runners.Parameterized
 class ProcessorEndToEndTest extends ProcessorTestBase {
 
     static def testSets = TestSet.ALL + [
+        'bean-validation',
         'deprecated',
+        'endpoint-exclude',
         'ref-into-another-file-path',
         'ref-is-relative-to-current-file',
         'ref-loop-array',
