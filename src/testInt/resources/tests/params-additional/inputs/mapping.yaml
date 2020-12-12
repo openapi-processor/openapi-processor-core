@@ -1,0 +1,11 @@
+openapi-processor-spring: v2
+
+options:
+  package-name: generated
+
+map:
+
+  paths:
+    /foo:
+      parameters:
+        - add: request => javax.servlet.http.HttpServletRequest

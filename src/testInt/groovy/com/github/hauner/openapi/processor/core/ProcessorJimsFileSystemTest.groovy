@@ -16,10 +16,10 @@
 
 package com.github.hauner.openapi.processor.core
 
+import com.github.hauner.openapi.test.TestSet
 import io.openapiprocessor.core.parser.ParserType
 import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
 import com.github.hauner.openapi.test.ProcessorTestBase
-import com.github.hauner.openapi.test.TestSet
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
 import org.junit.Test
@@ -32,7 +32,7 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized)
 class ProcessorJimsFileSystemTest extends ProcessorTestBase {
 
-    static def testSets = TestSet.ALL
+    static def testSets = TestSets.ALL
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {

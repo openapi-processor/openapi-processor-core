@@ -1,0 +1,11 @@
+openapi-processor-spring: v2
+
+options:
+  package-name: generated
+
+map:
+  result: plain
+
+  paths:
+    /bar:
+      result: http.ResponseWrapper

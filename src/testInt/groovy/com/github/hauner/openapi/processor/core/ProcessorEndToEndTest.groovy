@@ -30,19 +30,7 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized)
 class ProcessorEndToEndTest extends ProcessorTestBase {
 
-    static def testSets = TestSet.ALL + [
-        'bean-validation',
-        'deprecated',
-        'endpoint-exclude',
-        'endpoint-http-mapping',                    // framework specific
-        'ref-into-another-file-path',
-        'ref-is-relative-to-current-file',
-        'ref-loop-array',
-        'ref-parameter',
-        'ref-parameter-with-primitive-mapping',
-        'response-content-multiple-no-content',
-        'schema-composed-allof'
-    ]
+    static def testSets = TestSets.ALL
 
     @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {

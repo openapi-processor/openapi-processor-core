@@ -1,0 +1,16 @@
+openapi-processor-spring: v2
+
+options:
+  package-name: generated
+
+map:
+  types:
+    - type: array => java.util.Collection
+
+  responses:
+    - content: application/vnd.global-response => java.util.List
+
+  paths:
+    /array-endpoint-response:
+      responses:
+        - content: application/vnd.any => java.util.Set
