@@ -10,11 +10,11 @@ class TestSets {
         'method-operation-id',
         'params-additional',
         'params-complex-data-types',                // framework specific
+        'params-enum',
         'params-path-simple-data-types',            // framework specific
         'params-request-body',                      // framework specific
         'params-request-body-multipart-form-data',  // framework specific
         'params-simple-data-types',                 // framework specific
-        'params-enum',
         'ref-into-another-file',
         'ref-into-another-file-path',
         'ref-is-relative-to-current-file',
@@ -31,7 +31,8 @@ class TestSets {
         'response-simple-data-types',
         'response-single-multi-mapping',
         'schema-composed',
-        'schema-composed-allof'
+        'schema-composed-allof',
+        'schema-composed-allof-notype'
     ]
 
 }
