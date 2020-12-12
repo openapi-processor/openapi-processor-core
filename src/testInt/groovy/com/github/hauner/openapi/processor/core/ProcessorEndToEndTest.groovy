@@ -34,6 +34,7 @@ class ProcessorEndToEndTest extends ProcessorTestBase {
         'bean-validation',
         'deprecated',
         'endpoint-exclude',
+        'endpoint-http-mapping',                    // framework specific
         'ref-into-another-file-path',
         'ref-is-relative-to-current-file',
         'ref-loop-array',
