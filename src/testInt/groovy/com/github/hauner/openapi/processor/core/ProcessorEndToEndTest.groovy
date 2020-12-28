@@ -18,40 +18,45 @@ package com.github.hauner.openapi.processor.core
 
 import io.openapiprocessor.core.parser.ParserType
 import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
-import com.github.hauner.openapi.test.ProcessorTestBase
 import com.github.hauner.openapi.test.TestSet
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
+import io.openapiprocessor.test.TestSetRunner
+import spock.lang.Specification
+import spock.lang.TempDir
+import spock.lang.Unroll
+
 
 /**
- * using Junit so IDEA adds a "<Click to see difference>" when using assertEquals().
+ * runs all integration tests.
  */
-@RunWith(Parameterized)
-class ProcessorEndToEndTest extends ProcessorTestBase {
+class ProcessorEndToEndTest extends Specification {
 
     static def testSets = TestSets.ALL
 
-    @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
         def swagger = testSets.collect {
-           new TestSet (name: it, processor: new TestProcessor(), parser: ParserType.SWAGGER.name ())
+            new TestSet (name: it, processor: new TestProcessor (), parser: ParserType.SWAGGER.name ())
         }
 
         def openapi4j = testSets.collect {
-           new TestSet (name: it, processor: new TestProcessor(), parser: ParserType.OPENAPI4J.name ())
+            new TestSet (name: it, processor: new TestProcessor (), parser: ParserType.OPENAPI4J.name ())
         }
 
         swagger + openapi4j
     }
 
-    ProcessorEndToEndTest (TestSet testSet) {
-        super (testSet)
-    }
+    @TempDir
+    public File folder
 
-    @Test
-    void "native - processor creates expected files for api set "() {
-        runOnNativeFileSystem ()
+    @Unroll
+    void "native - #testSet"() {
+        def runner = new TestSetRunner (testSet)
+        def success = runner.runOnNativeFileSystem (folder)
+
+        expect:
+        assert success: "** found differences! **"
+
+        where:
+        testSet << sources ()
     }
 
 }

@@ -18,18 +18,19 @@ package com.github.hauner.openapi.processor.core
 
 import io.openapiprocessor.core.parser.ParserType
 import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
-import com.github.hauner.openapi.test.ProcessorTestBase
 import com.github.hauner.openapi.test.TestSet
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
+import io.openapiprocessor.test.TestSetRunner
 import spock.lang.Ignore
+import spock.lang.Specification
+import spock.lang.TempDir
+import spock.lang.Unroll
 
+/**
+ * helper to run selected integration tests.
+ */
 @Ignore
-@RunWith(Parameterized)
-class ProcessorPendingTest extends ProcessorTestBase {
+class ProcessorPendingTest extends Specification {
 
-    @Parameterized.Parameters(name = "{0}")
     static Collection<TestSet> sources () {
         return [
             new TestSet(name: 'schema-composed-allof-notype', processor: new TestProcessor(), parser: ParserType.SWAGGER),
@@ -37,13 +38,19 @@ class ProcessorPendingTest extends ProcessorTestBase {
         ]
     }
 
-    ProcessorPendingTest (TestSet testSet) {
-        super (testSet)
-    }
+    @TempDir
+    public File folder
 
-    @Test
-    void "native - processor creates expected files for api set "() {
-        runOnNativeFileSystem ()
+    @Unroll
+    void "native - #testSet"() {
+        def runner = new TestSetRunner (testSet)
+        def success = runner.runOnNativeFileSystem (folder)
+
+        expect:
+        assert success: "** found differences! **"
+
+        where:
+        testSet << sources ()
     }
 
 }
