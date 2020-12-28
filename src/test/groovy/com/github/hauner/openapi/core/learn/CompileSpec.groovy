@@ -16,16 +16,15 @@
 
 package com.github.hauner.openapi.core.learn
 
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.TempDir
 
 import javax.tools.ToolProvider
 import javax.tools.JavaCompiler
 
 class CompileSpec extends Specification {
 
-    @Rule TemporaryFolder target
+    @TempDir File target
 
     void "generated class compiles with groovy compiler" () {
         def loader = new GroovyClassLoader()
@@ -54,12 +53,12 @@ interface $name {
         compiler.run(null, null, null, source.getPath())
 
         then:
-        def loader = new URLClassLoader([target.root.toURI ().toURL ()] as URL[])
+        def loader = new URLClassLoader([target.toURI ().toURL ()] as URL[])
         Class.forName("$pkg.$name", true, loader)
     }
 
     private File saveSource (String pkg, String name, String sourceCode) {
-        def targetFolder = target.root.absolutePath
+        def targetFolder = target.absolutePath
 
         def sourceFolder = (
             [targetFolder] + (pkg.split (/\./) as List<String>) + ["${name}.java"]
@@ -70,4 +69,5 @@ interface $name {
         source.write (sourceCode, 'UTF-8')
         source
     }
+
 }

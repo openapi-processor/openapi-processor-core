@@ -19,11 +19,10 @@ package com.github.hauner.openapi.core.processor
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
 import io.openapiprocessor.core.processor.MappingReader
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import org.slf4j.Logger
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.TempDir
 
 import java.nio.file.FileSystem
 
@@ -32,8 +31,7 @@ class MappingReaderSpec extends Specification {
     @Shared
     FileSystem fs = Jimfs.newFileSystem (Configuration.unix ())
 
-    @Rule
-    TemporaryFolder folder
+    @TempDir File folder
 
     def log = Mock Logger
 
@@ -80,7 +78,7 @@ map:
       to: java.util.Collection
 """
 
-        def yamlFile = folder.newFile ('mapping.yaml')
+        def yamlFile = new File (folder, 'mapping.yaml')
         yamlFile.text = yaml
 
         when:
