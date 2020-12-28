@@ -141,7 +141,7 @@ dependencies {
     testImplementation ('org.spockframework:spock-core:2.0-M4-groovy-3.0') {}
     testImplementation("io.mockk:mockk:1.10.3")
     testImplementation("io.kotest:kotest-runner-junit5:4.3.2")
-    testImplementation 'net.bytebuddy:byte-buddy:1.10.18'
+    testImplementation 'net.bytebuddy:byte-buddy:1.10.19'
     testImplementation 'ch.qos.logback:logback-classic:1.2.3'
 }
 
