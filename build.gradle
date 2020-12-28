@@ -20,7 +20,8 @@ java {
 }
 
 ext {
-    processorApiVersion = '1.2.0'
+    processorApiVersion = '2020.3'
+    processorTestVersion = '2020.3-SNAPSHOT'
     jacksonVersion = '2.12.0'
 
     bintrayUser = project.findProperty ('BINTRAY_USER') ?: System.getenv ("BINTRAY_USER") ?: 'n/a'
@@ -126,7 +127,7 @@ dependencies {
     testImplementation 'org.codehaus.groovy:groovy-nio:2.5.12'
 
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
-    testImplementation ('io.openapiprocessor:openapi-processor-test:2020.2') {
+    testImplementation ("io.openapiprocessor:openapi-processor-test:$processorApiVersion") {
         exclude group: 'com.google.guava'
     }
 
