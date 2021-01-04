@@ -120,16 +120,15 @@ class  ApiConverter(
             operation.description
         )
 
-        try {
+        return try {
             collectParameters (operation.getParameters(), ep, dataTypes, resolver)
             collectRequestBody (operation.getRequestBody(), ep, dataTypes, resolver)
             collectResponses (operation.getResponses(), ep, dataTypes, resolver)
             ep.initEndpointResponses ()
-            return ep
-
+            ep
         } catch (e: UnknownDataTypeException) {
             log.error ("failed to parse endpoint {} {} because of: '{}'", ep.path, ep.method, e.message, e)
-            return null
+            null
         }
     }
 
