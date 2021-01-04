@@ -43,34 +43,6 @@ class Endpoint(
         this.responses = responses
     }
 
-    @Deprecated("groovy to kotlin")
-    constructor(
-        path: String,
-        method: HttpMethod,
-        operationId: String? = null,
-        deprecated: Boolean = false,
-        parameters: MutableList<Parameter>,
-        responses: MutableMap<String, List<Response>>
-    ): this(path, method, operationId, deprecated) {
-        this.parameters = parameters
-        this.responses = responses
-    }
-
-    @Deprecated("groovy to kotlin")
-    constructor(
-        path: String,
-        method: HttpMethod,
-        operationId: String? = null,
-        deprecated: Boolean = false,
-        parameters: MutableList<Parameter>,
-        requestBodies: MutableList<RequestBody>,
-        responses: MutableMap<String, List<Response>>
-    ): this(path, method, operationId, deprecated) {
-        this.parameters = parameters
-        this.requestBodies = requestBodies
-        this.responses = responses
-    }
-
     // todo
     /*private val*/ var parameters: MutableList<Parameter> = mutableListOf() // todo not mutable
     /*private val*/ var requestBodies: MutableList<RequestBody> = mutableListOf() // todo not mutable
