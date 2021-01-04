@@ -33,7 +33,7 @@ import org.openapi4j.parser.model.v3.Response as O4jResponse
 class Operation(
     private val method: HttpMethod,
     private val operation: O4jOperation,
-    private val refResolver: RefResolverNative
+    private val refResolver: RefResolverNative,
 ): ParserOperation {
 
     override fun getMethod(): HttpMethod = method
@@ -78,6 +78,9 @@ class Operation(
     override fun isDeprecated(): Boolean = operation.deprecated ?: false
 
     override fun hasTags(): Boolean = if (operation.tags != null) operation.tags.isNotEmpty() else false
+
+    override val description: String?
+        get() = operation.description
 
     override fun getFirstTag(): String? = operation.tags.first ()
 

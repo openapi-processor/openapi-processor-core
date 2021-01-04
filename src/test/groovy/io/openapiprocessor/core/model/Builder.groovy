@@ -105,7 +105,7 @@ class EndpointBuilder {
     }
 
     Endpoint build () {
-        def ep = new Endpoint(path, method, null, deprecated)
+        def ep = new Endpoint(path, method, null, deprecated, null)
         ep.requestBodies.addAll (bodies)
         ep.parameters.addAll (parameters)
         responses.each { status, values ->

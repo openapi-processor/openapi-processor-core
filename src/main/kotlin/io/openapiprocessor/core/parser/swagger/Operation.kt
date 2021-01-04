@@ -31,7 +31,10 @@ import io.swagger.v3.oas.models.responses.ApiResponse as SwaggerResponse
  *
  * @author Martin Hauner
  */
-class Operation(private val method: HttpMethod, private val operation: SwaggerOperation): ParserOperation {
+class Operation(
+    private val method: HttpMethod,
+    private val operation: SwaggerOperation
+): ParserOperation {
 
     override fun getMethod(): HttpMethod = method
 
@@ -70,6 +73,9 @@ class Operation(private val method: HttpMethod, private val operation: SwaggerOp
     override fun isDeprecated(): Boolean = operation.deprecated ?: false
 
     override fun hasTags(): Boolean = if (operation.tags != null) operation.tags.isNotEmpty() else false
+
+    override val description: String?
+        get() = operation.description
 
     override fun getFirstTag(): String? = operation.tags.first()
 

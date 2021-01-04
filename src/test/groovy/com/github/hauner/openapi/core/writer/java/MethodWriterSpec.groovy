@@ -62,7 +62,8 @@ class MethodWriterSpec extends Specification {
             properties.path as String ?: '',
             properties.method as HttpMethod ?: HttpMethod.GET,
             properties.operationId as String ?: null,
-            properties.deprecated as boolean ?: false
+            properties.deprecated as boolean ?: false,
+            properties.description as String ?: null
         )
         ep.parameters = properties.parameters ?: []
         ep.responses = properties.responses ?: [:]

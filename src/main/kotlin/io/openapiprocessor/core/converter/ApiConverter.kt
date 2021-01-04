@@ -112,7 +112,13 @@ class  ApiConverter(
     }
 
     private fun createEndpoint(path: String, operation: Operation, dataTypes: DataTypes, resolver: RefResolver): Endpoint? {
-        val ep = Endpoint(path, operation.getMethod(), operation.getOperationId(), operation.isDeprecated())
+        val ep = Endpoint(
+            path,
+            operation.getMethod(),
+            operation.getOperationId(),
+            operation.isDeprecated(),
+            operation.description
+        )
 
         try {
             collectParameters (operation.getParameters(), ep, dataTypes, resolver)

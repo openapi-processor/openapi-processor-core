@@ -29,7 +29,8 @@ class Endpoint(
     val path: String,
     val method: HttpMethod,
     val operationId: String? = null,
-    val deprecated: Boolean = false
+    val deprecated: Boolean = false,
+    val description: String? = null
 ) {
 
     @Deprecated("groovy to kotlin")
@@ -38,8 +39,9 @@ class Endpoint(
         method: HttpMethod,
         operationId: String? = null,
         deprecated: Boolean = false,
+        description: String? = null,
         responses: MutableMap<String, List<Response>>
-    ): this(path, method, operationId, deprecated) {
+    ): this(path, method, operationId, deprecated, description) {
         this.responses = responses
     }
 

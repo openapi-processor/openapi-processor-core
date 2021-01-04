@@ -26,7 +26,7 @@ import spock.lang.Specification
 class EndpointMethodResponseSpec extends Specification {
 
     void "creates single success/other content type groups" () {
-        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, [
+        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, null, [
             '200'    : [
                 new Response ('application/json',
                     new CollectionDataType (new StringDataType ()))
@@ -43,7 +43,7 @@ class EndpointMethodResponseSpec extends Specification {
     }
 
     void "groups response content types to multiple success/other content type groups" () {
-        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, [
+        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, null, [
             '200'    : [
                 new Response ('application/json',
                     new CollectionDataType (new StringDataType ())),

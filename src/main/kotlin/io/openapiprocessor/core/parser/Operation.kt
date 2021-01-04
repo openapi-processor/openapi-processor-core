@@ -34,6 +34,7 @@ interface Operation {
 
     fun isDeprecated(): Boolean
     fun hasTags(): Boolean
+    val description: String?
 
     fun getFirstTag(): String?
 
