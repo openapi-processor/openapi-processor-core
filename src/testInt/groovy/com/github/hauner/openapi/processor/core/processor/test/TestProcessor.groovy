@@ -122,6 +122,10 @@ class TestProcessor implements OpenApiProcessor {
                 options.beanValidation = mapping.options.beanValidation
             }
 
+            if (mapping?.options?.javadoc != null) {
+                options.javadoc = mapping.options.javadoc
+            }
+
             options.typeMappings = converter.convert (mapping)
         }
 
