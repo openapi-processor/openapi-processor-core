@@ -33,7 +33,7 @@ class ApiOptions {
     var packageName = "io.openapiprocessor.generated"
 
     /**
-     * provide enabling Bean Validation (JSR303) annotations. Default is false (disabled)
+     * enable Bean Validation (JSR303) annotations. Default is false (disabled)
      */
     var beanValidation = false
 
