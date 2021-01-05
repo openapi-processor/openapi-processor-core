@@ -120,6 +120,7 @@ dependencies {
         exclude group: 'org.codehaus.mojo'
     }
 
+    implementation 'com.atlassian.commonmark:commonmark:0.15.2'
     implementation ('com.google.googlejavaformat:google-java-format:1.9') {
         exclude group: 'com.google.guava'
     }
