@@ -36,6 +36,11 @@ data class Options(
     /**
      * bean validation (optional)
      */
-    val beanValidation: Boolean = false
+    val beanValidation: Boolean = false,
+
+    /**
+     * generate javadoc (optional)
+     */
+    val javadoc: Boolean = false
 
 )
