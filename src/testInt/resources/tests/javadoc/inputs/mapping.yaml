@@ -1,0 +1,5 @@
+openapi-processor-spring: v2
+
+options:
+  package-name: generated
+  javadoc: true

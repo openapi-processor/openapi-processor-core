@@ -1,0 +1,47 @@
+openapi: 3.0.2
+info:
+  title: test javadoc
+  version: 1.0.0
+
+paths:
+  /foo:
+    get:
+      description: |
+          a *markdown* description with **text**
+
+          - one list item
+          - second list item
+
+          ```
+          code block
+          ```
+
+          more
+
+      parameters:
+        - name: foo
+          description: this is a *parameter* description
+          example: this is an example
+          in: query
+          schema:
+            $ref: '#/components/schemas/Foo'
+      responses:
+        '200':
+          description: this is a *response* description
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+
+    Foo:
+      description: >
+        this is the *Foo* schema description
+      type: object
+      properties:
+        foobar:
+          description: >
+            *property* description
+          type: string
