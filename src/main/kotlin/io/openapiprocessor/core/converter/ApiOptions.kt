@@ -52,6 +52,13 @@ class ApiOptions {
     var beanValidation = false
 
     /**
+     * enable generation of javadoc comments based on the `description` OpenAPI property.
+     *
+     * *experimental*
+     */
+    var javadoc = false
+
+    /**
      * provide additional type mapping information to map OpenAPI types to java types. The list can
      * contain the following mappings:
      *
