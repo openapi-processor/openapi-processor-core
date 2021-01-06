@@ -17,6 +17,7 @@ import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DataTypeWriter
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
 import io.openapiprocessor.core.writer.java.InterfaceWriter
+import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
 import io.openapiprocessor.core.writer.java.StringEnumWriter
 import groovy.util.logging.Slf4j
@@ -60,7 +61,8 @@ class TestProcessor implements OpenApiProcessor {
                     new MethodWriter(options,
                         new TestMappingAnnotationWriter (),
                         new TestParameterAnnotationWriter (),
-                        beanValidationFactory),
+                        beanValidationFactory,
+                        new JavaDocWriter()),
                     annotations,
                     beanValidationFactory,
                     new DefaultImportFilter()
