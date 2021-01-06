@@ -62,8 +62,12 @@ open class FrameworkBase: Framework {
     }
 
     override fun createMultipartParameter(parameter: ParserParameter, dataType: DataType): Parameter {
-        return MultipartParameter (parameter.getName(), dataType,
-            parameter.isRequired(), parameter.isDeprecated())
+        return MultipartParameter(
+            parameter.getName(),
+            dataType,
+            parameter.isRequired(),
+            parameter.isDeprecated(),
+            parameter.description)
     }
 
     override fun createAdditionalParameter(parameter: ParserParameter, dataType: DataType,

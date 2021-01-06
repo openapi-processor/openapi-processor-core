@@ -148,7 +148,7 @@ class MultipartBuilder {
 
     List<Parameter> build () {
         data.objectProperties.collect {
-            new MultipartParameter (it.key, it.value, false, false)
+            new MultipartParameter (it.key, it.value, false, false, null)
         }
     }
 
