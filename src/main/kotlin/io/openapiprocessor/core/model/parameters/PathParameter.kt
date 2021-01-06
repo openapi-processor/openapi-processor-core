@@ -28,6 +28,7 @@ class PathParameter(
     name: String,
     dataType: DataType,
     required: Boolean = false,
-    deprecated: Boolean = false
+    deprecated: Boolean = false,
+    description: String? = null
 
-): ParameterBase(name, dataType, required, deprecated)
+): ParameterBase(name, dataType, required, deprecated, description)

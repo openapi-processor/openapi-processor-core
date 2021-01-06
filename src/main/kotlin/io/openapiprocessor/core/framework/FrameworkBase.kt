@@ -38,23 +38,40 @@ import io.openapiprocessor.core.parser.Parameter as ParserParameter
 open class FrameworkBase: Framework {
 
     override fun createQueryParameter(parameter: ParserParameter, dataType: DataType): Parameter {
-        return QueryParameter(parameter.getName(), dataType,
-            parameter.isRequired(), parameter.isDeprecated())
+        return QueryParameter(
+            parameter.getName(),
+            dataType,
+            parameter.isRequired(),
+            parameter.isDeprecated(),
+            parameter.description
+        )
     }
 
     override fun createHeaderParameter(parameter: ParserParameter, dataType: DataType): Parameter {
-        return HeaderParameter(parameter.getName(), dataType,
-            parameter.isRequired(), parameter.isDeprecated())
+        return HeaderParameter(
+            parameter.getName(),
+            dataType,
+            parameter.isRequired(),
+            parameter.isDeprecated(),
+            parameter.description)
     }
 
     override fun createCookieParameter(parameter: ParserParameter, dataType: DataType): Parameter {
-        return CookieParameter(parameter.getName(), dataType,
-            parameter.isRequired(), parameter.isDeprecated())
+        return CookieParameter(
+            parameter.getName(),
+            dataType,
+            parameter.isRequired(),
+            parameter.isDeprecated(),
+            parameter.description)
     }
 
     override fun createPathParameter(parameter: ParserParameter, dataType: DataType): Parameter {
-        return PathParameter(parameter.getName(), dataType,
-            parameter.isRequired(), parameter.isDeprecated())
+        return PathParameter(
+            parameter.getName(),
+            dataType,
+            parameter.isRequired(),
+            parameter.isDeprecated(),
+            parameter.description)
     }
 
     override fun createMultipartParameter(parameter: ParserParameter, dataType: DataType): Parameter {
