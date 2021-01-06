@@ -13,14 +13,19 @@ class ParametersBuilder {
     private val parameters: MutableList<Parameter> = mutableListOf()
     private val bodies: MutableList<RequestBody> = mutableListOf()
 
-    fun any(parameter: Parameter) {
+    fun any(parameter: Parameter, init: ParameterBuilder.() -> Unit? = {}) {
         parameters.add(parameter)
     }
 
     fun query(name: String, dataType: DataType, init: ParameterBuilder.() -> Unit? = {}) {
         val builder = ParameterBuilder()
         init(builder)
-        parameters.add(QueryParameter(name, dataType, builder.required, builder.deprecated))
+        parameters.add(QueryParameter(
+            name,
+            dataType,
+            builder.required,
+            builder.deprecated,
+            builder.description))
     }
 
     fun body(name: String, contentType: String, dataType: DataType,

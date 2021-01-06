@@ -28,9 +28,14 @@ class EndpointBuilder(
     private var bodies: List<RequestBody> = emptyList()
     private var responses: Map<String, List<Response>> = mapOf()
     private var deprecated = false
+    private var description: String? = null
 
     fun deprecated() {
         deprecated = true
+    }
+
+    fun description(description: String) {
+        this.description = description
     }
 
     fun parameters(init: ParametersBuilder.() -> Unit) {
@@ -47,7 +52,10 @@ class EndpointBuilder(
     }
 
     fun build(): Endpoint {
-        val ep = Endpoint(path, method, deprecated = deprecated)
+        val ep = Endpoint(path, method,
+            deprecated = deprecated,
+            description = description
+        )
 
         ep.parameters = parameters.toMutableList()
         ep.requestBodies = bodies.toMutableList()

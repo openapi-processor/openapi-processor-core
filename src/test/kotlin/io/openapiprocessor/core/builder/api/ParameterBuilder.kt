@@ -12,7 +12,7 @@ package io.openapiprocessor.core.builder.api
 class ParameterBuilder {
     var required: Boolean = false
     var deprecated: Boolean = false
-
+    var description: String? = null
 
     fun required() {
         required = true
@@ -20,6 +20,10 @@ class ParameterBuilder {
 
     fun deprecated() {
         deprecated = true
+    }
+
+    fun description(description: String) {
+        this.description = description
     }
 
 }
