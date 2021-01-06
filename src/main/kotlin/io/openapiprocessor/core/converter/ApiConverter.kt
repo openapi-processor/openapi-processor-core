@@ -233,6 +233,10 @@ class  ApiConverter(
             override fun isDeprecated(): Boolean {
                 return false
             }
+
+            override val description: String?
+                get() = null
+
         }
 
         return framework.createAdditionalParameter (parameter, addType, annotationType)
@@ -278,6 +282,9 @@ class  ApiConverter(
                 override fun isRequired(): Boolean {
                     return true
                 }
+
+                override val description: String?
+                    get() = null
 
             }
 
