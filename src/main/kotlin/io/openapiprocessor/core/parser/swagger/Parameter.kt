@@ -41,4 +41,7 @@ class Parameter(private val parameter: SwaggerParameter): ParserParameter {
 
     override fun isDeprecated(): Boolean = parameter.deprecated ?: false
 
+    override val description: String?
+        get() = parameter.description
+
 }
