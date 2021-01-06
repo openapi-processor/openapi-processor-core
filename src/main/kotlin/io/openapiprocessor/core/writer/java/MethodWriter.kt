@@ -36,10 +36,17 @@ open class MethodWriter(
     private val /*val*/ apiOptions: ApiOptions,
     private val /*val*/ mappingAnnotationWriter: CoreMappingAnnotationWriter,
     private var /*val*/ parameterAnnotationWriter: CoreParameterAnnotationWriter,
-    private val /*val*/ beanValidationFactory: BeanValidationFactory
+    private val /*val*/ beanValidationFactory: BeanValidationFactory,
+    private val javadocWriter: JavaDocWriter = JavaDocWriter()
 ) {
 
     fun write(target: Writer, endpoint: Endpoint, endpointResponse: EndpointResponse) {
+        if (apiOptions.javadoc) {
+            target.write(
+                javadocWriter.convert(endpoint, endpointResponse)
+            )
+        }
+
         if (endpoint.deprecated) {
             target.write (
                 """

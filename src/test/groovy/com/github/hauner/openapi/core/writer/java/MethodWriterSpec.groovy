@@ -28,6 +28,7 @@ import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
+import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
 import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 import spock.lang.Specification
@@ -42,7 +43,8 @@ class MethodWriterSpec extends Specification {
         apiOptions,
         new TestMappingAnnotationWriter(),
         new TestParameterAnnotationWriter(),
-        Stub (BeanValidationFactory))
+        Stub (BeanValidationFactory),
+        Stub (JavaDocWriter))
     def target = new StringWriter ()
 
     @Deprecated // use endpoint() builder
@@ -168,9 +170,11 @@ class MethodWriterSpec extends Specification {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '204': [new EmptyResponse ()]
         ], parameters: [
-            new ParameterBase ('foo', new StringDataType(null, false),
-                true, false) {
-            }
+            new ParameterBase (
+                'foo', new StringDataType(null, false),
+                true,
+                false,
+                null) {}
         ])
 
         when:
@@ -263,7 +267,12 @@ class MethodWriterSpec extends Specification {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '204': [new EmptyResponse ()]
         ], parameters: [
-            new QueryParameter('_fo-o', new StringDataType(), true, false)
+            new QueryParameter(
+                '_fo-o',
+                new StringDataType(),
+                true,
+                false,
+                null)
         ])
 
         when:
