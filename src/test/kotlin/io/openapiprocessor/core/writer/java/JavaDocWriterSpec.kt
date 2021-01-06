@@ -74,7 +74,7 @@ class JavaDocWriterSpec: StringSpec({
             description("any")
             parameters {
                 any(object : ParameterBase("foo", StringDataType(),
-                    true, false, parameterDescription ) {})
+                    true, false, parameterDescription) {})
             }
             responses {
                 status("204") {
