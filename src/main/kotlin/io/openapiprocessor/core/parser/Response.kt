@@ -24,5 +24,6 @@ package io.openapiprocessor.core.parser
 interface Response {
 
     fun getContent(): Map<String, MediaType>
+    val description: String?
 
 }

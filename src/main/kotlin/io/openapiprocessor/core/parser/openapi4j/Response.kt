@@ -36,4 +36,7 @@ class Response(private val response: O4jResponse): ParserResponse {
         return content
     }
 
+    override val description: String?
+        get() = response.description
+
 }
