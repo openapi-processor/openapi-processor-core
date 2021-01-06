@@ -237,7 +237,9 @@ class AddParameterBuilder {
     }
 
     AdditionalParameter build () {
-        new AdditionalParameter (name, type, annotationType, true, false)
+        new AdditionalParameter (
+            name, type, annotationType,
+            true, false, null)
     }
 
 }

@@ -69,8 +69,13 @@ open class FrameworkBase: Framework {
     override fun createAdditionalParameter(parameter: ParserParameter, dataType: DataType,
        annotationDataType: AnnotationDataType?): Parameter {
 
-        return AdditionalParameter(parameter.getName(), dataType,
-            annotationDataType, parameter.isRequired(), false)
+        return AdditionalParameter(
+            parameter.getName(),
+            dataType,
+            annotationDataType,
+            parameter.isRequired(),
+            false,
+            parameter.description)
     }
 
     override fun createRequestBody(contentType: String, required: Boolean, dataType: DataType): RequestBody {
