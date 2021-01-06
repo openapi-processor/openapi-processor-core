@@ -26,7 +26,8 @@ abstract class ParameterBase(
     override val name: String,
     override val dataType: DataType,
     override val required: Boolean = false,
-    override val deprecated: Boolean = false
+    override val deprecated: Boolean = false,
+    override var description: String? = null
 
 ): Parameter {
 

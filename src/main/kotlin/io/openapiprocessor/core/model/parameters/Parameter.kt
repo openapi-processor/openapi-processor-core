@@ -56,6 +56,11 @@ interface Parameter {
     val deprecated: Boolean
 
     /**
+     * (optional) parameter description
+     */
+    val description: String?
+
+    /**
      * true if the parameter requires an annotation, else false. Some parameters don't need an
      * annotation.
      */
