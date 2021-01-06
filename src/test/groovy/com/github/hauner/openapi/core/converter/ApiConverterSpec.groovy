@@ -23,6 +23,7 @@ import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
+import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MappingAnnotationWriter
 import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 import io.openapiprocessor.core.writer.java.SimpleWriter
@@ -146,7 +147,8 @@ paths:
                 new ApiOptions(),
                 Stub (MappingAnnotationWriter),
                 Stub (ParameterAnnotationWriter),
-                Stub (BeanValidationFactory)),
+                Stub (BeanValidationFactory),
+                Stub (JavaDocWriter)),
             Stub (FrameworkAnnotations),
             new BeanValidationFactory(),
             new DefaultImportFilter())
