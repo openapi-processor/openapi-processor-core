@@ -22,9 +22,9 @@ public interface Api {
      * <pre><code>code block
      * </code></pre>
      *
-     * <p>more
+     * more
      *
-     * @param foo this is a *parameter* description
+     * @param foo this is a <em>parameter</em> description
      * @return this is a *response* description
      */
     @Mapping("/foo")
