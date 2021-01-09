@@ -37,7 +37,7 @@ class  ApiConverter(
     private val options: ApiOptions,
     private val framework: Framework
 ) {
-    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
+    val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     private val dataTypeConverter: DataTypeConverter
     private val dataTypeWrapper: ResultDataTypeWrapper
