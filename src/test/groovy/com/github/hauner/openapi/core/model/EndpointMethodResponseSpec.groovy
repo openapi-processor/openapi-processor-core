@@ -17,8 +17,10 @@ class EndpointMethodResponseSpec extends Specification {
     void "creates single success/other content type groups" () {
         def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, null, [
             '200'    : [
-                new Response ('application/json',
-                    new CollectionDataType (new StringDataType ()))
+                new Response (
+                    'application/json',
+                    new CollectionDataType (new StringDataType ()),
+                    null)
             ]
         ]).initEndpointResponses ()
 
@@ -35,13 +37,13 @@ class EndpointMethodResponseSpec extends Specification {
         def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, null, [
             '200'    : [
                 new Response ('application/json',
-                    new CollectionDataType (new StringDataType ())),
+                    new CollectionDataType (new StringDataType ()), null),
                 new Response ('application/xml',
-                    new CollectionDataType (new StringDataType ()))
+                    new CollectionDataType (new StringDataType ()), null)
             ],
             'default': [
                 new Response ('text/plain',
-                    new CollectionDataType (new StringDataType ()))
+                    new CollectionDataType (new StringDataType ()), null)
             ]
         ]).initEndpointResponses ()
 

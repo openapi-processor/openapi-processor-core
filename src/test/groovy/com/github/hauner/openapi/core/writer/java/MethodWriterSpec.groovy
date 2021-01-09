@@ -1,32 +1,21 @@
 /*
- * Copyright © 2019 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2019 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
 package com.github.hauner.openapi.core.writer.java
 
-import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.model.datatypes.AnnotationDataType
-import io.openapiprocessor.core.model.datatypes.NoneDataType
-import io.openapiprocessor.core.model.datatypes.ResultDataType
-import io.openapiprocessor.core.model.parameters.Parameter
-import io.openapiprocessor.core.model.parameters.ParameterBase
-import io.openapiprocessor.core.model.Endpoint
-import io.openapiprocessor.core.model.Response
-import io.openapiprocessor.core.model.datatypes.ArrayDataType
-import io.openapiprocessor.core.model.datatypes.BooleanDataType
-import io.openapiprocessor.core.model.datatypes.DoubleDataType
-import io.openapiprocessor.core.model.datatypes.FloatDataType
-import io.openapiprocessor.core.model.datatypes.IntegerDataType
-import io.openapiprocessor.core.model.datatypes.LongDataType
-import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.StringDataType
-import io.openapiprocessor.core.model.parameters.QueryParameter
-import io.openapiprocessor.core.model.EmptyResponse
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
+import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.model.EmptyResponse
+import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.model.Response
+import io.openapiprocessor.core.model.datatypes.*
+import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.model.parameters.ParameterBase
+import io.openapiprocessor.core.model.parameters.QueryParameter
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
@@ -99,7 +88,7 @@ class MethodWriterSpec extends Specification {
     @Unroll
     void "writes simple data type response (#type)" () {
         def endpoint = createEndpoint (path: "/$type", method: HttpMethod.GET, responses: [
-            '200': [new Response('text/plain', responseType)]
+            '200': [new Response('text/plain', responseType, null)]
         ])
 
         when:
@@ -129,7 +118,8 @@ class MethodWriterSpec extends Specification {
                         'InlineObjectResponse', '', [
                         foo1: new StringDataType (),
                         foo2: new StringDataType ()
-                    ], null, false))
+                    ], null, false),
+                    null)
             ]
         ])
 
@@ -146,7 +136,7 @@ class MethodWriterSpec extends Specification {
     void "writes method with Collection response type" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200': [
-                new Response ('application/json', collection)
+                new Response ('application/json', collection, null)
             ]
         ])
 
@@ -293,7 +283,7 @@ class MethodWriterSpec extends Specification {
                     'http',
                     new NoneDataType ()
                         .wrappedInResult ()
-                ))]
+                ), null)]
         ])
 
         when:
@@ -309,7 +299,7 @@ class MethodWriterSpec extends Specification {
     void "writes method with success response type when it has only empty error responses" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200' : [
-                new Response ('application/json', new StringDataType ())
+                new Response ('application/json', new StringDataType (), null)
             ],
             '400': [
                 new EmptyResponse ()
@@ -332,10 +322,10 @@ class MethodWriterSpec extends Specification {
     void "writes method with 'Object' response when it has multiple result content types (200, default)" () {
         def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
             '200' : [
-                new Response ('application/json', new StringDataType ())
+                new Response ('application/json', new StringDataType (), null)
             ],
             'default': [
-                new Response ('text/plain', new StringDataType ())
+                new Response ('text/plain', new StringDataType (), null)
             ]
         ])
 
@@ -356,14 +346,16 @@ class MethodWriterSpec extends Specification {
                     new ResultDataType (
                         'ResultWrapper',
                         'http',
-                        new StringDataType ()))
+                        new StringDataType ()),
+                    null)
             ],
             'default': [
                 new Response ( 'text/plain',
                     new ResultDataType (
                         'ResultWrapper',
                         'http',
-                        new StringDataType ()))
+                        new StringDataType ()),
+                    null)
             ]
         ])
 

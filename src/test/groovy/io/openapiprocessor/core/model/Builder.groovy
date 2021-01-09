@@ -276,7 +276,7 @@ class ResponseBuilder {
     }
 
     Response build () {
-        new Response(content, response ?: new NoneDataType ())
+        new Response(content, response ?: new NoneDataType (), null)
     }
 
 }
