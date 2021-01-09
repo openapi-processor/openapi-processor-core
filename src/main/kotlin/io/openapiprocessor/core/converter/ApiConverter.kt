@@ -323,7 +323,7 @@ class  ApiConverter(
             }
             val resultDataType = dataTypeWrapper.wrap(changedType, info)
 
-            responses.add (ModelResponse(contentType, resultDataType))
+            responses.add (ModelResponse(contentType, resultDataType, response.description))
         }
 
         return responses
