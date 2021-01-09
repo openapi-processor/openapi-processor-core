@@ -24,6 +24,7 @@ import com.github.hauner.openapi.core.test.parser.SwaggerParser
 /**
  * OpenAPI parser to read yaml from memory (swagger or openapi4j).
  */
+@Deprecated
 class OpenApiParser {
 
     static OpenApi parse (String apiYaml, ParserType parserType = ParserType.SWAGGER) {

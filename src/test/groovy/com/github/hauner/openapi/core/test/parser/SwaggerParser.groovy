@@ -26,6 +26,7 @@ import io.swagger.v3.parser.OpenAPIV3Parser
  *
  * @author Martin Hauner
  */
+@Deprecated
 class SwaggerParser extends Parser {
 
     ParserOpenApi parseYaml (String apiYaml) {

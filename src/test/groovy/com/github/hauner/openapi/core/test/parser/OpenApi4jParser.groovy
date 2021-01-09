@@ -30,6 +30,7 @@ import org.openapi4j.parser.validation.v3.OpenApi3Validator
  *
  * @author Martin Hauner
  */
+@Deprecated
 class OpenApi4jParser extends Parser {
 
     ParserOpenApi parseYaml (String apiYaml) {
