@@ -10,18 +10,14 @@ import io.openapiprocessor.core.converter.wrapper.MultiDataTypeWrapper
 import io.openapiprocessor.core.converter.wrapper.ResultDataTypeWrapper
 import io.openapiprocessor.core.converter.wrapper.SingleDataTypeWrapper
 import io.openapiprocessor.core.framework.Framework
-import io.openapiprocessor.core.model.parameters.Parameter as ModelParameter
+import io.openapiprocessor.core.model.*
 import io.openapiprocessor.core.model.RequestBody as ModelRequestBody
 import io.openapiprocessor.core.model.Response as ModelResponse
-import io.openapiprocessor.core.parser.OpenApi
-import io.openapiprocessor.core.model.*
+import io.openapiprocessor.core.model.parameters.Parameter as ModelParameter
 import io.openapiprocessor.core.model.datatypes.*
-import io.openapiprocessor.core.parser.Operation
-import io.openapiprocessor.core.parser.Parameter
-import io.openapiprocessor.core.parser.RefResolver
+import io.openapiprocessor.core.parser.*
 import io.openapiprocessor.core.parser.RequestBody
 import io.openapiprocessor.core.parser.Response
-import io.openapiprocessor.core.parser.Schema
 import io.openapiprocessor.core.writer.java.toClass
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -39,19 +35,11 @@ class  ApiConverter(
 ) {
     val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
-    private val dataTypeConverter: DataTypeConverter
-    private val dataTypeWrapper: ResultDataTypeWrapper
-    private val singleDataTypeWrapper: SingleDataTypeWrapper
-    private val multiDataTypeWrapper: MultiDataTypeWrapper
-    private val mappingFinder: MappingFinder
-
-    init {
-        mappingFinder = MappingFinder(options.typeMappings)
-        dataTypeConverter = DataTypeConverter(options, mappingFinder)
-        dataTypeWrapper = ResultDataTypeWrapper(options,mappingFinder)
-        singleDataTypeWrapper = SingleDataTypeWrapper(options, mappingFinder)
-        multiDataTypeWrapper = MultiDataTypeWrapper(options, mappingFinder)
-    }
+    private val mappingFinder = MappingFinder(options.typeMappings)
+    private val dataTypeWrapper = ResultDataTypeWrapper(options, mappingFinder)
+    private val dataTypeConverter = DataTypeConverter(options, mappingFinder)
+    private val singleDataTypeWrapper = SingleDataTypeWrapper(options, mappingFinder)
+    private val multiDataTypeWrapper = MultiDataTypeWrapper(options, mappingFinder)
 
     /**
      * converts the openapi model to the source generation model
