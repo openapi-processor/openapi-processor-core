@@ -11,6 +11,7 @@ import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.kotest.matchers.types.shouldBeInstanceOf
 
 class ResponseBuilderSpec: StringSpec({
 
@@ -25,7 +26,7 @@ class ResponseBuilderSpec: StringSpec({
         // then:
         responses.size shouldBe 1
         responses.first().contentType shouldBe "text/plain"
-        (responses.first().responseType is NoneDataType) shouldBe true
+        responses.first().responseType.shouldBeInstanceOf<NoneDataType>()
     }
 
     "create response with content & data type" {
