@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2021 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -20,7 +20,7 @@ class JavaDocWriterSpec: StringSpec({
     }
 
     "converts endpoint description to javadoc comment" {
-        val endpointDescription = """
+        val description = """
             *markdown* description with **text**
         
             - one list item
@@ -33,7 +33,7 @@ class JavaDocWriterSpec: StringSpec({
             """.trimIndent()
 
         val endpoint = endpoint("/foo") {
-            description(endpointDescription)
+            description(description)
             responses {
                 status("204") {
                     response()
@@ -58,7 +58,7 @@ class JavaDocWriterSpec: StringSpec({
     }
 
     "converts endpoint parameter description to javadoc @param" {
-        val parameterDescription = """
+        val description = """
             *markdown* description with **text**
         
             - one list item
@@ -74,7 +74,7 @@ class JavaDocWriterSpec: StringSpec({
             description("any")
             parameters {
                 any(object : ParameterBase("foo", StringDataType(),
-                    true, false, parameterDescription) {})
+                    true, false, description) {})
             }
             responses {
                 status("204") {
@@ -90,6 +90,48 @@ class JavaDocWriterSpec: StringSpec({
              * any
              *
              * @param foo <em>markdown</em> description with <strong>text</strong>
+             * <ul>
+             * <li>one list item</li>
+             * <li>second list item</li>
+             * </ul>
+             * <pre><code>code block
+             * </code></pre>
+             */
+
+            """.trimIndent()
+    }
+
+    "converts endpoint response description to javadoc @return" {
+        val description = """
+            *markdown* description with **text**
+        
+            - one list item
+            - second list item
+        
+            ```
+            code block
+            ```
+
+            """.trimIndent()
+
+        val endpoint = endpoint("/foo") {
+            description("any")
+            responses {
+                status("204") {
+                    response {
+                        description(description)
+                    }
+                }
+            }
+        }
+
+        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
+
+        html shouldBe """
+            /**
+             * any
+             *
+             * @return <em>markdown</em> description with <strong>text</strong>
              * <ul>
              * <li>one list item</li>
              * <li>second list item</li>

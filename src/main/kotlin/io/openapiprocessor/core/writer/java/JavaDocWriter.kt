@@ -55,11 +55,17 @@ open class JavaDocWriter {
         javadoc += convert(endpoint.description)
         javadoc += "\n"
 
-        if (endpoint.parameters.isNotEmpty())
+        if (endpoint.parameters.isNotEmpty() || endpointResponse.description != null)
             javadoc += " *\n"
 
         endpoint.parameters.forEach {
             javadoc += convert(it.description, "@param ${it.name}")
+            javadoc += "\n"
+        }
+
+        val response = convert(endpointResponse.description, "@return")
+        if (response.isNotEmpty()) {
+            javadoc += response
             javadoc += "\n"
         }
 
