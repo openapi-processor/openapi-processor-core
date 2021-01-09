@@ -10,18 +10,32 @@ import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.EmptyResponse
 
+class ResponseDetailBuilder {
+    var description: String? = null
+
+    fun description(description: String) {
+        this.description = description
+    }
+
+}
+
 class ResponseBuilder {
     private val responses: MutableList<Response> = mutableListOf()
 
-    fun response(contentType: String? = null, dataType: DataType? = null) {
+    fun response(contentType: String? = null, dataType: DataType? = null, init: ResponseDetailBuilder.() -> Unit? = {}) {
+        val builder = ResponseDetailBuilder()
+        init(builder)
+
         lateinit var response: Response
 
         if(contentType == null && dataType == null)
-            response = EmptyResponse()
+            response = EmptyResponse(
+                description = builder.description)
         else
             response = Response(
                 contentType ?: "none",
-                dataType ?: NoneDataType())
+                dataType ?: NoneDataType(),
+                builder.description)
 
         responses.add(response)
     }

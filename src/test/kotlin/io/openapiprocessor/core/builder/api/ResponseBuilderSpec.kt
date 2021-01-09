@@ -42,6 +42,21 @@ class ResponseBuilderSpec: StringSpec({
         responses.first().responseType should { it is StringDataType }
     }
 
+    "create response with description" {
+        val init: ResponseBuilder.() -> Unit = {
+            response {
+                description("response description")
+            }
+        }
+
+        // when:
+        val responses = run(init)
+
+        // then:
+        responses.size shouldBe 1
+        responses.first().description shouldBe "response description"
+    }
+
 })
 
 fun run(init: ResponseBuilder.() -> Unit): List<Response> {
