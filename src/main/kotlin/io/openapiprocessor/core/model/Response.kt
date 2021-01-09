@@ -25,7 +25,8 @@ import io.openapiprocessor.core.model.datatypes.DataType
  */
 open class Response(
     val contentType: String,
-    val responseType: DataType
+    val responseType: DataType,
+    val description: String? = null
 ) {
 
     val imports

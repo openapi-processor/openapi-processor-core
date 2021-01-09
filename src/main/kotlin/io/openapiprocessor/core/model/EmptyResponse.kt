@@ -22,5 +22,8 @@ import io.openapiprocessor.core.model.datatypes.NoneDataType
 /**
  * simpler setup of an empty response.
  */
-class EmptyResponse(contentType: String = "?", responseType: DataType = NoneDataType()):
-    Response(contentType, responseType)
+class EmptyResponse(
+    contentType: String = "?",
+    responseType: DataType = NoneDataType(),
+    description: String? = null
+): Response(contentType, responseType, description)

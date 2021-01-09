@@ -55,6 +55,9 @@ class EndpointResponse(
             }
         }
 
+    val description: String?
+    get() = main.description
+
     /**
      * provides the imports required for {@link #getResponseType()}.
      *
