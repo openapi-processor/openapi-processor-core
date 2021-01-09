@@ -260,7 +260,7 @@ class  ApiConverter(
             throw MultipartResponseBodyException(info.getPath())
         }
 
-        return dataType.getObjectProperties().map {
+        return dataType.getProperties().map {
             val parameter = object: Parameter {
 
                 override fun getIn(): String {
