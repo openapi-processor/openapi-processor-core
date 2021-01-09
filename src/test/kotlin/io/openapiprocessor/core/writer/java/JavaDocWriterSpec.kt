@@ -20,6 +20,82 @@ class JavaDocWriterSpec: StringSpec({
     }
 
     "converts endpoint description to javadoc comment" {
+        val description = "*markdown* description with **text**"
+
+        val endpoint = endpoint("/foo") {
+            description(description)
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
+
+        html shouldBe """
+            /**
+             * <em>markdown</em> description with <strong>text</strong>
+             */
+
+            """.trimIndent()
+    }
+
+    "converts endpoint parameter description to javadoc @param" {
+        val description = "*markdown* description with **text**"
+
+        val endpoint = endpoint("/foo") {
+            description("any")
+            parameters {
+                any(object : ParameterBase("foo", StringDataType(),
+                    true, false, description) {})
+            }
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
+
+        html shouldBe """
+            /**
+             * any
+             *
+             * @param foo <em>markdown</em> description with <strong>text</strong>
+             */
+
+            """.trimIndent()
+    }
+
+    "converts endpoint response description to javadoc @return" {
+        val description = "*markdown* description with **text**"
+
+        val endpoint = endpoint("/foo") {
+            description("any")
+            responses {
+                status("204") {
+                    response {
+                        description(description)
+                    }
+                }
+            }
+        }
+
+        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
+
+        html shouldBe """
+            /**
+             * any
+             *
+             * @return <em>markdown</em> description with <strong>text</strong>
+             */
+
+            """.trimIndent()
+    }
+
+    "converts complex description javadoc" {
         val description = """
             *markdown* description with **text**
         
@@ -46,92 +122,6 @@ class JavaDocWriterSpec: StringSpec({
         html shouldBe """
             /**
              * <em>markdown</em> description with <strong>text</strong>
-             * <ul>
-             * <li>one list item</li>
-             * <li>second list item</li>
-             * </ul>
-             * <pre><code>code block
-             * </code></pre>
-             */
-
-            """.trimIndent()
-    }
-
-    "converts endpoint parameter description to javadoc @param" {
-        val description = """
-            *markdown* description with **text**
-        
-            - one list item
-            - second list item
-        
-            ```
-            code block
-            ```
-
-            """.trimIndent()
-
-        val endpoint = endpoint("/foo") {
-            description("any")
-            parameters {
-                any(object : ParameterBase("foo", StringDataType(),
-                    true, false, description) {})
-            }
-            responses {
-                status("204") {
-                    response()
-                }
-            }
-        }
-
-        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
-
-        html shouldBe """
-            /**
-             * any
-             *
-             * @param foo <em>markdown</em> description with <strong>text</strong>
-             * <ul>
-             * <li>one list item</li>
-             * <li>second list item</li>
-             * </ul>
-             * <pre><code>code block
-             * </code></pre>
-             */
-
-            """.trimIndent()
-    }
-
-    "converts endpoint response description to javadoc @return" {
-        val description = """
-            *markdown* description with **text**
-        
-            - one list item
-            - second list item
-        
-            ```
-            code block
-            ```
-
-            """.trimIndent()
-
-        val endpoint = endpoint("/foo") {
-            description("any")
-            responses {
-                status("204") {
-                    response {
-                        description(description)
-                    }
-                }
-            }
-        }
-
-        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
-
-        html shouldBe """
-            /**
-             * any
-             *
-             * @return <em>markdown</em> description with <strong>text</strong>
              * <ul>
              * <li>one list item</li>
              * <li>second list item</li>
