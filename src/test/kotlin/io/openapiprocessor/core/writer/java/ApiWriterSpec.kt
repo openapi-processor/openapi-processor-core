@@ -58,7 +58,7 @@ class ApiWriterSpec: StringSpec({
         val dts = DataTypes()
         dts.add(StringEnumDataType("Foo", "${options.packageName}.model"))
         dts.add(StringEnumDataType("Bar", "${options.packageName}.model"))
-        val api = Api(models = dts)
+        val api = Api(dataTypes = dts)
 
         // when:
         ApiWriter(options, stub(), stub(), enumWriter, false)
@@ -78,7 +78,7 @@ class ApiWriterSpec: StringSpec({
 
         val dts = DataTypes()
         dts.add (StringEnumDataType("Foo", "${options.packageName}.model"))
-        val api = Api(models = dts)
+        val api = Api(dataTypes = dts)
 
         // when:
         ApiWriter(options, stub(), stub(), enumWriter, true)
@@ -165,7 +165,7 @@ class ApiWriterSpec: StringSpec({
         val dt = DataTypes()
         dt.add(ObjectDataType("Foo", "${options.packageName}.model", linkedMapOf()))
         dt.add(ObjectDataType("Bar", "${options.packageName}.model", linkedMapOf()))
-        val api = Api(models = dt)
+        val api = Api(dataTypes = dt)
 
         // when:
         ApiWriter(options, stub(), dtWriter, stub(), false)
@@ -183,7 +183,7 @@ class ApiWriterSpec: StringSpec({
         val dt = DataTypes()
         dt.add(MappedDataType("Type", "${options.packageName}.model"))
         dt.add("simple", StringDataType())
-        val api = Api(models = dt)
+        val api = Api(dataTypes = dt)
 
         // when:
         ApiWriter(options, stub(), dtWriter, stub(), false)
@@ -223,7 +223,7 @@ class ApiWriterSpec: StringSpec({
 
         val dt = DataTypes()
         dt.add(ObjectDataType("Foo", "${options.packageName}.model"))
-        val api = Api(models = dt)
+        val api = Api(dataTypes = dt)
 
         // when:
         ApiWriter(options, stub(), dtWriter, stub(), true)

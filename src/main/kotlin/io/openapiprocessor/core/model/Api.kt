@@ -18,7 +18,7 @@ class Api(
     /**
      * named data types (i.e. $ref) used in the OpenAPI description.
      */
-    private val models: DataTypes = DataTypes()  // todo rename to dataTypes
+    private val dataTypes: DataTypes = DataTypes()
 ) {
 
     fun getInterface(name: String): Interface {
@@ -30,7 +30,7 @@ class Api(
     }
 
     fun getDataTypes(): DataTypes {
-        return models
+        return dataTypes
     }
 
     fun forEachInterface(action: Consumer<Interface>) {
@@ -38,11 +38,11 @@ class Api(
     }
 
     fun forEachModelDataType(action: Consumer<ModelDataType>) {
-        models.getModelDataTypes().forEach(action)
+        dataTypes.getModelDataTypes().forEach(action)
     }
 
     fun forEachEnumDataType(action: Consumer<StringEnumDataType>) {
-        models.getEnumDataTypes().forEach(action)
+        dataTypes.getEnumDataTypes().forEach(action)
     }
 
 }

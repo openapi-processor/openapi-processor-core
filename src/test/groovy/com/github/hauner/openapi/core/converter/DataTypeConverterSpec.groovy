@@ -213,8 +213,8 @@ paths:
         props.get ('title').name == 'String'
 
         and:
-        api.models.dataTypes.size () == 1
-        api.models.find ('InlineResponse200') is rsp.responseType
+        api.dataTypes.dataTypes.size () == 1
+        api.dataTypes.find ('InlineResponse200') is rsp.responseType
     }
 
     void "creates model for component schema object" () {
@@ -252,10 +252,10 @@ components:
             .convert (openApi)
 
         then:
-        api.models.dataTypes.size () == 1
+        api.dataTypes.dataTypes.size () == 1
 
         and:
-        def dataTypes = api.models
+        def dataTypes = api.dataTypes
         def book = dataTypes.find ('Book') as ObjectDataType
         assert book.name == 'Book'
         assert book.packageName == "${options.packageName}.model"
@@ -308,10 +308,10 @@ components:
             .convert (openApi)
 
         then:
-        api.models.dataTypes.size () == 1
+        api.dataTypes.dataTypes.size () == 1
 
         and:
-        def dataTypes = api.models
+        def dataTypes = api.dataTypes
         assert dataTypes.find ('Book')
     }
 
@@ -361,10 +361,10 @@ components:
             .convert (openApi)
 
         then:
-        api.models.dataTypes.size () == 2
+        api.dataTypes.dataTypes.size () == 2
 
         and:
-        def dataTypes = api.models
+        def dataTypes = api.dataTypes
         def book = dataTypes.find ('Book')
         assert book != null
         def author = dataTypes.find ('Author')

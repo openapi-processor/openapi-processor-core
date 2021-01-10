@@ -193,7 +193,7 @@ paths:
             .convert (openApi)
 
         then:
-        cv.models.objectDataTypes.empty
+        cv.dataTypes.modelDataTypes.empty
     }
 
 }

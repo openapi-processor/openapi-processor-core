@@ -62,7 +62,7 @@ components:
             .convert (openApi)
 
         then:
-        api.models.dataTypes.size () == 1
+        api.dataTypes.dataTypes.size () == 1
         api.interfaces.size () == 1
 
         and:

@@ -118,9 +118,9 @@ components:
             .convert (openApi)
 
         then:
-        api.models.dataTypes.size () == 2
-        api.models.dataTypes[0].name == 'Foo'
-        api.models.dataTypes[1].name == 'Bar'
+        api.dataTypes.dataTypes.size () == 2
+        api.dataTypes.dataTypes[0].name == 'Foo'
+        api.dataTypes.dataTypes[1].name == 'Bar'
     }
 
 }
