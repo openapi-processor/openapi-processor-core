@@ -30,7 +30,7 @@ class Parser {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     fun parse(processorOptions: Map<String, *>): OpenApi {
-        val apiPath: String = processorOptions["apiPath"].toString()
+        val apiPath: String = processorOptions["apiPath"]?.toString() ?: throw NoOpenApiException()
 
         when(val parser= processorOptions["parser"]?.toString()) {
             ParserType.SWAGGER.name -> {
