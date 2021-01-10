@@ -16,9 +16,7 @@
 
 package io.openapiprocessor.core.model
 
-import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import java.util.function.Consumer
 
@@ -36,13 +34,8 @@ class Api(
     private val models: DataTypes = DataTypes()  // todo rename to dataTypes
 ) {
 
-    @Deprecated("only used from test")
-    fun setModels(dataTypes: List<DataType>) {
-        models.add(dataTypes)
-    }
-
     fun getInterface(name: String): Interface {
-        return interfaces.find { it.name.toLowerCase () == name.toLowerCase () }!!
+        return interfaces.find { it.name.equals(name, ignoreCase = true) }!!
     }
 
     fun setInterfaces(ifs: List<Interface>) {
@@ -55,10 +48,6 @@ class Api(
 
     fun forEachInterface(action: Consumer<Interface>) {
         interfaces.forEach(action)
-    }
-
-    fun forEachObjectDataType(action: Consumer<ObjectDataType>) {
-        models.getObjectDataTypes().forEach(action)
     }
 
     fun forEachModelDataType(action: Consumer<ModelDataType>) {
