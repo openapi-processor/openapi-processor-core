@@ -96,8 +96,8 @@ class TestProcessor implements OpenApiProcessor {
         }
 
         def options = new ApiOptions ()
-        options.apiPath = processorOptions.apiPath
         options.targetDir = processorOptions.targetDir
+        options.validate ()
 
         if (mapping) {
             if (mapping?.options?.packageName != null) {
