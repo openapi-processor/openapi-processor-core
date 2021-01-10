@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2019 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -15,6 +15,7 @@ class ApiOptions {
     /**
      * the path to the open api yaml file.
      */
+    @Deprecated("unused")
     lateinit var apiPath: String
 
     /**
