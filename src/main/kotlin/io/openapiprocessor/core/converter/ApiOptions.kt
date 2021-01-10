@@ -21,7 +21,7 @@ class ApiOptions {
      * the destination folder for generating interfaces & models. This is the parent of the
      * {@link #packageName} folder tree.
      */
-    lateinit var targetDir: String
+    var targetDir: String? = null
 
     /**
      * the root package of the generated interfaces/model. The package folder tree will be created
@@ -56,5 +56,14 @@ class ApiOptions {
      * endpoint.
      */
     var typeMappings: List<Mapping> = emptyList()
+
+    /**
+     * validate that targetDir is set, throws if not.
+     */
+    fun validate() {
+        if (targetDir == null) {
+            throw InvalidOptionException("targetDir")
+        }
+    }
 
 }
