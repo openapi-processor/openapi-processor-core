@@ -76,6 +76,12 @@ class DataTypeConverter(
     private fun createComposedDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
         val objectType: DataType
 
+        val items: MutableList<DataType> = mutableListOf()
+        schemaInfo.eachItemOf { itemSchemaInfo: SchemaInfo ->
+            val itemType = convert(itemSchemaInfo, dataTypes)
+            items.add (itemType)
+        }
+
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
             objectType = MappedDataType(
@@ -86,12 +92,6 @@ class DataTypeConverter(
                 schemaInfo.getDeprecated()
             )
             return objectType
-        }
-
-        val items: MutableList<DataType> = mutableListOf()
-        schemaInfo.eachItemOf { itemSchemaInfo: SchemaInfo ->
-            val itemType = convert(itemSchemaInfo, dataTypes)
-            items.add (itemType)
         }
 
         objectType = ComposedObjectDataType(
