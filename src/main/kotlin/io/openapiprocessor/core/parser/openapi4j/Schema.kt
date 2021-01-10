@@ -49,7 +49,7 @@ class Schema(val schema: O4jSchema) : ParserSchema {
     override fun getProperties(): Map<String, ParserSchema> {
         val props = LinkedHashMap<String, ParserSchema> ()
 
-        schema.properties.forEach { (key: String, entry: O4jSchema) ->
+        schema.properties?.forEach { (key: String, entry: O4jSchema) ->
             props[key] = Schema (entry)
         }
 

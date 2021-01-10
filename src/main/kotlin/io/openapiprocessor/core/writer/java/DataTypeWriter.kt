@@ -125,7 +125,10 @@ class DataTypeWriter(
 
     private fun collectImports(packageName: String, dataType: ModelDataType): List<String> {
         val imports = mutableSetOf<String>()
-        imports.add("com.fasterxml.jackson.annotation.JsonProperty")
+
+        if (dataType.getProperties().isNotEmpty()) {
+            imports.add("com.fasterxml.jackson.annotation.JsonProperty")
+        }
 
         imports.addAll(dataType.getReferencedImports())
 

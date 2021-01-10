@@ -13,6 +13,7 @@ class TestSets {
         'endpoint-exclude',
         'endpoint-http-mapping',                    // framework specific
         'method-operation-id',
+        'object-without-properties',
         'params-additional',
         'params-complex-data-types',                // framework specific
         'params-enum',

@@ -51,7 +51,7 @@ class Schema(private val schema: SwaggerSchema<*>): ParserSchema {
     override fun getProperties(): Map<String, ParserSchema> {
         val props = LinkedHashMap<String, ParserSchema> ()
 
-        schema.properties.forEach { (key: String, value: SwaggerSchema<Any>) ->
+        schema.properties?.forEach { (key: String, value: SwaggerSchema<Any>) ->
             props[key] = Schema (value)
         }
 
