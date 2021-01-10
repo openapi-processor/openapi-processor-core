@@ -21,15 +21,17 @@ import io.openapiprocessor.core.support.parse
 class ApiConverterErrorSpec: StringSpec({
     isolationMode = IsolationMode.InstancePerTest
 
-    val converter = ApiConverter(ApiOptions(), mockk<Framework>())
-    val appender = ListAppender<ILoggingEvent>()
-
-    beforeEach {
+    fun addAppender(converter: ApiConverter): ListAppender<ILoggingEvent> {
+        val appender = ListAppender<ILoggingEvent>()
         (converter.log as Logger).addAppender(appender)
         appender.start()
+        return appender
     }
 
     "logs error when datatype conversion fails" {
+        val converter = ApiConverter(ApiOptions(), mockk<Framework>())
+        val appender = addAppender(converter)
+
         val openApi = parse ("""
             openapi: 3.0.2
             info:
