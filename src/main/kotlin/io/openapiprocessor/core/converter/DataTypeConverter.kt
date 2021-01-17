@@ -50,23 +50,25 @@ class DataTypeConverter(
         push(schemaInfo)
 
         val result: DataType
-        if (schemaInfo.isRefObject()) {
-            result = createRefDataType(schemaInfo, dataTypes)
-
-        } else if (schemaInfo.isComposedObject()) {
-            result = createComposedDataType(schemaInfo, dataTypes)
-
-        } else if (schemaInfo.isArray ()) {
-            result = createArrayDataType (schemaInfo, dataTypes)
-
-        } else if (schemaInfo.isObject ()) {
-            result = createObjectDataType (schemaInfo, dataTypes)
-
-        } else if (schemaInfo.isTypeLess()) {
-            result = createNoDataType(schemaInfo, dataTypes)
-
-        } else {
-            result = createSimpleDataType(schemaInfo, dataTypes)
+        when {
+            schemaInfo.isRefObject() -> {
+                result = createRefDataType(schemaInfo, dataTypes)
+            }
+            schemaInfo.isComposedObject() -> {
+                result = createComposedDataType(schemaInfo, dataTypes)
+            }
+            schemaInfo.isArray () -> {
+                result = createArrayDataType (schemaInfo, dataTypes)
+            }
+            schemaInfo.isObject () -> {
+                result = createObjectDataType (schemaInfo, dataTypes)
+            }
+            schemaInfo.isTypeLess() -> {
+                result = createNoDataType(schemaInfo, dataTypes)
+            }
+            else -> {
+                result = createSimpleDataType(schemaInfo, dataTypes)
+            }
         }
 
         pop()
