@@ -17,6 +17,8 @@ import java.net.URL
 
 /**
  * OpenAPI parser to read yaml from memory (swagger or openapi4j).
+ *
+ * extract individual Schemas with the get...Schema() functions on the [ParserOpenApi] result.
  */
 fun parse(apiYaml: String, parserType: ParserType = ParserType.SWAGGER): ParserOpenApi {
     return when (parserType) {
