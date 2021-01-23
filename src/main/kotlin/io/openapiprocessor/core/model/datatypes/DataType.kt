@@ -37,14 +37,15 @@ interface DataType {
 
     /**
      * Provides the import(s) of this type, usually a single import. If it is a generic type it will
-     * add another import for each generic parameter.
+     * add another import for each generic parameter. Used to create the import of this data type.
      *
      * @return import of this type.
      */
     fun getImports(): Set<String>
 
     /**
-     * Provides the list of imports for the types referenced by this this type.
+     * Provides the list of imports for the types referenced by this this type. Used to create the
+     * imports used by the data type itself.
      *
      * @return the referenced import list.
      */

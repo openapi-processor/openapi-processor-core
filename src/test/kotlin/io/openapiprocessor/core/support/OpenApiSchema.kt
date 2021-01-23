@@ -5,6 +5,7 @@
 
 package io.openapiprocessor.core.support
 
+import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.OpenApi
 import io.openapiprocessor.core.parser.Schema
@@ -15,8 +16,9 @@ import io.openapiprocessor.core.parser.Schema
  * @param path the endpoint path
  * @param method the http method
  * @param status the http response status
+ * @return the [Schema]
  */
-fun OpenApi.getResponseSchema(path: String, method: HttpMethod, status: String, mediaType: String)
+fun OpenApi.getSchema(path: String, method: HttpMethod, status: String, mediaType: String)
 : Schema {
     val endpoint = this.getPaths()[path]
     if (endpoint == null) {
@@ -41,3 +43,18 @@ fun OpenApi.getResponseSchema(path: String, method: HttpMethod, status: String, 
     return media?.getSchema()!!
 }
 
+/**
+ * extracts a specific response Schema from an [OpenApi] object created by [parse()][parse] and
+ * creates a [SchemaInfo] for the schema.
+ *
+ * @param name name of schema info, i.e the datatype name
+ * @param path the endpoint path
+ * @param method the http method
+ * @param status the http response status
+ * @return the [SchemaInfo]
+ */
+fun OpenApi.getSchemaInfo(name: String, path: String, method: HttpMethod, status: String,
+          mediaType: String): SchemaInfo {
+    val schema = getSchema(path, method, status, mediaType)
+    return SchemaInfo(path, name, mediaType, schema, getRefResolver())
+}
