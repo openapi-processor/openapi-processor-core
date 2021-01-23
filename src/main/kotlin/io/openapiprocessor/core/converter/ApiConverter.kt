@@ -160,7 +160,7 @@ class  ApiConverter(
             parameter.getSchema(),
             resolver)
 
-        val dataType = dataTypeConverter.convert (info, dataTypes)
+        val dataType = convertDataType(info, dataTypes)
 
         return when (parameter.getIn()) {
             "query" ->
@@ -231,19 +231,18 @@ class  ApiConverter(
     }
 
     private fun createRequestBody(contentType: String, info: SchemaInfo, required: Boolean, dataTypes: DataTypes): ModelRequestBody {
-        val dataType = dataTypeConverter.convert(info, dataTypes)
-        val changedType: DataType
-        if (!info.isArray ()) {
-            changedType = singleDataTypeWrapper.wrap(dataType, info)
+        val dataType = convertDataType(info, dataTypes)
+        val changedType = if (!info.isArray ()) {
+            singleDataTypeWrapper.wrap(dataType, info)
         } else {
-            changedType = multiDataTypeWrapper.wrap(dataType, info)
+            multiDataTypeWrapper.wrap(dataType, info)
         }
 
         return framework.createRequestBody(contentType, required, changedType)
     }
 
     private fun createMultipartParameter(info: SchemaInfo, required: Boolean): Collection<ModelParameter> {
-        val dataType = dataTypeConverter.convert (info, DataTypes())
+        val dataType = convertDataType(info, DataTypes())
         if (! (dataType is ObjectDataType)) {
             throw MultipartResponseBodyException(info.getPath())
         }
@@ -302,9 +301,8 @@ class  ApiConverter(
                 schema,
                 resolver)
 
-            val dataType = dataTypeConverter.convert (info, dataTypes)
-            val changedType: DataType
-            changedType = if (!info.isArray ()) { // todo fails if ref
+            val dataType = convertDataType(info, dataTypes)
+            val changedType = if (!info.isArray ()) { // todo fails if ref
                 singleDataTypeWrapper.wrap(dataType, info)
             } else {
                 multiDataTypeWrapper.wrap(dataType, info)
@@ -315,6 +313,10 @@ class  ApiConverter(
         }
 
         return responses
+    }
+
+    private fun convertDataType(info: SchemaInfo, dataTypes: DataTypes): DataType {
+        return dataTypeConverter.convert(info, dataTypes)
     }
 
     private fun getInlineRequestBodyName(path: String): String {
