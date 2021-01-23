@@ -49,25 +49,24 @@ class DataTypeConverter(
 
         push(schemaInfo)
 
-        val result: DataType
-        when {
+        val result: DataType = when {
             schemaInfo.isRefObject() -> {
-                result = createRefDataType(schemaInfo, dataTypes)
+                createRefDataType(schemaInfo, dataTypes)
             }
             schemaInfo.isComposedObject() -> {
-                result = createComposedDataType(schemaInfo, dataTypes)
+                createComposedDataType(schemaInfo, dataTypes)
             }
             schemaInfo.isArray () -> {
-                result = createArrayDataType (schemaInfo, dataTypes)
+                createArrayDataType (schemaInfo, dataTypes)
             }
             schemaInfo.isObject () -> {
-                result = createObjectDataType (schemaInfo, dataTypes)
+                createObjectDataType (schemaInfo, dataTypes)
             }
             schemaInfo.isTypeLess() -> {
-                result = createNoDataType(schemaInfo, dataTypes)
+                createNoDataType(schemaInfo, dataTypes)
             }
             else -> {
-                result = createSimpleDataType(schemaInfo, dataTypes)
+                createSimpleDataType(schemaInfo, dataTypes)
             }
         }
 
