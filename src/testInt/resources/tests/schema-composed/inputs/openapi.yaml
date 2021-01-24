@@ -12,8 +12,8 @@ paths:
           description: allOf
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/FooAllOf'
+              schema:
+                $ref: '#/components/schemas/FooAllOf'
 
   /foo-any-of:
     get:
@@ -22,8 +22,8 @@ paths:
           description: anyOf
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/FooAnyOf'
+              schema:
+                $ref: '#/components/schemas/FooAnyOf'
 
   /foo-one-of:
     get:
@@ -32,8 +32,8 @@ paths:
           description: oneOf
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/FooOneOf'
+              schema:
+                $ref: '#/components/schemas/FooOneOf'
 
 
 components:
