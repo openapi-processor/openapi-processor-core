@@ -8,7 +8,7 @@ package io.openapiprocessor.core.model.datatypes
 /**
  * OpenAPI "allOf" composed schema type.
  */
-class ComposedObjectDataType(
+class AllOfObjectDataType(
 
     private val type: String,
     private val pkg: String,

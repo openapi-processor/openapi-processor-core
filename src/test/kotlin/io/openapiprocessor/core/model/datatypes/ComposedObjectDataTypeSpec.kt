@@ -11,7 +11,7 @@ import io.kotest.matchers.shouldBe
 class ComposedObjectDataTypeSpec : StringSpec({
 
     "loop properties of allOf objects as if it was a single object" {
-        val composed = ComposedObjectDataType("Foo", "pkg", "allOf", listOf(
+        val composed = AllOfObjectDataType("Foo", "pkg", "allOf", listOf(
             ObjectDataType("Foo", "pkg", linkedMapOf(
                 Pair("foo", StringDataType()),
                 Pair("foobar", StringDataType())

@@ -35,13 +35,13 @@ class DataTypeCollector(
                         dataTypes.addRef(it.substringAfterLast("."))
                     }
             }
-            is ComposedObjectDataType -> {
+            is AllOfObjectDataType -> {
                 dataTypes.addRef(dataType.getName())
                 dataType.forEach { _, propDataType ->
                     collect(propDataType)
                 }
             }
-            is CompositeObjectDataType -> {
+            is AnyOneOfObjectDataType -> {
                 dataType.forEach { ofDataType ->
                     collect(ofDataType)
                 }

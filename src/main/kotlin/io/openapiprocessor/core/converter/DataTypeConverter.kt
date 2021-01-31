@@ -98,7 +98,7 @@ class DataTypeConverter(
                 return filtered.first()
             }
 
-            objectType = ComposedObjectDataType(
+            objectType = AllOfObjectDataType(
                 schemaInfo.getName(),
                 listOf(options.packageName, "model").joinToString ("."),
                 schemaInfo.itemOf()!!,
@@ -107,7 +107,7 @@ class DataTypeConverter(
                 schemaInfo.getDeprecated()
             )
         } else {
-            objectType = CompositeObjectDataType(
+            objectType = AnyOneOfObjectDataType(
                 schemaInfo.getName(),
                 listOf(options.packageName, "model").joinToString ("."),
                 schemaInfo.itemOf()!!,

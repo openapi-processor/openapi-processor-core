@@ -8,7 +8,7 @@ package io.openapiprocessor.core.model.datatypes
 /**
  * OpenAPI "oneOf/anyOf" composed schema type.
  */
-class CompositeObjectDataType(
+class AnyOneOfObjectDataType(
     private val type: String,
     private val pkg: String,
     private val of: String,
