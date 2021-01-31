@@ -26,7 +26,7 @@ open class MappedCollectionDataType(
 
     private val type: String,
     private val pkg: String,
-    private val item: DataType,
+    /*private*/ val item: DataType,
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
 

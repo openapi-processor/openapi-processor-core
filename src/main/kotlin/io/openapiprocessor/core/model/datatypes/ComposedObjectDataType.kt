@@ -57,4 +57,8 @@ class ComposedObjectDataType(
         return getConstraints()?.isRequired(prop) ?: false
     }
 
+    override fun forEach(action: (property: String, dataType: DataType) -> Unit) {
+        for (p in getProperties()) action(p.key, p.value)
+    }
+
 }

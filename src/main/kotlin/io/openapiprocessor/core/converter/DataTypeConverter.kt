@@ -17,9 +17,11 @@
 package io.openapiprocessor.core.converter
 
 import io.openapiprocessor.core.converter.mapping.*
+import io.openapiprocessor.core.model.DataTypeCollector
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.datatypes.*
 import java.util.*
+import kotlin.collections.LinkedHashMap
 
 /**
  * Converter to map OpenAPI schemas to Java data types.
@@ -71,38 +73,63 @@ class DataTypeConverter(
         }
 
         pop()
+
+        // result is complete, add ref what is really required
+        if (current.isEmpty()) {
+            DataTypeCollector(dataTypes, options.packageName).collect(result)
+        }
+
         return result
     }
 
     private fun createComposedDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
-        val objectType: DataType
-
         val items: MutableList<DataType> = mutableListOf()
         schemaInfo.eachItemOf { itemSchemaInfo: SchemaInfo ->
             val itemType = convert(itemSchemaInfo, dataTypes)
             items.add (itemType)
         }
 
+        val objectType: DataType
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
-            objectType = MappedDataType(
+            return MappedDataType(
                 targetType.getName(),
                 targetType.getPkg(),
                 targetType.genericNames,
                 null,
                 schemaInfo.getDeprecated()
             )
-            return objectType
         }
 
-        objectType = ComposedObjectDataType(
-            schemaInfo.getName(),
-            listOf(options.packageName, "model").joinToString ("."),
-            schemaInfo.itemOf()!!,
-            items,
-            null,
-            schemaInfo.getDeprecated()
-        )
+        val found = dataTypes.find(schemaInfo.getName())
+        if (found != null) {
+            return found
+        }
+
+        if (schemaInfo.isComposedAllOf()) {
+            val filtered = items.filterNot { item -> item is NoDataType }
+            if (filtered.size == 1) {
+                return filtered.first()
+            }
+
+            objectType = ComposedObjectDataType(
+                schemaInfo.getName(),
+                listOf(options.packageName, "model").joinToString ("."),
+                schemaInfo.itemOf()!!,
+                items,
+                null,
+                schemaInfo.getDeprecated()
+            )
+        } else {
+            objectType = CompositeObjectDataType(
+                schemaInfo.getName(),
+                listOf(options.packageName, "model").joinToString ("."),
+                schemaInfo.itemOf()!!,
+                items,
+                null,
+                schemaInfo.getDeprecated()
+            )
+        }
 
         dataTypes.add (objectType)
         return objectType
@@ -140,6 +167,11 @@ class DataTypeConverter(
     }
 
     private fun createObjectDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
+        val properties = LinkedHashMap<String, DataType>()
+        schemaInfo.eachProperty { propName: String, propSchemaInfo: SchemaInfo ->
+            properties[propName] = convert(propSchemaInfo, dataTypes)
+        }
+
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
             when(targetType.typeName) {
@@ -152,19 +184,20 @@ class DataTypeConverter(
                         null,
                         schemaInfo.getDeprecated())
                 else -> {
-                    val objectType = MappedDataType(
+                    return MappedDataType(
                         targetType.getName(),
                         targetType.getPkg(),
                         targetType.genericNames,
                         null,
                         schemaInfo.getDeprecated()
                     )
-
-                    // todo probably not required anymore => no switch
-                    dataTypes.add (schemaInfo.getName(), objectType)
-                    return objectType
                 }
             }
+        }
+
+        val found = dataTypes.find(schemaInfo.getName())
+        if (found != null) {
+            return found
         }
 
         val constraints = DataTypeConstraints(
@@ -175,14 +208,10 @@ class DataTypeConverter(
         val objectType = ObjectDataType (
             schemaInfo.getName(),
             listOf(options.packageName, "model").joinToString("."),
+            properties = properties,
             constraints = constraints,
             deprecated = schemaInfo.getDeprecated()
         )
-
-        schemaInfo.eachProperty { propName: String, propDataTypeInfo: SchemaInfo ->
-            val propType = convert(propDataTypeInfo, dataTypes)
-            objectType.addObjectProperty(propName, propType)
-        }
 
         dataTypes.add (objectType)
         return objectType
@@ -268,19 +297,26 @@ class DataTypeConverter(
             "date-time")
     }
 
-    private fun createStringDataType(info: SchemaInfo, constraints: DataTypeConstraints, dataTypes: DataTypes): DataType {
-        if (!info.isEnum()) {
-            return StringDataType(constraints, info.getDeprecated())
+    private fun createStringDataType(schemaInfo: SchemaInfo, constraints: DataTypeConstraints, dataTypes: DataTypes): DataType {
+        if (!schemaInfo.isEnum()) {
+            return StringDataType(constraints, schemaInfo.getDeprecated())
         }
 
         // in case of an inline definition the name may be lowercase, make sure the enum
         // class gets an uppercase name!
+        val enumName = schemaInfo.getName().capitalize ()
+
+        val found = dataTypes.find(enumName)
+        if (found != null) {
+            return found
+        }
+
         val enumType = StringEnumDataType (
-            info.getName().capitalize (),
+            enumName,
             listOf(options.packageName, "model").joinToString("."),
-            info.getEnumValues() as List<String>,
+            schemaInfo.getEnumValues() as List<String>,
             constraints,
-            info.getDeprecated())
+            schemaInfo.getDeprecated())
 
         dataTypes.add (enumType)
         return enumType

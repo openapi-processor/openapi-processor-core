@@ -33,7 +33,7 @@ class LazyDataType(
     }
 
     private fun getDataType(): DataType {
-        return dataTypes.find (info.getName())
+        return dataTypes.find(info.getName())!!
     }
 
 }

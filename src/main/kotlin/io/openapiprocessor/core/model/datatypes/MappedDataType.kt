@@ -25,7 +25,7 @@ open class MappedDataType(
 
     private val type: String,
     private val pkg: String,
-    private val genericTypes: List<String> = emptyList(),
+    /*private*/ val genericTypes: List<String> = emptyList(),
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
 
