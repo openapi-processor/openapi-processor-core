@@ -21,11 +21,8 @@ import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema
 
 /**
- * Helper for {@link DataTypeConverter}. Holds an OpenAPI
- * schema with context information, i.e. name and if this is an inline type with a generated name.
- *
- * @author Martin Hauner
- * @author Bastian Wilhelm
+ * Helper for [DataTypeConverter]. Holds an OpenAPI schema with context information, e.g. name and
+ * if this is an inline type with a generated name.
  */
 class SchemaInfo(
     /**
@@ -112,6 +109,11 @@ class SchemaInfo(
         return schema?.isDeprecated()!!
     }
 
+    /**
+     * get required value
+     *
+     * @return true or false
+     */
     fun getRequired(): List<String> {
         return schema?.getRequired()!!
     }
@@ -220,6 +222,9 @@ class SchemaInfo(
         }
     }
 
+    /**
+     * allOf, oneOf, anyOf.
+     */
     fun itemOf(): String? {
         return schema?.itemsOf()
     }
