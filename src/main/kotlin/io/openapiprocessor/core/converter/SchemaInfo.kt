@@ -283,6 +283,10 @@ class SchemaInfo(
         return schema?.getType().equals("composed")
     }
 
+    fun isComposedAllOf(): Boolean {
+        return itemOf().equals("allOf")
+    }
+
     fun isTypeLess(): Boolean {
         return schema?.getType() == null
     }

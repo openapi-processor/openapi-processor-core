@@ -19,7 +19,7 @@ package com.github.hauner.openapi.core.converter
 import io.openapiprocessor.core.converter.ApiConverter
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.model.datatypes.ComposedObjectDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse
@@ -69,11 +69,12 @@ components:
         def itf = api.interfaces.first ()
         def ep = itf.endpoints.first ()
         def rsp = ep.getFirstResponse ('200')
-        rsp.responseType.name == 'Foo'
+        rsp.responseType.name == 'FooA'
+        rsp.responseType instanceof ObjectDataType
 
-        def cs = rsp.responseType as ComposedObjectDataType
-        cs.items.size () == 1
-        cs.items.first ().name == 'FooA'
+//        def cs = rsp.responseType as ComposedObjectDataType
+//        cs.items.size () == 1
+//        cs.items.first ().name == 'FooA'
     }
 
 }

@@ -60,16 +60,16 @@ class ObjectDataType(
         return getProperties()
     }
 
-    override fun isModel(): Boolean {
-        return true
-    }
-
     override fun getProperties(): Map<String, DataType> {
         return properties
     }
 
     override fun isRequired(prop: String): Boolean {
         return getConstraints()?.isRequired(prop) ?: false
+    }
+
+    override fun forEach(action: (property: String, dataType: DataType) -> Unit) {
+        for (p in properties) action(p.key, p.value)
     }
 
 }

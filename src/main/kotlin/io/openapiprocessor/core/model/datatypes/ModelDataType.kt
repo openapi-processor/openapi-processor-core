@@ -7,8 +7,12 @@ package io.openapiprocessor.core.model.datatypes
 
 interface ModelDataType: DataType {
 
-    fun isModel(): Boolean
+    /**
+     * loop object properties.
+     */
+    fun forEach(action: (property: String, dataType: DataType) -> Unit)
 
+    @Deprecated(message = "use forEach() instead", replaceWith = ReplaceWith("forEach()"))
     fun getProperties(): Map<String, DataType>
 
     fun isRequired(prop: String): Boolean

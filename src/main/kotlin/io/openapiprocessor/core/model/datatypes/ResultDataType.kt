@@ -46,10 +46,6 @@ class ResultDataType(
         return emptySet()
     }
 
-    override fun isComposed(): Boolean {
-        return dataType.isComposed()
-    }
-
     /**
      * type if the result data type can have multiple values.
      *

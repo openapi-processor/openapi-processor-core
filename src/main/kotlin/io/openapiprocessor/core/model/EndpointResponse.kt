@@ -16,6 +16,7 @@
 
 package io.openapiprocessor.core.model
 
+import io.openapiprocessor.core.model.datatypes.CompositeObjectDataType
 import io.openapiprocessor.core.model.datatypes.ResultDataType
 
 /**
@@ -92,7 +93,7 @@ class EndpointResponse(
      * if this response has multiple types.
      */
     private fun hasMultipleResponses(): Boolean {
-        if (main.responseType.isComposed()) {
+        if (main.responseType is CompositeObjectDataType) {
             return true
         }
         return errors.isNotEmpty()

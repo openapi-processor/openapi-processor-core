@@ -52,15 +52,6 @@ class ComposedObjectDataType(
             .toSet()
     }
 
-    // todo find better name
-    override fun isComposed(): Boolean {
-        return of != "allOf"
-    }
-
-    override fun isModel(): Boolean {
-        return of == "allOf"
-    }
-
     override fun getProperties(): Map<String, DataType> {
         val properties = linkedMapOf<String, DataType>()
 

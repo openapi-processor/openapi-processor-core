@@ -56,11 +56,4 @@ interface DataType {
         return false
     }
 
-    /**
-     * is this a composed type, i.e. allOf, anyOf, oneOf ?
-     */
-    fun isComposed(): Boolean {
-        return false
-    }
-
 }
