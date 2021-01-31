@@ -10,13 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AllOfNoTypeResponse200 {
 
     @JsonProperty("foo")
-    private AllOfNoTypeResponse200Foo foo;
+    private Foo foo;
 
-    public AllOfNoTypeResponse200Foo getFoo() {
+    public Foo getFoo() {
         return foo;
     }
 
-    public void setFoo(AllOfNoTypeResponse200Foo foo) {
+    public void setFoo(Foo foo) {
         this.foo = foo;
     }
 

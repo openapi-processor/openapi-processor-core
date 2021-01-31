@@ -57,7 +57,9 @@ class ApiWriterSpec: StringSpec({
 
         val dts = DataTypes()
         dts.add(StringEnumDataType("Foo", "${options.packageName}.model"))
+        dts.addRef("Foo")
         dts.add(StringEnumDataType("Bar", "${options.packageName}.model"))
+        dts.addRef("Bar")
         val api = Api(dataTypes = dts)
 
         // when:
@@ -78,6 +80,7 @@ class ApiWriterSpec: StringSpec({
 
         val dts = DataTypes()
         dts.add (StringEnumDataType("Foo", "${options.packageName}.model"))
+        dts.addRef("Foo")
         val api = Api(dataTypes = dts)
 
         // when:
@@ -164,7 +167,9 @@ class ApiWriterSpec: StringSpec({
 
         val dt = DataTypes()
         dt.add(ObjectDataType("Foo", "${options.packageName}.model", linkedMapOf()))
+        dt.addRef("Foo")
         dt.add(ObjectDataType("Bar", "${options.packageName}.model", linkedMapOf()))
+        dt.addRef("Bar")
         val api = Api(dataTypes = dt)
 
         // when:
@@ -223,6 +228,7 @@ class ApiWriterSpec: StringSpec({
 
         val dt = DataTypes()
         dt.add(ObjectDataType("Foo", "${options.packageName}.model"))
+        dt.addRef("Foo")
         val api = Api(dataTypes = dt)
 
         // when:
