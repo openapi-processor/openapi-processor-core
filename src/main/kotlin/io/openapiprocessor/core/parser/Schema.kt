@@ -25,6 +25,9 @@ import java.math.BigDecimal
  */
 interface Schema {
 
+    /**
+     * OpenAPI schema type, ie. array, string, etc.
+     */
     fun getType(): String?
     fun getFormat(): String?
 
