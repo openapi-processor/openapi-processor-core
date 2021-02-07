@@ -23,7 +23,7 @@ link:{sonar}[image:{sonar-coverage}[]]
 
 == openapi-processor-core
 
-this is the re-usable core of openapi-processors that generate java code.
+this is the re-usable core of the openapi-processors that generate java code.
 
 It reads the link:{openapi}[OpenAPI] yaml, converts it to an internal model and provides writers to
 generate java code.
