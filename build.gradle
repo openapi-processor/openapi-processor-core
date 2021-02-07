@@ -25,8 +25,8 @@ String getBuildProperty(String property) {
 }
 
 ext {
-    processorApiVersion = '2020.3'
-    processorTestVersion = '2020.3-SNAPSHOT'
+    processorApiVersion = '2021.1'
+    processorTestVersion = '2021.1'
     jacksonVersion = '2.12.0'
     groovyVersion = '3.0.7'
 
