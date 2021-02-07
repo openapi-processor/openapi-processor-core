@@ -49,7 +49,6 @@ publishing {
             url = project.isReleaseVersion ? releaseRepository : snapshotRepository
 
             credentials {
-                println "${publishUser[0]}${publishUser.size ()}${publishKey[0]}${publishKey.size ()}"
                 username = publishUser
                 password = publishKey
             }
