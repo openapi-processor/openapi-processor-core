@@ -92,8 +92,8 @@ jobs:
       uses: actions/upload-artifact@v1
       if: always()
       with:
-        name: test results
-        path: build/reports
+        name: publish results
+        path: build
 
   sonarqube:
     needs: [publish]
@@ -142,4 +142,4 @@ jobs:
       if: always()
       with:
         name: sonarqube results
-        path: build/reports
+        path: build
