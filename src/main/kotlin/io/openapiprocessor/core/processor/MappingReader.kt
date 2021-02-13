@@ -18,7 +18,7 @@ package io.openapiprocessor.core.processor
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.PropertyNamingStrategy
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -91,7 +91,7 @@ class MappingReader {
 
         return ObjectMapper (YAMLFactory ())
             .configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .setPropertyNamingStrategy (PropertyNamingStrategy.KEBAB_CASE)
+            .setPropertyNamingStrategy (PropertyNamingStrategies.KEBAB_CASE)
             .registerModules (kotlinModule, module)
     }
 
@@ -105,14 +105,14 @@ class MappingReader {
 
         return ObjectMapper (YAMLFactory ())
             .configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .setPropertyNamingStrategy (PropertyNamingStrategy.KEBAB_CASE)
+            .setPropertyNamingStrategy (PropertyNamingStrategies.KEBAB_CASE)
             .registerModules(kotlinModule, module)
     }
 
     private fun createVersionParser(): ObjectMapper {
         return ObjectMapper (YAMLFactory ())
             .configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .setPropertyNamingStrategy (PropertyNamingStrategy.KEBAB_CASE)
+            .setPropertyNamingStrategy (PropertyNamingStrategies.KEBAB_CASE)
             .registerModule (KotlinModule ())
     }
 
