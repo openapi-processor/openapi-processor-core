@@ -21,5 +21,5 @@ package io.openapiprocessor.core.processor.mapping.v1
  *
  *  @author Martin Hauner
  */
-@Deprecated("replaced by mapping.v2")
+//@Deprecated("replaced by mapping.v2")
 interface Parameter

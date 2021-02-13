@@ -18,10 +18,8 @@ package io.openapiprocessor.core.processor.mapping.v1
 
 /**
  * a "parameters:" request parameter entry in the mapping yaml
- *
- *  @author Martin Hauner
  */
-@Deprecated("replaced by mapping.v2")
+//@Deprecated("replaced by mapping.v2")
 class RequestParameter(
 
     /**

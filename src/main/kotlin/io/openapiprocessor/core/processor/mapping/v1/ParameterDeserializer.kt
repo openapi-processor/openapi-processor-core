@@ -26,7 +26,7 @@ import kotlin.collections.Map
  *
  *  @author Martin Hauner
  */
-@Deprecated("replaced by mapping.v2")
+//@Deprecated("replaced by mapping.v2")
 class ParameterDeserializer: StdDeserializer<Parameter>(Parameter::class.java) {
 
     @Suppress("UNCHECKED_CAST")

@@ -23,7 +23,7 @@ import io.openapiprocessor.core.processor.mapping.MappingVersion
  *
  *  @author Martin Hauner
  */
-@Deprecated("replaced by mapping.v2")
+//@Deprecated("replaced by mapping.v2")
 class Mapping(
 
     /**
