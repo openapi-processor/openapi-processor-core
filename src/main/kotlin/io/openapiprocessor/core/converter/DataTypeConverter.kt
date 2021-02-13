@@ -211,7 +211,8 @@ class DataTypeConverter(
                 targetType.getPkg(),
                 targetType.genericNames,
                 null,
-                schemaInfo.getDeprecated()
+                schemaInfo.getDeprecated(),
+                true
             )
         }
 

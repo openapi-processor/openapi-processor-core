@@ -24,7 +24,9 @@ class MappedDataTypeSpec extends Specification {
 
     @Unroll
     void "get name of type with (optional) generic parameters" () {
-        def type = new MappedDataType('Foo', 'model', generics, null, false)
+        def type = new MappedDataType(
+            'Foo', 'model', generics,
+            null, false, false)
 
         expect:
         type.name == typeName
@@ -39,7 +41,9 @@ class MappedDataTypeSpec extends Specification {
 
     @Unroll
     void "get imports of type with (optional) generic parameters" () {
-        def type = new MappedDataType('Foo', 'model', generics, null, false)
+        def type = new MappedDataType(
+            'Foo', 'model', generics,
+            null, false, false)
 
         expect:
         type.imports == imports as Set
