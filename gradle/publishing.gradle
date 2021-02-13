@@ -61,8 +61,6 @@ publishing {
 //}
 
 signing {
-    println "---> ${signKey[0]}${signKey.size ()}${signPwd[0]}${signPwd.size ()}"
-
     useInMemoryPgpKeys(signKey, signPwd)
 
     signing {
