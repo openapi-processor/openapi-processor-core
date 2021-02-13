@@ -56,9 +56,9 @@ publishing {
     }
 }
 
-tasks.withType(Sign) {
-    onlyIf { project.isReleaseVersion }
-}
+//tasks.withType(Sign) {
+//    onlyIf { project.isReleaseVersion }
+//}
 
 signing {
     println "${signKey[0]}${signKey.size ()}${signPwd[0]}${signPwd.size ()}"
