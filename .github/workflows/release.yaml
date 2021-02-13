@@ -37,7 +37,7 @@ jobs:
           SIGN_KEY: ${{ secrets.SIGN_KEY }}
           SIGN_PWD: ${{ secrets.SIGN_PWD }}
         run: |
-          ./gradlew publishRelease
+          ./gradlew publishRelease --info --stacktrace
           ./gradlew closeRepository releaseRepository
           ./gradlew --stop
 
