@@ -8,9 +8,13 @@
 :oap-docs: https://docs.openapiprocessor.io
 :openapi: https://www.openapis.org/
 
+:oap-central: https://search.maven.org/search?q=io.openapiprocessor
+:badge-central: https://img.shields.io/maven-central/v/io.openapiprocessor/openapi-processor-core?label=Maven%20Central
+
 // badges
 link:{oaps-ci}[image:{badge-ci}[]]
 link:{sonar}[image:{sonar-coverage}[]]
+link:{oap-central}[image:{badge-central}[]]
 //link:{oaps-license}[image:{badge-license}[]]
 
 // does not center on github
