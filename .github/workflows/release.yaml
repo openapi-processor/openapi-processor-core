@@ -38,6 +38,5 @@ jobs:
           SIGN_PWD: ${{ secrets.SIGN_PWD }}
         run: |
           ./gradlew publishRelease
-#          ./gradlew closeRepository releaseRepository
           ./gradlew --stop
 
