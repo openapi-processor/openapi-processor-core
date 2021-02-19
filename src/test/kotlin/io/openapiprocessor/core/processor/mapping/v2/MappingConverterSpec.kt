@@ -40,7 +40,7 @@ class MappingConverterSpec: StringSpec({
         type.genericTypeNames shouldBe listOf("io.openapiprocessor.somewhere.Bar")
     }
 
-    "read 'null' mapping" {
+    "read global 'null' mapping" {
         val yaml = """
                    |openapi-processor-mapping: v2
                    |
@@ -57,6 +57,28 @@ class MappingConverterSpec: StringSpec({
 
         // then:
         val `null` = mappings.first() as TypeMapping
+        `null`.targetTypeName shouldBe "org.openapitools.jackson.nullable.JsonNullable"
+    }
+
+    "read endpoint 'null' mapping" {
+        val yaml = """
+                   |openapi-processor-mapping: v2
+                   |
+                   |options:
+                   |  package-name: io.openapiprocessor.somewhere
+                   | 
+                   |map:
+                   |  paths:
+                   |    /foo:
+                   |      null: org.openapitools.jackson.nullable.JsonNullable
+                   """.trimMargin()
+
+        // when:
+        val mapping = reader.read (yaml)
+        val mappings = converter.convert (mapping)
+
+        // then:
+        val `null` = mappings.first().getChildMappings().first() as TypeMapping
         `null`.targetTypeName shouldBe "org.openapitools.jackson.nullable.JsonNullable"
     }
 

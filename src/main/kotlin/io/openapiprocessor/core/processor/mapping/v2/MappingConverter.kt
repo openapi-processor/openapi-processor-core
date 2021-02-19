@@ -143,6 +143,10 @@ class MappingConverter(val mapping: MappingV2) {
             result.add(convertType("multi", source.multi))
         }
 
+        if(source.`null` != null) {
+            result.add(convertType("null", source.`null`))
+        }
+
         source.types.forEach {
             result.add(convertType(it))
         }

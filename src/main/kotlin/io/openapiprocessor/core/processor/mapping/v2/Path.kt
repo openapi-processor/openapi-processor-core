@@ -44,6 +44,11 @@ data class Path(
     val multi: String?,
 
     /**
+     * null wrapper, e.g. JsonNullable<>
+     */
+    val `null`: String?,
+
+    /**
      * path limited type mappings
      */
     val types: List<Type> = emptyList(),
