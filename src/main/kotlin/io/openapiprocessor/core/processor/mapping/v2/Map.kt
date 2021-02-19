@@ -29,12 +29,12 @@ data class Map(
     val result: String? = null,
 
     /**
-     * single mapping, i.e. Mono<>
+     * single mapping, e.g. Mono<>
      */
     val single: String? = null,
 
     /**
-     * multi mapping, i.e. Flux<>
+     * multi mapping, e.g. Flux<>
      */
     val multi: String? = null,
 
