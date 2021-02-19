@@ -39,6 +39,11 @@ data class Map(
     val multi: String? = null,
 
     /**
+     * null wrapper, e.g. JsonNullable<>
+     */
+    val `null`: String? = null,
+
+    /**
      * global type mappings
      */
     val types: List<Type> = emptyList(),
