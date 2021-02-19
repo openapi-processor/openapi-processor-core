@@ -72,7 +72,7 @@ class MappingFinder(
      */
     fun findAdditionalEndpointParameter(path: String): List<Mapping> {
         val info = MappingSchemaEndpoint(path)
-        val ep = filterMappings(EndpointMatcher(info), typeMappings)
+        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
 
         val matcher = AddParameterMatcher(info)
         val add = ep.filter {
@@ -93,7 +93,7 @@ class MappingFinder(
      * @return the result type mapping.
      */
     fun findEndpointResultMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(EndpointMatcher(info), typeMappings)
+        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
 
         val matcher = ResultTypeMatcher(info)
         val result = ep.filter {
@@ -129,7 +129,7 @@ class MappingFinder(
      * @return the single type mapping.
      */
     fun findEndpointSingleMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(EndpointMatcher(info), typeMappings)
+        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
 
         val matcher = SingleTypeMatcher(info)
         val result = ep.filter {
@@ -165,7 +165,7 @@ class MappingFinder(
      * @return the multi type mapping.
      */
     fun findEndpointMultiMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(EndpointMatcher(info), typeMappings)
+        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
 
         val matcher = MultiTypeMatcher(info)
         val result = ep.filter {
@@ -202,7 +202,7 @@ class MappingFinder(
      */
     fun isExcludedEndpoint(path: String): Boolean {
         val info = MappingSchemaEndpoint(path)
-        val matcher = EndpointMatcher(info)
+        val matcher = EndpointMatcherOld(info)
 
         val ep = typeMappings.filter {
             it.matches (matcher)
@@ -220,9 +220,20 @@ class MappingFinder(
         return false
     }
 
+    @Deprecated(message = "replaced by filterMappings(matcher, mappings)")
     private fun filterMappings(visitor: MappingVisitor, mappings: List<Mapping>): List<Mapping> {
         return mappings
             .filter { it.matches(visitor) }
+            .map { it.getChildMappings() }
+            .flatten()
+    }
+
+    private inline fun <reified T: Mapping> filterMappings(
+        matcher: (m: T) -> Boolean, mappings: List<Mapping>): List<Mapping> {
+
+        return mappings
+            .filterIsInstance<T>()
+            .filter { matcher(it) }
             .map { it.getChildMappings() }
             .flatten()
     }
@@ -261,7 +272,16 @@ class MappingSchemaEndpoint(private val path: String): MappingSchema {
 
 }
 
-class EndpointMatcher(schema: MappingSchema): BaseVisitor(schema) {
+class EndpointMatcher(private val schema: MappingSchema): (EndpointTypeMapping) -> Boolean {
+
+    override fun invoke(m: EndpointTypeMapping): Boolean {
+        return m.path == schema.getPath()
+    }
+
+}
+
+@Deprecated("", replaceWith = ReplaceWith("EndpointMatcher"))
+class EndpointMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: EndpointTypeMapping): Boolean {
         return mapping.path == schema.getPath()
