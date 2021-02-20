@@ -286,6 +286,35 @@ class IoMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
+class TypeMatcher(private val schema: MappingSchema): (TypeMapping) -> Boolean {
+
+    override fun invoke(mapping: TypeMapping): Boolean {
+        // try to match by name first
+        // the format must match to avoid matching primitive and primitive with format, e.g.
+        // string should not match string:binary
+        if (matchesName(mapping) && matchesFormat(mapping)) {
+            return true
+        }
+
+        return when {
+            schema.isPrimitive() -> {
+                matchesType(mapping) && matchesFormat(mapping)
+            }
+            schema.isArray() -> {
+                matchesArray(mapping)
+            }
+            else -> {
+                false // nop
+            }
+        }
+    }
+
+    private fun matchesName(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getName()
+    private fun matchesFormat(mapping: TypeMapping): Boolean = mapping.sourceTypeFormat == schema.getFormat()
+    private fun matchesType(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getType()
+    private fun matchesArray(mapping: TypeMapping): Boolean = mapping.sourceTypeName == "array"
+}
+
 class TypeMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: TypeMapping): Boolean {
