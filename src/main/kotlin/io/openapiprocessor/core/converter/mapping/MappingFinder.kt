@@ -16,23 +16,6 @@ import io.openapiprocessor.core.converter.mapping.matcher.TypeMatcher
 class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
 
     /**
-     * find any matching endpoint mapping for the given schema info.
-     *
-     * @param info schema info of the OpenAPI schema.
-     * @return list of matching mappings
-     */
-    fun findEndpointMappings(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(EndpointMatcher(info), typeMappings)
-
-        val io = filterMappingsOld(IoMatcherOld(info), ep)
-        if (io.isNotEmpty()) {
-            return io
-        }
-
-        return filterMappings (TypeMatcher(info), ep)
-    }
-
-    /**
      * find a matching endpoint mapping for the given schema info.
      *
      * @param info schema info of the OpenAPI schema.
@@ -51,17 +34,6 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
             return response
 
         return getTypeMapping(filterMappings(TypeMatcher(info), ep))
-    }
-
-    /**
-     * find any matching (global) io mapping for the given schema info.
-     *
-     * @param info schema info of the OpenAPI schema.
-     * @return list of matching mappings
-     */
-    @Deprecated("")
-    fun findIoMappings(info: SchemaInfo): List<Mapping> {
-        return filterMappingsOld(IoMatcherOld(info), typeMappings)
     }
 
     /**
