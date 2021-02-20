@@ -21,7 +21,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     fun findEndpointMappings(info: SchemaInfo): List<Mapping> {
         val ep = filterMappings(EndpointMatcher(info), typeMappings)
 
-        val io = filterMappings(IoMatcher(info), ep)
+        val io = filterMappings(IoMatcherOld(info), ep)
         if (io.isNotEmpty()) {
             return io
         }
@@ -36,7 +36,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return list of matching mappings
      */
     fun findIoMappings(info: SchemaInfo): List<Mapping> {
-        return filterMappings(IoMatcher(info), typeMappings)
+        return filterMappings(IoMatcherOld(info), typeMappings)
     }
 
     /**
@@ -296,7 +296,7 @@ class EndpointMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
-class IoMatcher(schema: MappingSchema): BaseVisitor(schema) {
+class IoMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: ParameterTypeMapping): Boolean {
         return mapping.parameterName == schema.getName()
