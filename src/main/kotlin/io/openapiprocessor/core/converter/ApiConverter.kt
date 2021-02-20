@@ -112,7 +112,7 @@ class  ApiConverter(
             ep.parameters.add (createParameter (ep.path, parameter, dataTypes, resolver))
         }
 
-        val addMappings = mappingFinder.findAdditionalEndpointParameterOld (ep.path)
+        val addMappings = mappingFinder.findEndpointAddParameterTypeMappings (ep.path)
         addMappings.forEach {
             ep.parameters.add (createAdditionalParameter (ep.path, it as AddParameterTypeMapping, dataTypes, resolver))
         }

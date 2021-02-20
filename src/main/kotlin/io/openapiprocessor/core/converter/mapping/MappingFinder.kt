@@ -6,10 +6,7 @@
 package io.openapiprocessor.core.converter.mapping
 
 import io.openapiprocessor.core.converter.SchemaInfo
-import io.openapiprocessor.core.converter.mapping.matcher.EndpointTypeMatcher
-import io.openapiprocessor.core.converter.mapping.matcher.ParameterTypeMatcher
-import io.openapiprocessor.core.converter.mapping.matcher.ResponseTypeMatcher
-import io.openapiprocessor.core.converter.mapping.matcher.TypeMatcher
+import io.openapiprocessor.core.converter.mapping.matcher.*
 
 /**
  * find mappings of a given schema info in the type mapping list.
@@ -87,6 +84,20 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
         }
 
         return emptyList()
+    }
+
+    /**
+     * find a matching (endpoint) type mapping for the given schema info.
+     *
+     * @param path the endpoint path
+     * @return the matching mapping or null if there is no match.
+     * @throws AmbiguousTypeMappingException if there is more than one match.
+     */
+    fun findEndpointAddParameterTypeMappings(path: String): List<AddParameterTypeMapping> {
+        val info = MappingSchemaEndpoint(path)
+        val ep = filterMappings(EndpointTypeMatcher(info), typeMappings)
+
+        return ep.filterIsInstance<AddParameterTypeMapping>()
     }
 
     /**
