@@ -33,6 +33,27 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
+     * find a matching endpoint mapping for the given schema info.
+     *
+     * @param info schema info of the OpenAPI schema.
+     * @return the matching mapping or null if there is no match.
+     * @throws AmbiguousTypeMappingException if there is more than one match.
+     */
+    fun findEndpointTypeMapping(info: SchemaInfo): TypeMapping? {
+        val ep = filterMappings(EndpointMatcher(info), typeMappings)
+
+        val parameter = getTypeMapping(filterMappings(ParameterTypeMatcher(info), ep))
+        if (parameter != null)
+            return parameter
+
+        val response = getTypeMapping(filterMappings(ResponseTypeMatcher(info), ep))
+        if (response != null)
+            return response
+
+        return getTypeMapping(filterMappings(TypeMatcher(info), ep))
+    }
+
+    /**
      * find any matching (global) io mapping for the given schema info.
      *
      * @param info schema info of the OpenAPI schema.

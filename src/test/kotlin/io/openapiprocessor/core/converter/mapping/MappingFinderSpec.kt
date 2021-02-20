@@ -144,4 +144,108 @@ class MappingFinderSpec: StringSpec({
         }
     }
 
+    "no endpoint type mapping in empty mappings" {
+        val finder = MappingFinder(emptyList())
+
+        val info = SchemaInfo("/foo", "Foo", "", null, resolver)
+        val result = finder.findEndpointTypeMapping(info)
+
+        result.shouldBeNull()
+    }
+
+    "endpoint parameter mapping matches single mapping" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", listOf(
+                    ParameterTypeMapping("foo param",
+                        TypeMapping("Foo", "io.openapiprocessor.Foo")),
+                    ParameterTypeMapping("far param",
+                        TypeMapping("far", "io.openapiprocessor.Far")),
+                    ParameterTypeMapping("bar param",
+                        TypeMapping("Bar", "io.openapiprocessor.Bar"))
+            )))
+        )
+
+        val info = SchemaInfo("/foo", "far param", "", null, resolver)
+        val result = finder.findEndpointTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.sourceTypeName.shouldBe("far")
+        result.targetTypeName.shouldBe("io.openapiprocessor.Far")
+    }
+
+    "endpoint response mapping matches single mapping" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", listOf(
+                    ResponseTypeMapping("application/json",
+                        TypeMapping("Foo", "io.openapiprocessor.Foo")),
+                     ResponseTypeMapping("application/json-2",
+                        TypeMapping("far", "io.openapiprocessor.Far")),
+                    ResponseTypeMapping("application/json-3",
+                        TypeMapping("Bar", "io.openapiprocessor.Bar"))
+            )))
+        )
+
+        val info = SchemaInfo("/foo", "", "application/json",null, resolver)
+        val result = finder.findEndpointTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.sourceTypeName.shouldBe("Foo")
+        result.targetTypeName.shouldBe("io.openapiprocessor.Foo")
+    }
+
+    "throws on duplicate endpoint parameter mapping" {
+        val finder = MappingFinder(listOf(
+            EndpointTypeMapping("/foo", listOf(
+                    ParameterTypeMapping("foo param",
+                        TypeMapping("Foo A", "io.openapiprocessor.Foo A")),
+                    ParameterTypeMapping("foo param",
+                        TypeMapping("Foo B", "io.openapiprocessor.Foo B"))
+                )))
+        )
+
+        val info = SchemaInfo("/foo", "foo param", "", null, resolver)
+
+        shouldThrow<AmbiguousTypeMappingException> {
+            finder.findEndpointTypeMapping(info)
+        }
+    }
+
+    "throws on duplicate endpoint response mapping" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", listOf(
+                    ResponseTypeMapping("application/json",
+                        TypeMapping("Foo", "io.openapiprocessor.Foo")),
+                    ResponseTypeMapping("application/json",
+                        TypeMapping("far", "io.openapiprocessor.Far"))
+            )))
+        )
+
+        val info = SchemaInfo("/foo", "", "application/json", null, resolver)
+
+        shouldThrow<AmbiguousTypeMappingException> {
+            finder.findEndpointTypeMapping(info)
+        }
+    }
+
+    "endpoint type mapping matches single mapping" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", listOf(
+                    TypeMapping("Foo", "io.openapiprocessor.Foo"),
+                    TypeMapping("Far", "io.openapiprocessor.Far"),
+                    TypeMapping("Bar", "io.openapiprocessor.Bar")
+            )))
+        )
+
+        val info = SchemaInfo("/foo", "Foo", "", null, resolver)
+        val result = finder.findEndpointTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.sourceTypeName.shouldBe("Foo")
+        result.targetTypeName.shouldBe("io.openapiprocessor.Foo")
+    }
+
 })
