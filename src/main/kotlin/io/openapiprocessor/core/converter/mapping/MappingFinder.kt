@@ -289,14 +289,6 @@ class IoMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 }
 
 @Deprecated("obsolete")
-class ResultTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
-
-    override fun match(mapping: ResultTypeMapping): Boolean {
-        return true
-    }
-
-}
-
 class SingleTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: TypeMapping): Boolean {
