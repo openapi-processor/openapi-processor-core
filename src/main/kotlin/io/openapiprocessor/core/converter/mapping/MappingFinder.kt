@@ -77,10 +77,10 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find (endpoint) result type mappings.
+     * find (endpoint) "result" type mappings.
      *
      * @param info schema info of the OpenAPI schema.
-     * @return the result type mappings or null if there is no match.
+     * @return the "result" type mappings or null if there is no match.
      */
     fun findEndpointResultTypeMapping(info: SchemaInfo): ResultTypeMapping? {
         val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
@@ -93,9 +93,9 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find (global) result type mappings.
+     * find (global) "result" type mappings.
      *
-     * @return the result type mapping or null if there is no match.
+     * @return the "result" type mapping or null if there is no match.
      */
     fun findResultTypeMapping(): ResultTypeMapping? {
         val matches = filterMappings({ _: ResultTypeMapping -> true }, typeMappings)
@@ -106,10 +106,10 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find (endpoint) single type mappings.
+     * find (endpoint) "single" type mappings.
      *
      * @param info schema info of the OpenAPI schema.
-     * @return the single type mappings or null if there is no match.
+     * @return the "single" type mappings or null if there is no match.
      */
     fun findEndpointSingleTypeMapping(info: SchemaInfo): TypeMapping? {
         val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
@@ -122,9 +122,9 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find (global) single type mapping.
+     * find (global) "single" type mapping.
      *
-     * @return the single type mappings or null if there is no match.
+     * @return the "single" type mappings or null if there is no match.
      */
     fun findSingleTypeMapping(): TypeMapping? {
         val matches = filterMappings(SingleTypeMatcher(), typeMappings)
