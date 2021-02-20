@@ -124,7 +124,6 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     /**
      * find (global) single type mapping.
      *
-     * @param info schema info of the OpenAPI schema.
      * @return the single type mappings or null if there is no match.
      */
     fun findSingleTypeMapping(): TypeMapping? {
@@ -133,43 +132,6 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
             return null
 
         return matches.first() as TypeMapping
-    }
-
-
-    /**
-     * find endpoint single type mapping.
-     *
-     * @param info schema info of the OpenAPI schema.
-     * @return the single type mapping.
-     */
-    fun findEndpointSingleMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
-
-        val matcher = SingleTypeMatcherOld(info)
-        val result = ep.filter {
-            it.matches(matcher)
-        }
-
-        if (result.isNotEmpty()) {
-            return result
-        }
-
-        return emptyList()
-    }
-
-    /**
-     * find (global) single type mapping.
-     *
-     * @param info schema info of the OpenAPI schema.
-     * @return the single type mapping.
-     */
-    fun findSingleMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(SingleTypeMatcherOld(info), typeMappings)
-        if (ep.isNotEmpty()) {
-            return ep
-        }
-
-        return emptyList()
     }
 
     /**
@@ -302,28 +264,6 @@ class EndpointMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: EndpointTypeMapping): Boolean {
         return mapping.path == schema.getPath()
-    }
-
-}
-
-@Deprecated("")
-class IoMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
-
-    override fun match(mapping: ParameterTypeMapping): Boolean {
-        return mapping.parameterName == schema.getName()
-    }
-
-    override fun match(mapping: ResponseTypeMapping): Boolean {
-        return mapping.contentType == schema.getContentType()
-    }
-
-}
-
-@Deprecated("obsolete")
-class SingleTypeMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
-
-    override fun match(mapping: TypeMapping): Boolean {
-        return mapping.sourceTypeName == "single"
     }
 
 }
