@@ -106,6 +106,37 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
+     * find (endpoint) single type mappings.
+     *
+     * @param info schema info of the OpenAPI schema.
+     * @return the single type mappings or null if there is no match.
+     */
+    fun findEndpointSingleTypeMapping(info: SchemaInfo): TypeMapping? {
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+
+        val matches = filterMappings(SingleTypeMatcher(), ep)
+        if (matches.isEmpty())
+            return null
+
+        return matches.first() as TypeMapping
+    }
+
+    /**
+     * find (global) single type mapping.
+     *
+     * @param info schema info of the OpenAPI schema.
+     * @return the single type mappings or null if there is no match.
+     */
+    fun findSingleTypeMapping(): TypeMapping? {
+        val matches = filterMappings(SingleTypeMatcher(), typeMappings)
+        if (matches.isEmpty())
+            return null
+
+        return matches.first() as TypeMapping
+    }
+
+
+    /**
      * find endpoint single type mapping.
      *
      * @param info schema info of the OpenAPI schema.
