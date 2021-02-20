@@ -72,33 +72,14 @@ class MultiDataTypeWrapper(
     }
 
     private fun getMultiDataType(info: SchemaInfo): TargetType? {
-        // check endpoint multi mapping
-        val endpointMatches = finder.findEndpointMultiMapping(info)
-
-        if (endpointMatches.isNotEmpty()) {
-
-            if (endpointMatches.size != 1) {
-                throw AmbiguousTypeMappingException(endpointMatches.toTypeMapping())
-            }
-
-            val target = (endpointMatches.first() as TargetTypeMapping).getTargetType()
-            if (target != null) {
-                return target
-            }
+        // check endpoint result mapping
+        val epMatch = finder.findEndpointMultiTypeMapping(info)
+        if (epMatch != null) {
+            return epMatch.getTargetType()
         }
 
-        // find global multi mapping
-        val typeMatches = finder.findMultiMapping(info)
-        if (typeMatches.isEmpty ()) {
-            return null
-        }
-
-        if (typeMatches.size != 1) {
-            throw AmbiguousTypeMappingException(typeMatches.toTypeMapping())
-        }
-
-        val match = typeMatches.first () as TargetTypeMapping
-        return match.getTargetType()
+        // check global result mapping
+        return finder.findMultiTypeMapping()?.getTargetType()
     }
 
     private fun checkNone(dataType: DataType): DataType {
