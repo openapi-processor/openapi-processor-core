@@ -164,29 +164,22 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * check if the given endpoint should b excluded.
+     * check if the given endpoint should be excluded.
      *
      * @param path the endpoint path
      * @return true/false
      */
     fun isExcludedEndpoint(path: String): Boolean {
-        val info = MappingSchemaEndpoint(path)
-        val matcher = EndpointMatcherOld(info)
+        val ep = typeMappings
+            .filterIsInstance<EndpointTypeMapping>()
+            .filter(EndpointTypeMatcher(path))
 
-        val ep = typeMappings.filter {
-            it.matches (matcher)
-        }
+        if (ep.isEmpty())
+            return false
 
-        if (ep.isNotEmpty()) {
-            if (ep.size != 1) {
-                throw AmbiguousTypeMappingException(ep.map { it as TypeMapping })
-            }
+        // todo check multiple matches
 
-            val match = ep.first () as EndpointTypeMapping
-            return match.exclude
-        }
-
-        return false
+        return ep.first().exclude
     }
 
     private fun getTypeMapping(mappings: List<Mapping>): TypeMapping? {
