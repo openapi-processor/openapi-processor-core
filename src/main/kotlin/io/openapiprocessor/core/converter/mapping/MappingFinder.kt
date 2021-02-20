@@ -21,7 +21,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     fun findEndpointMappings(info: SchemaInfo): List<Mapping> {
         val ep = filterMappings(EndpointMatcher(info), typeMappings)
 
-        val io = filterMappings(IoMatcherOld(info), ep)
+        val io = filterMappingsOld(IoMatcherOld(info), ep)
         if (io.isNotEmpty()) {
             return io
         }
@@ -36,7 +36,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return list of matching mappings
      */
     fun findIoMappings(info: SchemaInfo): List<Mapping> {
-        return filterMappings(IoMatcherOld(info), typeMappings)
+        return filterMappingsOld(IoMatcherOld(info), typeMappings)
     }
 
     /**
@@ -79,7 +79,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      */
     fun findAdditionalEndpointParameter(path: String): List<Mapping> {
         val info = MappingSchemaEndpoint(path)
-        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
+        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
 
         val matcher = AddParameterMatcher(info)
         val add = ep.filter {
@@ -100,7 +100,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the result type mapping.
      */
     fun findEndpointResultMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
+        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
 
         val matcher = ResultTypeMatcher(info)
         val result = ep.filter {
@@ -121,7 +121,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the result type mapping.
      */
     fun findResultMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(ResultTypeMatcher(info), typeMappings)
+        val ep = filterMappingsOld(ResultTypeMatcher(info), typeMappings)
         if (ep.isNotEmpty()) {
             return ep
         }
@@ -136,7 +136,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the single type mapping.
      */
     fun findEndpointSingleMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
+        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
 
         val matcher = SingleTypeMatcher(info)
         val result = ep.filter {
@@ -157,7 +157,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the single type mapping.
      */
     fun findSingleMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(SingleTypeMatcher(info), typeMappings)
+        val ep = filterMappingsOld(SingleTypeMatcher(info), typeMappings)
         if (ep.isNotEmpty()) {
             return ep
         }
@@ -172,7 +172,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the multi type mapping.
      */
     fun findEndpointMultiMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(EndpointMatcherOld(info), typeMappings)
+        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
 
         val matcher = MultiTypeMatcher(info)
         val result = ep.filter {
@@ -193,7 +193,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the multi type mapping.
      */
     fun findMultiMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappings(MultiTypeMatcher(info), typeMappings)
+        val ep = filterMappingsOld(MultiTypeMatcher(info), typeMappings)
         if (ep.isNotEmpty()) {
             return ep
         }
@@ -228,7 +228,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     @Deprecated(message = "replaced by filterMappings(matcher, mappings)")
-    private fun filterMappings(visitor: MappingVisitor, mappings: List<Mapping>): List<Mapping> {
+    private fun filterMappingsOld(visitor: MappingVisitor, mappings: List<Mapping>): List<Mapping> {
         return mappings
             .filter { it.matches(visitor) }
             .map { it.getChildMappings() }

@@ -3,4 +3,6 @@ openapi-processor-spring: v2
 options:
   package-name: generated
 
-# map:
+map:
+
+  null: org.openapitools.jackson.nullable.JsonNullable
