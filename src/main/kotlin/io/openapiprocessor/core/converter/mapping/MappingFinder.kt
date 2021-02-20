@@ -114,7 +114,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     fun findEndpointSingleMapping(info: SchemaInfo): List<Mapping> {
         val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
 
-        val matcher = SingleTypeMatcher(info)
+        val matcher = SingleTypeMatcherOld(info)
         val result = ep.filter {
             it.matches(matcher)
         }
@@ -133,7 +133,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the single type mapping.
      */
     fun findSingleMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(SingleTypeMatcher(info), typeMappings)
+        val ep = filterMappingsOld(SingleTypeMatcherOld(info), typeMappings)
         if (ep.isNotEmpty()) {
             return ep
         }
@@ -150,7 +150,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     fun findEndpointMultiMapping(info: SchemaInfo): List<Mapping> {
         val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
 
-        val matcher = MultiTypeMatcher(info)
+        val matcher = MultiTypeMatcherOld(info)
         val result = ep.filter {
             it.matches (matcher)
         }
@@ -169,7 +169,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the multi type mapping.
      */
     fun findMultiMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(MultiTypeMatcher(info), typeMappings)
+        val ep = filterMappingsOld(MultiTypeMatcherOld(info), typeMappings)
         if (ep.isNotEmpty()) {
             return ep
         }
@@ -289,7 +289,7 @@ class IoMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 }
 
 @Deprecated("obsolete")
-class SingleTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
+class SingleTypeMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: TypeMapping): Boolean {
         return mapping.sourceTypeName == "single"
@@ -297,7 +297,8 @@ class SingleTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
-class MultiTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
+@Deprecated("obsolete")
+class MultiTypeMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: TypeMapping): Boolean {
         return mapping.sourceTypeName == "multi"
