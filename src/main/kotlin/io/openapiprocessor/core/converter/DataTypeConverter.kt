@@ -309,6 +309,14 @@ class DataTypeConverter(
         return enumType
     }
 
+    /**
+     * the mappings are checked in the following order and the first match wins:
+     *
+     * - endpoint io (parameter/response)
+     * - endpoint type
+     * - global io (parameter/response)
+     * - global type
+     */
     private fun getMappedDataType(info: SchemaInfo): TargetType? {
         // check endpoint mappings
         val endpointMatches = finder.findEndpointMappings(info)
