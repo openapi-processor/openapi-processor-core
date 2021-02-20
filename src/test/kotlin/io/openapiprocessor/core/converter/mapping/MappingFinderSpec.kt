@@ -58,4 +58,90 @@ class MappingFinderSpec: StringSpec({
         }
     }
 
+    "no io mapping in empty mappings" {
+        val finder = MappingFinder(emptyList())
+
+        val param = SchemaInfo("/any", "parameter", "", null, resolver)
+        val paramResult = finder.findIoMapping(param)
+        paramResult.shouldBeNull()
+
+        val response = SchemaInfo("/any", "", "application/json", null, resolver)
+        val responseResult = finder.findIoMapping(response)
+        responseResult.shouldBeNull()
+    }
+
+    "io parameter mapping matches single mapping" {
+        val finder = MappingFinder(
+            listOf(
+                ParameterTypeMapping("foo param",
+                    TypeMapping("Foo", "io.openapiprocessor.Foo")),
+                ParameterTypeMapping("far param",
+                    TypeMapping("far", "io.openapiprocessor.Far")),
+                ParameterTypeMapping("bar param",
+                    TypeMapping("Bar", "io.openapiprocessor.Bar"))
+            )
+        )
+
+        val info = SchemaInfo("/any", "far param", "", null, resolver)
+        val result = finder.findIoMapping(info)
+
+        result.shouldNotBeNull()
+        result.sourceTypeName.shouldBe("far")
+        result.targetTypeName.shouldBe("io.openapiprocessor.Far")
+    }
+
+    "io response mapping matches single mapping" {
+        val finder = MappingFinder(
+            listOf(
+                ResponseTypeMapping("application/json",
+                    TypeMapping("Foo", "io.openapiprocessor.Foo")),
+                ResponseTypeMapping("application/json-2",
+                    TypeMapping("far", "io.openapiprocessor.Far")),
+                ResponseTypeMapping("application/json-3",
+                    TypeMapping("Bar", "io.openapiprocessor.Bar"))
+            )
+        )
+
+        val info = SchemaInfo("/any", "", "application/json",null, resolver)
+        val result = finder.findIoMapping(info)
+
+        result.shouldNotBeNull()
+        result.sourceTypeName.shouldBe("Foo")
+        result.targetTypeName.shouldBe("io.openapiprocessor.Foo")
+    }
+
+    "throws on duplicate parameter mapping" {
+        val finder = MappingFinder(
+            listOf(
+                ParameterTypeMapping("foo param",
+                    TypeMapping("Foo A", "io.openapiprocessor.Foo A")),
+                ParameterTypeMapping("foo param",
+                    TypeMapping("Foo B", "io.openapiprocessor.Foo B"))
+            )
+        )
+
+        val info = SchemaInfo("/any", "foo param", "", null, resolver)
+
+        shouldThrow<AmbiguousTypeMappingException> {
+            finder.findIoMapping(info)
+        }
+    }
+
+    "throws on duplicate response mapping" {
+        val finder = MappingFinder(
+            listOf(
+                ResponseTypeMapping("application/json",
+                    TypeMapping("Foo", "io.openapiprocessor.Foo")),
+                ResponseTypeMapping("application/json",
+                    TypeMapping("far", "io.openapiprocessor.Far"))
+            )
+        )
+
+        val info = SchemaInfo("/any", "", "application/json", null, resolver)
+
+        shouldThrow<AmbiguousTypeMappingException> {
+            finder.findIoMapping(info)
+        }
+    }
+
 })

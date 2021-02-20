@@ -35,8 +35,28 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @param info schema info of the OpenAPI schema.
      * @return list of matching mappings
      */
+    @Deprecated("")
     fun findIoMappings(info: SchemaInfo): List<Mapping> {
         return filterMappingsOld(IoMatcherOld(info), typeMappings)
+    }
+
+    /**
+     * find a matching (global) parameter/response (io) mapping for the given schema info.
+     *
+     * @param info schema info of the OpenAPI schema.
+     * @return the matching mapping or null if there is no match.
+     * @throws AmbiguousTypeMappingException if there is more than one match.
+     */
+    fun findIoMapping(info: SchemaInfo): TypeMapping? {
+        val parameter = getTypeMapping(filterMappings(ParameterTypeMatcher(info), typeMappings))
+        if (parameter != null)
+            return parameter
+
+        val response = getTypeMapping(filterMappings(ResponseTypeMatcher(info), typeMappings))
+        if (response != null)
+            return response
+
+        return null
     }
 
     /**
@@ -298,6 +318,7 @@ class EndpointMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
+@Deprecated("")
 class IoMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: ParameterTypeMapping): Boolean {
@@ -305,6 +326,22 @@ class IoMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
     }
 
     override fun match(mapping: ResponseTypeMapping): Boolean {
+        return mapping.contentType == schema.getContentType()
+    }
+
+}
+
+class ParameterTypeMatcher(private val schema: MappingSchema): (ParameterTypeMapping) -> Boolean {
+
+    override fun invoke(mapping: ParameterTypeMapping): Boolean {
+        return mapping.parameterName == schema.getName()
+    }
+
+}
+
+class ResponseTypeMatcher(private val schema: MappingSchema): (ResponseTypeMapping) -> Boolean {
+
+    override fun invoke(mapping: ResponseTypeMapping): Boolean {
         return mapping.contentType == schema.getContentType()
     }
 
