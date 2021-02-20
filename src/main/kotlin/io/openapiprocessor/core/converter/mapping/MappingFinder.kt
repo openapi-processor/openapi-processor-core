@@ -6,6 +6,9 @@
 package io.openapiprocessor.core.converter.mapping
 
 import io.openapiprocessor.core.converter.SchemaInfo
+import io.openapiprocessor.core.converter.mapping.matcher.ParameterTypeMatcher
+import io.openapiprocessor.core.converter.mapping.matcher.ResponseTypeMatcher
+import io.openapiprocessor.core.converter.mapping.matcher.TypeMatcher
 
 /**
  * find mappings of a given schema info in the type mapping list.
@@ -318,51 +321,7 @@ class IoMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
-class ParameterTypeMatcher(private val schema: MappingSchema): (ParameterTypeMapping) -> Boolean {
-
-    override fun invoke(mapping: ParameterTypeMapping): Boolean {
-        return mapping.parameterName == schema.getName()
-    }
-
-}
-
-class ResponseTypeMatcher(private val schema: MappingSchema): (ResponseTypeMapping) -> Boolean {
-
-    override fun invoke(mapping: ResponseTypeMapping): Boolean {
-        return mapping.contentType == schema.getContentType()
-    }
-
-}
-
-class TypeMatcher(private val schema: MappingSchema): (TypeMapping) -> Boolean {
-
-    override fun invoke(mapping: TypeMapping): Boolean {
-        // try to match by name first
-        // the format must match to avoid matching primitive and primitive with format, e.g.
-        // string should not match string:binary
-        if (matchesName(mapping) && matchesFormat(mapping)) {
-            return true
-        }
-
-        return when {
-            schema.isPrimitive() -> {
-                matchesType(mapping) && matchesFormat(mapping)
-            }
-            schema.isArray() -> {
-                matchesArray(mapping)
-            }
-            else -> {
-                false // nop
-            }
-        }
-    }
-
-    private fun matchesName(m: TypeMapping): Boolean = m.sourceTypeName == schema.getName()
-    private fun matchesFormat(m: TypeMapping): Boolean = m.sourceTypeFormat == schema.getFormat()
-    private fun matchesType(m: TypeMapping): Boolean = m.sourceTypeName == schema.getType()
-    private fun matchesArray(m: TypeMapping): Boolean = m.sourceTypeName == "array"
-}
-
+@Deprecated("obsolete")
 class ResultTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: ResultTypeMapping): Boolean {
