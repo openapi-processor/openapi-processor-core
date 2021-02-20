@@ -72,32 +72,13 @@ class ResultDataTypeWrapper(
 
     private fun getMappedResultDataType(info: SchemaInfo): TargetType? {
         // check endpoint result mapping
-        val endpointMatches = finder.findEndpointResultMapping(info)
-
-        if (endpointMatches.isNotEmpty()) {
-
-            if (endpointMatches.size != 1) {
-                throw AmbiguousTypeMappingException (endpointMatches.map { it as TypeMapping })
-            }
-
-            val target = (endpointMatches.first() as TargetTypeMapping).getTargetType()
-            if (target != null) {
-                return target
-            }
+        val epMatch = finder.findEndpointResultTypeMapping(info)
+        if (epMatch != null) {
+            return epMatch.getTargetType()
         }
 
-        // find global result mapping
-        val typeMatches = finder.findResultMapping(info)
-        if (typeMatches.isEmpty ()) {
-            return null
-        }
-
-        if (typeMatches.size != 1) {
-            throw AmbiguousTypeMappingException(typeMatches.map { it as TypeMapping })
-        }
-
-        val match = typeMatches.first () as TargetTypeMapping
-        return match.getTargetType()
+        // check global result mapping
+        return finder.findResultTypeMapping()?.getTargetType()
     }
 
 }
