@@ -340,17 +340,8 @@ class DataTypeConverter(
         }
 
         // check global type mapping
-        val typeMatches = finder.findTypeMappings(info)
-        if (typeMatches.isEmpty()) {
-            return null
-        }
-
-        if (typeMatches.size != 1) {
-            throw AmbiguousTypeMappingException(typeMatches.toTypeMapping())
-        }
-
-        val match = typeMatches.first () as TargetTypeMapping
-        return match.getTargetType()
+        val typeMatch = finder.findTargetTypeMapping(info)
+        return typeMatch.getTargetType()
     }
 
     /**
