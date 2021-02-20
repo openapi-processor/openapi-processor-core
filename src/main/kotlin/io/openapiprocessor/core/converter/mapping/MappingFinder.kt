@@ -135,6 +135,35 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
+     * find (endpoint) "multi" type mappings.
+     *
+     * @param info schema info of the OpenAPI schema.
+     * @return the "multi" type mappings or null if there is no match.
+     */
+    fun findEndpointMultiTypeMapping(info: SchemaInfo): TypeMapping? {
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+
+        val matches = filterMappings(MultiTypeMatcher(), ep)
+        if (matches.isEmpty())
+            return null
+
+        return matches.first() as TypeMapping
+    }
+
+    /**
+     * find (global) "multi" type mapping.
+     *
+     * @return the "multi" type mappings or null if there is no match.
+     */
+    fun findMultiTypeMapping(): TypeMapping? {
+        val matches = filterMappings(MultiTypeMatcher(), typeMappings)
+        if (matches.isEmpty())
+            return null
+
+        return matches.first() as TypeMapping
+    }
+
+    /**
      * find endpoint multi type mapping.
      *
      * @param info schema info of the OpenAPI schema.
