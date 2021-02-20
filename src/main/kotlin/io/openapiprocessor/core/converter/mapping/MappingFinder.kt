@@ -47,7 +47,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the matching mapping or null if there is no match.
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
-    fun findIoMapping(info: SchemaInfo): TypeMapping? {
+    fun findIoTypeMapping(info: SchemaInfo): TypeMapping? {
         val parameter = getTypeMapping(filterMappings(ParameterTypeMatcher(info), typeMappings))
         if (parameter != null)
             return parameter

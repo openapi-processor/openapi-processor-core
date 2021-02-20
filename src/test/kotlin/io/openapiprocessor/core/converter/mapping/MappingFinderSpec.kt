@@ -62,11 +62,11 @@ class MappingFinderSpec: StringSpec({
         val finder = MappingFinder(emptyList())
 
         val param = SchemaInfo("/any", "parameter", "", null, resolver)
-        val paramResult = finder.findIoMapping(param)
+        val paramResult = finder.findIoTypeMapping(param)
         paramResult.shouldBeNull()
 
         val response = SchemaInfo("/any", "", "application/json", null, resolver)
-        val responseResult = finder.findIoMapping(response)
+        val responseResult = finder.findIoTypeMapping(response)
         responseResult.shouldBeNull()
     }
 
@@ -83,7 +83,7 @@ class MappingFinderSpec: StringSpec({
         )
 
         val info = SchemaInfo("/any", "far param", "", null, resolver)
-        val result = finder.findIoMapping(info)
+        val result = finder.findIoTypeMapping(info)
 
         result.shouldNotBeNull()
         result.sourceTypeName.shouldBe("far")
@@ -103,7 +103,7 @@ class MappingFinderSpec: StringSpec({
         )
 
         val info = SchemaInfo("/any", "", "application/json",null, resolver)
-        val result = finder.findIoMapping(info)
+        val result = finder.findIoTypeMapping(info)
 
         result.shouldNotBeNull()
         result.sourceTypeName.shouldBe("Foo")
@@ -123,7 +123,7 @@ class MappingFinderSpec: StringSpec({
         val info = SchemaInfo("/any", "foo param", "", null, resolver)
 
         shouldThrow<AmbiguousTypeMappingException> {
-            finder.findIoMapping(info)
+            finder.findIoTypeMapping(info)
         }
     }
 
@@ -140,7 +140,7 @@ class MappingFinderSpec: StringSpec({
         val info = SchemaInfo("/any", "", "application/json", null, resolver)
 
         shouldThrow<AmbiguousTypeMappingException> {
-            finder.findIoMapping(info)
+            finder.findIoTypeMapping(info)
         }
     }
 

@@ -326,7 +326,7 @@ class DataTypeConverter(
         }
 
         // check global io (parameter & response) mappings
-        val ioMatch = finder.findIoMapping(info)
+        val ioMatch = finder.findIoTypeMapping(info)
         if (ioMatch != null)
             return ioMatch.getTargetType()
 
