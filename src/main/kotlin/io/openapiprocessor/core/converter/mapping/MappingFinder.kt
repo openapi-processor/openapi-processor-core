@@ -47,15 +47,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findTypeMapping(info: SchemaInfo): TypeMapping? {
-        val mappings = filterMappings(TypeMatcher(info), typeMappings)
-
-        if (mappings.isEmpty())
-            return null
-
-        if (mappings.size > 1)
-            throw AmbiguousTypeMappingException(mappings.toTypeMapping())
-
-        return mappings.first() as TypeMapping
+        return getTypeMapping(filterMappings(TypeMatcher(info), typeMappings))
     }
 
     /**
@@ -233,6 +225,16 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
             .filter { it.matches(visitor) }
             .map { it.getChildMappings() }
             .flatten()
+    }
+
+    private fun getTypeMapping(mappings: List<Mapping>): TypeMapping? {
+        if (mappings.isEmpty())
+            return null
+
+        if (mappings.size > 1)
+            throw AmbiguousTypeMappingException(mappings.toTypeMapping())
+
+        return mappings.first() as TypeMapping
     }
 
     private inline fun <reified T: Mapping> filterMappings(
