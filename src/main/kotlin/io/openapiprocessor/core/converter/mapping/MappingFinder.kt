@@ -65,7 +65,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find a matching (endpoint) type mapping for the given schema info.
+     * find all (endpoint) add parameter type mappings for the given schema info.
      *
      * @param path the endpoint path
      * @return the matching mapping or null if there is no match.
@@ -320,14 +320,7 @@ class MultiTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
-class AddParameterMatcher(schema: MappingSchema): BaseVisitor(schema) {
-
-    override fun match(mapping: AddParameterTypeMapping): Boolean {
-        return true
-    }
-
-}
-
+@Deprecated("obsolete")
 open class BaseVisitor(protected val schema: MappingSchema): MappingVisitor {
 
     override fun match(mapping: EndpointTypeMapping): Boolean {
