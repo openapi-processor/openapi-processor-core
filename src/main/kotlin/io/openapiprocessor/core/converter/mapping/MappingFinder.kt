@@ -60,11 +60,11 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
 
     /**
      * find a matching (global) type mapping for the given schema info as [TargetTypeMapping].
-     * Delegates to [findTypeMapping]. Never returns null but the [TargetType] of [TargetTypeMapping]
-     * is null if ther is no matching mapping.
+     * Delegates to [findTypeMapping]. Never returns null but the [TargetType] of the result
+     * is null if there was no matching mapping.
      *
      * @param info schema info of the OpenAPI schema.
-     * @return the matching target type mapping or a target type mapping of null.
+     * @return the matching target type mapping or a null target type mapping.
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findTargetTypeMapping(info: SchemaInfo): TargetTypeMapping {
