@@ -21,7 +21,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findEndpointTypeMapping(info: SchemaInfo): TypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
 
         val parameter = getTypeMapping(filterMappings(ParameterTypeMatcher(info), ep))
         if (parameter != null)
@@ -72,10 +72,8 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findEndpointAddParameterTypeMappings(path: String): List<AddParameterTypeMapping> {
-        val info = MappingSchemaEndpoint(path)
-        val ep = filterMappings(EndpointTypeMatcher(info), typeMappings)
-
-        return ep.filterIsInstance<AddParameterTypeMapping>()
+        return filterMappings(EndpointTypeMatcher(path), typeMappings)
+            .filterIsInstance<AddParameterTypeMapping>()
     }
 
     /**
@@ -242,6 +240,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
 
 }
 
+@Deprecated("")
 class MappingSchemaEndpoint(private val path: String): MappingSchema {
 
     override fun getPath(): String {
