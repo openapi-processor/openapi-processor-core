@@ -10,6 +10,7 @@ import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.mockk.every
 import io.mockk.mockk
+import io.openapiprocessor.core.converter.mapping.matcher.TypeMatcher
 
 class TypeMatcherSpec: StringSpec({
 
