@@ -319,18 +319,9 @@ class DataTypeConverter(
      */
     private fun getMappedDataType(info: SchemaInfo): TargetType? {
         // check endpoint mappings
-        val endpointMatches = finder.findEndpointMappings(info)
-
-        if (endpointMatches.isNotEmpty()) {
-
-            if (endpointMatches.size != 1) {
-                throw AmbiguousTypeMappingException (endpointMatches.toTypeMapping())
-            }
-
-            val target: TargetType? = (endpointMatches.first() as TargetTypeMapping).getTargetType()
-            if (target != null) {
-                return target
-            }
+        val epMatch = finder.findEndpointTypeMapping(info)
+        if (epMatch != null) {
+            return epMatch.getTargetType()
         }
 
         // check global io (parameter & response) mappings
