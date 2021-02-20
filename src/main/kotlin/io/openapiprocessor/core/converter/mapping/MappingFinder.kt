@@ -164,42 +164,6 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find endpoint multi type mapping.
-     *
-     * @param info schema info of the OpenAPI schema.
-     * @return the multi type mapping.
-     */
-    fun findEndpointMultiMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
-
-        val matcher = MultiTypeMatcherOld(info)
-        val result = ep.filter {
-            it.matches (matcher)
-        }
-
-        if (result.isNotEmpty()) {
-            return result
-        }
-
-        return emptyList()
-    }
-
-    /**
-     * find (global) multi type mapping.
-     *
-     * @param info schema info of the OpenAPI schema.
-     * @return the multi type mapping.
-     */
-    fun findMultiMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(MultiTypeMatcherOld(info), typeMappings)
-        if (ep.isNotEmpty()) {
-            return ep
-        }
-
-        return emptyList()
-    }
-
-    /**
      * check if the given endpoint should b excluded.
      *
      * @param path the endpoint path
@@ -223,14 +187,6 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
         }
 
         return false
-    }
-
-    @Deprecated(message = "replaced by filterMappings(matcher, mappings)")
-    private fun filterMappingsOld(visitor: MappingVisitor, mappings: List<Mapping>): List<Mapping> {
-        return mappings
-            .filter { it.matches(visitor) }
-            .map { it.getChildMappings() }
-            .flatten()
     }
 
     private fun getTypeMapping(mappings: List<Mapping>): TypeMapping? {
@@ -297,14 +253,6 @@ class EndpointMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
-@Deprecated("obsolete")
-class MultiTypeMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
-
-    override fun match(mapping: TypeMapping): Boolean {
-        return mapping.sourceTypeName == "multi"
-    }
-
-}
 
 @Deprecated("obsolete")
 open class BaseVisitor(protected val schema: MappingSchema): MappingVisitor {
