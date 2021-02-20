@@ -40,18 +40,6 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find any matching (global) type mapping for the given schema info.
-     *
-     * @param info schema info of the OpenAPI schema.
-     * @return list of matching mappings
-     */
-
-    @Deprecated("use findTypeMapping()")
-    fun findTypeMappings(info: SchemaInfo): List<Mapping> {
-        return filterMappings (TypeMatcher(info), typeMappings)
-    }
-
-    /**
      * find a matching (global) type mapping for the given schema info.
      *
      * @param info schema info of the OpenAPI schema.
