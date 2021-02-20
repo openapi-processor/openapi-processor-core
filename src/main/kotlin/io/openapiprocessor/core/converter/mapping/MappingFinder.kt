@@ -357,10 +357,10 @@ class TypeMatcher(private val schema: MappingSchema): (TypeMapping) -> Boolean {
         }
     }
 
-    private fun matchesName(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getName()
-    private fun matchesFormat(mapping: TypeMapping): Boolean = mapping.sourceTypeFormat == schema.getFormat()
-    private fun matchesType(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getType()
-    private fun matchesArray(mapping: TypeMapping): Boolean = mapping.sourceTypeName == "array"
+    private fun matchesName(m: TypeMapping): Boolean = m.sourceTypeName == schema.getName()
+    private fun matchesFormat(m: TypeMapping): Boolean = m.sourceTypeFormat == schema.getFormat()
+    private fun matchesType(m: TypeMapping): Boolean = m.sourceTypeName == schema.getType()
+    private fun matchesArray(m: TypeMapping): Boolean = m.sourceTypeName == "array"
 }
 
 class ResultTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
