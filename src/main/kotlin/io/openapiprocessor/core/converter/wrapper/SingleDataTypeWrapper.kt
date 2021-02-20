@@ -66,33 +66,14 @@ class SingleDataTypeWrapper(
     }
 
     private fun getSingleResultDataType(info: SchemaInfo): TargetType? {
-        // check endpoint single mapping
-        val endpointMatches= finder.findEndpointSingleMapping(info)
-
-        if (endpointMatches.isNotEmpty()) {
-
-            if (endpointMatches.size != 1) {
-                throw AmbiguousTypeMappingException(endpointMatches.map { it as TypeMapping })
-            }
-
-            val target = (endpointMatches.first() as TargetTypeMapping).getTargetType()
-            if (target != null) {
-                return target
-            }
+        // check endpoint result mapping
+        val epMatch = finder.findEndpointSingleTypeMapping(info)
+        if (epMatch != null) {
+            return epMatch.getTargetType()
         }
 
-        // find global single mapping
-        val typeMatches = finder.findSingleMapping(info)
-        if (typeMatches.isEmpty ()) {
-            return null
-        }
-
-        if (typeMatches.size != 1) {
-            throw AmbiguousTypeMappingException (typeMatches.map { it as TypeMapping })
-        }
-
-        val match = typeMatches.first () as TargetTypeMapping
-        return match.getTargetType()
+        // check global result mapping
+        return finder.findSingleTypeMapping()?.getTargetType()
     }
 
     private fun checkNone(dataType: DataType): DataType {
