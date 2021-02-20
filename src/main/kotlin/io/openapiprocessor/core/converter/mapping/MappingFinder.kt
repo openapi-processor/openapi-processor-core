@@ -77,39 +77,32 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find endpoint result type mapping.
+     * find (endpoint) result type mappings.
      *
      * @param info schema info of the OpenAPI schema.
-     * @return the result type mapping.
+     * @return the result type mappings or null if there is no match.
      */
-    fun findEndpointResultMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
+    fun findEndpointResultTypeMapping(info: SchemaInfo): ResultTypeMapping? {
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
 
-        val matcher = ResultTypeMatcher(info)
-        val result = ep.filter {
-            it.matches (matcher)
-        }
+        val matches = filterMappings({ m: ResultTypeMapping -> true }, ep)
+        if (matches.isEmpty())
+            return null
 
-        if (result.isNotEmpty()) {
-            return result
-        }
-
-        return emptyList()
+        return matches.first() as ResultTypeMapping
     }
 
     /**
-     * find (global) result type mapping.
+     * find (global) result type mappings.
      *
-     * @param info schema info of the OpenAPI schema.
-     * @return the result type mapping.
+     * @return the result type mapping or null if there is no match.
      */
-    fun findResultMapping(info: SchemaInfo): List<Mapping> {
-        val ep = filterMappingsOld(ResultTypeMatcher(info), typeMappings)
-        if (ep.isNotEmpty()) {
-            return ep
-        }
+    fun findResultTypeMapping(): ResultTypeMapping? {
+        val matches = filterMappings({ m: ResultTypeMapping -> true }, typeMappings)
+        if (matches.isEmpty())
+            return null
 
-        return emptyList()
+        return matches.first() as ResultTypeMapping
     }
 
     /**
