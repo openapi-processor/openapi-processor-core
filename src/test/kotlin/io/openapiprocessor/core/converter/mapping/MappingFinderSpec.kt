@@ -5,8 +5,10 @@
 
 package io.openapiprocessor.core.converter.mapping
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import io.openapiprocessor.core.converter.SchemaInfo
@@ -15,29 +17,45 @@ import io.openapiprocessor.core.parser.RefResolver
 class MappingFinderSpec: StringSpec({
     val resolver = mockk<RefResolver>()
 
-    /*
-    "no mapping in empty mappings" {
+    "no type mapping in empty mappings" {
         val finder = MappingFinder(emptyList())
 
-        val info = SchemaInfo("/any", "Foo", "", null, resolver)
+        val info = SchemaInfo("/any", "Any", "", null, resolver)
         val result = finder.findTypeMapping(info)
 
         result.shouldBeNull()
     }
 
-    "does find mapping" {
-        val finder = MappingFinder(listOf(
-            TypeMapping("Foo", "io.openapiprocessor.Foo")
-        ))
+    "type mapping matches single mapping" {
+        val finder = MappingFinder(
+            listOf(
+                TypeMapping("Foo", "io.openapiprocessor.Foo"),
+                TypeMapping("Far", "io.openapiprocessor.Far"),
+                TypeMapping("Bar", "io.openapiprocessor.Bar")
+            )
+        )
+
+        val info = SchemaInfo("/any", "Foo", "", null, resolver)
+        val result = finder.findTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.sourceTypeName.shouldBe("Foo")
+        result.targetTypeName.shouldBe("io.openapiprocessor.Foo")
+    }
+
+    "throws on duplicate type mapping" {
+        val finder = MappingFinder(
+            listOf(
+                TypeMapping("Foo", "io.openapiprocessor.Foo"),
+                TypeMapping("Foo", "io.openapiprocessor.Foo")
+            )
+        )
 
         val info = SchemaInfo("/any", "Foo", "", null, resolver)
 
-        val result = finder.findTypeMapping(info)
-
-        result?.sourceTypeName.shouldBe("Foo")
-        result?.targetTypeName.shouldBe("io.openapiprocessor.Foo")
-    }*/
-
-    // throws on duplicate mapping
+        shouldThrow<AmbiguousTypeMappingException> {
+            finder.findTypeMapping(info)
+        }
+    }
 
 })
