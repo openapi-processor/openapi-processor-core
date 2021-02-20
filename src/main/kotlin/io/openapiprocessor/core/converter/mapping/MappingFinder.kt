@@ -72,7 +72,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @param path the endpoint path
      * @return list of matching mappings
      */
-    fun findAdditionalEndpointParameter(path: String): List<Mapping> {
+    fun findAdditionalEndpointParameterOld(path: String): List<Mapping> {
         val info = MappingSchemaEndpoint(path)
         val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
 
