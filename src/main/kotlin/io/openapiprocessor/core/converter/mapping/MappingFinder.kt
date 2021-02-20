@@ -65,28 +65,6 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
-     * find additional parameter mappings for the given endpoint.
-     *
-     * @param path the endpoint path
-     * @return list of matching mappings
-     */
-    fun findAdditionalEndpointParameterOld(path: String): List<Mapping> {
-        val info = MappingSchemaEndpoint(path)
-        val ep = filterMappingsOld(EndpointMatcherOld(info), typeMappings)
-
-        val matcher = AddParameterMatcher(info)
-        val add = ep.filter {
-            it.matches (matcher)
-        }
-
-        if (add.isNotEmpty()) {
-            return add
-        }
-
-        return emptyList()
-    }
-
-    /**
      * find a matching (endpoint) type mapping for the given schema info.
      *
      * @param path the endpoint path
