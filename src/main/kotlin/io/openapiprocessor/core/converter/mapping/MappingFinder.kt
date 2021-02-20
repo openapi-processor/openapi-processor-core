@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.converter.mapping
 
 import io.openapiprocessor.core.converter.SchemaInfo
+import io.openapiprocessor.core.converter.mapping.matcher.EndpointTypeMatcher
 import io.openapiprocessor.core.converter.mapping.matcher.ParameterTypeMatcher
 import io.openapiprocessor.core.converter.mapping.matcher.ResponseTypeMatcher
 import io.openapiprocessor.core.converter.mapping.matcher.TypeMatcher
@@ -23,7 +24,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findEndpointTypeMapping(info: SchemaInfo): TypeMapping? {
-        val ep = filterMappings(EndpointMatcher(info), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info), typeMappings)
 
         val parameter = getTypeMapping(filterMappings(ParameterTypeMatcher(info), ep))
         if (parameter != null)
@@ -280,14 +281,6 @@ class MappingSchemaEndpoint(private val path: String): MappingSchema {
 
     override fun isArray(): Boolean {
         throw NotImplementedError()
-    }
-
-}
-
-class EndpointMatcher(private val schema: MappingSchema): (EndpointTypeMapping) -> Boolean {
-
-    override fun invoke(m: EndpointTypeMapping): Boolean {
-        return m.path == schema.getPath()
     }
 
 }
