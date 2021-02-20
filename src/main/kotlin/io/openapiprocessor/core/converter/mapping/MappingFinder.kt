@@ -8,7 +8,7 @@ package io.openapiprocessor.core.converter.mapping
 import io.openapiprocessor.core.converter.SchemaInfo
 
 /**
- * find mapping in type mapping list for a schema info.
+ * find mappings of a given schema info in the type mapping list.
  */
 class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
 
