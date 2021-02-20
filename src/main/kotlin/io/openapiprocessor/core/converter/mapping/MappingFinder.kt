@@ -26,7 +26,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
             return io
         }
 
-        return filterMappings (TypeMatcherOld(info), ep)
+        return filterMappings (TypeMatcher(info), ep)
     }
 
     /**
@@ -46,7 +46,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return list of matching mappings
      */
     fun findTypeMappings(info: SchemaInfo): List<Mapping> {
-        return filterMappings (TypeMatcherOld(info), typeMappings)
+        return filterMappings (TypeMatcher(info), typeMappings)
     }
 
     /**
@@ -313,36 +313,6 @@ class TypeMatcher(private val schema: MappingSchema): (TypeMapping) -> Boolean {
     private fun matchesFormat(mapping: TypeMapping): Boolean = mapping.sourceTypeFormat == schema.getFormat()
     private fun matchesType(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getType()
     private fun matchesArray(mapping: TypeMapping): Boolean = mapping.sourceTypeName == "array"
-}
-
-class TypeMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
-
-    override fun match(mapping: TypeMapping): Boolean {
-        // try to match by name first, the format must match to avoid matching primitive
-        // and primitive with format e.g. string should not match string:binary
-        if (matchesName(mapping) && matchesFormat(mapping)) {
-            return true
-        }
-
-        return when {
-            schema.isPrimitive() -> {
-                matchesType(mapping) && matchesFormat(mapping)
-            }
-            schema.isArray() -> {
-                matchesArray(mapping)
-            }
-            else -> {
-                // nop
-                false
-            }
-        }
-    }
-
-    private fun matchesName(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getName()
-    private fun matchesType(mapping: TypeMapping): Boolean = mapping.sourceTypeName == schema.getType()
-    private fun matchesArray(mapping: TypeMapping): Boolean = mapping.sourceTypeName == "array"
-    private fun matchesFormat(mapping: TypeMapping): Boolean = mapping.sourceTypeFormat == schema.getFormat()
-
 }
 
 class ResultTypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
