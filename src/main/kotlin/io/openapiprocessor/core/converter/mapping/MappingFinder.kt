@@ -26,7 +26,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
             return io
         }
 
-        return filterMappings (TypeMatcher(info), ep)
+        return filterMappings (TypeMatcherOld(info), ep)
     }
 
     /**
@@ -46,7 +46,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return list of matching mappings
      */
     fun findTypeMappings(info: SchemaInfo): List<Mapping> {
-        return filterMappings (TypeMatcher(info), typeMappings)
+        return filterMappings (TypeMatcherOld(info), typeMappings)
     }
 
     /**
@@ -286,7 +286,7 @@ class IoMatcher(schema: MappingSchema): BaseVisitor(schema) {
 
 }
 
-class TypeMatcher(schema: MappingSchema): BaseVisitor(schema) {
+class TypeMatcherOld(schema: MappingSchema): BaseVisitor(schema) {
 
     override fun match(mapping: TypeMapping): Boolean {
         // try to match by name first, the format must match to avoid matching primitive
