@@ -261,7 +261,7 @@ class MappingFinderSpec: StringSpec({
         val finder = MappingFinder(
             listOf(
                 EndpointTypeMapping("/foo", listOf(
-                    TypeMapping("null", "org.openapitools.jackson.nullable.JsonNullable"),
+                    NullTypeMapping("null", "org.openapitools.jackson.nullable.JsonNullable"),
                     TypeMapping("Far", "io.openapiprocessor.Far"),
                     TypeMapping("Bar", "io.openapiprocessor.Bar")
             )))

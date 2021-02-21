@@ -9,7 +9,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
-import io.openapiprocessor.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.NullTypeMapping
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
@@ -56,10 +56,11 @@ class DataTypeConverterNullSpec: StringSpec({
         val options = ApiOptions()
         options.typeMappings = listOf(
             EndpointTypeMapping("/foo", listOf(
-                TypeMapping(
+                NullTypeMapping(
                     "null",
                     "org.openapitools.jackson.nullable.JsonNullable"
-                )))
+                )
+            ))
             )
 
         val schemaInfo = openApi.getBodySchemaInfo("Foo",

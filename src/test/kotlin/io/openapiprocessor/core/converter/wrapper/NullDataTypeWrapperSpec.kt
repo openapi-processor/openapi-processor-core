@@ -13,7 +13,7 @@ import io.mockk.mockk
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.MappingFinder
-import io.openapiprocessor.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.NullTypeMapping
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.parser.RefResolver
 
@@ -34,7 +34,7 @@ class NullDataTypeWrapperSpec : StringSpec({
 
     "does wrap datatype if there is a null mapping" {
         val finder = mockk<MappingFinder>()
-        every { finder.findEndpointNullTypeMapping(any()) } returns TypeMapping(
+        every { finder.findEndpointNullTypeMapping(any()) } returns NullTypeMapping(
             "null", "org.openapitools.jackson.nullable.JsonNullable")
 
         val wrapper = NullDataTypeWrapper(ApiOptions(), finder)
