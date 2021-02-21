@@ -23,7 +23,7 @@ class TypeMapping (
      * The OpenAPI format of {@link #sourceTypeName} that should be mapped to the
      * {@link #targetTypeName} java type.
      */
-    val sourceTypeFormat: String?,
+    val sourceTypeFormat: String? = null,
 
     /**
      * The fully qualified java type name that will replace {@link #sourceTypeName}.
