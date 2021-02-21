@@ -29,7 +29,7 @@ open class NullDataTypeWrapper(
      * @return the resulting java data type
      */
     fun wrap(dataType: DataType, schemaInfo: SchemaInfo): DataType {
-        val targetType = getNullDataType(schemaInfo)
+        val (targetType, init) = getNullDataType(schemaInfo)
         if (targetType == null) {
             return dataType
         }
@@ -37,13 +37,17 @@ open class NullDataTypeWrapper(
         return NullDataType (
             targetType.getName(),
             targetType.getPkg(),
+            init,
             dataType
         )
     }
 
-    private fun getNullDataType(info: SchemaInfo): TargetType? {
+    private data class Target(val targetType: TargetType?, val init: String? = null)
+
+    private fun getNullDataType(info: SchemaInfo): Target {
         // check endpoint result mapping
-        return finder.findEndpointNullTypeMapping(info)?.getTargetType()
+        val nullType = finder.findEndpointNullTypeMapping(info)
+        return Target(nullType?.getTargetType(), nullType?.undefined)
 
         // not yet supported
         // check global result mapping
