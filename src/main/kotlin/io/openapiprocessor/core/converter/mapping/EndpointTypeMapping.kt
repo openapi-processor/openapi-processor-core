@@ -47,10 +47,6 @@ class EndpointTypeMapping @JvmOverloads constructor(
 
 ): Mapping {
 
-    override fun matches(visitor: MappingVisitor): Boolean {
-        return visitor.match(this)
-    }
-
     override fun getChildMappings(): List<Mapping> {
         return typeMappings
     }

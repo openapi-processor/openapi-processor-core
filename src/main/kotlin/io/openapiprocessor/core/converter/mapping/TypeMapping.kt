@@ -81,10 +81,6 @@ class TypeMapping (
         return TargetType(targetTypeName, genericTypeNames)
     }
 
-    override fun matches(visitor: MappingVisitor): Boolean {
-        return visitor.match (this)
-    }
-
     override fun getChildMappings(): List<Mapping> {
         return listOf(this)
     }

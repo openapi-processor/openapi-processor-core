@@ -36,10 +36,6 @@ class ParameterTypeMapping(
 
 ): Mapping {
 
-    override fun matches (visitor: MappingVisitor): Boolean {
-        return visitor.match (this)
-    }
-
     @Override
     override fun getChildMappings(): List<Mapping> {
         return listOf(mapping)

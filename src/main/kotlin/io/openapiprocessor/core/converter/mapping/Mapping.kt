@@ -22,14 +22,6 @@ package io.openapiprocessor.core.converter.mapping
 interface Mapping {
 
     /**
-     * check if this mapping applies to the given schema by delegating to the visitor.
-     *
-     * @param visitor provides the matching logic
-     * @return true, id mapping applies, false otherwise
-     */
-    fun matches (visitor: MappingVisitor): Boolean
-
-    /**
      * Returns the inner mappings.
      * In case of an ENDPOINT mapping the IO or TYPE mappings.
      * In case of an IO mappings its type mappings.
