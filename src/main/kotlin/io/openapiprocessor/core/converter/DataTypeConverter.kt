@@ -135,7 +135,7 @@ class DataTypeConverter(
         )
 
         if (targetType != null) {
-            val mappedDataType = MappedCollectionDataType (
+            return MappedCollectionDataType(
                 targetType.getName(),
                 targetType.getPkg(),
                 item,
