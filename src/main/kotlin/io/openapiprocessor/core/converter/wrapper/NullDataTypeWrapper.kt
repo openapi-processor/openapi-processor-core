@@ -10,7 +10,6 @@ import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.NullDataType
 
 /**
@@ -35,13 +34,11 @@ class NullDataTypeWrapper(
             return dataType
         }
 
-        val wrappedType = NullDataType (
+        return NullDataType (
             targetType.getName(),
             targetType.getPkg(),
             dataType
         )
-
-        return wrappedType
     }
 
     private fun getNullDataType(info: SchemaInfo): TargetType? {
