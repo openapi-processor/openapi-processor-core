@@ -15,7 +15,7 @@ import io.openapiprocessor.core.model.datatypes.NullDataType
 /**
  * wraps a data type in [io.openapiprocessor.core.model.datatypes.NullDataType].
  */
-class NullDataTypeWrapper(
+open class NullDataTypeWrapper(
     private val options: ApiOptions,
     private val finder: MappingFinder = MappingFinder(options.typeMappings)
 ) {

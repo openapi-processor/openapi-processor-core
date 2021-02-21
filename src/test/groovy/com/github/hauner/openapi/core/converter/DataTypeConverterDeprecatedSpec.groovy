@@ -22,6 +22,7 @@ import io.openapiprocessor.core.converter.DataTypeConverter
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.wrapper.NullDataTypeWrapper
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.model.DataTypes
@@ -36,7 +37,8 @@ class DataTypeConverterDeprecatedSpec extends Specification {
 
     @Unroll
     void "converts primitive deprecated schema(#type, #format) to datatype" () {
-        def converter = new DataTypeConverter(new ApiOptions(), new MappingFinder())
+        def converter = new DataTypeConverter(
+            new ApiOptions(), new MappingFinder(), Stub(NullDataTypeWrapper))
         def schema = new TestSchema (type: type, format: format, deprecated: deprecated)
 
         when:
