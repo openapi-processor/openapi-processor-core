@@ -11,6 +11,7 @@ package io.openapiprocessor.core.model.datatypes
 class NullDataType(
     private val type: String,
     private val pkg: String,
+    val init: String?,
     private val dataType: DataType
 ): DataType {
 
