@@ -8,6 +8,7 @@ package io.openapiprocessor.core.processor.mapping.v2
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.openapiprocessor.core.converter.mapping.NullTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.processor.MappingConverter
 import io.openapiprocessor.core.processor.MappingReader
@@ -56,7 +57,7 @@ class MappingConverterSpec: StringSpec({
         val mappings = converter.convert (mapping)
 
         // then:
-        val `null` = mappings.first() as TypeMapping
+        val `null` = mappings.first() as NullTypeMapping
         `null`.targetTypeName shouldBe "org.openapitools.jackson.nullable.JsonNullable"
     }
 
@@ -78,7 +79,29 @@ class MappingConverterSpec: StringSpec({
         val mappings = converter.convert (mapping)
 
         // then:
-        val `null` = mappings.first().getChildMappings().first() as TypeMapping
+        val `null` = mappings.first().getChildMappings().first() as NullTypeMapping
+        `null`.targetTypeName shouldBe "org.openapitools.jackson.nullable.JsonNullable"
+    }
+
+    "read endpoint 'null' mapping with init value" {
+        val yaml = """
+                   |openapi-processor-mapping: v2
+                   |
+                   |options:
+                   |  package-name: io.openapiprocessor.somewhere
+                   | 
+                   |map:
+                   |  paths:
+                   |    /foo:
+                   |      null: org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()
+                   """.trimMargin()
+
+        // when:
+        val mapping = reader.read (yaml)
+        val mappings = converter.convert (mapping)
+
+        // then:
+        val `null` = mappings.first().getChildMappings().first() as NullTypeMapping
         `null`.targetTypeName shouldBe "org.openapitools.jackson.nullable.JsonNullable"
     }
 

@@ -55,7 +55,7 @@ class MappingConverter(val mapping: MappingV2) {
         }
 
         if(mapping.map.`null` != null) {
-            result.add(convertType("null", mapping.map.`null`))
+            result.add(convertNull(mapping.map.`null`))
         }
 
         mapping.map.types.forEach {
@@ -79,6 +79,19 @@ class MappingConverter(val mapping: MappingV2) {
 
     private fun convertResult (result: String): Mapping {
         return ResultTypeMapping(result)
+    }
+
+    private fun convertNull(value: String): Mapping {
+        val split = value
+                .split(" = ")
+                .map { it.trim() }
+
+        val type = split.component1()
+        var init: String? = null
+        if (split.size == 2)
+            init = split.component2()
+
+        return NullTypeMapping("null", type, init)
     }
 
     private fun convertType (from: String, to: String): Mapping {
@@ -144,7 +157,7 @@ class MappingConverter(val mapping: MappingV2) {
         }
 
         if(source.`null` != null) {
-            result.add(convertType("null", source.`null`))
+            result.add(convertNull(source.`null`))
         }
 
         source.types.forEach {
