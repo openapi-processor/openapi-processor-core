@@ -1,0 +1,27 @@
+openapi: 3.0.2
+info:
+  title: nullable wrapper
+  version: 1.0.0
+
+paths:
+  /foo:
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Foo'
+      responses:
+        '204':
+          description: empty
+
+components:
+  schemas:
+
+    Foo:
+      description: a Foo
+      type: object
+      properties:
+        bar:
+          nullable: true
+          type: string
