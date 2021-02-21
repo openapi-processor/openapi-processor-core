@@ -38,7 +38,7 @@ class NullDataTypeWrapper(
         val wrappedType = NullDataType (
             targetType.getName(),
             targetType.getPkg(),
-            checkNone (dataType)
+            dataType
         )
 
         return wrappedType
@@ -51,14 +51,6 @@ class NullDataTypeWrapper(
         // not yet supported
         // check global result mapping
         // return finder.findNullTypeMapping()?.getTargetType()
-    }
-
-    private fun checkNone(dataType: DataType): DataType {
-        if (dataType is NoneDataType) {
-            return dataType.wrappedInResult ()
-        }
-
-        return dataType
     }
 
 }
