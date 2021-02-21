@@ -114,7 +114,7 @@ class  ApiConverter(
 
         val addMappings = mappingFinder.findEndpointAddParameterTypeMappings (ep.path)
         addMappings.forEach {
-            ep.parameters.add (createAdditionalParameter (ep.path, it as AddParameterTypeMapping, dataTypes, resolver))
+            ep.parameters.add (createAdditionalParameter (it, dataTypes, resolver))
         }
     }
 
@@ -177,7 +177,7 @@ class  ApiConverter(
         }
     }
 
-    private fun createAdditionalParameter(path: String, mapping: AddParameterTypeMapping, dataTypes: DataTypes, resolver: RefResolver): ModelParameter {
+    private fun createAdditionalParameter(mapping: AddParameterTypeMapping, dataTypes: DataTypes, resolver: RefResolver): ModelParameter {
         val tm = mapping.getChildMappings().first () as TypeMapping
         val tt = tm.getTargetType()
 
