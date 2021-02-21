@@ -14,7 +14,6 @@ import io.swagger.v3.oas.models.Operation as SwaggerOperation
 import io.swagger.v3.oas.models.parameters.Parameter as SwaggerParameter
 import io.swagger.v3.oas.models.responses.ApiResponse as SwaggerResponse
 
-
 /**
  * Swagger Operation abstraction.
  */
@@ -59,11 +58,10 @@ class Operation(
 
     override fun isDeprecated(): Boolean = operation.deprecated ?: false
 
-    override fun hasTags(): Boolean = if (operation.tags != null) operation.tags.isNotEmpty() else false
+    override fun hasTags(): Boolean = operation.tags?.isNotEmpty() ?: false
 
-    override val description: String?
-        get() = operation.description
+    override val description: String? = operation.description
 
-    override fun getFirstTag(): String? = operation.tags.first()
+    override fun getFirstTag(): String? = operation.tags?.first()
 
 }
