@@ -19,6 +19,7 @@ package io.openapiprocessor.core.writer.java
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
+import io.openapiprocessor.core.model.datatypes.NullDataType
 import java.io.Writer
 
 /**
@@ -85,7 +86,14 @@ class DataTypeWriter(
         }
 
         result += "    @JsonProperty(\"${propertyName}\")\n"
-        result += "    private ${propDataType.getName()} ${javaPropertyName};\n\n"
+        result += "    private ${propDataType.getName()} ${javaPropertyName}"
+
+        // null may have an init value
+        if (propDataType is NullDataType && propDataType.init != null) {
+            result += " = ${propDataType.init}"
+        }
+
+        result += ";\n\n"
         return result
     }
 
