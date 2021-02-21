@@ -44,6 +44,37 @@ fun OpenApi.getSchema(path: String, method: HttpMethod, status: String, mediaTyp
 }
 
 /**
+ * extracts a specific request body Schema from an [OpenApi] object created by [parse()][parse].
+ *
+ * @param path the endpoint path
+ * @param method the http method
+ * @return the [Schema]
+ */
+fun OpenApi.getBodySchema(path: String, method: HttpMethod, mediaType: String): Schema {
+    val endpoint = this.getPaths()[path]
+    if (endpoint == null) {
+        println("unknown path '$path' !")
+    }
+
+    val operation = endpoint?.getOperations()?.find { it.getMethod() == method }
+    if (operation == null) {
+        println("unknown method '$method' ($path)!")
+    }
+
+    val body = operation?.getRequestBody()
+    if (body == null) {
+        println("no body ($path $method)!")
+    }
+
+    val media = body?.getContent()?.get(mediaType)
+    if (media == null) {
+        println("unknown media type '$mediaType' ($path $method)!")
+    }
+
+    return media?.getSchema()!!
+}
+
+/**
  * extracts a specific response Schema from an [OpenApi] object created by [parse()][parse] and
  * creates a [SchemaInfo] for the schema.
  *
@@ -57,4 +88,20 @@ fun OpenApi.getSchemaInfo(name: String, path: String, method: HttpMethod, status
           mediaType: String): SchemaInfo {
     val schema = getSchema(path, method, status, mediaType)
     return SchemaInfo(path, name, mediaType, schema, getRefResolver())
+}
+
+/**
+ * extracts a specific body Schema from an [OpenApi] object created by [parse()][parse] and
+ * creates a [SchemaInfo] for the schema.
+ *
+ * @param name name of schema info, i.e the datatype name
+ * @param path the endpoint path
+ * @param method the http method
+ * @return the [SchemaInfo]
+ */
+fun OpenApi.getBodySchemaInfo(name: String, path: String, method: HttpMethod, mediaType: String)
+: SchemaInfo {
+    val schema = getBodySchema(path, method, mediaType)
+    return SchemaInfo(path, path.substring(1).capitalize() + "RequestBody",
+        mediaType, schema, getRefResolver())
 }

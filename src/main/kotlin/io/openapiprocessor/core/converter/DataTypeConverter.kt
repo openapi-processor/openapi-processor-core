@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.converter
 
 import io.openapiprocessor.core.converter.mapping.*
+import io.openapiprocessor.core.converter.wrapper.NullDataTypeWrapper
 import io.openapiprocessor.core.model.DataTypeCollector
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.datatypes.*
@@ -17,7 +18,8 @@ import kotlin.collections.LinkedHashMap
  */
 class DataTypeConverter(
     private val options: ApiOptions,
-    private val finder: MappingFinder = MappingFinder(options.typeMappings)
+    private val finder: MappingFinder = MappingFinder(options.typeMappings),
+    private val nullWrapper: NullDataTypeWrapper = NullDataTypeWrapper(options, finder)
 ) {
     private val current: Deque<SchemaInfo> = LinkedList()
 
@@ -142,7 +144,6 @@ class DataTypeConverter(
                 constraints,
                 schemaInfo.getDeprecated()
             )
-            return mappedDataType
         }
 
         return ArrayDataType(item, constraints, schemaInfo.getDeprecated())
@@ -155,7 +156,12 @@ class DataTypeConverter(
     private fun createObjectDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
         val properties = LinkedHashMap<String, DataType>()
         schemaInfo.eachProperty { propName: String, propSchemaInfo: SchemaInfo ->
-            properties[propName] = convert(propSchemaInfo, dataTypes)
+            var propDataType = convert(propSchemaInfo, dataTypes)
+
+            if (propSchemaInfo.getNullable()) {
+                propDataType = nullWrapper.wrap(propDataType, schemaInfo)
+            }
+            properties[propName] = propDataType
         }
 
         val targetType = getMappedDataType(schemaInfo)
