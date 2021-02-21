@@ -69,11 +69,4 @@ class MultiDataTypeWrapper(
         return finder.findMultiTypeMapping()?.getTargetType()
     }
 
-    private fun checkNone(dataType: DataType): DataType {
-        if (dataType is NoneDataType) {
-            return dataType.wrappedInResult ()
-        }
-        return dataType
-    }
-
 }
