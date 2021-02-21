@@ -182,6 +182,35 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
         return ep.first().exclude
     }
 
+    /**
+     * find (endpoint) "null" type mappings.
+     *
+     * @param info schema info of the OpenAPI schema.
+     * @return the "null" type mappings or null if there is no match.
+     */
+    fun findEndpointNullTypeMapping(info: SchemaInfo): TypeMapping? {
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+
+        val matches = filterMappings(NullTypeMatcher(), ep)
+        if (matches.isEmpty())
+            return null
+
+        return matches.first() as TypeMapping
+    }
+
+    /**
+     * find (global) "null" type mapping.
+     *
+     * @return the "multi" type mappings or null if there is no match.
+     */
+    fun findNullTypeMapping(): TypeMapping? {
+        val matches = filterMappings(NullTypeMatcher(), typeMappings)
+        if (matches.isEmpty())
+            return null
+
+        return matches.first() as TypeMapping
+    }
+
     private fun getTypeMapping(mappings: List<Mapping>): TypeMapping? {
         if (mappings.isEmpty())
             return null

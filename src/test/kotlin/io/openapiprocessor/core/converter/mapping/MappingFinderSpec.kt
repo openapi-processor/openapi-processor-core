@@ -248,4 +248,31 @@ class MappingFinderSpec: StringSpec({
         result.targetTypeName.shouldBe("io.openapiprocessor.Foo")
     }
 
+    "no endpoint null mapping in empty mappings" {
+        val finder = MappingFinder(emptyList())
+
+        val info = SchemaInfo("/foo", "", "", null, resolver)
+        val result = finder.findEndpointNullTypeMapping(info)
+
+        result.shouldBeNull()
+    }
+
+    "endpoint type mapping matches null mapping" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", listOf(
+                    TypeMapping("null", "org.openapitools.jackson.nullable.JsonNullable"),
+                    TypeMapping("Far", "io.openapiprocessor.Far"),
+                    TypeMapping("Bar", "io.openapiprocessor.Bar")
+            )))
+        )
+
+        val info = SchemaInfo("/foo", "Foo", "", null, resolver)
+        val result = finder.findEndpointNullTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.sourceTypeName.shouldBe("null")
+        result.targetTypeName.shouldBe("org.openapitools.jackson.nullable.JsonNullable")
+    }
+
 })
