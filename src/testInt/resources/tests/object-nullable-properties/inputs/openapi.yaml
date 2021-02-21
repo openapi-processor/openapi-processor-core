@@ -15,11 +15,30 @@ paths:
         '204':
           description: empty
 
+  /foo2:
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Foo2'
+      responses:
+        '204':
+          description: empty
+
 components:
   schemas:
 
     Foo:
       description: a Foo
+      type: object
+      properties:
+        bar:
+          nullable: true
+          type: string
+
+    Foo2:
+      description: a Foo 2
       type: object
       properties:
         bar:

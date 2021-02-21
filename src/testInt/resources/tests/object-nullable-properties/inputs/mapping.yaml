@@ -8,3 +8,6 @@ map:
   paths:
     /foo:
       null: org.openapitools.jackson.nullable.JsonNullable
+
+    /foo2:
+      null: org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()

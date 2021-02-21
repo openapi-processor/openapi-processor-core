@@ -1,3 +1,4 @@
 items:
   - generated/api/Api.java
   - generated/model/Foo.java
+  - generated/model/Foo2.java
