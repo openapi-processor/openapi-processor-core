@@ -5,14 +5,14 @@
 
 package io.openapiprocessor.core.converter.mapping.matcher
 
-import io.openapiprocessor.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.NullTypeMapping
 
 /**
  * [io.openapiprocessor.core.converter.mapping.MappingFinder] matcher for null type mapping.
  */
-class NullTypeMatcher: (TypeMapping) -> Boolean {
+class NullTypeMatcher: (NullTypeMapping) -> Boolean {
 
-    override fun invoke(mapping: TypeMapping): Boolean {
+    override fun invoke(mapping: NullTypeMapping): Boolean {
         return mapping.sourceTypeName == "null"
     }
 
