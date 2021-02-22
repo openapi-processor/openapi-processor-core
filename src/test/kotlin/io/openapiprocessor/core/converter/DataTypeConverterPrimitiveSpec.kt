@@ -14,12 +14,14 @@ import io.mockk.every
 import io.mockk.mockk
 import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.model.DataTypes
+import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.RefResolver
 import io.openapiprocessor.core.parser.Schema
 
 class DataTypeConverterPrimitiveSpec: StringSpec({
     isolationMode = IsolationMode.InstancePerTest
 
+    val any = SchemaInfo.Endpoint("/any", HttpMethod.GET)
     val converter = DataTypeConverter(ApiOptions(), MappingFinder())
     val resolver = mockk<RefResolver>()
 
@@ -36,7 +38,7 @@ class DataTypeConverterPrimitiveSpec: StringSpec({
             every { schema.getFormat() } returns format
 
             // when:
-            val info = SchemaInfo("", "foo", schema = schema, resolver = resolver)
+            val info = SchemaInfo(any, "foo", schema = schema, resolver = resolver)
             val datatype = converter.convert(info, DataTypes())
 
             // then:

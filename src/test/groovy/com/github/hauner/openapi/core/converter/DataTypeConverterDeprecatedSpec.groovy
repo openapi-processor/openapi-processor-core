@@ -27,6 +27,7 @@ import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.model.DataTypes
 import com.github.hauner.openapi.core.test.TestSchema
+import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.RefResolver
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -43,7 +44,9 @@ class DataTypeConverterDeprecatedSpec extends Specification {
 
         when:
         def datatype = converter.convert (
-            new SchemaInfo ("", "", "", schema, Stub(RefResolver)),
+            new SchemaInfo (
+                new SchemaInfo.Endpoint ("", HttpMethod.GET),
+                "", "", schema, Stub(RefResolver)),
             new DataTypes())
 
         then:

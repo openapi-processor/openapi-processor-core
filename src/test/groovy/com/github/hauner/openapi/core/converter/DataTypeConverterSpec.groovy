@@ -25,6 +25,7 @@ import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.test.TestSchema
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
@@ -45,7 +46,9 @@ class DataTypeConverterSpec extends Specification {
 
         when:
         def datatype = converter.convert (
-            new SchemaInfo ("", javaType, "", schema, Stub(RefResolver)),
+            new SchemaInfo (
+                new SchemaInfo.Endpoint("", HttpMethod.GET),
+                javaType, "", schema, Stub(RefResolver)),
             new DataTypes())
 
         then:
@@ -71,7 +74,9 @@ class DataTypeConverterSpec extends Specification {
 
         when:
         def datatype = converter.convert (
-            new SchemaInfo ("", javaType, "", schema, Stub(RefResolver)),
+            new SchemaInfo (
+                new SchemaInfo.Endpoint("", HttpMethod.GET),
+                javaType, "", schema, Stub(RefResolver)),
             new DataTypes())
 
         then:
@@ -94,7 +99,9 @@ class DataTypeConverterSpec extends Specification {
         def schema = new TestSchema (type: type, format: format)
 
         when:
-        converter.convert (new SchemaInfo ("", "", "", schema, Stub (RefResolver)),
+        converter.convert (new SchemaInfo (
+            new SchemaInfo.Endpoint("", HttpMethod.GET),
+            "", "", schema, Stub (RefResolver)),
             new DataTypes())
 
         then:
@@ -127,10 +134,12 @@ class DataTypeConverterSpec extends Specification {
 
         when:
         converter.convert (
-            new SchemaInfo ("", 'Bar', "", barSchema, Stub(RefResolver)),
+            new SchemaInfo (new SchemaInfo.Endpoint ("", HttpMethod.GET),
+                'Bar', "", barSchema, Stub(RefResolver)),
             dt)
         converter.convert (
-            new SchemaInfo ("", 'Foo', "", fooSchema, resolver),
+            new SchemaInfo (new SchemaInfo.Endpoint ("", HttpMethod.GET),
+                'Foo', "", fooSchema, resolver),
             dt)
 
         then:

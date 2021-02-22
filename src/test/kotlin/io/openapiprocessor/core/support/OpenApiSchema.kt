@@ -87,7 +87,7 @@ fun OpenApi.getBodySchema(path: String, method: HttpMethod, mediaType: String): 
 fun OpenApi.getSchemaInfo(name: String, path: String, method: HttpMethod, status: String,
           mediaType: String): SchemaInfo {
     val schema = getSchema(path, method, status, mediaType)
-    return SchemaInfo(path, name, mediaType, schema, getRefResolver())
+    return SchemaInfo(SchemaInfo.Endpoint(path, method), name, mediaType, schema, getRefResolver())
 }
 
 /**
@@ -102,6 +102,7 @@ fun OpenApi.getSchemaInfo(name: String, path: String, method: HttpMethod, status
 fun OpenApi.getBodySchemaInfo(name: String, path: String, method: HttpMethod, mediaType: String)
 : SchemaInfo {
     val schema = getBodySchema(path, method, mediaType)
-    return SchemaInfo(path, path.substring(1).capitalize() + "RequestBody",
+    return SchemaInfo(SchemaInfo.Endpoint(path, method),
+        path.substring(1).capitalize() + "RequestBody",
         mediaType, schema, getRefResolver())
 }

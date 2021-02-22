@@ -109,7 +109,7 @@ class  ApiConverter(
 
     private fun collectParameters(parameters: List<Parameter>, ep: Endpoint, dataTypes: DataTypes, resolver: RefResolver) {
         parameters.forEach { parameter ->
-            ep.parameters.add (createParameter (ep.path, parameter, dataTypes, resolver))
+            ep.parameters.add (createParameter (ep, parameter, dataTypes, resolver))
         }
 
         val addMappings = mappingFinder.findEndpointAddParameterTypeMappings (ep.path)
@@ -125,7 +125,7 @@ class  ApiConverter(
 
         requestBody.getContent().forEach { contentType, mediaType ->
             val info = SchemaInfo(
-                ep.path,
+                SchemaInfo.Endpoint(ep.path, ep.method),
                 getInlineRequestBodyName (ep.path),
                 "",
                 mediaType.getSchema(),
@@ -142,7 +142,7 @@ class  ApiConverter(
     private fun collectResponses(responses: Map<String, Response>, ep: Endpoint, dataTypes: DataTypes, resolver: RefResolver) {
         responses.forEach { httpStatus, httpResponse ->
             val results = createResponses(
-                ep.path,
+                ep,
                 httpStatus,
                 httpResponse,
                 dataTypes,
@@ -152,9 +152,9 @@ class  ApiConverter(
         }
     }
 
-    private fun createParameter(path: String, parameter: Parameter, dataTypes: DataTypes, resolver: RefResolver): ModelParameter {
+    private fun createParameter(ep: Endpoint, parameter: Parameter, dataTypes: DataTypes, resolver: RefResolver): ModelParameter {
         val info = SchemaInfo (
-            path,
+            SchemaInfo.Endpoint(ep.path, ep.method),
             parameter.getName(),
             "",
             parameter.getSchema(),
@@ -279,9 +279,11 @@ class  ApiConverter(
         }
     }
 
-    private fun createResponses(path: String, httpStatus: String, response: Response, dataTypes: DataTypes, resolver: RefResolver): List<ModelResponse> {
+    private fun createResponses(ep: Endpoint, httpStatus: String, response: Response, dataTypes: DataTypes, resolver: RefResolver): List<ModelResponse> {
         if (response.getContent().isEmpty()) {
-            val info = SchemaInfo (path, "", "", null, resolver)
+            val info = SchemaInfo (
+                SchemaInfo.Endpoint(ep.path, ep.method),
+                "", "", null, resolver)
 
             val dataType = NoneDataType()
             val singleDataType = singleDataTypeWrapper.wrap (dataType, info)
@@ -295,8 +297,8 @@ class  ApiConverter(
             val schema = mediaType.getSchema()
 
             val info = SchemaInfo (
-                path,
-                getInlineResponseName (path, httpStatus),
+                SchemaInfo.Endpoint(ep.path, ep.method),
+                getInlineResponseName (ep.path, httpStatus),
                 contentType,
                 schema,
                 resolver)

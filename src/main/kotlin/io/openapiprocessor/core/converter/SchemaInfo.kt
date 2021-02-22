@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.converter
 
 import io.openapiprocessor.core.converter.mapping.MappingSchema
+import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema
 
@@ -17,7 +18,7 @@ class SchemaInfo(
     /**
      * Endpoint path.
      */
-    private val path: String,
+    private val endpoint: Endpoint,
 
     /**
      * name of the type/schema or parameter name.
@@ -41,8 +42,10 @@ class SchemaInfo(
 
 ): MappingSchema {
 
+    class Endpoint(val path: String, val method: HttpMethod)
+
     override fun getPath(): String {
-        return path
+        return endpoint.path
     }
 
     override fun getName(): String {
@@ -203,7 +206,7 @@ class SchemaInfo(
     fun eachItemOf(action: (info: SchemaInfo) -> Unit) {
         schema?.getItems()?.forEachIndexed { index, schema ->
             action(SchemaInfo(
-                path = path,
+                endpoint = endpoint,
                 name = "${name}_${itemOf()!!.capitalize()}_${index}",
                 schema = schema,
                 resolver = resolver
@@ -225,7 +228,7 @@ class SchemaInfo(
      */
     fun buildForRef(): SchemaInfo {
         return SchemaInfo(
-            path = path,
+            endpoint = endpoint,
             name = getRefName(schema!!),
             schema = resolver.resolve(schema),
             resolver = resolver)
@@ -241,7 +244,7 @@ class SchemaInfo(
      */
     private fun buildForNestedType(nestedName: String, nestedSchema: Schema): SchemaInfo {
         return SchemaInfo(
-            path = path,
+            endpoint = endpoint,
             name = getNestedTypeName(nestedName),
             schema = nestedSchema,
             resolver = resolver)
@@ -260,7 +263,7 @@ class SchemaInfo(
         }
 
         return SchemaInfo(
-            path = path,
+            endpoint = endpoint,
             name = name!!,
             schema = schema?.getItem(),
             resolver = resolver

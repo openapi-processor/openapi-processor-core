@@ -14,11 +14,13 @@ import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.mapping.NullTypeMapping
+import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.parser.RefResolver
 
 class NullDataTypeWrapperSpec : StringSpec({
     val resolver = mockk<RefResolver>()
+    val any = SchemaInfo.Endpoint("/any", HttpMethod.GET)
 
     "does not wrap datatype if there is no null mapping" {
         val finder = mockk<MappingFinder>()
@@ -26,7 +28,7 @@ class NullDataTypeWrapperSpec : StringSpec({
 
         val wrapper = NullDataTypeWrapper(ApiOptions(), finder)
 
-        val info = SchemaInfo("/any", "", "", null, resolver)
+        val info = SchemaInfo(any, "", "", null, resolver)
         val dataType = StringDataType()
 
         wrapper.wrap(dataType, info).shouldBeSameInstanceAs(dataType)
@@ -39,7 +41,7 @@ class NullDataTypeWrapperSpec : StringSpec({
 
         val wrapper = NullDataTypeWrapper(ApiOptions(), finder)
 
-        val info = SchemaInfo("/any", "", "", null, resolver)
+        val info = SchemaInfo(any, "", "", null, resolver)
         val dataType = StringDataType()
 
         val result = wrapper.wrap(dataType, info)
