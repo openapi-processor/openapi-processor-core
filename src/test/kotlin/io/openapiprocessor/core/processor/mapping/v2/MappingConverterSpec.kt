@@ -41,7 +41,7 @@ class MappingConverterSpec: StringSpec({
         type.genericTypeNames shouldBe listOf("io.openapiprocessor.somewhere.Bar")
     }
 
-    "read global 'null' mapping" {
+    "read global 'null' mapping".config(enabled = false) {
         val yaml = """
                    |openapi-processor-mapping: v2
                    |

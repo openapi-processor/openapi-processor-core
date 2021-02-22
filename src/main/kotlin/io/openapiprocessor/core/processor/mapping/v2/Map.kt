@@ -41,7 +41,7 @@ data class Map(
     /**
      * null wrapper, e.g. JsonNullable<>
      */
-    val `null`: String? = null,
+    //val `null`: String? = null,
 
     /**
      * global type mappings

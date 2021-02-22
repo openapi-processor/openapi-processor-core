@@ -54,9 +54,9 @@ class MappingConverter(val mapping: MappingV2) {
             result.add(convertType("multi", mapping.map.multi))
         }
 
-        if(mapping.map.`null` != null) {
-            result.add(convertNull(mapping.map.`null`))
-        }
+        //if(mapping.map.`null` != null) {
+        //    result.add(convertNull(mapping.map.`null`))
+        //}
 
         mapping.map.types.forEach {
             result.add(convertType(it))
