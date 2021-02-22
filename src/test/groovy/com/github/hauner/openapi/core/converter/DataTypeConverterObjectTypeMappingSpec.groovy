@@ -221,7 +221,7 @@ components:
         def options = new ApiOptions(
             packageName: 'pkg',
             typeMappings: [
-                new EndpointTypeMapping ('/foobar', [
+                new EndpointTypeMapping ('/foobar', null, [
                         new TypeMapping (
                             'Foo',
                             'someA.ObjectA'),
@@ -290,7 +290,7 @@ paths:
 
         mappings << [
             [
-                new EndpointTypeMapping ('/foobar', [
+                new EndpointTypeMapping ('/foobar', null, [
                         new ParameterTypeMapping (
                             'foobar', new TypeMapping (
                                 null,
@@ -355,7 +355,7 @@ paths:
 
         mappings << [
             [
-                new EndpointTypeMapping ('/object', [
+                new EndpointTypeMapping ('/object', null, [
                     new ResponseTypeMapping (
                         'application/vnd.any', new TypeMapping (
                         'object',
@@ -371,7 +371,7 @@ paths:
                         ['java.lang.String'])
                 )
             ], [
-                new EndpointTypeMapping ('/object', [
+                new EndpointTypeMapping ('/object', null, [
                     new ResponseTypeMapping (
                         'application/vnd.any', new TypeMapping (
                         'object',
@@ -384,7 +384,7 @@ paths:
                         ['java.lang.StringType'])
                 ])
             ], [
-                new EndpointTypeMapping ('/object', [
+                new EndpointTypeMapping ('/object', null, [
                     new TypeMapping (
                         'ObjectResponse200',
                         'pkg.TargetClass',
@@ -433,7 +433,7 @@ components:
         def options = new ApiOptions(
             packageName: 'pkg',
             typeMappings: [
-                new EndpointTypeMapping ('/endpoint-map', [
+                new EndpointTypeMapping ('/endpoint-map', null, [
                     new TypeMapping (
                         'Props',
                         'java.util.Map',
@@ -489,7 +489,7 @@ components:
         def options = new ApiOptions(
             packageName: 'pkg',
             typeMappings: [
-                new EndpointTypeMapping ('/endpoint-map', [
+                new EndpointTypeMapping ('/endpoint-map', null, [
                     new TypeMapping (
                         'Props',
                         'org.springframework.util.MultiValueMap',

@@ -172,7 +172,7 @@ class MappingConverter(val mapping: MappingV2) {
             result.add (convertResponse (it))
         }
 
-        return EndpointTypeMapping(path, result, source.exclude)
+        return EndpointTypeMapping(path, null, result, source.exclude)
     }
 
     private data class MappingTypes(val result: String, val format: String)

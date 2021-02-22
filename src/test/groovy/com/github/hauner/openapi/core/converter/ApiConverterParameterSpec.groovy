@@ -213,7 +213,7 @@ paths:
         )
 
         def options = new ApiOptions(packageName: 'pkg', typeMappings: [
-            new EndpointTypeMapping('/foo', [
+            new EndpointTypeMapping('/foo', null, [
                 new AddParameterTypeMapping (
                     'request', new TypeMapping (
                         null,
@@ -258,7 +258,7 @@ paths:
         )
 
         def options = new ApiOptions(packageName: 'pkg', typeMappings: [
-            new EndpointTypeMapping('/foo', [
+            new EndpointTypeMapping('/foo', null, [
                 new AddParameterTypeMapping (
                     'foo', new TypeMapping (
                         null,

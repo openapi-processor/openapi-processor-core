@@ -227,7 +227,7 @@ paths:
 """)
 
         def options = new ApiOptions(typeMappings: [
-            new EndpointTypeMapping ('/foo', [], true)
+            new EndpointTypeMapping ('/foo', null, [], true)
         ])
 
         when:

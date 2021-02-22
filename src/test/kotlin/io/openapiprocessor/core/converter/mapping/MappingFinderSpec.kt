@@ -159,7 +159,7 @@ class MappingFinderSpec: StringSpec({
     "endpoint parameter mapping matches single mapping" {
         val finder = MappingFinder(
             listOf(
-                EndpointTypeMapping("/foo", listOf(
+                EndpointTypeMapping("/foo", null, listOf(
                     ParameterTypeMapping("foo param",
                         TypeMapping("Foo", "io.openapiprocessor.Foo")),
                     ParameterTypeMapping("far param",
@@ -180,7 +180,7 @@ class MappingFinderSpec: StringSpec({
     "endpoint response mapping matches single mapping" {
         val finder = MappingFinder(
             listOf(
-                EndpointTypeMapping("/foo", listOf(
+                EndpointTypeMapping("/foo", null, listOf(
                     ResponseTypeMapping("application/json",
                         TypeMapping("Foo", "io.openapiprocessor.Foo")),
                      ResponseTypeMapping("application/json-2",
@@ -200,7 +200,7 @@ class MappingFinderSpec: StringSpec({
 
     "throws on duplicate endpoint parameter mapping" {
         val finder = MappingFinder(listOf(
-            EndpointTypeMapping("/foo", listOf(
+            EndpointTypeMapping("/foo", null, listOf(
                     ParameterTypeMapping("foo param",
                         TypeMapping("Foo A", "io.openapiprocessor.Foo A")),
                     ParameterTypeMapping("foo param",
@@ -218,7 +218,7 @@ class MappingFinderSpec: StringSpec({
     "throws on duplicate endpoint response mapping" {
         val finder = MappingFinder(
             listOf(
-                EndpointTypeMapping("/foo", listOf(
+                EndpointTypeMapping("/foo", null, listOf(
                     ResponseTypeMapping("application/json",
                         TypeMapping("Foo", "io.openapiprocessor.Foo")),
                     ResponseTypeMapping("application/json",
@@ -236,7 +236,7 @@ class MappingFinderSpec: StringSpec({
     "endpoint type mapping matches single mapping" {
         val finder = MappingFinder(
             listOf(
-                EndpointTypeMapping("/foo", listOf(
+                EndpointTypeMapping("/foo", null, listOf(
                     TypeMapping("Foo", "io.openapiprocessor.Foo"),
                     TypeMapping("Far", "io.openapiprocessor.Far"),
                     TypeMapping("Bar", "io.openapiprocessor.Bar")
@@ -263,7 +263,7 @@ class MappingFinderSpec: StringSpec({
     "endpoint type mapping matches null mapping" {
         val finder = MappingFinder(
             listOf(
-                EndpointTypeMapping("/foo", listOf(
+                EndpointTypeMapping("/foo", null, listOf(
                     NullTypeMapping("null", "org.openapitools.jackson.nullable.JsonNullable"),
                     TypeMapping("Far", "io.openapiprocessor.Far"),
                     TypeMapping("Bar", "io.openapiprocessor.Bar")

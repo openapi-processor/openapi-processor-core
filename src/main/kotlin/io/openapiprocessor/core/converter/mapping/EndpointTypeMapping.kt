@@ -5,6 +5,8 @@
 
 package io.openapiprocessor.core.converter.mapping
 
+import io.openapiprocessor.core.model.HttpMethod
+
 /**
  * Used with [io.openapiprocessor.core.converter.ApiOptions] to store endpoint specific type
  * mappings. It can also be used to add parameters that are not defined in the api. For example
@@ -15,7 +17,13 @@ class EndpointTypeMapping @JvmOverloads constructor(
     /**
      * full path of the endpoint that is configured by this object.
      */
-    var path: String,
+    val path: String,
+
+    /**
+     * http method of this endpoint. If it is not set (i.e null) the mapping applies to all http
+     * methods.
+     */
+    val method: HttpMethod? = null,
 
     /**
      * provides type mappings for the endpoint.

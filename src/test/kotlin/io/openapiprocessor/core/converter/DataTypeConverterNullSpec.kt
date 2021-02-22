@@ -55,7 +55,7 @@ class DataTypeConverterNullSpec: StringSpec({
 
         val options = ApiOptions()
         options.typeMappings = listOf(
-            EndpointTypeMapping("/foo", listOf(
+            EndpointTypeMapping("/foo", null, listOf(
                 NullTypeMapping(
                     "null",
                     "org.openapitools.jackson.nullable.JsonNullable"

@@ -182,7 +182,7 @@ paths:
                 )
             ],
             [
-                new EndpointTypeMapping ('/foo', [
+                new EndpointTypeMapping ('/foo', null, [
                         new ParameterTypeMapping (
                             'param', new TypeMapping (
                                 'array',
@@ -221,7 +221,7 @@ paths:
 
         when:
         def options = new ApiOptions(packageName: 'pkg', typeMappings: [
-            new EndpointTypeMapping ('/foo', [
+            new EndpointTypeMapping ('/foo', null, [
                 new TypeMapping (
                     'array',
                     targetTypeName)
@@ -290,7 +290,7 @@ paths:
 
         mappings << [
             [
-                new EndpointTypeMapping ('/foobar', [
+                new EndpointTypeMapping ('/foobar', null, [
                     new ParameterTypeMapping (
                         'foobar', new TypeMapping (
                         'array',
@@ -352,7 +352,7 @@ paths:
 
         mappings << [
             [
-                new EndpointTypeMapping ('/array-string', [
+                new EndpointTypeMapping ('/array-string', null, [
                     new ResponseTypeMapping (
                         'application/vnd.any', new TypeMapping (
                         'array',
@@ -366,7 +366,7 @@ paths:
                         'java.util.Collection')
                 )
             ], [
-                new EndpointTypeMapping ('/array-string', [
+                new EndpointTypeMapping ('/array-string', null, [
                     new ResponseTypeMapping (
                         'application/vnd.any', new TypeMapping (
                         'array',
@@ -377,7 +377,7 @@ paths:
                         'java.util.Collection')
                 ])
             ], [
-                new EndpointTypeMapping ('/array-string', [
+                new EndpointTypeMapping ('/array-string', null, [
                     new TypeMapping (
                         'array',
                         'java.util.Collection')

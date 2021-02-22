@@ -263,7 +263,7 @@ paths:
 
         mappings << [
             [
-                new EndpointTypeMapping ('/foo', [
+                new EndpointTypeMapping ('/foo', null, [
                         new ParameterTypeMapping (
                             'bar', new TypeMapping (
                                 'string',

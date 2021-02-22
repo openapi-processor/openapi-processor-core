@@ -99,7 +99,7 @@ paths:
         )
 
         def options = new ApiOptions(packageName: 'pkg', typeMappings: [
-            new EndpointTypeMapping('/multipart/single-file', [
+            new EndpointTypeMapping('/multipart/single-file', null, [
                 new TypeMapping (
                     'string',
                     'binary',
