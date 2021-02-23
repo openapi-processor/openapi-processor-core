@@ -101,13 +101,17 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the "result" type mappings or null if there is no match.
      */
     fun findEndpointResultTypeMapping(info: SchemaInfo): ResultTypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), null/*info.getMethod()*/), typeMappings)
-
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
         val matches = filterMappings({ _: ResultTypeMapping -> true }, ep)
-        if (matches.isEmpty())
-            return null
+        if (matches.isNotEmpty())
+            return matches.first() as ResultTypeMapping
 
-        return matches.first() as ResultTypeMapping
+        val epAll = filterMappings(EndpointTypeMatcher(info.getPath(), null), typeMappings)
+        val matchesAll = filterMappings({ _: ResultTypeMapping -> true }, epAll)
+        if (matchesAll.isNotEmpty())
+            return matchesAll.first() as ResultTypeMapping
+
+        return null;
     }
 
     /**

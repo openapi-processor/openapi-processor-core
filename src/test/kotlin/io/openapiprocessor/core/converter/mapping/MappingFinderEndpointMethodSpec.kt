@@ -122,4 +122,20 @@ class MappingFinderEndpointMethodSpec: StringSpec({
         result[1].parameterName.shouldBe("bar param")
     }
 
+    "endpoint/method result mapping matches" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, emptyList()),
+                EndpointTypeMapping("/foo", HttpMethod.GET, listOf(
+                    ResultTypeMapping("io.openapiprocessor.ResultWrapper")
+            )))
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.findEndpointResultTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.targetTypeName.shouldBe("io.openapiprocessor.ResultWrapper")
+    }
+
 })
