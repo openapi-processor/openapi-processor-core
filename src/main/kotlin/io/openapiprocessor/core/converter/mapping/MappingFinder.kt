@@ -201,12 +201,16 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      */
     fun findEndpointNullTypeMapping(info: SchemaInfo): NullTypeMapping? {
         val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
-
         val matches = filterMappings(NullTypeMatcher(), ep)
-        if (matches.isEmpty())
-            return null
+        if (matches.isNotEmpty())
+            return matches.first() as NullTypeMapping
 
-        return matches.first() as NullTypeMapping
+        val epAll = filterMappings(EndpointTypeMatcher(info.getPath(), null), typeMappings)
+        val matchesAll = filterMappings(NullTypeMatcher(), epAll)
+        if (matchesAll.isNotEmpty())
+            return matchesAll.first() as NullTypeMapping
+
+        return null
     }
 
     /**
