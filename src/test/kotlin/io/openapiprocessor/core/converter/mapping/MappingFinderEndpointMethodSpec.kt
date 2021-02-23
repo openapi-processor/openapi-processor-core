@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.converter.mapping
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -198,6 +199,33 @@ class MappingFinderEndpointMethodSpec: StringSpec({
 
         result.shouldNotBeNull()
         result.targetTypeName.shouldBe("io.openapiprocessor.MultiWrapper")
+    }
+
+    "endpoint/method excluded" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, emptyList()),
+                EndpointTypeMapping("/foo", HttpMethod.GET, emptyList(), true)
+            )
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.isExcludedEndpoint(info.getPath(), info.getMethod())
+
+        result.shouldBeTrue()
+    }
+
+    "endpoint excluded" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, emptyList(), true)
+            )
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.isExcludedEndpoint(info.getPath(), info.getMethod())
+
+        result.shouldBeTrue()
     }
 
 })
