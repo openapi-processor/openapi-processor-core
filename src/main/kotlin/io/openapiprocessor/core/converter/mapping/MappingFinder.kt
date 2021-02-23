@@ -22,7 +22,17 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findEndpointTypeMapping(info: SchemaInfo): TypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
+        // check with method
+        val m = findEndpointTypeMapping(info, info.getMethod())
+        if (m != null)
+            return m
+
+        // check without method, i.e. all methods
+        return findEndpointTypeMapping(info, null)
+    }
+
+    private fun findEndpointTypeMapping(info: SchemaInfo, method: HttpMethod?): TypeMapping? {
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), method), typeMappings)
 
         val parameter = getTypeMapping(filterMappings(ParameterTypeMatcher(info), ep))
         if (parameter != null)
@@ -84,7 +94,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the "result" type mappings or null if there is no match.
      */
     fun findEndpointResultTypeMapping(info: SchemaInfo): ResultTypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), null/*info.getMethod()*/), typeMappings)
 
         val matches = filterMappings({ _: ResultTypeMapping -> true }, ep)
         if (matches.isEmpty())
@@ -173,7 +183,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     fun isExcludedEndpoint(path: String, method: HttpMethod): Boolean {
         val ep = typeMappings
             .filterIsInstance<EndpointTypeMapping>()
-            .filter(EndpointTypeMatcher(path, method))
+            .filter(EndpointTypeMatcher(path, null/*method*/))
 
         if (ep.isEmpty())
             return false

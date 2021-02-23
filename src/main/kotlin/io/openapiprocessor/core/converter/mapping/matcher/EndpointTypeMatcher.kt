@@ -11,11 +11,11 @@ import io.openapiprocessor.core.model.HttpMethod
 /**
  * [io.openapiprocessor.core.converter.mapping.MappingFinder] matcher for endpoint type mappings.
  */
-class EndpointTypeMatcher(private val path: String, private val method: HttpMethod)
+class EndpointTypeMatcher(private val path: String, private val method: HttpMethod?)
     : (EndpointTypeMapping) -> Boolean {
 
     override fun invoke(m: EndpointTypeMapping): Boolean {
-        return m.path == path && (m.method == null || m.method == method)
+        return m.path == path && m.method == method
     }
 
 }
