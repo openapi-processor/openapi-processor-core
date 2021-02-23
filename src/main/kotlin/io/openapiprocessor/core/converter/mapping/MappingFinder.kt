@@ -7,6 +7,7 @@ package io.openapiprocessor.core.converter.mapping
 
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.matcher.*
+import io.openapiprocessor.core.model.HttpMethod
 
 /**
  * find mappings of a given schema info in the type mapping list.
@@ -21,7 +22,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findEndpointTypeMapping(info: SchemaInfo): TypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
 
         val parameter = getTypeMapping(filterMappings(ParameterTypeMatcher(info), ep))
         if (parameter != null)
@@ -71,8 +72,8 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the matching mapping or null if there is no match.
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
-    fun findEndpointAddParameterTypeMappings(path: String): List<AddParameterTypeMapping> {
-        return filterMappings(EndpointTypeMatcher(path), typeMappings)
+    fun findEndpointAddParameterTypeMappings(path: String, method: HttpMethod): List<AddParameterTypeMapping> {
+        return filterMappings(EndpointTypeMatcher(path, method), typeMappings)
             .filterIsInstance<AddParameterTypeMapping>()
     }
 
@@ -83,7 +84,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the "result" type mappings or null if there is no match.
      */
     fun findEndpointResultTypeMapping(info: SchemaInfo): ResultTypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
 
         val matches = filterMappings({ _: ResultTypeMapping -> true }, ep)
         if (matches.isEmpty())
@@ -112,7 +113,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the "single" type mappings or null if there is no match.
      */
     fun findEndpointSingleTypeMapping(info: SchemaInfo): TypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
 
         val matches = filterMappings(SingleTypeMatcher(), ep)
         if (matches.isEmpty())
@@ -141,7 +142,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the "multi" type mappings or null if there is no match.
      */
     fun findEndpointMultiTypeMapping(info: SchemaInfo): TypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
 
         val matches = filterMappings(MultiTypeMatcher(), ep)
         if (matches.isEmpty())
@@ -169,10 +170,10 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @param path the endpoint path
      * @return true/false
      */
-    fun isExcludedEndpoint(path: String): Boolean {
+    fun isExcludedEndpoint(path: String, method: HttpMethod): Boolean {
         val ep = typeMappings
             .filterIsInstance<EndpointTypeMapping>()
-            .filter(EndpointTypeMatcher(path))
+            .filter(EndpointTypeMatcher(path, method))
 
         if (ep.isEmpty())
             return false
@@ -189,7 +190,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @return the "null" type mappings or null if there is no match.
      */
     fun findEndpointNullTypeMapping(info: SchemaInfo): NullTypeMapping? {
-        val ep = filterMappings(EndpointTypeMatcher(info.getPath()), typeMappings)
+        val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
 
         val matches = filterMappings(NullTypeMatcher(), ep)
         if (matches.isEmpty())

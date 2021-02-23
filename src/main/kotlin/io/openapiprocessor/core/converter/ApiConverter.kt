@@ -73,7 +73,7 @@ class  ApiConverter(
     }
 
     private fun createInterface(path: String, operation: Operation, interfaces: MutableMap<String, Interface>): Interface {
-        val targetInterfaceName = getInterfaceName(operation, isExcluded(path))
+        val targetInterfaceName = getInterfaceName(operation, isExcluded(path, operation.getMethod()))
 
         var itf = interfaces[targetInterfaceName]
         if (itf != null) {
@@ -112,7 +112,7 @@ class  ApiConverter(
             ep.parameters.add (createParameter (ep, parameter, dataTypes, resolver))
         }
 
-        val addMappings = mappingFinder.findEndpointAddParameterTypeMappings (ep.path)
+        val addMappings = mappingFinder.findEndpointAddParameterTypeMappings (ep.path, ep.method)
         addMappings.forEach {
             ep.parameters.add (createAdditionalParameter (it, dataTypes, resolver))
         }
@@ -329,8 +329,8 @@ class  ApiConverter(
         return toClass(path) + "Response" + httpStatus
     }
 
-    private fun isExcluded(path: String): Boolean {
-        return mappingFinder.isExcludedEndpoint(path)
+    private fun isExcluded(path: String, method: HttpMethod): Boolean {
+        return mappingFinder.isExcludedEndpoint(path, method)
     }
 
     private fun getInterfaceName(op: Operation, excluded: Boolean): String {

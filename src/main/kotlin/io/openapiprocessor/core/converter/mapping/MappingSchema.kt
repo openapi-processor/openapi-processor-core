@@ -5,6 +5,8 @@
 
 package io.openapiprocessor.core.converter.mapping
 
+import io.openapiprocessor.core.model.HttpMethod
+
 /**
  * Provides the properties required to check if a [Mapping] applies to a
  * [io.openapiprocessor.core.converter.SchemaInfo].
@@ -12,6 +14,7 @@ package io.openapiprocessor.core.converter.mapping
 interface MappingSchema {
 
     fun getPath(): String
+    fun getMethod(): HttpMethod
     fun getName(): String
     fun getContentType(): String
 

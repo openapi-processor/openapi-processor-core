@@ -48,6 +48,10 @@ class SchemaInfo(
         return endpoint.path
     }
 
+    override fun getMethod(): HttpMethod {
+        return endpoint.method
+    }
+
     override fun getName(): String {
         return name
     }
