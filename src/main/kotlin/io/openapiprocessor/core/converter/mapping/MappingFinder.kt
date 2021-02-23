@@ -83,7 +83,14 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findEndpointAddParameterTypeMappings(path: String, method: HttpMethod): List<AddParameterTypeMapping> {
-        return filterMappings(EndpointTypeMatcher(path, method), typeMappings)
+        // check with method
+        val m = filterMappings(EndpointTypeMatcher(path, method), typeMappings)
+            .filterIsInstance<AddParameterTypeMapping>()
+        if (m.isNotEmpty())
+            return m
+
+        // check without method, i.e. all methods
+        return filterMappings(EndpointTypeMatcher(path, null), typeMappings)
             .filterIsInstance<AddParameterTypeMapping>()
     }
 

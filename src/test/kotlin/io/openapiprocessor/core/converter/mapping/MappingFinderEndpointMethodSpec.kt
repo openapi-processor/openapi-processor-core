@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.converter.mapping
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk
@@ -99,6 +100,26 @@ class MappingFinderEndpointMethodSpec: StringSpec({
         result.shouldNotBeNull()
         result.sourceTypeName.shouldBe("null")
         result.targetTypeName.shouldBe("org.openapitools.jackson.nullable.JsonNullable")
+    }
+
+    "endpoint/method add parameter mapping matches" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, emptyList()),
+                EndpointTypeMapping("/foo", HttpMethod.GET, listOf(
+                    AddParameterTypeMapping("foo param",
+                        TypeMapping(null, "io.openapiprocessor.Foo")),
+                    AddParameterTypeMapping("bar param",
+                        TypeMapping(null, "io.openapiprocessor.Foo"))
+            )))
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.findEndpointAddParameterTypeMappings(info.getPath(), info.getMethod())
+
+        result.shouldNotBeEmpty()
+        result[0].parameterName.shouldBe("foo param")
+        result[1].parameterName.shouldBe("bar param")
     }
 
 })
