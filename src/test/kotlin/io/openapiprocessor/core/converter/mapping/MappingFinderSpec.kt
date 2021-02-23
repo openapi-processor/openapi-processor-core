@@ -183,7 +183,7 @@ class MappingFinderSpec: StringSpec({
                 EndpointTypeMapping("/foo", null, listOf(
                     ResponseTypeMapping("application/json",
                         TypeMapping("Foo", "io.openapiprocessor.Foo")),
-                     ResponseTypeMapping("application/json-2",
+                    ResponseTypeMapping("application/json-2",
                         TypeMapping("far", "io.openapiprocessor.Far")),
                     ResponseTypeMapping("application/json-3",
                         TypeMapping("Bar", "io.openapiprocessor.Bar"))
