@@ -111,7 +111,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
         if (matchesAll.isNotEmpty())
             return matchesAll.first() as ResultTypeMapping
 
-        return null;
+        return null
     }
 
     /**
@@ -135,12 +135,16 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      */
     fun findEndpointSingleTypeMapping(info: SchemaInfo): TypeMapping? {
         val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
-
         val matches = filterMappings(SingleTypeMatcher(), ep)
-        if (matches.isEmpty())
-            return null
+        if (matches.isNotEmpty())
+            return matches.first() as TypeMapping
 
-        return matches.first() as TypeMapping
+        val epAll = filterMappings(EndpointTypeMatcher(info.getPath(), null), typeMappings)
+        val matchesAll = filterMappings(SingleTypeMatcher(), epAll)
+        if (matchesAll.isNotEmpty())
+            return matchesAll.first() as TypeMapping
+
+        return null
     }
 
     /**
@@ -164,12 +168,16 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      */
     fun findEndpointMultiTypeMapping(info: SchemaInfo): TypeMapping? {
         val ep = filterMappings(EndpointTypeMatcher(info.getPath(), info.getMethod()), typeMappings)
-
         val matches = filterMappings(MultiTypeMatcher(), ep)
-        if (matches.isEmpty())
-            return null
+        if (matches.isNotEmpty())
+            return matches.first() as TypeMapping
 
-        return matches.first() as TypeMapping
+        val epAll = filterMappings(EndpointTypeMatcher(info.getPath(), null), typeMappings)
+        val matchesAll = filterMappings(MultiTypeMatcher(), epAll)
+        if (matchesAll.isNotEmpty())
+            return matchesAll.first() as TypeMapping
+
+        return null
     }
 
     /**

@@ -138,4 +138,66 @@ class MappingFinderEndpointMethodSpec: StringSpec({
         result.targetTypeName.shouldBe("io.openapiprocessor.ResultWrapper")
     }
 
+    "endpoint/method single mapping matches" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, emptyList()),
+                EndpointTypeMapping("/foo", HttpMethod.GET, listOf(
+                    TypeMapping("single", "io.openapiprocessor.SingleWrapper")
+            )))
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.findEndpointSingleTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.targetTypeName.shouldBe("io.openapiprocessor.SingleWrapper")
+    }
+
+    "endpoint single mapping matches" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, listOf(
+                    TypeMapping("single", "io.openapiprocessor.SingleWrapper")
+            )))
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.findEndpointSingleTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.targetTypeName.shouldBe("io.openapiprocessor.SingleWrapper")
+    }
+
+    "endpoint/method multi mapping matches" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, emptyList()),
+                EndpointTypeMapping("/foo", HttpMethod.GET, listOf(
+                    TypeMapping("multi", "io.openapiprocessor.MultiWrapper")
+            )))
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.findEndpointMultiTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.targetTypeName.shouldBe("io.openapiprocessor.MultiWrapper")
+    }
+
+    "endpoint multi mapping matches" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, listOf(
+                    TypeMapping("multi", "io.openapiprocessor.MultiWrapper")
+            )))
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.findEndpointMultiTypeMapping(info)
+
+        result.shouldNotBeNull()
+        result.targetTypeName.shouldBe("io.openapiprocessor.MultiWrapper")
+    }
+
 })
