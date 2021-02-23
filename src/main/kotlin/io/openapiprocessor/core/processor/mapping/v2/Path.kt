@@ -61,6 +61,19 @@ data class Path(
     /**
      * path limited response mappings
      */
-    val responses: List<Response> = emptyList()
+    val responses: List<Response> = emptyList(),
+
+    /**
+     * http method specific mappings
+     */
+    val get: PathMethod? = null,
+    val head: PathMethod? = null,
+    val post: PathMethod? = null,
+    val put: PathMethod? = null,
+    val delete: PathMethod? = null,
+    val connect: PathMethod? = null,
+    val options: PathMethod? = null,
+    val trace: PathMethod? = null,
+    val patch: PathMethod? = null
 
 )

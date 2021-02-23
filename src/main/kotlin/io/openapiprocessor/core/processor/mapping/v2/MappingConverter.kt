@@ -17,6 +17,7 @@
 package io.openapiprocessor.core.processor.mapping.v2
 
 import io.openapiprocessor.core.converter.mapping.*
+import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 import io.openapiprocessor.core.processor.mapping.v2.parser.ToData
 import io.openapiprocessor.core.processor.mapping.v2.parser.ToExtractor
@@ -72,6 +73,7 @@ class MappingConverter(val mapping: MappingV2) {
 
         mapping.map.paths.forEach {
             result.add(convertPath (it.key, it.value))
+            result.addAll(convertPathMethods(it.key, it.value))
         }
 
         return result
@@ -173,6 +175,78 @@ class MappingConverter(val mapping: MappingV2) {
         }
 
         return EndpointTypeMapping(path, null, result, source.exclude)
+    }
+
+    private fun convertPathMethods(path: String, source: Path): List<Mapping> {
+        val result = ArrayList<Mapping>()
+
+        if (source.get != null) {
+            result.add(convertPathMethod(path, HttpMethod.GET, source.get))
+        }
+
+        if (source.put != null) {
+            result.add(convertPathMethod(path, HttpMethod.PUT, source.put))
+        }
+
+        if (source.post != null) {
+            result.add(convertPathMethod(path, HttpMethod.POST, source.post))
+        }
+
+        if (source.delete != null) {
+            result.add(convertPathMethod(path, HttpMethod.DELETE, source.delete))
+        }
+
+        if (source.options != null) {
+            result.add(convertPathMethod(path, HttpMethod.OPTIONS, source.options))
+        }
+
+        if (source.head != null) {
+            result.add(convertPathMethod(path, HttpMethod.HEAD, source.head))
+        }
+
+        if (source.patch != null) {
+            result.add(convertPathMethod(path, HttpMethod.PATCH, source.patch))
+        }
+
+        if (source.trace != null) {
+            result.add(convertPathMethod(path, HttpMethod.TRACE, source.trace))
+        }
+
+        return result
+    }
+
+    private fun convertPathMethod(path: String, method: HttpMethod, source: PathMethod): Mapping {
+        val result = ArrayList<Mapping>()
+
+        if(source.result != null) {
+            result.add(convertResult(source.result))
+        }
+
+        if(source.single != null) {
+            result.add(convertType("single" , source.single))
+        }
+
+        if(source.multi != null) {
+            result.add(convertType("multi", source.multi))
+        }
+
+        if(source.`null` != null) {
+            result.add(convertNull(source.`null`))
+        }
+
+        source.types.forEach {
+            result.add(convertType(it))
+        }
+
+        source.parameters.forEach {
+            result.add (convertParameter (it))
+        }
+
+        source.responses.forEach {
+            result.add (convertResponse (it))
+        }
+
+        return EndpointTypeMapping(path, method, result, source.exclude)
     }
 
     private data class MappingTypes(val result: String, val format: String)
