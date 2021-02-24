@@ -1,4 +1,0 @@
-= funny kotlin
-
-- why is switch called when?
-- companion object just for static stuff? why not static?
