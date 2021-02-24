@@ -26,6 +26,7 @@
     "Options": {
       "description": "general processor configuration options.",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "package-name": {
           "description": "java root package name to use in the generated source files.",
@@ -34,6 +35,11 @@
         },
         "bean-validation": {
           "description": "enable bean validation annotations for OpenAPI constraints.",
+          "type": "boolean",
+          "default": false
+        },
+        "javadoc": {
+          "description": "generate javadoc from OpenAPI 'description' properties (since core 2021.1).",
           "type": "boolean",
           "default": false
         }
@@ -63,8 +69,9 @@
               "$ref": "#/definitions/Exclude"
             }, {
               "$ref": "#/definitions/Mappings"
-            }
-          ]
+            }, {
+              "$ref": "#/definitions/Methods"
+          }]
         }
       }
     },
@@ -81,6 +88,9 @@
         "multi": {
           "$ref": "#/definitions/MultiMapping"
         },
+        "null": {
+          "$ref": "#/definitions/NullMapping"
+        },
         "types": {
           "$ref": "#/definitions/TypeMappings"
         },
@@ -90,6 +100,31 @@
         "responses": {
           "$ref": "#/definitions/ResponseMappings"
         }
+      }
+    },
+    "Methods": {
+      "description": "http method mapping rules (since core 2021.2).",
+      "type": "object",
+      "get": {
+        "$ref": "#/definitions/Mappings"
+      },
+      "put": {
+        "$ref": "#/definitions/Mappings"
+      },
+      "post": {
+        "$ref": "#/definitions/Mappings"
+      },
+      "delete": {
+        "$ref": "#/definitions/Mappings"
+      },
+      "options": {
+        "$ref": "#/definitions/Mappings"
+      },
+      "head": {
+        "$ref": "#/definitions/Mappings"
+      },
+      "patch": {
+        "$ref": "#/definitions/Mappings"
       }
     },
     "ResultMapping": {
@@ -111,6 +146,14 @@
       "type": "string",
       "examples": [
         "reactor.core.publisher.Flux"
+      ]
+    },
+    "NullMapping": {
+      "description": "null wrapper of 'nullable' object properties (since core 2021.2).",
+      "type": "string",
+      "examples": [
+        "org.openapitools.jackson.nullable.JsonNullable",
+        "org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()"
       ]
     },
     "TypeMappings": {

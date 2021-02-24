@@ -13,6 +13,8 @@ options: # general processor options (optional)
   # validation annotation (optional): true or false (default)
   bean-validation: false
 
+  javadoc: true
+
 map: # the type mappings
 
   # global mappings, apply to all paths/endpoints
@@ -72,3 +74,7 @@ map: # the type mappings
       responses:
         - content: application/vnd.any => java.util.Set
         - content: application/json => java.util.Map
+
+    /third:
+      patch:
+        null: org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()
