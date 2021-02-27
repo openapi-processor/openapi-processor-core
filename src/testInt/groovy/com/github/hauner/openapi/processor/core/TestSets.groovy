@@ -17,6 +17,7 @@ class TestSets {
         'object-without-properties',
         'params-additional',
         'params-complex-data-types',                // framework specific
+        'params-endpoint',
         'params-enum',
         'params-path-simple-data-types',            // framework specific
         'params-request-body',                      // framework specific
