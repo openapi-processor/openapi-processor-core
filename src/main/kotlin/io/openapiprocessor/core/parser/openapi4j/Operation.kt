@@ -12,6 +12,7 @@ import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
 import io.openapiprocessor.core.parser.Response as ParserResponse
 import org.openapi4j.parser.model.v3.Operation as O4jOperation
 import org.openapi4j.parser.model.v3.Parameter as O4jParameter
+import org.openapi4j.parser.model.v3.Path as O4jPath
 import org.openapi4j.parser.model.v3.Response as O4jResponse
 
 /**
@@ -20,7 +21,8 @@ import org.openapi4j.parser.model.v3.Response as O4jResponse
 class Operation(
     private val method: HttpMethod,
     private val operation: O4jOperation,
-    private val refResolver: RefResolverNative,
+    private val path: O4jPath,
+    private val refResolver: RefResolverNative
 ): ParserOperation {
 
     override fun getMethod(): HttpMethod = method
@@ -31,6 +33,15 @@ class Operation(
 
     override fun getParameters(): List<ParserParameter> {
         val parameters = mutableListOf<ParserParameter>()
+
+        path.parameters?.map { p: O4jParameter ->
+            var param = p
+            if(p.isRef) {
+                param = refResolver.resolve(p)
+            }
+
+            parameters.add(Parameter(param))
+        }
 
         operation.parameters?.map { p: O4jParameter ->
             var param = p

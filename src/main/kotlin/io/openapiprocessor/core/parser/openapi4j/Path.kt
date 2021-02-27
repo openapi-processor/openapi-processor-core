@@ -40,7 +40,7 @@ class Path(
         HttpMethod.values().map {
             val op = info.getOperation(it.method)
             if (op != null) {
-                ops.add (Operation(it, op, refResolver))
+                ops.add (Operation(it, op, info, refResolver))
             }
         }
 
