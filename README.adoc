@@ -29,11 +29,12 @@ link:{oap-central}[image:{badge-central}[]]
 
 this is the re-usable core of the openapi-processors that generate java code.
 
-It reads the link:{openapi}[OpenAPI] yaml, converts it to an internal model and provides writers to
-generate java code.
+It reads the link:{openapi}[OpenAPI] yaml, converts it to an internal model and provides writers to generate java code.
 
 == documentation
 
 See link:{oap-docs}[here].
 
+== snapshot repository
 
+to use snapshot versions add `https://oss.sonatype.org/content/repositories/snapshots` as maven repository to your build file.
