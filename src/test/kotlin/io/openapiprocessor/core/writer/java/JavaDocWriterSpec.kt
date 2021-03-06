@@ -7,6 +7,7 @@ package io.openapiprocessor.core.writer.java
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldBeEmpty
 import io.openapiprocessor.core.builder.api.endpoint
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.parameters.ParameterBase
@@ -19,10 +20,26 @@ class JavaDocWriterSpec: StringSpec({
         writer = JavaDocWriter()
     }
 
-    "converts endpoint description to javadoc comment" {
+    "converts endpoint without documentation to empty string" {
+        val endpoint = endpoint("/foo") {
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
+
+        html.shouldBeEmpty()
+    }
+
+    "converts endpoint summary & description to javadoc comment" {
+        val summary = "plain text summary"
         val description = "*markdown* description with **text**"
 
         val endpoint = endpoint("/foo") {
+            summary(summary)
             description(description)
             responses {
                 status("204") {

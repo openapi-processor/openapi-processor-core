@@ -72,17 +72,22 @@ open class JavaDocWriter {
         return wrap(javadoc)
     }
 
-    private fun wrap(javadoc: String): String {
-        if (javadoc.isEmpty())
+    private fun wrap(comment: String): String {
+        val temp = comment
+            .dropLastWhile { it == '\n' }
+
+        if (temp.isEmpty())
             return ""
 
-        val prefixed = javadoc
-            .dropLastWhile { it == '\n' }
+        val prefixed = temp
             .lineSequence()
             .map {
                 " * $it".trimEnd()
             }
-            .joinToString("\n", "/**\n", "\n */\n")
+            .joinToString(
+                "\n",
+                "/**\n",
+                "\n */\n")
 
         return prefixed
     }
