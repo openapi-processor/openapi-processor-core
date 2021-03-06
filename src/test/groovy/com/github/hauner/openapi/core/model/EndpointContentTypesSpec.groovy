@@ -1,19 +1,18 @@
 package com.github.hauner.openapi.core.model
 
+import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import spock.lang.Specification
 
-import static io.openapiprocessor.core.model.Builder.endpoint
+import static io.openapiprocessor.core.builder.api.EndpointBuilderKt.endpoint
 
 class EndpointContentTypesSpec extends Specification {
 
     void "provides no consuming content types without body" () {
-        def endpoint = endpoint('/foo') {
-            bodies {
-            }
-            responses ('204') {
-                empty ()
+        def endpoint = endpoint('/foo', HttpMethod.GET) { e ->
+            e.responses { r ->
+                r.status ('204') {it.empty () }
             }
         }
 
@@ -22,14 +21,14 @@ class EndpointContentTypesSpec extends Specification {
     }
 
     void "provides consuming content types" () {
-        def endpoint = endpoint('/foo') {
-            bodies {
-                content ('text/plain') {}
-                content ('application/json') {}
-                content ('text/plain') {}
+        def endpoint = endpoint('/foo', HttpMethod.GET) { e ->
+            e.parameters () { ps ->
+                ps.body("body", "text/plain", new StringDataType())
+                ps.body("body", "application/json", new StringDataType())
+                ps.body("body", "text/plain", new StringDataType())
             }
-            responses ('204') {
-                empty ()
+            e.responses { r ->
+                r.status ('204') {it.empty () }
             }
         }
 
@@ -38,17 +37,16 @@ class EndpointContentTypesSpec extends Specification {
     }
 
     void "provides consuming content type for multipart/form-data" () {
-        def endpoint = endpoint('/foo') {
-            bodies {
-                content ('multipart/form-data') {
-                    data (new ObjectDataType ('Foo', '', [
+        def endpoint = endpoint('/foo', HttpMethod.GET) { e ->
+            e.parameters () { ps ->
+                ps.body ("body", "multipart/form-data",
+                    new ObjectDataType ('Foo', '', [
                         foo: new StringDataType (),
                         bar: new StringDataType ()
                     ], null, false))
-                }
             }
-            responses ('204') {
-                empty ()
+            e.responses { r ->
+                r.status ('204') {it.empty () }
             }
         }
 
@@ -57,9 +55,9 @@ class EndpointContentTypesSpec extends Specification {
     }
 
     void "provides no producing content types without response" () {
-        def endpoint = endpoint('/foo') {
-            responses ('204') {
-                empty ()
+        def endpoint = endpoint('/foo', HttpMethod.GET) { e ->
+            e.responses { r ->
+                r.status ('204') {it.empty () }
             }
         }
 
@@ -68,18 +66,14 @@ class EndpointContentTypesSpec extends Specification {
     }
 
     void "provides producing content types" () {
-        def endpoint = endpoint('/foo') {
-            responses ('200') {
-                content ('text/plain') {
-                    response (new StringDataType())
+        def endpoint = endpoint('/foo', HttpMethod.GET) { e ->
+            e.responses { rs ->
+                rs.status ('200') { r ->
+                    r.response ('text/plain', new StringDataType())
+                    r.response ('application/json', new StringDataType())
                 }
-                content ('application/json') {
-                    response (new StringDataType())
-                }
-            }
-            responses ('401') {
-                content ('text/plain') {
-                    response (new StringDataType())
+                rs.status ('401') { r ->
+                    r.response ('text/plain', new StringDataType())
                 }
             }
         }
