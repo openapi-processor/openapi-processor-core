@@ -46,6 +46,11 @@ class ParametersBuilder {
             builder.description))
     }
 
+    // avoids empty {} when called from non kotlin code
+    fun body(name: String, contentType: String, dataType: DataType) {
+        body(name, contentType, dataType, {})
+    }
+
     fun body(name: String, contentType: String, dataType: DataType,
              init: ParameterBuilder.() -> Unit = {}) {
         val builder = ParameterBuilder()
