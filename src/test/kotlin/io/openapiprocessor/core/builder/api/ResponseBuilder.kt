@@ -22,6 +22,11 @@ class ResponseDetailBuilder {
 class ResponseBuilder {
     private val responses: MutableList<Response> = mutableListOf()
 
+    // avoids empty {} when called from non kotlin code
+    fun response(contentType: String? = null, dataType: DataType? = null) {
+        response(contentType, dataType, {})
+    }
+
     fun response(contentType: String? = null, dataType: DataType? = null, init: ResponseDetailBuilder.() -> Unit? = {}) {
         val builder = ResponseDetailBuilder()
         init(builder)
@@ -38,6 +43,10 @@ class ResponseBuilder {
                 builder.description)
 
         responses.add(response)
+    }
+
+    fun empty() {
+        response()
     }
 
     fun build(): List<Response> {

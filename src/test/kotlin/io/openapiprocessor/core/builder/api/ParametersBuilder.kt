@@ -6,12 +6,18 @@ package io.openapiprocessor.core.builder.api
 
 import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.parameters.QueryParameter
 
 class ParametersBuilder {
     private val parameters: MutableList<Parameter> = mutableListOf()
     private val bodies: MutableList<RequestBody> = mutableListOf()
+
+    // avoids empty {} when called from non kotlin code
+    fun any(parameter: Parameter) {
+        parameters.add(parameter)
+    }
 
     fun any(parameter: Parameter, init: ParameterBuilder.() -> Unit? = {}) {
         parameters.add(parameter)
@@ -23,6 +29,18 @@ class ParametersBuilder {
         parameters.add(QueryParameter(
             name,
             dataType,
+            builder.required,
+            builder.deprecated,
+            builder.description))
+    }
+
+    fun add(name: String, dataType: DataType, init: AddParameterBuilder.() -> Unit? = {}) {
+        val builder = AddParameterBuilder()
+        init(builder)
+        parameters.add(AdditionalParameter(
+            name,
+            dataType,
+            builder.annotation,
             builder.required,
             builder.deprecated,
             builder.description))

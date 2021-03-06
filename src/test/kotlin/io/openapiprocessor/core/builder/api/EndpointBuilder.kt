@@ -28,10 +28,17 @@ class EndpointBuilder(
     private var bodies: List<RequestBody> = emptyList()
     private var responses: Map<String, List<Response>> = mapOf()
     private var deprecated = false
+    var operationId: String? = null
+
+    private var summary: String? = null
     private var description: String? = null
 
     fun deprecated() {
         deprecated = true
+    }
+
+    fun summary(summary: String) {
+        this.summary = summary
     }
 
     fun description(description: String) {
@@ -53,6 +60,7 @@ class EndpointBuilder(
 
     fun build(): Endpoint {
         val ep = Endpoint(path, method,
+            operationId = operationId,
             deprecated = deprecated,
             description = description
         )

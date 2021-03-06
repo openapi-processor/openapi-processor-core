@@ -5,7 +5,9 @@
 
 package io.openapiprocessor.core.builder.api
 
-class ParameterBuilder {
+import io.openapiprocessor.core.model.datatypes.AnnotationDataType
+
+open class ParameterBuilder {
     var required: Boolean = false
     var deprecated: Boolean = false
     var description: String? = null
@@ -24,3 +26,6 @@ class ParameterBuilder {
 
 }
 
+class AddParameterBuilder: ParameterBuilder() {
+    var annotation: AnnotationDataType? = null
+}
