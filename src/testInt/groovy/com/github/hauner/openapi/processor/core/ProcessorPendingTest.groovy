@@ -22,8 +22,8 @@ class ProcessorPendingTest extends Specification {
 
     static Collection<TestSet> sources () {
         return [
-            new TestSet(name: 'object-nullable-properties', processor: new TestProcessor(), parser: ParserType.SWAGGER),
-            new TestSet(name: 'object-nullable-properties', processor: new TestProcessor(), parser: ParserType.OPENAPI4J)
+            new TestSet(name: 'javadoc', processor: new TestProcessor(), parser: ParserType.SWAGGER),
+            new TestSet(name: 'javadoc', processor: new TestProcessor(), parser: ParserType.OPENAPI4J)
         ]
     }
 
