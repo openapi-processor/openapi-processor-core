@@ -15,11 +15,11 @@ class Documentation(
     /**
      * plain text `summary`
      */
-    summary: String?,
+    val summary: String? = null,
 
     /**
      * plain text (or common mark)
      */
-    description: String?
+    val description: String? = null
 
 )
