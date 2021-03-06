@@ -24,6 +24,7 @@ class Builder {
         builder.build ()
     }
 
+    /** @deprecated use io.openapiprocessor.core.builder.api.EndpointBuilder */
     static Endpoint endpoint(String path, @DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = EndpointBuilder) Closure init) {
         def builder = new EndpointBuilder(path: path)
         def code = init.rehydrate (builder, this, this)
