@@ -8,14 +8,10 @@ package com.github.hauner.openapi.core.writer.java
 import com.github.hauner.openapi.core.test.TestMappingAnnotationWriter
 import com.github.hauner.openapi.core.test.TestParameterAnnotationWriter
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.model.EmptyResponse
-import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.HttpMethod
-import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.parameters.ParameterBase
-import io.openapiprocessor.core.model.parameters.QueryParameter
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
@@ -23,7 +19,7 @@ import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static io.openapiprocessor.core.model.Builder.endpoint
+import static io.openapiprocessor.core.builder.api.EndpointBuilderKt.endpoint
 
 class MethodWriterSpec extends Specification {
     def apiOptions = new ApiOptions()
@@ -36,24 +32,12 @@ class MethodWriterSpec extends Specification {
         Stub (JavaDocWriter))
     def target = new StringWriter ()
 
-    @Deprecated // use endpoint() builder
-    private Endpoint createEndpoint (Map properties) {
-        def ep = new Endpoint(
-            properties.path as String ?: '',
-            properties.method as HttpMethod ?: HttpMethod.GET,
-            properties.operationId as String ?: null,
-            properties.deprecated as boolean ?: false,
-            properties.description as String ?: null
-        )
-        ep.parameters = properties.parameters ?: []
-        ep.responses = properties.responses ?: [:]
-        ep.initEndpointResponses ()
-    }
-
     void "writes mapping annotation" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '204': [new EmptyResponse ()]
-        ])
+        def endpoint = endpoint('/foo', HttpMethod.GET) { e ->
+            e.responses { r ->
+                r.status ('204') {it.empty () }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -66,11 +50,10 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes @Deprecated annotation" () {
-        def endpoint = endpoint('/foo') {
-            deprecated ()
-
-            responses ('204') {
-                empty ()
+        def endpoint = endpoint ('/foo', HttpMethod.GET) {e ->
+            e.deprecated ()
+            e.responses {r ->
+                r.status ('204') {it.empty () }
             }
         }
 
@@ -87,9 +70,13 @@ class MethodWriterSpec extends Specification {
 
     @Unroll
     void "writes simple data type response (#type)" () {
-        def endpoint = createEndpoint (path: "/$type", method: HttpMethod.GET, responses: [
-            '200': [new Response('text/plain', responseType, null)]
-        ])
+        def endpoint = endpoint ("/$type", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('200') { r ->
+                    r.response ('text/plain', responseType)
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -111,17 +98,18 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes inline object data type response" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200': [
-                new Response ('application/json',
-                    new ObjectDataType (
-                        'InlineObjectResponse', '', [
-                        foo1: new StringDataType (),
-                        foo2: new StringDataType ()
-                    ], null, false),
-                    null)
-            ]
-        ])
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('200') { r ->
+                    r.response ('application/json',
+                        new ObjectDataType (
+                            'InlineObjectResponse', '', [
+                            foo1: new StringDataType (),
+                            foo2: new StringDataType ()
+                        ], null, false)) {}
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -134,11 +122,13 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method with Collection response type" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200': [
-                new Response ('application/json', collection, null)
-            ]
-        ])
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('200') { r ->
+                    r.response ('application/json', collection)
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -157,15 +147,18 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes parameter annotation" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '204': [new EmptyResponse ()]
-        ], parameters: [
-            new ParameterBase (
-                'foo', new StringDataType(null, false),
-                true,
-                false,
-                null) {}
-        ])
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('204') { r -> r.empty () }
+            }
+            e.parameters { ps ->
+                ps.any (new ParameterBase (
+                    'foo', new StringDataType (null, false),
+                    true,
+                    false,
+                    null) {})
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -179,14 +172,19 @@ class MethodWriterSpec extends Specification {
 
     void "writes no parameter annotation if the annotation writer skips it" () {
         def stubWriter = Stub (ParameterAnnotationWriter) {}
-
         writer.parameterAnnotationWriter = stubWriter
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '204': [new EmptyResponse ()]
-        ], parameters: [Stub (Parameter) {
-            getName () >> 'foo'
-            getDataType () >> new StringDataType()
-        }])
+
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('204') { r -> r.empty () }
+            }
+            e.parameters { ps -> ps.any (
+                Stub (Parameter) {
+                    getName () >> 'foo'
+                    getDataType () >> new StringDataType ()
+                })
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -199,16 +197,14 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes additional parameter annotation" () {
-        def endpoint = endpoint('/foo') {
-            parameters {
-                add {
-                    name ('foo')
-                    type (new StringDataType())
-                    annotation (new AnnotationDataType ('Foo', 'oap', '()'))
-                }
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('204') { r -> r.empty () }
             }
-            responses ('204') {
-                empty ()
+            e.parameters { ps ->
+                ps.add ('foo', new StringDataType()) { a ->
+                    a.annotation = new AnnotationDataType ('Foo', 'oap', '()')
+                }
             }
         }
 
@@ -223,9 +219,11 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method name from path with valid java identifiers" () {
-        def endpoint = createEndpoint (path: '/f_o-ooo/b_a-rrr', method: HttpMethod.GET, responses: [
-            '204': [new EmptyResponse ()]
-        ])
+        def endpoint = endpoint ('/f_o-ooo/b_a-rrr', HttpMethod.GET) {e ->
+            e.responses {r ->
+                r.status ('204') {it.empty () }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -238,10 +236,12 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method name from operation id with valid java identifiers" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, operationId: 'get-bar',
-            responses: [
-                '204': [new EmptyResponse ()]
-            ])
+        def endpoint = endpoint ('/foo', HttpMethod.GET) {e ->
+            e.operationId = 'get-bar'
+            e.responses {r ->
+                r.status ('204') {it.empty () }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -254,16 +254,17 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method parameter with valid java identifiers" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '204': [new EmptyResponse ()]
-        ], parameters: [
-            new QueryParameter(
-                '_fo-o',
-                new StringDataType(),
-                true,
-                false,
-                null)
-        ])
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('204') { r -> r.empty () }
+            }
+            e.parameters { ps ->
+                ps.query ('_fo-o', new StringDataType()) { q ->
+                    q.required = true
+                    q.deprecated = false
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -276,15 +277,18 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method with void response type wrapped by result wrapper" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '204': [new Response("",
-                new ResultDataType (
-                    'ResultWrapper',
-                    'http',
-                    new NoneDataType ()
-                        .wrappedInResult ()
-                ), null)]
-        ])
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('204') { r ->
+                    r.response ('', new ResultDataType (
+                        'ResultWrapper',
+                        'http',
+                        new NoneDataType ()
+                            .wrappedInResult ()
+                    ))
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -297,17 +301,19 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method with success response type when it has only empty error responses" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200' : [
-                new Response ('application/json', new StringDataType (), null)
-            ],
-            '400': [
-                new EmptyResponse ()
-            ],
-            '500': [
-                new EmptyResponse ()
-            ]
-        ])
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('200') { r ->
+                    r.response ('application/json', new StringDataType ())
+                }
+                rs.status ('400') { r ->
+                    r.empty ()
+                }
+                rs.status ('500') { r ->
+                    r.empty ()
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -320,14 +326,16 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method with 'Object' response when it has multiple result content types (200, default)" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200' : [
-                new Response ('application/json', new StringDataType (), null)
-            ],
-            'default': [
-                new Response ('text/plain', new StringDataType (), null)
-            ]
-        ])
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('200') { r ->
+                    r.response ('application/json', new StringDataType ())
+                }
+                rs.status ('default') { r ->
+                    r.response ('text/plain', new StringDataType ())
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
@@ -340,24 +348,22 @@ class MethodWriterSpec extends Specification {
     }
 
     void "writes method with '?' response when it has multiple result contents types & wrapper result type" () {
-        def endpoint = createEndpoint (path: '/foo', method: HttpMethod.GET, responses: [
-            '200' : [
-                new Response ('application/json',
-                    new ResultDataType (
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('200') { r ->
+                    r.response ('application/json', new ResultDataType (
                         'ResultWrapper',
                         'http',
-                        new StringDataType ()),
-                    null)
-            ],
-            'default': [
-                new Response ( 'text/plain',
-                    new ResultDataType (
+                        new StringDataType ()))
+                }
+                rs.status ('default') { r ->
+                    r.response ('text/plain', new ResultDataType (
                         'ResultWrapper',
                         'http',
-                        new StringDataType ()),
-                    null)
-            ]
-        ])
+                        new StringDataType ()))
+                }
+            }
+        }
 
         when:
         writer.write (target, endpoint, endpoint.endpointResponses.first ())
