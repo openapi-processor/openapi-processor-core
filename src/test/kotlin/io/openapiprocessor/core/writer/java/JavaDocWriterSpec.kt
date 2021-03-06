@@ -34,6 +34,50 @@ class JavaDocWriterSpec: StringSpec({
         html.shouldBeEmpty()
     }
 
+    "converts summary to javadoc comment" {
+        val summary = "plain text summary"
+
+        val endpoint = endpoint("/foo") {
+            summary(summary)
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
+
+        html shouldBe """
+            /**
+             * plain text summary
+             */
+
+            """.trimIndent()
+    }
+
+    "converts description to javadoc comment" {
+        val description = "*markdown* description with **text**"
+
+        val endpoint = endpoint("/foo") {
+            description(description)
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        val html = writer.convert(endpoint, endpoint.endpointResponses.first())
+
+        html shouldBe """
+            /**
+             * <em>markdown</em> description with <strong>text</strong>
+             */
+
+            """.trimIndent()
+    }
+
     "converts endpoint summary & description to javadoc comment" {
         val summary = "plain text summary"
         val description = "*markdown* description with **text**"
@@ -52,6 +96,8 @@ class JavaDocWriterSpec: StringSpec({
 
         html shouldBe """
             /**
+             * plain text summary
+             *
              * <em>markdown</em> description with <strong>text</strong>
              */
 

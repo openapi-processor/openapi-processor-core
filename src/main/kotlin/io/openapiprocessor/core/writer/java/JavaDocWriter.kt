@@ -52,8 +52,13 @@ open class JavaDocWriter {
     fun convert(endpoint: Endpoint, endpointResponse: EndpointResponse): String {
         var comment = ""
 
-        comment += convert(endpoint.description)
-        comment += "\n"
+        if (endpoint.summary != null) {
+            comment += endpoint.summary + "\n\n"
+        }
+
+        if (endpoint.description != null) {
+            comment += convert(endpoint.description) + "\n"
+        }
 
         if (endpoint.parameters.isNotEmpty() || endpointResponse.description != null)
             comment += "\n"
