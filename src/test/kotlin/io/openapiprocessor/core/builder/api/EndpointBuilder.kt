@@ -10,7 +10,7 @@ import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.parameters.Parameter
-import io.openapiprocessor.core.parser.Documentation
+import io.openapiprocessor.core.model.Documentation
 
 /**
  * entry point of model [Endpoint] builder dsl
@@ -63,7 +63,7 @@ class EndpointBuilder(
         val ep = Endpoint(path, method,
             operationId = operationId,
             deprecated = deprecated,
-            Documentation(summary, description)
+            documentation = Documentation(summary, description)
         )
 
         ep.parameters = parameters.toMutableList()

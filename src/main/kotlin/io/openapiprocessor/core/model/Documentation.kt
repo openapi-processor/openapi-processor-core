@@ -3,7 +3,7 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-package io.openapiprocessor.core.parser
+package io.openapiprocessor.core.model
 
 /**
  * OpenAPI documentation properties.
