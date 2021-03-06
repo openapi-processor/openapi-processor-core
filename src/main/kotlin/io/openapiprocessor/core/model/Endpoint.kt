@@ -11,8 +11,6 @@ import io.openapiprocessor.core.model.parameters.Parameter
 
 /**
  * Endpoint properties.
- *
- * @author Martin Hauner
  */
 class Endpoint(
     val path: String,
