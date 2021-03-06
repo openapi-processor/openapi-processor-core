@@ -8,6 +8,7 @@ package io.openapiprocessor.core.model
 
 import io.openapiprocessor.core.model.parameters.MultipartParameter
 import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.parser.Documentation
 
 /**
  * Endpoint properties.
@@ -17,7 +18,7 @@ class Endpoint(
     val method: HttpMethod,
     val operationId: String? = null,
     val deprecated: Boolean = false,
-    val description: String? = null
+    private val documentation: Documentation? = null
 ) {
 
     // todo
@@ -125,6 +126,12 @@ class Endpoint(
 
         return resp?.first ()
     }
+
+    val summary: String?
+        get() = documentation?.summary
+    
+    val description: String?
+        get() = documentation?.description
 
     /**
      * checks if the endpoint has multiple success responses with different content types.
