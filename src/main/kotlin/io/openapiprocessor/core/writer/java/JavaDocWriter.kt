@@ -50,13 +50,13 @@ open class JavaDocWriter {
         .build()
 
     fun convert(endpoint: Endpoint, endpointResponse: EndpointResponse): String {
-        var javadoc = "/**\n"
+        var javadoc = ""
 
         javadoc += convert(endpoint.description)
         javadoc += "\n"
 
         if (endpoint.parameters.isNotEmpty() || endpointResponse.description != null)
-            javadoc += " *\n"
+            javadoc += "\n"
 
         endpoint.parameters.forEach {
             javadoc += convert(it.description, "@param ${it.name}")
@@ -69,8 +69,22 @@ open class JavaDocWriter {
             javadoc += "\n"
         }
 
-        javadoc += " */\n"
-        return javadoc
+        return wrap(javadoc)
+    }
+
+    private fun wrap(javadoc: String): String {
+        if (javadoc.isEmpty())
+            return ""
+
+        val prefixed = javadoc
+            .dropLastWhile { it == '\n' }
+            .lineSequence()
+            .map {
+                " * $it".trimEnd()
+            }
+            .joinToString("\n", "/**\n", "\n */\n")
+
+        return prefixed
     }
 
     private fun convert(description: String?, intro: String? = null): String {
@@ -89,11 +103,6 @@ open class JavaDocWriter {
             .render(doc)
 
         return result
-            .dropLastWhile { it == '\n' }
-            .lineSequence()
-            .map {
-                " * $it"
-            }.joinToString("\n")
     }
 
 }
