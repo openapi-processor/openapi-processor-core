@@ -1,0 +1,49 @@
+== OpenAPI documentation properties
+
+list of OpenAPI *documentation* properties. Checked items are supported/used to create javadoc.
+
+* `Path`
+** applies to all operations
+** [ ] `summary: string`
+** [ ] `description: string` (common mark)
+
+* `Operation`
+** [ ] `summary: string`
+** [x] `description: string` (common mark)
+** [ ] `externalDocs: ExternalDoc`
+
+* `Parameter`:
+** [x] `description: string` (common mark)
+** [ ] `example: any` (mutually exclusive with examples)
+** [ ] `examples: [string -> Example]`
+
+* `Request Body`:
+** [ ] `description: string` (common mark)
+** [ ] `content: [string -> MediaType]`
+
+* `Responses`:
+** [ ] `[default, http method -> Response]`
+
+* `Response`:
+** [x] `description: string` (common mark)
+** `content: [string -> MediaType]`
+
+* `Schema`:
+** [ ] `description: string` (common mark)
+** [ ] `externalDocs: ExternalDoc`
+** [ ] `example: any`
+** [ ] `properties: [string -> Schema]`
+
+* `MediaType`:
+** [ ] `example: any` (mutually exclusive with examples)
+** [ ] `examples: [string -> Example]`
+
+* `External`:
+** [ ] `url: string` (url)
+** [ ] `description: string` (common mark)
+
+* `Example`:
+** [ ] `summary: string`
+** [ ] `description: string` (common mark)
+** [ ] `value: any`
+** [ ] `externalValue: string` (url)
