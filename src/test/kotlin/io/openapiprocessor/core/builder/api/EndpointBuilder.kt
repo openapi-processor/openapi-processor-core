@@ -28,10 +28,10 @@ class EndpointBuilder(
     private var bodies: List<RequestBody> = emptyList()
     private var responses: Map<String, List<Response>> = mapOf()
     private var deprecated = false
-    var operationId: String? = null
 
-    private var summary: String? = null
-    private var description: String? = null
+    var operationId: String? = null
+    var summary: String? = null
+    var description: String? = null
 
     fun deprecated() {
         deprecated = true
