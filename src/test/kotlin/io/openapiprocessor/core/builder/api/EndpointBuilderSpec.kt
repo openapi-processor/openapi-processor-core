@@ -62,12 +62,12 @@ class EndpointBuilderSpec: StringSpec({
     "adds endpoint request bodies" {
         val ep = endpoint("/foo") {
             parameters {
-                body("foo", "text/plain", StringDataType())
+                body("body", "text/plain", StringDataType())
             }
         }
 
         ep.requestBodies.size shouldBe 1
-        ep.requestBodies.first().name shouldBe "foo"
+        ep.requestBodies.first().name shouldBe "body"
     }
 
 })
