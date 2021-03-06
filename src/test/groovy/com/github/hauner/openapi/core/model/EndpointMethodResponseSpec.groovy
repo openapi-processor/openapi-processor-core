@@ -5,24 +5,26 @@
 
 package com.github.hauner.openapi.core.model
 
-import io.openapiprocessor.core.model.Endpoint
-import io.openapiprocessor.core.model.Response
 import io.openapiprocessor.core.model.datatypes.CollectionDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.HttpMethod
 import spock.lang.Specification
 
+import static io.openapiprocessor.core.builder.api.EndpointBuilderKt.endpoint
+
 class EndpointMethodResponseSpec extends Specification {
 
     void "creates single success/other content type groups" () {
-        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, null, [
-            '200'    : [
-                new Response (
-                    'application/json',
-                    new CollectionDataType (new StringDataType ()),
-                    null)
-            ]
-        ]).initEndpointResponses ()
+        def endpoint = endpoint('/foo', HttpMethod.GET) { eb ->
+            eb.responses { rs ->
+                rs.status ('200') {r ->
+                    r.response (
+                        'application/json',
+                        new CollectionDataType (new StringDataType ())) {
+                    }
+                }
+            }
+        }
 
         when:
         def result = endpoint.endpointResponses
@@ -34,18 +36,23 @@ class EndpointMethodResponseSpec extends Specification {
     }
 
     void "groups response content types to multiple success/other content type groups" () {
-        def endpoint = new Endpoint ('/foo', HttpMethod.GET, null, false, null, [
-            '200'    : [
-                new Response ('application/json',
-                    new CollectionDataType (new StringDataType ()), null),
-                new Response ('application/xml',
-                    new CollectionDataType (new StringDataType ()), null)
-            ],
-            'default': [
-                new Response ('text/plain',
-                    new CollectionDataType (new StringDataType ()), null)
-            ]
-        ]).initEndpointResponses ()
+        def endpoint = endpoint('/foo', HttpMethod.GET) { eb ->
+            eb.responses { rs ->
+                rs.status ('200') {r ->
+                    r.response ('application/json',
+                        new CollectionDataType (new StringDataType ())) {
+                    }
+                    r.response ('application/xml',
+                        new CollectionDataType (new StringDataType ())) {
+                    }
+                }
+                rs.status ('default') {r ->
+                    r.response ('text/plain',
+                        new CollectionDataType (new StringDataType ())) {
+                    }
+                }
+            }
+        }
 
         when:
         def result = endpoint.endpointResponses
