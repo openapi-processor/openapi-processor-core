@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2020 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -59,6 +59,8 @@ class Operation(
     override fun isDeprecated(): Boolean = operation.deprecated ?: false
 
     override fun hasTags(): Boolean = operation.tags?.isNotEmpty() ?: false
+
+    override val summary: String? = operation.summary
 
     override val description: String? = operation.description
 

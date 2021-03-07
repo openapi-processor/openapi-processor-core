@@ -77,6 +77,8 @@ class Operation(
 
     override fun hasTags(): Boolean = operation.tags?.isNotEmpty() ?: false
 
+    override val summary: String? = operation.summary
+
     override val description: String? = operation.description
 
     override fun getFirstTag(): String? = operation.tags.first ()

@@ -21,6 +21,7 @@ interface Operation {
 
     fun isDeprecated(): Boolean
     fun hasTags(): Boolean
+    val summary: String?
     val description: String?
 
     fun getFirstTag(): String?

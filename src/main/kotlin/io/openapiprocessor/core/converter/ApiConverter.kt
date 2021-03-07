@@ -92,7 +92,9 @@ class  ApiConverter(
             operation.getMethod(),
             operation.getOperationId(),
             operation.isDeprecated(),
-            Documentation(description = operation.description)
+            Documentation(
+                summary = operation.summary,
+                description = operation.description)
         )
 
         return try {
