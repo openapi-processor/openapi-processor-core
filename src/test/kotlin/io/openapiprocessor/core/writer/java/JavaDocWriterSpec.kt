@@ -49,11 +49,11 @@ class JavaDocWriterSpec: StringSpec({
         val html = writer.convert(endpoint, endpoint.endpointResponses.first())
 
         html shouldBe """
-            /**
-             * plain text summary
-             */
-
-            """.trimIndent()
+            |    /**
+            |     * plain text summary
+            |     */
+            |
+            """.trimMargin()
     }
 
     "converts description to javadoc comment" {
@@ -71,11 +71,11 @@ class JavaDocWriterSpec: StringSpec({
         val html = writer.convert(endpoint, endpoint.endpointResponses.first())
 
         html shouldBe """
-            /**
-             * <em>markdown</em> description with <strong>text</strong>
-             */
-
-            """.trimIndent()
+            |    /**
+            |     * <em>markdown</em> description with <strong>text</strong>
+            |     */
+            |
+            """.trimMargin()
     }
 
     "converts endpoint summary & description to javadoc comment" {
@@ -95,13 +95,13 @@ class JavaDocWriterSpec: StringSpec({
         val html = writer.convert(endpoint, endpoint.endpointResponses.first())
 
         html shouldBe """
-            /**
-             * plain text summary
-             *
-             * <em>markdown</em> description with <strong>text</strong>
-             */
-
-            """.trimIndent()
+            |    /**
+            |     * plain text summary
+            |     *
+            |     * <em>markdown</em> description with <strong>text</strong>
+            |     */
+            |
+            """.trimMargin()
     }
 
     "converts endpoint parameter description to javadoc @param" {
@@ -123,13 +123,13 @@ class JavaDocWriterSpec: StringSpec({
         val html = writer.convert(endpoint, endpoint.endpointResponses.first())
 
         html shouldBe """
-            /**
-             * any
-             *
-             * @param foo <em>markdown</em> description with <strong>text</strong>
-             */
-
-            """.trimIndent()
+            |    /**
+            |     * any
+            |     *
+            |     * @param foo <em>markdown</em> description with <strong>text</strong>
+            |     */
+            |
+            """.trimMargin()
     }
 
     "converts endpoint response description to javadoc @return" {
@@ -149,13 +149,13 @@ class JavaDocWriterSpec: StringSpec({
         val html = writer.convert(endpoint, endpoint.endpointResponses.first())
 
         html shouldBe """
-            /**
-             * any
-             *
-             * @return <em>markdown</em> description with <strong>text</strong>
-             */
-
-            """.trimIndent()
+            |    /**
+            |     * any
+            |     *
+            |     * @return <em>markdown</em> description with <strong>text</strong>
+            |     */
+            |
+            """.trimMargin()
     }
 
     "converts complex description javadoc" {
@@ -183,17 +183,17 @@ class JavaDocWriterSpec: StringSpec({
         val html = writer.convert(endpoint, endpoint.endpointResponses.first())
 
         html shouldBe """
-            /**
-             * <em>markdown</em> description with <strong>text</strong>
-             * <ul>
-             * <li>one list item</li>
-             * <li>second list item</li>
-             * </ul>
-             * <pre><code>code block
-             * </code></pre>
-             */
-
-            """.trimIndent()
+            |    /**
+            |     * <em>markdown</em> description with <strong>text</strong>
+            |     * <ul>
+            |     * <li>one list item</li>
+            |     * <li>second list item</li>
+            |     * </ul>
+            |     * <pre><code>code block
+            |     * </code></pre>
+            |     */
+            |
+            """.trimMargin()
     }
 
 })

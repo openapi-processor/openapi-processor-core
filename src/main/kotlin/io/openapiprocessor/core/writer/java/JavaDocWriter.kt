@@ -74,7 +74,7 @@ open class JavaDocWriter {
             comment += "\n"
         }
 
-        return wrap(comment)
+        return indent(wrap(comment))
     }
 
     private fun wrap(comment: String): String {
@@ -95,6 +95,23 @@ open class JavaDocWriter {
                 "\n */\n")
 
         return javadoc
+    }
+
+    private fun indent(javadoc: String): String {
+        if (javadoc.isEmpty())
+            return ""
+
+        val indented = javadoc
+            .lineSequence()
+            .map {
+                if (it.isEmpty())
+                    return@map it
+                else
+                    return@map "    $it"
+            }
+            .joinToString("\n")
+
+        return indented
     }
 
     private fun convert(description: String?, intro: String? = null): String {
