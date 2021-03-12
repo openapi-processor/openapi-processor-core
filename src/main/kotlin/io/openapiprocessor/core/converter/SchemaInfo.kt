@@ -260,16 +260,12 @@ class SchemaInfo(
      * @return a new {@link SchemaInfo}
      */
     fun buildForItem(): SchemaInfo {
-        val name = if (schema?.getItem()?.getRef() != null) {
-            getRefName(schema.getItem())
-        } else {
-            schema?.getItem()?.getType()
-        }
+        val item = schema!!.getItem()
 
         return SchemaInfo(
             endpoint = endpoint,
-            name = name!!,
-            schema = schema?.getItem(),
+            name = getArrayItemName(item),
+            schema = item,
             resolver = resolver
         )
     }
@@ -314,9 +310,8 @@ class SchemaInfo(
         return schema!!.getEnum()
     }
 
-    private fun getRefName(schema: Schema): String {
-        return schema.getRef()!!
-            .substring(schema.getRef()!!.lastIndexOf("/") + 1)
+    private fun getArrayItemName(schema: Schema): String {
+        return "Array" + name.capitalize()
     }
 
     private fun getNestedTypeName(nestedName: String): String {
