@@ -37,7 +37,7 @@ class Path(private val path: String, private val info: SwaggerPath): ParserPath 
         HttpMethod.values().map {
             val op = info.getOperation(it.method)
             if (op != null) {
-                ops.add (Operation(it, op))
+                ops.add (Operation(it, op, info))
             }
         }
 

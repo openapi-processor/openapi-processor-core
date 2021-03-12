@@ -11,6 +11,7 @@ import io.openapiprocessor.core.parser.Parameter as ParserParameter
 import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
 import io.openapiprocessor.core.parser.Response as ParserResponse
 import io.swagger.v3.oas.models.Operation as SwaggerOperation
+import io.swagger.v3.oas.models.PathItem as SwaggerPath
 import io.swagger.v3.oas.models.parameters.Parameter as SwaggerParameter
 import io.swagger.v3.oas.models.responses.ApiResponse as SwaggerResponse
 
@@ -19,7 +20,8 @@ import io.swagger.v3.oas.models.responses.ApiResponse as SwaggerResponse
  */
 class Operation(
     private val method: HttpMethod,
-    private val operation: SwaggerOperation
+    private val operation: SwaggerOperation,
+    private val path: SwaggerPath
 ): ParserOperation {
 
     override fun getMethod(): HttpMethod = method
@@ -30,6 +32,12 @@ class Operation(
 
     override fun getParameters(): List<ParserParameter> {
         val parameters = mutableListOf<ParserParameter>()
+
+        // the swagger parser moves the endpoint parameters to the operation level, sometimes.
+        // Sometimes it does not. Check both lists.
+        path.parameters?.map { p: SwaggerParameter ->
+            parameters.add(Parameter(p))
+        }
 
         operation.parameters?.map { p: SwaggerParameter ->
             parameters.add(Parameter(p))
