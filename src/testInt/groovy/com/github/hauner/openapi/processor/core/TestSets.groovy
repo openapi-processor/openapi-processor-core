@@ -23,6 +23,9 @@ class TestSets {
         'params-request-body',                      // framework specific
         'params-request-body-multipart-form-data',  // framework specific
         'params-simple-data-types',                 // framework specific
+        'ref-array-items-nested',
+        'ref-chain-spring-124.1',
+        'ref-chain-spring-124.2',
         'ref-into-another-file',
         'ref-into-another-file-path',
         'ref-is-relative-to-current-file',
@@ -30,6 +33,7 @@ class TestSets {
         'ref-loop-array',
         'ref-parameter',
         'ref-parameter-with-primitive-mapping',
+        'ref-to-escaped-path-name',
         'response-array-data-type-mapping',
         'response-complex-data-types',
         'response-content-multiple',
