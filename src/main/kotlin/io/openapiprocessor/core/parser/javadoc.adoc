@@ -8,7 +8,7 @@ list of OpenAPI *documentation* properties. Checked items are supported/used to 
 ** [ ] `description: string` (common mark)
 
 * `Operation`
-** [ ] `summary: string`
+** [x] `summary: string`
 ** [x] `description: string` (common mark)
 ** [ ] `externalDocs: ExternalDoc`
 
