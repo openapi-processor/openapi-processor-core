@@ -29,8 +29,10 @@ import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import com.github.hauner.openapi.core.test.TestSchema
 import io.openapiprocessor.core.converter.mapping.UnknownDataTypeException
+import io.openapiprocessor.core.parser.NamedSchema
 import io.openapiprocessor.core.parser.RefResolver
 import io.openapiprocessor.core.parser.Schema
+import org.jetbrains.annotations.NotNull
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -126,9 +128,10 @@ class DataTypeConverterSpec extends Specification {
         ])
 
         def resolver = new RefResolver () {
+
             @Override
-            Schema resolve (Schema ref) {
-                barSchema
+            NamedSchema resolve (@NotNull Schema ref) {
+                return new NamedSchema("Bar", barSchema)
             }
         }
 

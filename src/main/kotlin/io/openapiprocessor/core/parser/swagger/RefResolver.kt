@@ -16,6 +16,7 @@
 
 package io.openapiprocessor.core.parser.swagger
 
+import io.openapiprocessor.core.parser.NamedSchema as ParserNamedSchema
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema as ParserSchema
 import io.swagger.v3.oas.models.media.Schema as SwaggerSchema
@@ -28,7 +29,7 @@ import io.swagger.v3.oas.models.OpenAPI
  */
 class RefResolver(private val openapi: OpenAPI): ParserRefResolver {
 
-    override fun resolve(ref: ParserSchema): ParserSchema {
+    override fun resolve(ref: ParserSchema): ParserNamedSchema {
         val refName = getRefName(ref.getRef()!!)
 
         val schema: SwaggerSchema<*>? = openapi.components?.schemas?.get(refName)
@@ -36,11 +37,16 @@ class RefResolver(private val openapi: OpenAPI): ParserRefResolver {
             throw Exception("failed to resolve ${ref.getRef()}")
         }
 
-        return Schema(schema)
+        return ParserNamedSchema(refName, Schema(schema))
     }
 
-    private fun getRefName(ref: String): String {
-        return ref.substring(ref.lastIndexOf('/') + 1)
+    private fun getRefName(ref: String): String? {
+        val split = ref.split('#')
+        if (split.size > 1) {
+            val hash = split[1]
+            return hash.substring(hash.lastIndexOf('/') + 1)
+        }
+        return null
     }
 
 }

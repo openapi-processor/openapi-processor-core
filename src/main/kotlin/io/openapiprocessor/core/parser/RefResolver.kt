@@ -18,11 +18,12 @@ package io.openapiprocessor.core.parser
 
 /**
  * Resolves $ref objects from an OpenAPI.
- *
- * @author Martin Hauner
  */
 interface RefResolver {
+    fun resolve(ref: Schema): NamedSchema
+}
 
-    fun resolve(ref: Schema): Schema
-
+class NamedSchema(val name: String?, val schema: Schema) {
+    val hasName = name != null
+    val hasNoName = name == null
 }
