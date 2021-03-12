@@ -7,13 +7,13 @@ package generated.api;
 
 import annotation.Mapping;
 import generated.model.Book;
-import generated.model.BookInlineResponse200;
+import generated.model.BookInlineGetResponse200;
 import generated.model.BookNested;
 
 public interface Api {
 
     @Mapping("/book-inline")
-    BookInlineResponse200 getBookInline();
+    BookInlineGetResponse200 getBookInline();
 
     @Mapping("/book")
     Book getBook();

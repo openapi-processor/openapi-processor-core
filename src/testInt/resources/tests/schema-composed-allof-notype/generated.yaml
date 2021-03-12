@@ -1,5 +1,5 @@
 items:
   - generated/api/Api.java
   - generated/model/Foo.java
-  - generated/model/AllOfNoTypeResponse200.java
-#  - generated/model/AllOfNoTypeResponse200Foo.java
+  - generated/model/AllOfNoTypeGetResponse200.java
+#  - generated/model/AllOfNoTypeGetResponse200Foo.java

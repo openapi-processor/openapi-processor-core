@@ -7,7 +7,7 @@ package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class QueryResponse200_AllOf_0 {
+public class QueryGetResponse200_AllOf_0 {
 
     @JsonProperty("prop1")
     private String prop1;

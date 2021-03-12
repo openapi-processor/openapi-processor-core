@@ -7,16 +7,16 @@ package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AllOfNoTypeResponse200 {
+public class AllOfNoTypeGetResponse200Foo {
 
     @JsonProperty("foo")
-    private Foo foo;
+    private String foo;
 
-    public Foo getFoo() {
+    public String getFoo() {
         return foo;
     }
 
-    public void setFoo(Foo foo) {
+    public void setFoo(String foo) {
         this.foo = foo;
     }
 

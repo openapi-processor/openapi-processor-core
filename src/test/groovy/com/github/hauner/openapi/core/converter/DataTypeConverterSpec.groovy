@@ -183,7 +183,7 @@ paths:
         rsp.responseType.name == 'String[]'
     }
 
-    void "creates model for inline response object with name {path}Response{response code}"() {
+    void "creates model for inline response object with name {path}{method}Response{response code}"() {
         def openApi = parse ("""\
 openapi: 3.0.2
 info:
@@ -217,7 +217,7 @@ paths:
         def ep = itf.endpoints.first ()
         def rsp = ep.getFirstResponse ('200')
         def props = (rsp.responseType as ObjectDataType).objectProperties
-        rsp.responseType.name == 'InlineResponse200'
+        rsp.responseType.name == 'InlineGetResponse200'
         rsp.responseType.packageName == "${options.packageName}.model"
         props.size () == 2
         props.get ('isbn').name == 'String'
@@ -225,7 +225,7 @@ paths:
 
         and:
         api.dataTypes.dataTypes.size () == 1
-        api.dataTypes.find ('InlineResponse200') is rsp.responseType
+        api.dataTypes.find ('InlineGetResponse200') is rsp.responseType
     }
 
     void "creates model for component schema object" () {

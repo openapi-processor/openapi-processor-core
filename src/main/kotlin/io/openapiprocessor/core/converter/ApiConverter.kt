@@ -128,7 +128,7 @@ class  ApiConverter(
         requestBody.getContent().forEach { contentType, mediaType ->
             val info = SchemaInfo(
                 SchemaInfo.Endpoint(ep.path, ep.method),
-                getInlineRequestBodyName (ep.path),
+                getInlineRequestBodyName (ep.path, ep.method),
                 "",
                 mediaType.getSchema(),
                 resolver)
@@ -300,7 +300,7 @@ class  ApiConverter(
 
             val info = SchemaInfo (
                 SchemaInfo.Endpoint(ep.path, ep.method),
-                getInlineResponseName (ep.path, httpStatus),
+                getInlineResponseName (ep.path, ep.method, httpStatus),
                 contentType,
                 schema,
                 resolver)
@@ -323,12 +323,12 @@ class  ApiConverter(
         return dataTypeConverter.convert(info, dataTypes)
     }
 
-    private fun getInlineRequestBodyName(path: String): String {
-        return toClass(path) + "RequestBody"
+    private fun getInlineRequestBodyName(path: String, method: HttpMethod): String {
+        return toClass(path) + method.method.capitalize() + "RequestBody"
     }
 
-    private fun getInlineResponseName(path: String, httpStatus: String): String {
-        return toClass(path) + "Response" + httpStatus
+    private fun getInlineResponseName(path: String, method: HttpMethod, httpStatus: String): String {
+        return toClass(path) + method.method.capitalize() + "Response" + httpStatus
     }
 
     private fun isExcluded(path: String, method: HttpMethod): Boolean {

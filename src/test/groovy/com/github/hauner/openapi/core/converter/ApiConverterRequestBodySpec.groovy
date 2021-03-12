@@ -65,7 +65,7 @@ paths:
         def ep = itf.endpoints.first ()
         def body = ep.requestBodies.first ()
         body.contentType == 'application/json'
-        body.dataType.type == 'EndpointRequestBody'
+        body.dataType.name == 'EndpointGetRequestBody'
         !body.required
     }
 

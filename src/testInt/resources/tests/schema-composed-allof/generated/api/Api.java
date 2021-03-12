@@ -6,11 +6,11 @@
 package generated.api;
 
 import annotation.Mapping;
-import generated.model.QueryResponse200;
+import generated.model.QueryGetResponse200;
 
 public interface Api {
 
     @Mapping("/query")
-    QueryResponse200 getQuery();
+    QueryGetResponse200 getQuery();
 
 }

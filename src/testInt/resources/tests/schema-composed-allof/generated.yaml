@@ -1,5 +1,5 @@
 items:
   - generated/api/Api.java
-  - generated/model/QueryResponse200.java
+  - generated/model/QueryGetResponse200.java
 #  - generated/model/QueryResponse200_AllOf_0.java
 #  - generated/model/QueryResponse200_AllOf_1.java

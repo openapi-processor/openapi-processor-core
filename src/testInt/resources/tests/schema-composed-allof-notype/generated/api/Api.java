@@ -6,11 +6,11 @@
 package generated.api;
 
 import annotation.Mapping;
-import generated.model.AllOfNoTypeResponse200;
+import generated.model.AllOfNoTypeGetResponse200;
 
 public interface Api {
 
     @Mapping("/all-of-no-type")
-    AllOfNoTypeResponse200 getAllOfNoType();
+    AllOfNoTypeGetResponse200 getAllOfNoType();
 
 }

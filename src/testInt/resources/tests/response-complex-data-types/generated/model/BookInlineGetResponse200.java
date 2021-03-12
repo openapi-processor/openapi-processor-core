@@ -7,7 +7,7 @@ package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class BookInlineResponse200 {
+public class BookInlineGetResponse200 {
 
     @JsonProperty("isbn")
     private String isbn;

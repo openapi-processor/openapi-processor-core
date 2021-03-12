@@ -379,14 +379,14 @@ paths:
                         ['java.lang.String'])
                     ),
                     new TypeMapping (
-                        'ObjectResponse200',
+                        'ObjectGetResponse200',
                         'pkg.TargetClassType',
                         ['java.lang.StringType'])
                 ])
             ], [
                 new EndpointTypeMapping ('/object', null, [
                     new TypeMapping (
-                        'ObjectResponse200',
+                        'ObjectGetResponse200',
                         'pkg.TargetClass',
                         ['java.lang.String'])
                     ]

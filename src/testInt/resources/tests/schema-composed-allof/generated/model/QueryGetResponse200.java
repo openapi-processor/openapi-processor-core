@@ -7,10 +7,21 @@ package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class QueryResponse200_AllOf_1 {
+public class QueryGetResponse200 {
+
+    @JsonProperty("prop1")
+    private String prop1;
 
     @JsonProperty("prop2")
     private String prop2;
+
+    public String getProp1() {
+        return prop1;
+    }
+
+    public void setProp1(String prop1) {
+        this.prop1 = prop1;
+    }
 
     public String getProp2() {
         return prop2;
