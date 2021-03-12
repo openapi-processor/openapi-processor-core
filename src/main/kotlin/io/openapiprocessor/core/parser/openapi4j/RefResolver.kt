@@ -33,13 +33,8 @@ class RefResolver(private val api: O4jOpenApi): ParserRefResolver {
         val resolved: O4jSchema
 
         val refName = getRefName(ref.getRef()!!)
-        val o4jCompSchema: O4jSchema? = api.components?.schemas?.get(refName)
-        resolved = if (o4jCompSchema != null) {
-            o4jCompSchema
-        } else {
-            val o4jSchema: O4jSchema = (ref as Schema).schema
-            o4jSchema.getReference(api.context).getMappedContent(O4jSchema::class.java)
-        }
+        val o4jSchema: O4jSchema = (ref as Schema).schema
+        resolved = o4jSchema.getReference(api.context).getMappedContent(O4jSchema::class.java)
 
         return NamedSchema (refName, Schema(resolved))
     }
