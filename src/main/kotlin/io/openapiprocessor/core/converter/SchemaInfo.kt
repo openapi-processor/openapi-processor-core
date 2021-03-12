@@ -44,6 +44,19 @@ class SchemaInfo(
 
     class Endpoint(val path: String, val method: HttpMethod)
 
+    /**
+     * if this is a $ref it indicates that the name of this SchemaInfo should be propagated to its
+     * resolved $ref.
+     *
+     * if the schema is the start of a $ref-chain, its original name should be used for the resolved
+     * schema.
+     *
+     * The swagger parser (resolve option) creates schemas for intermediate $refs where the name is
+     * based on the filename. This breaks code generation because the original/public name of the
+     * schema is lost.
+     */
+    private var refName: Boolean = false
+
     override fun getPath(): String {
         return endpoint.path
     }
@@ -226,16 +239,27 @@ class SchemaInfo(
     }
 
     /**
-     * Factory method to create a {@link SchemaInfo} with the $ref name (without its "path").
+     * Factory method to create a {@link SchemaInfo} of the $ref'erenced schema.
      *
      * @return a new {@link SchemaInfo}
      */
     fun buildForRef(): SchemaInfo {
-        return SchemaInfo(
+        val resolved = resolver.resolve(schema!!)
+        val resolvedName = if (refName || resolved.hasNoName) {
+            name // propagate "parent" name
+        } else {
+            resolved.name
+        }!!
+
+        val info = SchemaInfo(
             endpoint = endpoint,
-            name = getRefName(schema!!),
-            schema = resolver.resolve(schema),
+            name = resolvedName,
+            schema = resolved.schema,
             resolver = resolver)
+
+        info.refName = true
+
+        return info
     }
 
     /**
