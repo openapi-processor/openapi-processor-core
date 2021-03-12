@@ -1,0 +1,15 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: generated
+
+map:
+  result: org.springframework.http.ResponseEntity
+  types:
+    - type: string:date-time => java.time.ZonedDateTime
+    - type: integer => java.lang.Long
+    - type: number => java.lang.Long
+    - type: array => java.util.Collection
+    - type: Pageable => org.springframework.data.domain.Pageable
+    - type: UserPage => org.springframework.data.domain.Page<{package-name}.model.User>
+    - type: TopicPage => org.springframework.data.domain.Page<{package-name}.model.Topic>

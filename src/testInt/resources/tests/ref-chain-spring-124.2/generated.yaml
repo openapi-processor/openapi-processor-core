@@ -1,0 +1,4 @@
+items:
+  - generated/api/UserApi.java
+  - generated/model/User.java
+  - generated/model/UserSearch.java

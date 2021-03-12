@@ -1,0 +1,15 @@
+get:
+  summary: Get all users
+  description: Get all users.
+  operationId: get-all-users
+  tags:
+    - user
+  responses:
+    '200':
+      description: none
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../models/user.model.v1.yaml#/User

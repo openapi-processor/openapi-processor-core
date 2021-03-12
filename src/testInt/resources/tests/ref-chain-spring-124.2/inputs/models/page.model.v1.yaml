@@ -1,0 +1,9 @@
+Page:
+  title: Page
+  description: minimal Page response without content property.
+  type: object
+  properties:
+    number:
+      type: integer
+    size:
+      type: integer

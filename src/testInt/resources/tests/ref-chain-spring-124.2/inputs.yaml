@@ -1,0 +1,11 @@
+items:
+  - inputs/openapi.yaml
+  - inputs/mapping.yaml
+  - inputs/apis/user.api.v1.yaml
+  - inputs/apis/user-page.api.v1.yaml
+  - inputs/apis/user-userId.api.v1.yaml
+  - inputs/apis/users.api.v1.yaml
+  - inputs/examples/user.example.v1.yaml
+  - inputs/models/page.model.v1.yaml
+  - inputs/models/pageable.model.v1.yaml
+  - inputs/models/user.model.v1.yaml

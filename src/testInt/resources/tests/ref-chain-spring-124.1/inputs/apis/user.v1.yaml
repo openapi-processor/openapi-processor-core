@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  title: user
+  version: '1.0'
+
+tags:
+  - name: user
+    description: user tag
+
+paths:
+
+  '/users/{userId}':
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
+
+    get:
+      summary: Get User by User ID
+      description: Retrieve the information of the user with the matching user ID.
+      operationId: get-user-by-userId
+      tags:
+        - user
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Get User Alice Smith:
+                  $ref: '#/components/examples/UserExample'
+        '404':
+          description: User Not Found
+
+    put:
+      summary: Replace User Info by User ID
+      description: Replace the information of the user with the matching user ID.
+      operationId: put-user-by-userId
+      tags:
+        - user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Put User Alice Smith:
+                  value:
+                    id: 0
+                    firstName: string
+                    lastName: string
+                    birthDate: '2019-08-24'
+                    email: user@example.com
+        '404':
+          description: Not Found
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            examples:
+              Put User Alice Smith:
+                $ref: '#/components/examples/UserExample'
+
+    delete:
+      summary: Delete User by User ID
+      description: Delete the user with the matching user ID.
+      operationId: delete-user-by-userId
+      tags:
+        - user
+      responses:
+        '200':
+          description: OK
+
+  '/user':
+    post:
+      summary: Create New User
+      description: Create a new user.
+      operationId: post-user
+      tags:
+        - user
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Post User Alice Smith:
+                  $ref: '#/components/examples/UserExample'
+        '400':
+          description: Missing Required Information.
+      requestBody:
+        description: Post the necessary fields for the API to create a new user.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            examples:
+              Post User Alice Smith:
+                $ref: '#/components/examples/UserExample'
+
+  /users:
+    get:
+      summary: Get all users
+      description: Get all users.
+      operationId: get-all-users
+      tags:
+        - user
+      responses:
+        '200':
+          description: none
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /user-page:
+    post:
+      summary: Get user page
+      description: Get a user page.
+      operationId: get-user-page
+      tags:
+        - user
+      parameters:
+        - in: query
+          name: pageable
+          required: false
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: none
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPage'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSearch'
+
+components:
+  schemas:
+    Pageable:
+      $ref: ../models/pageable.model.v1.yaml
+    Page:
+      $ref: ../models/page.model.v1.yaml
+    UserContent:
+      $ref: ../models/user-content.model.v1.yaml
+    UserPage:
+      $ref: ../models/user-page.model.v1.yaml
+    User:
+      $ref: ../models/user.model.v1.yaml
+    UserSearch:
+      $ref: ../models/user-search.model.v1.yaml
+  examples:
+    UserExample:
+      $ref: ../examples/user.example.v1.yaml

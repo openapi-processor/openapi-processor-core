@@ -1,0 +1,5 @@
+title: UserPage
+description: user typed Page.
+allOf:
+  - $ref: './page.model.v1.yaml'
+  - $ref: './user-content.model.v1.yaml'

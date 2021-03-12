@@ -1,0 +1,8 @@
+title: UserContent
+description: specific content List of the user Page response.
+type: object
+properties:
+  content:
+    type: array
+    items:
+      $ref: './user.model.v1.yaml'

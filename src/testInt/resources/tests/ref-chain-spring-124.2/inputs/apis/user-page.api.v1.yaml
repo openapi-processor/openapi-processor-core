@@ -1,0 +1,24 @@
+post:
+  summary: Get user page
+  description: Get a user page.
+  operationId: get-user-page
+  tags:
+    - user
+  parameters:
+    - in: query
+      name: pageable
+      required: false
+      schema:
+        $ref: ../models/pageable.model.v1.yaml#/Pageable
+  responses:
+    '200':
+      description: none
+      content:
+        application/json:
+          schema:
+            $ref: ../models/user.model.v1.yaml#/UserPage
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../models/user.model.v1.yaml#/UserSearch

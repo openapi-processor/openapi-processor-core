@@ -1,0 +1,70 @@
+parameters:
+- schema:
+    type: integer
+  name: userId
+  in: path
+  required: true
+  description: Id of an existing user.
+
+get:
+  summary: Get User by User ID
+  description: Retrieve the information of the user with the matching user ID.
+  operationId: get-user-by-userId
+  tags:
+    - user
+  responses:
+    '200':
+      description: User Found
+      content:
+        application/json:
+          schema:
+            $ref: ../models/user.model.v1.yaml#/User
+          examples:
+            Get User Alice Smith:
+              $ref: ../examples/user.example.v1.yaml
+    '404':
+      description: User Not Found
+
+put:
+  summary: Replace User Info by User ID
+  description: Replace the information of the user with the matching user ID.
+  operationId: put-user-by-userId
+  tags:
+    - user
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../models/user.model.v1.yaml#/User
+          examples:
+            Put User Alice Smith:
+              value:
+                id: 0
+                firstName: string
+                lastName: string
+                birthDate: '2019-08-24'
+                email: user@example.com
+    '404':
+      description: Not Found
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../models/user.model.v1.yaml#/User
+        examples:
+          Put User Alice Smith:
+            $ref: ../examples/user.example.v1.yaml
+    description: ''
+
+delete:
+  summary: Delete User by User ID
+  description: Delete the user with the matching user ID.
+  operationId: delete-user-by-userId
+  tags:
+    - user
+  responses:
+    '200':
+      description: OK

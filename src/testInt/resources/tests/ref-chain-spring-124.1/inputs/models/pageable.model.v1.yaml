@@ -1,0 +1,10 @@
+title: Pageable
+description: minimal Pageable query parameters.
+type: object
+properties:
+  page:
+    type: integer
+  size:
+    type: integer
+  sort:
+    type: string

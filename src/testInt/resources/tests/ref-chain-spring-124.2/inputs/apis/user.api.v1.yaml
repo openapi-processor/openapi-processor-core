@@ -1,0 +1,28 @@
+post:
+  summary: Create New User
+  description: Create a new user.
+  operationId: post-user
+  tags:
+    - user
+  responses:
+    '200':
+      description: User Created
+      content:
+        application/json:
+          schema:
+            $ref: ../models/user.model.v1.yaml#/User
+          examples:
+            Post User Alice Smith:
+              $ref: ../examples/user.example.v1.yaml
+    '400':
+      description: Missing Required Information
+  requestBody:
+    description: Post the necessary fields for the API to create a new user.
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../models/user.model.v1.yaml#/User
+        examples:
+          Post User Alice Smith:
+            $ref: ../examples/user.example.v1.yaml
