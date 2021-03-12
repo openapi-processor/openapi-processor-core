@@ -10,10 +10,10 @@ package io.openapiprocessor.core.parser
  */
 interface Schema {
 
-    /**
-     * OpenAPI schema type, ie. array, string, etc.
-     */
+    // type, ie. array, string, etc.
     fun getType(): String?
+
+    // format
     fun getFormat(): String?
 
     // $ref
