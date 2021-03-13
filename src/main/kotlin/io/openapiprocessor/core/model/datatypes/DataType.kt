@@ -5,6 +5,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * Data type description of a Java data type.
  */
@@ -55,5 +57,7 @@ interface DataType {
     fun isDeprecated(): Boolean {
         return false
     }
+
+    val documentation: Documentation?
 
 }

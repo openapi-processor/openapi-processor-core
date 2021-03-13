@@ -5,6 +5,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * Null(able) data type wrapper. Assumes a single generic parameter.
  */
@@ -30,5 +32,7 @@ class NullDataType(
     override fun getReferencedImports(): Set<String> {
         return emptySet()
     }
+
+    override val documentation: Documentation? = null
 
 }

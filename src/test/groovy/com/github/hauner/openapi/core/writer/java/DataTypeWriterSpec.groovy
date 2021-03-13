@@ -22,6 +22,7 @@ import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DataTypeWriter
+import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.SimpleWriter
 import spock.lang.Specification
 
@@ -31,7 +32,7 @@ class DataTypeWriterSpec extends Specification {
     def headerWriter = Mock SimpleWriter
     def options = new ApiOptions()
 
-    def writer = new DataTypeWriter(options, headerWriter, new BeanValidationFactory())
+    def writer = new DataTypeWriter(options, headerWriter, new BeanValidationFactory(), new JavaDocWriter())
     def target = new StringWriter ()
 
     void "writes 'generated' comment" () {

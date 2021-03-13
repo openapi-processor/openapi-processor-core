@@ -8,9 +8,16 @@ package io.openapiprocessor.core.writer.java
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
+import io.mockk.every
+import io.mockk.mockk
 import io.openapiprocessor.core.builder.api.endpoint
+import io.openapiprocessor.core.model.Documentation
+import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.ModelDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.parameters.ParameterBase
+import io.openapiprocessor.core.parser.Schema
 
 class JavaDocWriterSpec: StringSpec({
 
@@ -191,6 +198,31 @@ class JavaDocWriterSpec: StringSpec({
             |     * </ul>
             |     * <pre><code>code block
             |     * </code></pre>
+            |     */
+            |
+            """.trimMargin()
+    }
+
+    "converts schema without description to empty string" {
+        val datatype = mockk<ModelDataType>()
+        every { datatype.documentation } returns null
+
+        val html = writer.convert(datatype)
+
+        html.shouldBeEmpty()
+    }
+
+    "converts schema description to javadoc comment" {
+        val description = "*markdown* description with **text**"
+
+        val datatype = mockk<ModelDataType>()
+        every { datatype.documentation } returns Documentation(description = description)
+
+        val html = writer.convert(datatype)
+
+        html shouldBe """
+            |    /**
+            |     * <em>markdown</em> description with <strong>text</strong>
             |     */
             |
             """.trimMargin()

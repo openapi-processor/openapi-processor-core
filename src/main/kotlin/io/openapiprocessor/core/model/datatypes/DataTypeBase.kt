@@ -16,6 +16,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * basic DataType implementation. Reduces duplication in DataTypes.
  *
@@ -24,7 +26,8 @@ package io.openapiprocessor.core.model.datatypes
 abstract class DataTypeBase(
 
     private val constraints: DataTypeConstraints? = null,
-    private val deprecated: Boolean = false
+    private val deprecated: Boolean = false,
+    override val documentation: Documentation? = null
 
 ): DataType {
 

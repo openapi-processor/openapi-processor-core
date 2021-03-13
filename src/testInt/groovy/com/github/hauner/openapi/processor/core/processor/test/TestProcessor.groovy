@@ -70,7 +70,8 @@ class TestProcessor implements OpenApiProcessor {
                 new DataTypeWriter(
                     options,
                     headerWriter,
-                    beanValidationFactory
+                    beanValidationFactory,
+                    new JavaDocWriter()
                 ),
                 new StringEnumWriter(headerWriter),
                 true

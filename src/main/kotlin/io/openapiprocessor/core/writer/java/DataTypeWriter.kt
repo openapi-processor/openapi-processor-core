@@ -31,7 +31,8 @@ import java.io.Writer
 class DataTypeWriter(
     private val apiOptions: ApiOptions,
     private val headerWriter: SimpleWriter,
-    private val validationAnnotations: BeanValidationFactory = BeanValidationFactory()
+    private val validationAnnotations: BeanValidationFactory = BeanValidationFactory(),
+    private val javadocWriter: JavaDocWriter = JavaDocWriter()
 ) {
 
     fun write(target: Writer, dataType: ModelDataType) {
@@ -49,6 +50,13 @@ class DataTypeWriter(
 
         if (dataType.isDeprecated()) {
             target.write("@Deprecated\n")
+        }
+
+        // add description
+        if (apiOptions.javadoc) {
+            target.write(
+                javadocWriter.convert(dataType)
+            )
         }
 
         target.write("public class ${dataType.getName()} {\n\n")
