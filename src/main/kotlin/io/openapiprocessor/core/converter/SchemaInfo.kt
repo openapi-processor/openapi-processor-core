@@ -110,6 +110,13 @@ class SchemaInfo(
     }
 
     /**
+     * get description.
+     *
+     * @return description or null
+     */
+    val description: String? = schema?.description
+
+    /**
      * get deprecated value
      *
      * @return true or false

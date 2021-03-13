@@ -9,6 +9,7 @@ import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.converter.wrapper.NullDataTypeWrapper
 import io.openapiprocessor.core.model.DataTypeCollector
 import io.openapiprocessor.core.model.DataTypes
+import io.openapiprocessor.core.model.Documentation
 import io.openapiprocessor.core.model.datatypes.*
 import java.util.*
 import kotlin.collections.LinkedHashMap
@@ -202,7 +203,10 @@ class DataTypeConverter(
             listOf(options.packageName, "model").joinToString("."),
             properties = properties,
             constraints = constraints,
-            deprecated = schemaInfo.getDeprecated()
+            deprecated = schemaInfo.getDeprecated(),
+            documentation = Documentation(
+                description = schemaInfo.description
+            )
         )
 
         dataTypes.add (objectType)

@@ -58,6 +58,8 @@ class TestSchema implements Schema {
     Map<String, Schema> properties
     List<?> enumValues = []
 
+    String description
+
     def getDefault() {
         defaultValue
     }

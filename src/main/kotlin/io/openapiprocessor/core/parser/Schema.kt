@@ -34,6 +34,8 @@ interface Schema {
 
     fun getDefault(): Any?
 
+    val description: String?
+
     // default false
     fun isDeprecated(): Boolean
 

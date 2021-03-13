@@ -38,11 +38,8 @@ class DataTypeWriter(
             target.write("@Deprecated\n")
         }
 
-        // add description
         if (apiOptions.javadoc) {
-            target.write(
-                javadocWriter.convert(dataType)
-            )
+            target.write(javadocWriter.convert(dataType))
         }
 
         target.write("public class ${dataType.getName()} {\n\n")

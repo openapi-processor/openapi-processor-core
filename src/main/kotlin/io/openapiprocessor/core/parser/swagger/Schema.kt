@@ -89,6 +89,8 @@ class Schema(private val schema: SwaggerSchema<*>): ParserSchema {
 
     override fun getDefault(): Any? = schema.default
 
+    override val description: String? = schema.description
+
     override fun isDeprecated(): Boolean = schema.deprecated ?: false
 
     override fun getRequired(): List<String> = schema.required ?: emptyList()

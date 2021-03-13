@@ -16,6 +16,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * OpenAPI named #/component/schemas type or an inline type.
  *
@@ -28,9 +30,10 @@ class ObjectDataType(
     private val pkg: String,
     private val properties: LinkedHashMap<String, DataType> = linkedMapOf(), // preserves order
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false
+    deprecated: Boolean = false,
+    override val documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated), ModelDataType {
+): DataTypeBase(constraints, deprecated, documentation), ModelDataType {
 
     override fun getName(): String {
         return type
