@@ -65,6 +65,11 @@ class DataTypeWriter(
         propDataType: DataType, required: Boolean): String {
 
         var result = ""
+
+        if (apiOptions.javadoc) {
+            result += javadocWriter.convert(propDataType)
+        }
+
         if (propDataType.isDeprecated()) {
             result += "    @Deprecated\n"
         }

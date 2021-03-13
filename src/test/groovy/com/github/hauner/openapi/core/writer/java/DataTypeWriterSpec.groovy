@@ -36,7 +36,8 @@ class DataTypeWriterSpec extends Specification {
     def target = new StringWriter ()
 
     void "writes 'generated' comment" () {
-        def dataType = new ObjectDataType('Book', '', [:], null, false)
+        def dataType = new ObjectDataType(
+            'Book', '', [:], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -47,7 +48,8 @@ class DataTypeWriterSpec extends Specification {
 
     void "writes 'package'" () {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new ObjectDataType ('Book', pkg, [:], null, false)
+        def dataType = new ObjectDataType (
+            'Book', pkg, [:], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -63,8 +65,9 @@ package $pkg;
         def pkg = 'external'
 
         def dataType = new ObjectDataType ('Book', 'mine', [
-            'isbn': new ObjectDataType ('Isbn', pkg, [:], null, false)
-        ], null, false)
+            'isbn': new ObjectDataType (
+                'Isbn', pkg, [:], null, false, null)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -79,7 +82,7 @@ import external.Isbn;
     void "writes import of generic list type" () {
         def dataType = new ObjectDataType ('Book', 'mine', [
             'authors': new ListDataType (new StringDataType())
-        ], null, false)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -96,7 +99,7 @@ import java.util.List;
         def dataType = new ObjectDataType ('Book', pkg, [
             isbn: new StringDataType(),
             title: new StringDataType ()
-        ], null, false)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -117,7 +120,7 @@ import java.util.List;
         def dataType = new ObjectDataType ('Book', pkg, [
             isbn: new StringDataType(),
             title: new StringDataType ()
-        ], null, false)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -147,7 +150,8 @@ import java.util.List;
 
     void "writes deprecated class" () {
         def pkg = 'io.openapiprocessor.core'
-        def dataType = new ObjectDataType ('Bar', pkg, [:],null, true)
+        def dataType = new ObjectDataType (
+            'Bar', pkg, [:],null, true, null)
 
         when:
         writer.write (target, dataType)
@@ -164,8 +168,8 @@ public class Bar {
     void "writes deprecated property" () {
         def pkg = 'com.github.hauner.openapi'
         def dataType = new ObjectDataType ('Book', pkg, [
-            isbn: new StringDataType(null, true)
-        ], null, false)
+            isbn: new StringDataType(null, true, null)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -181,8 +185,8 @@ public class Bar {
     void "writes deprecated property getters & setters" () {
         def pkg = 'com.github.hauner.openapi'
         def dataType = new ObjectDataType ('Book', pkg, [
-            isbn: new StringDataType(null, true)
-        ], null, false)
+            isbn: new StringDataType(null, true, null)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -208,7 +212,7 @@ public class Bar {
         def dataType = new ObjectDataType ('Book', pkg, [
             'a-isbn' : new StringDataType (),
             'a-title': new StringDataType ()
-        ], null, false)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -229,7 +233,7 @@ public class Bar {
         def dataType = new ObjectDataType ('Book', pkg, [
             'isbn' : new StringDataType (),
             'title': new StringDataType ()
-        ], null, false)
+        ], null, false, null)
 
         when:
         writer.write (target, dataType)
@@ -247,7 +251,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
         def dataType = new ObjectDataType ('Book', pkg, [
                     'a-isbn': new StringDataType (),
                     'a-title': new StringDataType ()
-                ], null, false)
+                ], null, false, null)
 
         when:
         writer.write (target, dataType)

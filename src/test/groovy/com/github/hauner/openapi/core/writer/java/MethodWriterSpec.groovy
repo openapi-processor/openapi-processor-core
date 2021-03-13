@@ -106,7 +106,7 @@ class MethodWriterSpec extends Specification {
                             'InlineObjectResponse', '', [
                             foo1: new StringDataType (),
                             foo2: new StringDataType ()
-                        ], null, false)) {}
+                        ], null, false, null)) {}
                 }
             }
         }
@@ -153,7 +153,7 @@ class MethodWriterSpec extends Specification {
             }
             e.parameters { ps ->
                 ps.any (new ParameterBase (
-                    'foo', new StringDataType (null, false),
+                    'foo', new StringDataType (null, false, null),
                     true,
                     false,
                     null) {})

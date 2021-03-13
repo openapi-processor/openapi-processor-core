@@ -16,6 +16,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * OpenAPI type 'integer' with format 'int64' maps to java Long.
  *
@@ -24,9 +26,10 @@ package io.openapiprocessor.core.model.datatypes
 class LongDataType(
 
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false
+    deprecated: Boolean = false,
+    documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints, deprecated, documentation) {
 
     override fun getName(): String {
         return "Long"

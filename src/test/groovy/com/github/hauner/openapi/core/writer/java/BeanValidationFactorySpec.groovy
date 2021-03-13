@@ -44,7 +44,8 @@ class BeanValidationFactorySpec extends Specification {
 
     @Unroll
     void "applies @Valid to Object" () {
-        def dataType = new ObjectDataType('Foo', '', [:], null, false)
+        def dataType = new ObjectDataType(
+            'Foo', '', [:], null, false, null)
 
         when:
         def imports = validation.collectImports (dataType, false)
@@ -82,7 +83,7 @@ class BeanValidationFactorySpec extends Specification {
             maxLength: maxLength
         )
 
-        def dataType = new StringDataType(constraints, false)
+        def dataType = new StringDataType(constraints, false, null)
 
         when:
         def imports = validation.collectImports (dataType, false)
@@ -299,7 +300,7 @@ class BeanValidationFactorySpec extends Specification {
         constraints.maximum = maximum
         constraints.exclusiveMaximum = exclusiveMaximum
 
-        DataType dataType = new DoubleDataType (constraints, false)
+        DataType dataType = new DoubleDataType (constraints, false, null)
 
         when:
         def imports = validation.collectImports (dataType, false)
@@ -322,19 +323,19 @@ class BeanValidationFactorySpec extends Specification {
     private DataType createDataType (Class clazz, DataTypeConstraints constraints) {
         switch (clazz) {
             case IntegerDataType:
-                return new IntegerDataType(constraints, false)
+                return new IntegerDataType(constraints, false, null)
 
             case LongDataType:
-                return new LongDataType(constraints, false)
+                return new LongDataType(constraints, false, null)
 
             case FloatDataType:
-                return new FloatDataType(constraints, false)
+                return new FloatDataType(constraints, false, null)
 
             case DoubleDataType:
-                return new DoubleDataType(constraints, false)
+                return new DoubleDataType(constraints, false, null)
 
             case StringDataType:
-                return new StringDataType(constraints, false)
+                return new StringDataType(constraints, false, null)
 
             case MappedCollectionDataType:
                 return new MappedCollectionDataType(

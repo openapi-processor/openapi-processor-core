@@ -5,19 +5,17 @@
 
 package io.openapiprocessor.core.writer.java
 
+import io.kotest.core.datatest.forAll
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import io.mockk.every
 import io.mockk.mockk
 import io.openapiprocessor.core.builder.api.endpoint
 import io.openapiprocessor.core.model.Documentation
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.ModelDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.model.parameters.ParameterBase
-import io.openapiprocessor.core.parser.Schema
 
 class JavaDocWriterSpec: StringSpec({
 
@@ -221,11 +219,46 @@ class JavaDocWriterSpec: StringSpec({
         val html = writer.convert(datatype)
 
         html shouldBe """
-            |    /**
-            |     * <em>markdown</em> description with <strong>text</strong>
-            |     */
+            |/**
+            | * <em>markdown</em> description with <strong>text</strong>
+            | */
             |
             """.trimMargin()
+    }
+
+    "converts property schema without description to empty string" {
+        val datatype = ObjectDataType( "Foo", "pkg", linkedMapOf(
+            Pair("bar", StringDataType())
+        ))
+
+        val html = writer.convert(datatype)
+
+        html.shouldBeEmpty()
+    }
+
+    "converts property schema description to javadoc comment" {
+        val description = "*markdown* description with **text**"
+
+        forAll(
+            row(IntegerDataType(documentation = Documentation(description = description))),
+            row(LongDataType(documentation = Documentation(description = description))),
+            row(FloatDataType(documentation = Documentation(description = description))),
+            row(DoubleDataType(documentation = Documentation(description = description))),
+            row(BooleanDataType(documentation = Documentation(description = description))),
+            row(StringDataType(documentation = Documentation(description = description))),
+            row(LocalDateDataType(documentation = Documentation(description = description))),
+            row(OffsetDateTimeDataType(documentation = Documentation(description = description)))
+        ) { (type: DataType) ->
+
+            val html = writer.convert(type)
+
+            html shouldBe """
+                |    /**
+                |     * <em>markdown</em> description with <strong>text</strong>
+                |     */
+                |
+                """.trimMargin()
+        }
     }
 
 })

@@ -7,6 +7,7 @@ package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
+import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import org.commonmark.node.Document
 import org.commonmark.node.Node
@@ -86,6 +87,16 @@ open class JavaDocWriter {
         }
 
         return wrap(comment)
+    }
+
+    fun convert(dataType: DataType): String {
+        var comment = ""
+
+        if (dataType.documentation?.description != null) {
+            comment += convert(dataType.documentation!!.description) + "\n"
+        }
+
+        return indent(wrap(comment))
     }
 
     private fun wrap(comment: String): String {

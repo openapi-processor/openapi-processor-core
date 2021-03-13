@@ -16,6 +16,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * OpenAPI type 'string' with format 'date-time' maps to java OffsetDateTime.
  *
@@ -24,7 +26,8 @@ package io.openapiprocessor.core.model.datatypes
 class OffsetDateTimeDataType(
 
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false
+    deprecated: Boolean = false,
+    documentation: Documentation? = null
 
 ): DataTypeBase(constraints, deprecated) {
 

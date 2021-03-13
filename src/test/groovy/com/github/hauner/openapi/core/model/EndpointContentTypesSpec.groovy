@@ -48,7 +48,7 @@ class EndpointContentTypesSpec extends Specification {
                     new ObjectDataType ('Foo', '', [
                         foo: new StringDataType (),
                         bar: new StringDataType ()
-                    ], null, false))
+                    ], null, false, null))
             }
             e.responses { r ->
                 r.status ('204') {it.empty () }

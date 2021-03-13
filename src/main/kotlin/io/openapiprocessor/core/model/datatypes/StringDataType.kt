@@ -16,6 +16,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * OpenAPI type 'string' maps to java String.
  *
@@ -24,9 +26,10 @@ package io.openapiprocessor.core.model.datatypes
 class StringDataType(
 
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false
+    deprecated: Boolean = false,
+    documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints, deprecated, documentation) {
 
     override fun getName(): String {
         return "String"

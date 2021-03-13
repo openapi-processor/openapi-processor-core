@@ -16,6 +16,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * OpenAPI type 'string' with format 'date' maps to java LocalDate.
  *
@@ -24,9 +26,10 @@ package io.openapiprocessor.core.model.datatypes
 class LocalDateDataType(
 
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false
+    deprecated: Boolean = false,
+    documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints, deprecated, documentation) {
 
     override fun getName(): String {
         return "LocalDate"
@@ -35,5 +38,5 @@ class LocalDateDataType(
     override fun getPackageName(): String {
         return "java.time"
     }
-    
+
 }

@@ -204,9 +204,7 @@ class DataTypeConverter(
             properties = properties,
             constraints = constraints,
             deprecated = schemaInfo.getDeprecated(),
-            documentation = Documentation(
-                description = schemaInfo.description
-            )
+            documentation = Documentation(description = schemaInfo.description)
         )
 
         dataTypes.add (objectType)
@@ -246,22 +244,29 @@ class DataTypeConverter(
         return when(typeFormat) {
             "integer",
             "integer:int32" ->
-                IntegerDataType(constraints, schemaInfo.getDeprecated())
+                IntegerDataType(constraints, schemaInfo.getDeprecated(),
+                    Documentation(description = schemaInfo.description))
             "integer:int64" ->
-                LongDataType(constraints, schemaInfo.getDeprecated())
+                LongDataType(constraints, schemaInfo.getDeprecated(),
+                    Documentation(description = schemaInfo.description))
             "number",
             "number:float" ->
-                FloatDataType(constraints, schemaInfo.getDeprecated())
+                FloatDataType(constraints, schemaInfo.getDeprecated(),
+                    Documentation(description = schemaInfo.description))
             "number:double" ->
-                DoubleDataType(constraints, schemaInfo.getDeprecated())
+                DoubleDataType(constraints, schemaInfo.getDeprecated(),
+                    Documentation(description = schemaInfo.description))
             "boolean" ->
-                BooleanDataType(constraints, schemaInfo.getDeprecated())
+                BooleanDataType(constraints, schemaInfo.getDeprecated(),
+                    Documentation(description = schemaInfo.description))
             "string" ->
                 createStringDataType(schemaInfo, constraints, dataTypes)
             "string:date" ->
-                LocalDateDataType(constraints, schemaInfo.getDeprecated())
+                LocalDateDataType(constraints, schemaInfo.getDeprecated(),
+                    Documentation(description = schemaInfo.description))
             "string:date-time" ->
-                OffsetDateTimeDataType (constraints, schemaInfo.getDeprecated())
+                OffsetDateTimeDataType (constraints, schemaInfo.getDeprecated(),
+                    Documentation(description = schemaInfo.description))
             else ->
                 throw UnknownDataTypeException(schemaInfo.getName(), schemaInfo.getType(),
                     schemaInfo.getFormat())
@@ -294,9 +299,12 @@ class DataTypeConverter(
             "date-time")
     }
 
-    private fun createStringDataType(schemaInfo: SchemaInfo, constraints: DataTypeConstraints, dataTypes: DataTypes): DataType {
+    private fun createStringDataType(schemaInfo: SchemaInfo, constraints: DataTypeConstraints,
+        dataTypes: DataTypes): DataType {
+
         if (!schemaInfo.isEnum()) {
-            return StringDataType(constraints, schemaInfo.getDeprecated())
+            return StringDataType(constraints, schemaInfo.getDeprecated(),
+                Documentation(description = schemaInfo.description))
         }
 
         // in case of an inline definition the name may be lowercase, make sure the enum

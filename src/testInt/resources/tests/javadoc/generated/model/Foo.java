@@ -7,12 +7,10 @@ package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/** this is the *Foo* schema description */
+/** this is the <em>Foo</em> schema description */
 public class Foo {
 
-    /**
-     *  *property* description
-     */
+    /** <em>property</em> description */
     @JsonProperty("foobar")
     private String foobar;
 
