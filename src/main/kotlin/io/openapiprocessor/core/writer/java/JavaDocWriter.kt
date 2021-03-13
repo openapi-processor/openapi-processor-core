@@ -85,7 +85,7 @@ open class JavaDocWriter {
             comment += convert(dataType.documentation!!.description) + "\n"
         }
 
-        return indent(wrap(comment))
+        return wrap(comment)
     }
 
     private fun wrap(comment: String): String {
