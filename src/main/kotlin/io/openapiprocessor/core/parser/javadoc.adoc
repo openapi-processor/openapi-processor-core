@@ -29,10 +29,10 @@ list of OpenAPI *documentation* properties. Checked items are supported/used to 
 ** `content: [string -> MediaType]`
 
 * `Schema`:
-** [ ] `description: string` (common mark)
+** [x] `description: string` (common mark)
 ** [ ] `externalDocs: ExternalDoc`
 ** [ ] `example: any`
-** [ ] `properties: [string -> Schema]`
+** [x] `properties: [string -> Schema]`
 
 * `MediaType`:
 ** [ ] `example: any` (mutually exclusive with examples)
