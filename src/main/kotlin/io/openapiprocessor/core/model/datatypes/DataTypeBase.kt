@@ -14,8 +14,4 @@ abstract class DataTypeBase: DataType {
         return setOf(getPackageName() + "." + getName())
     }
 
-    override fun getReferencedImports(): Set<String> {
-        return emptySet()
-    }
-
 }

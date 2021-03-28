@@ -5,8 +5,6 @@
 
 package io.openapiprocessor.core.model.datatypes
 
-import io.openapiprocessor.core.model.Documentation
-
 /**
  * Null(able) data type wrapper. Assumes a single generic parameter.
  */
@@ -27,10 +25,6 @@ class NullDataType(
 
     override fun getImports(): Set<String> {
         return setOf("${getPackageName()}.$type") + dataType.getImports()
-    }
-
-    override fun getReferencedImports(): Set<String> {
-        return emptySet()
     }
 
 }

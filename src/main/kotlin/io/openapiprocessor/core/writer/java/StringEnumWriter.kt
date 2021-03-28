@@ -89,7 +89,7 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
         val imports = mutableSetOf<String>()
         imports.add ("com.fasterxml.jackson.annotation.JsonCreator")
         imports.add ("com.fasterxml.jackson.annotation.JsonValue")
-        imports.addAll (dataType.getReferencedImports())
+        imports.addAll (dataType.referencedImports)
 
         return DefaultImportFilter ()
             .filter(packageName, imports)

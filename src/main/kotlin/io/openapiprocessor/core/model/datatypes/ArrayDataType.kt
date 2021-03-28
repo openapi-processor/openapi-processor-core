@@ -23,11 +23,9 @@ package io.openapiprocessor.core.model.datatypes
  * @author Bastian Wilhelm
  */
 class ArrayDataType(
-
     val item: DataType,
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-
 ): DataTypeBase() {
 
     override fun getName(): String {
@@ -42,8 +40,7 @@ class ArrayDataType(
         return item.getImports()
     }
 
-    override fun getReferencedImports(): Set<String> {
-        return item.getReferencedImports()
-    }
+    override val referencedImports: Set<String>
+        get() = item.referencedImports
 
 }

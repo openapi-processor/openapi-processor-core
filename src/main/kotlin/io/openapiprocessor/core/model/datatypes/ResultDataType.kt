@@ -16,8 +16,6 @@
 
 package io.openapiprocessor.core.model.datatypes
 
-import io.openapiprocessor.core.model.Documentation
-
 /**
  * Result data type wrapper. Assumes a single generic parameter.
  *
@@ -42,10 +40,6 @@ class ResultDataType(
 
     override fun getImports(): Set<String> {
         return setOf("${getPackageName()}.$type") + dataType.getImports()
-    }
-
-    override fun getReferencedImports(): Set<String> {
-        return emptySet()
     }
 
     /**

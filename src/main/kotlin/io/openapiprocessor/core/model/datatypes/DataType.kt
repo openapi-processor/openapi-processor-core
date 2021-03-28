@@ -33,28 +33,27 @@ interface DataType {
     fun getImports(): Set<String>
 
     /**
-     * Provides the list of imports for the types referenced by this this type. Used to create the
+     * provides the list of imports for the types referenced by this this type. Used to create the
      * imports used by the data type itself.
-     *
-     * @return the referenced import list.
      */
-    fun getReferencedImports(): Set<String>
+    val referencedImports: Set<String>
+        get() = emptySet()
 
     /**
-     * Provides the constraint information of the data type.
-     *
-     * @return the constraints or null if there are no constraints.
+     * provides the constraint information of the data type.
      */
-//    fun getConstraints(): DataTypeConstraints? {
-//        return null
-//    }
-
     val constraints: DataTypeConstraints?
         get() = null
 
+    /**
+     * is this data type deprecated?
+     */
     val deprecated: Boolean
         get() = false
 
+    /**
+     * provides the documentation of the data type.
+     */
     val documentation: Documentation?
         get() = null
 

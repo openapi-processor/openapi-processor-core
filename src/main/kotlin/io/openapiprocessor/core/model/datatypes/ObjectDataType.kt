@@ -29,12 +29,13 @@ class ObjectDataType(
         return pkg
     }
 
-    override fun getReferencedImports(): Set<String> {
-        return properties.values
-            .map { it.getImports() }
-            .flatten()
-            .toSet()
-    }
+    override val referencedImports: Set<String>
+        get() {
+            return properties.values
+                .map { it.getImports() }
+                .flatten()
+                .toSet()
+        }
 
     fun addObjectProperty(name: String, type: DataType) {
         properties[name] = type

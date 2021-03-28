@@ -134,7 +134,7 @@ class DataTypeWriter(
             imports.add("com.fasterxml.jackson.annotation.JsonProperty")
         }
 
-        imports.addAll(dataType.getReferencedImports())
+        imports.addAll(dataType.referencedImports)
 
         if (apiOptions.beanValidation) {
             val properties = dataType.getProperties()

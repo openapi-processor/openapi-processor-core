@@ -31,13 +31,14 @@ class AllOfObjectDataType(
         return setOf(getPackageName() + "." + getName())
     }
 
-    override fun getReferencedImports(): Set<String> {
-        return items
-            .filterIsInstance<ObjectDataType>()
-            .map { it.getImports() }
-            .flatten()
-            .toSet()
-    }
+    override val referencedImports: Set<String>
+        get() {
+            return items
+                .filterIsInstance<ObjectDataType>()
+                .map { it.getImports() }
+                .flatten()
+                .toSet()
+        }
 
     override fun getProperties(): Map<String, DataType> {
         val properties = linkedMapOf<String, DataType>()
