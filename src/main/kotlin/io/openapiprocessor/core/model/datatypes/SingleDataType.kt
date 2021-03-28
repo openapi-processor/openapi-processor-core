@@ -47,6 +47,4 @@ class SingleDataType(
         return emptySet()
     }
 
-    override val documentation: Documentation? = null
-
 }

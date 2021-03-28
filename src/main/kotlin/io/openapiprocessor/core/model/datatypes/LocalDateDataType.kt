@@ -14,9 +14,9 @@ class LocalDateDataType(
 
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false,
-    documentation: Documentation? = null
+    override val documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated, documentation) {
+): DataTypeBase(constraints, deprecated) {
 
     override fun getName(): String {
         return "LocalDate"

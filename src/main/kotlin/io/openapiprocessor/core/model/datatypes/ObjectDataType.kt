@@ -19,7 +19,7 @@ class ObjectDataType(
     deprecated: Boolean = false,
     override val documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated, documentation), ModelDataType {
+): DataTypeBase(constraints, deprecated), ModelDataType {
 
     override fun getName(): String {
         return type

@@ -48,8 +48,6 @@ class ResultDataType(
         return emptySet()
     }
 
-    override val documentation: Documentation? = null
-
     /**
      * type if the result data type can have multiple values.
      *

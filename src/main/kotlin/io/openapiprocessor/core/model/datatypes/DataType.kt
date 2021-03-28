@@ -59,5 +59,6 @@ interface DataType {
     }
 
     val documentation: Documentation?
+        get() = null
 
 }

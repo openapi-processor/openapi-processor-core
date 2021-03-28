@@ -33,6 +33,4 @@ class NullDataType(
         return emptySet()
     }
 
-    override val documentation: Documentation? = null
-
 }

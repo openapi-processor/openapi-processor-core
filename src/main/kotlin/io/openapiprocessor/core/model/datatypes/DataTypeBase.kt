@@ -13,8 +13,7 @@ import io.openapiprocessor.core.model.Documentation
 abstract class DataTypeBase(
 
     private val constraints: DataTypeConstraints? = null,
-    private val deprecated: Boolean = false,
-    override val documentation: Documentation? = null
+    private val deprecated: Boolean = false
 
 ): DataType {
 
