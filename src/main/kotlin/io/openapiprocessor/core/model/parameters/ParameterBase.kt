@@ -24,7 +24,7 @@ abstract class ParameterBase(
         get() = dataType.getImports()
 
     override val constraints: ParameterConstraints
-        get() = ParameterConstraints(dataType.getConstraints())
+        get() = ParameterConstraints(dataType.constraints)
 
     override val withAnnotation: Boolean
         get() = true

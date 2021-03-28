@@ -20,7 +20,7 @@ package io.openapiprocessor.core.model.datatypes
  *
  * @author Martin Hauner
  */
-class NoneDataType(): DataTypeBase(null) {
+class NoneDataType(): DataTypeBase() {
 
     private var type = "void"
 

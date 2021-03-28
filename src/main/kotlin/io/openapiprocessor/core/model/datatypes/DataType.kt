@@ -45,9 +45,12 @@ interface DataType {
      *
      * @return the constraints or null if there are no constraints.
      */
-    fun getConstraints(): DataTypeConstraints? {
-        return null
-    }
+//    fun getConstraints(): DataTypeConstraints? {
+//        return null
+//    }
+
+    val constraints: DataTypeConstraints?
+        get() = null
 
     val deprecated: Boolean
         get() = false

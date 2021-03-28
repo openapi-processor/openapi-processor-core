@@ -8,10 +8,10 @@ package io.openapiprocessor.core.model.datatypes
 class NoDataType(
 
     private val type: String,
-    constraints: DataTypeConstraints? = null,
+    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 
-): DataTypeBase(constraints) {
+): DataTypeBase() {
 
     override fun getName(): String {
         return type

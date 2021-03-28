@@ -69,7 +69,7 @@ open class BeanValidationFactory {
     private fun createNotNullAnnotation(): String = "@NotNull"
 
     private fun createDecimalMinAnnotation(dataType: DataType): String {
-        val minimum = dataType.getConstraints()?.minimumConstraint!!
+        val minimum = dataType.constraints?.minimumConstraint!!
         return if(minimum.exclusive) {
             "@DecimalMin(value = \"${minimum.value}\", inclusive = false)"
         } else {
@@ -78,7 +78,7 @@ open class BeanValidationFactory {
     }
 
     private fun createDecimalMaxAnnotation(dataType: DataType): String {
-        val maximum = dataType.getConstraints()?.maximumConstraint!!
+        val maximum = dataType.constraints?.maximumConstraint!!
         return if(maximum.exclusive) {
             "@DecimalMax(value = \"${maximum.value}\", inclusive = false)"
         } else {
@@ -126,20 +126,20 @@ private fun DataType.isNumber(): Boolean =
    || this is IntegerDataType
    || this is LongDataType
 
-private fun DataType.hasNotNullableConstraint(): Boolean = !(getConstraints()?.nullable ?: false)
+private fun DataType.hasNotNullableConstraint(): Boolean = !(constraints?.nullable ?: false)
 
-private fun DataType.hasArrayConstraints(): Boolean = getConstraints()?.hasItemConstraints() ?: false
+private fun DataType.hasArrayConstraints(): Boolean = constraints?.hasItemConstraints() ?: false
 
-private fun DataType.hasLengthConstraints(): Boolean = getConstraints()?.hasLengthConstraints() ?: false
+private fun DataType.hasLengthConstraints(): Boolean = constraints?.hasLengthConstraints() ?: false
 
 private fun DataType.hasSizeConstraints(): Boolean =
        (isCollection() && hasArrayConstraints())
     || (isString() && hasLengthConstraints())
 
-private fun DataType.hasMinConstraint(): Boolean = isNumber() && getConstraints()?.minimum != null
+private fun DataType.hasMinConstraint(): Boolean = isNumber() && constraints?.minimum != null
 
-private fun DataType.hasMaxConstraint(): Boolean = isNumber() && getConstraints()?.maximum != null
+private fun DataType.hasMaxConstraint(): Boolean = isNumber() && constraints?.maximum != null
 
-private fun DataType.lengthConstraints(): SizeConstraints = getConstraints()?.lengthConstraints!!
+private fun DataType.lengthConstraints(): SizeConstraints = constraints?.lengthConstraints!!
 
-private fun DataType.itemConstraints(): SizeConstraints = getConstraints()?.itemConstraints!!
+private fun DataType.itemConstraints(): SizeConstraints = constraints?.itemConstraints!!

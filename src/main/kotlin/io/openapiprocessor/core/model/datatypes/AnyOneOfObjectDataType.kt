@@ -13,9 +13,9 @@ class AnyOneOfObjectDataType(
     private val pkg: String,
     private val of: String,
     private val items: List<DataType> = emptyList(),
-    constraints: DataTypeConstraints? = null,
+    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-): DataTypeBase(constraints) {
+): DataTypeBase() {
 
     override fun getName(): String {
         return type

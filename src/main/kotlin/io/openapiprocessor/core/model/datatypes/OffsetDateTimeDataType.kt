@@ -11,12 +11,10 @@ import io.openapiprocessor.core.model.Documentation
  * OpenAPI type 'string' with format 'date-time' maps to java OffsetDateTime.
  */
 class OffsetDateTimeDataType(
-
-    constraints: DataTypeConstraints? = null,
+    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
-
-): DataTypeBase(constraints) {
+): DataTypeBase() {
 
     override fun getName(): String {
         return "OffsetDateTime"

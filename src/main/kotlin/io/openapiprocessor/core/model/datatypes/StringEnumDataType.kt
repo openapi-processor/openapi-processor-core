@@ -26,10 +26,10 @@ class StringEnumDataType(
     private val type: String,
     private val pkg: String,
     val values: List<String> = emptyList(),
-    constraints: DataTypeConstraints? = null,
+    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 
-): DataTypeBase(constraints) {
+): DataTypeBase() {
 
     override fun getName(): String {
         return type

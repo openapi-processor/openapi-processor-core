@@ -5,16 +5,10 @@
 
 package io.openapiprocessor.core.model.datatypes
 
-import io.openapiprocessor.core.model.Documentation
-
 /**
  * basic DataType implementation. Reduces duplication in DataTypes.
  */
-abstract class DataTypeBase(
-
-    private val constraints: DataTypeConstraints? = null
-
-): DataType {
+abstract class DataTypeBase: DataType {
 
     override fun getImports(): Set<String> {
         return setOf(getPackageName() + "." + getName())
@@ -22,10 +16,6 @@ abstract class DataTypeBase(
 
     override fun getReferencedImports(): Set<String> {
         return emptySet()
-    }
-
-    override fun getConstraints(): DataTypeConstraints? {
-        return constraints
     }
 
 }

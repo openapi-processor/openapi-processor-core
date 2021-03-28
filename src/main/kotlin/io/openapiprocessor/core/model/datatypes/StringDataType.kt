@@ -11,12 +11,10 @@ import io.openapiprocessor.core.model.Documentation
  * OpenAPI type 'string' maps to java String.
  */
 class StringDataType(
-
-    constraints: DataTypeConstraints? = null,
+    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
-
-): DataTypeBase(constraints) {
+): DataTypeBase() {
 
     override fun getName(): String {
         return "String"

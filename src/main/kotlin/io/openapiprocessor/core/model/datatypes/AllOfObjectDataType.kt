@@ -14,10 +14,10 @@ class AllOfObjectDataType(
     private val pkg: String,
     private val of: String,
     private val items: List<DataType> = emptyList(),
-    constraints: DataTypeConstraints? = null,
+    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 
-): DataTypeBase(constraints), ModelDataType {
+): DataTypeBase(), ModelDataType {
 
     override fun getName(): String {
         return type
@@ -54,7 +54,7 @@ class AllOfObjectDataType(
     }
 
     override fun isRequired(prop: String): Boolean {
-        return getConstraints()?.isRequired(prop) ?: false
+        return constraints?.isRequired(prop) ?: false
     }
 
     override fun forEach(action: (property: String, dataType: DataType) -> Unit) {

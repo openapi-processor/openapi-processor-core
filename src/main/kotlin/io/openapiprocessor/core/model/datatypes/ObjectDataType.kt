@@ -15,11 +15,11 @@ class ObjectDataType(
     private val type: String,
     private val pkg: String,
     private val properties: LinkedHashMap<String, DataType> = linkedMapOf(), // preserves order
-    constraints: DataTypeConstraints? = null,
+    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
 
-): DataTypeBase(constraints), ModelDataType {
+): DataTypeBase(), ModelDataType {
 
     override fun getName(): String {
         return type
@@ -54,7 +54,7 @@ class ObjectDataType(
     }
 
     override fun isRequired(prop: String): Boolean {
-        return getConstraints()?.isRequired(prop) ?: false
+        return constraints?.isRequired(prop) ?: false
     }
 
     override fun forEach(action: (property: String, dataType: DataType) -> Unit) {
