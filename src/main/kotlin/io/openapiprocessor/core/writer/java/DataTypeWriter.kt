@@ -34,7 +34,7 @@ class DataTypeWriter(
             target.write("\n")
         }
 
-        if (dataType.isDeprecated()) {
+        if (dataType.deprecated) {
             target.write("@Deprecated\n")
         }
 
@@ -70,7 +70,7 @@ class DataTypeWriter(
             result += javadocWriter.convert(propDataType)
         }
 
-        if (propDataType.isDeprecated()) {
+        if (propDataType.deprecated) {
             result += "    @Deprecated\n"
         }
 
@@ -95,7 +95,7 @@ class DataTypeWriter(
 
     private fun getGetter(propertyName: String, propDataType: DataType): String {
         var result = ""
-        if (propDataType.isDeprecated()) {
+        if (propDataType.deprecated) {
             result += "    @Deprecated\n"
         }
 
@@ -112,7 +112,7 @@ class DataTypeWriter(
 
     private fun getSetter(propertyName: String, propDataType: DataType): String {
         var result = ""
-        if (propDataType.isDeprecated()) {
+        if (propDataType.deprecated) {
             result += "    @Deprecated\n"
         }
 

@@ -9,9 +9,9 @@ class NoDataType(
 
     private val type: String,
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false
+    override val deprecated: Boolean = false
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints) {
 
     override fun getName(): String {
         return type

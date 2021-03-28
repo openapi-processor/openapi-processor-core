@@ -14,10 +14,10 @@ open class MappedDataType(
     private val pkg: String,
     /*private*/ val genericTypes: List<String> = emptyList(),
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false,
+    override val deprecated: Boolean = false,
     val simpleDataType: Boolean = false
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints) {
 
     override fun getName(): String {
         return if (genericTypes.isEmpty()) {

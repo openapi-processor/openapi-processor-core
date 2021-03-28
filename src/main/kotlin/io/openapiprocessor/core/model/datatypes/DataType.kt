@@ -49,14 +49,8 @@ interface DataType {
         return null
     }
 
-    /**
-     * is the data type deprecated?
-     *
-     * @return true if deprecated, else false
-     */
-    fun isDeprecated(): Boolean {
-        return false
-    }
+    val deprecated: Boolean
+        get() = false
 
     val documentation: Documentation?
         get() = null

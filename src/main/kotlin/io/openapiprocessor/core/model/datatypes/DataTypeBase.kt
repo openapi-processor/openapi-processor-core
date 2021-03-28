@@ -12,8 +12,7 @@ import io.openapiprocessor.core.model.Documentation
  */
 abstract class DataTypeBase(
 
-    private val constraints: DataTypeConstraints? = null,
-    private val deprecated: Boolean = false
+    private val constraints: DataTypeConstraints? = null
 
 ): DataType {
 
@@ -27,10 +26,6 @@ abstract class DataTypeBase(
 
     override fun getConstraints(): DataTypeConstraints? {
         return constraints
-    }
-
-    override fun isDeprecated(): Boolean {
-        return deprecated
     }
 
 }

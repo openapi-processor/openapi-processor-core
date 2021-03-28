@@ -13,10 +13,10 @@ import io.openapiprocessor.core.model.Documentation
 class LocalDateDataType(
 
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false,
+    override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated) {
+): DataTypeBase(constraints) {
 
     override fun getName(): String {
         return "LocalDate"

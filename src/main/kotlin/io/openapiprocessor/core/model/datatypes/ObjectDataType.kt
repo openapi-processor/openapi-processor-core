@@ -16,10 +16,10 @@ class ObjectDataType(
     private val pkg: String,
     private val properties: LinkedHashMap<String, DataType> = linkedMapOf(), // preserves order
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false,
+    override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
 
-): DataTypeBase(constraints, deprecated), ModelDataType {
+): DataTypeBase(constraints), ModelDataType {
 
     override fun getName(): String {
         return type

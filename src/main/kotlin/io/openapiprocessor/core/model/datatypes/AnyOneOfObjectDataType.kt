@@ -14,8 +14,8 @@ class AnyOneOfObjectDataType(
     private val of: String,
     private val items: List<DataType> = emptyList(),
     constraints: DataTypeConstraints? = null,
-    deprecated: Boolean = false
-): DataTypeBase(constraints, deprecated) {
+    override val deprecated: Boolean = false
+): DataTypeBase(constraints) {
 
     override fun getName(): String {
         return type
