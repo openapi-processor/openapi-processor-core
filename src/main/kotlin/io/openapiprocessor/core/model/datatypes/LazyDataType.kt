@@ -13,7 +13,7 @@ import io.openapiprocessor.core.model.DataTypes
 class LazyDataType(
     private val info: SchemaInfo,
     private val dataTypes: DataTypes
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return dataType.getName()

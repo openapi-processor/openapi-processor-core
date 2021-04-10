@@ -26,7 +26,7 @@ class ArrayDataType(
     val item: DataType,
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return "${item.getName()}[]"

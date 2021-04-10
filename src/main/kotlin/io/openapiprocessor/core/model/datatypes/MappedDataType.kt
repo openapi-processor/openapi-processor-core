@@ -17,7 +17,7 @@ open class MappedDataType(
     override val deprecated: Boolean = false,
     val simpleDataType: Boolean = false
 
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return if (genericTypes.isEmpty()) {

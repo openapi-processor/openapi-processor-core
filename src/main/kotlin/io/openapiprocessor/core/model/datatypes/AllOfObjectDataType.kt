@@ -17,7 +17,7 @@ class AllOfObjectDataType(
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 
-): DataTypeBase(), ModelDataType {
+): DataType, ModelDataType {
 
     override fun getName(): String {
         return type

@@ -16,7 +16,7 @@
 
 package com.github.hauner.openapi.core.writer.java
 
-import io.openapiprocessor.core.model.datatypes.DataTypeBase
+import io.openapiprocessor.core.model.Documentation
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 import io.openapiprocessor.core.model.datatypes.NoneDataType
 import io.openapiprocessor.core.model.datatypes.ArrayDataType
@@ -361,7 +361,7 @@ class BeanValidationFactorySpec extends Specification {
         annotations.contains (match)
     }
 
-    class OtherDataType extends DataTypeBase {
+    class OtherDataType implements DataType {
 
         @Override
         String getName () {
@@ -382,6 +382,22 @@ class BeanValidationFactorySpec extends Specification {
         Set<String> getReferencedImports () {
             []
         }
+
+        @Override
+        DataTypeConstraints getConstraints () {
+            return null
+        }
+
+        @Override
+        boolean getDeprecated () {
+            return false
+        }
+
+        @Override
+        Documentation getDocumentation () {
+            return null
+        }
+
     }
 
 }

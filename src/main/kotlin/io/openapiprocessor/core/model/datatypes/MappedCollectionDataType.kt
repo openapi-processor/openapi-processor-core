@@ -30,7 +30,7 @@ open class MappedCollectionDataType(
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return "${type}<${item.getName()}>"
