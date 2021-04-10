@@ -6,12 +6,10 @@
 package io.openapiprocessor.core.model.datatypes
 
 class NoDataType(
-
     private val type: String,
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return type
@@ -19,6 +17,10 @@ class NoDataType(
 
     override fun getPackageName(): String {
         return "io.openapiprocessor.leaked"
+    }
+
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.${getName()}")
     }
 
 }

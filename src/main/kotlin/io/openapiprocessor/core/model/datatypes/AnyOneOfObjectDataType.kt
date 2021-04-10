@@ -15,7 +15,7 @@ class AnyOneOfObjectDataType(
     private val items: List<DataType> = emptyList(),
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return type
@@ -23,6 +23,10 @@ class AnyOneOfObjectDataType(
 
     override fun getPackageName(): String {
         return pkg
+    }
+
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.${getName()}")
     }
 
     fun forEach(action: (dataType: DataType) -> Unit) {

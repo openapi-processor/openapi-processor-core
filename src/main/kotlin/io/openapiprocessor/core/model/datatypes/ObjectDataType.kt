@@ -11,15 +11,13 @@ import io.openapiprocessor.core.model.Documentation
  * OpenAPI named object schemas type or an inline object schema.
  */
 class ObjectDataType(
-
     private val type: String,
     private val pkg: String,
     private val properties: LinkedHashMap<String, DataType> = linkedMapOf(), // preserves order
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
-
-): DataTypeBase(), ModelDataType {
+): DataType, ModelDataType {
 
     override fun getName(): String {
         return type
@@ -27,6 +25,10 @@ class ObjectDataType(
 
     override fun getPackageName(): String {
         return pkg
+    }
+
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.${getName()}")
     }
 
     override val referencedImports: Set<String>

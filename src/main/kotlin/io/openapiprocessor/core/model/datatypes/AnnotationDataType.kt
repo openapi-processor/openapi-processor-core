@@ -12,7 +12,7 @@ class AnnotationDataType(
     private val type: String,
     private val pkg: String,
     private val parameters: String?
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return type
@@ -20,6 +20,10 @@ class AnnotationDataType(
 
     override fun getPackageName(): String {
         return pkg
+    }
+
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.${getName()}")
     }
 
     fun getParameters(): String {

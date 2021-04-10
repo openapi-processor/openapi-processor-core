@@ -11,12 +11,10 @@ import io.openapiprocessor.core.model.Documentation
  * OpenAPI type 'boolean' maps to java Boolean.
  */
 class BooleanDataType(
-
    override val constraints: DataTypeConstraints? = null,
    override val deprecated: Boolean = false,
    override val documentation: Documentation? = null
-
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return "Boolean"
@@ -24,6 +22,10 @@ class BooleanDataType(
 
     override fun getPackageName(): String {
         return "java.lang"
+    }
+
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.${getName()}")
     }
 
 }

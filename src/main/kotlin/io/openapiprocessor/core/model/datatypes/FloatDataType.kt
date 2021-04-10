@@ -16,7 +16,7 @@ class FloatDataType(
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
 
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return "Float"
@@ -24,6 +24,10 @@ class FloatDataType(
 
     override fun getPackageName(): String {
         return "java.lang"
+    }
+
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.${getName()}")
     }
 
 }

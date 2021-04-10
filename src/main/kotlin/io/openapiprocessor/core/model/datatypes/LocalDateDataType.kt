@@ -11,12 +11,10 @@ import io.openapiprocessor.core.model.Documentation
  * OpenAPI type 'string' with format 'date' maps to java LocalDate.
  */
 class LocalDateDataType(
-
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
-
-): DataTypeBase() {
+): DataType {
 
     override fun getName(): String {
         return "LocalDate"
@@ -24,6 +22,10 @@ class LocalDateDataType(
 
     override fun getPackageName(): String {
         return "java.time"
+    }
+
+    override fun getImports(): Set<String> {
+        return setOf("${getPackageName()}.${getName()}")
     }
 
 }
