@@ -8,6 +8,7 @@ package io.openapiprocessor.core.model.datatypes
 /**
  * basic DataType implementation. Reduces duplication in DataTypes.
  */
+@Deprecated(message = "remove me...")
 abstract class DataTypeBase: DataType {
 
     override fun getImports(): Set<String> {
