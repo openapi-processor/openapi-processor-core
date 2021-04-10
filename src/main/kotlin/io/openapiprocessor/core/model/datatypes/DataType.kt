@@ -25,8 +25,9 @@ interface DataType {
     fun getPackageName(): String
 
     /**
-     * Provides the import(s) of this type, usually a single import. If it is a generic type it will
-     * add another import for each generic parameter. Used to create the import of this data type.
+     * Provides the import(s) of this type, usually a single import. If it is a generic type it
+     * should add another import for each generic parameter. Used to create the import list of
+     * this data type.
      *
      * @return import of this type.
      */
