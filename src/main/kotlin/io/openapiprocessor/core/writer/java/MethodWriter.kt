@@ -56,23 +56,28 @@ open class MethodWriter(
     }
 
     private fun createMethodName(endpoint: Endpoint, endpointResponse: EndpointResponse): String {
+        val tokens: MutableList<String>
+
         if (endpoint.operationId != null) {
-            return toCamelCase(endpoint.operationId)
+            tokens = mutableListOf(endpoint.operationId)
+        } else {
+            tokens = mutableListOf(endpoint.method.method)
+            tokens += endpoint.path
+                .split('/')
+                .filter { it.isNotEmpty() }
+                .toMutableList()
         }
 
-        val tokens = endpoint.path
-            .split ('/')
-            .filter { it.isNotEmpty() }
-            .toMutableList()
-
-        if (endpoint.hasMultipleEndpointResponses ()) {
-            tokens += endpointResponse.contentType.split ('/')
+        if (endpoint.hasMultipleEndpointResponses()) {
+            tokens += endpointResponse.contentType.split('/')
         }
 
-        val capitalized = tokens.map { toCamelCase(it).capitalize() }
-        val name = capitalized.joinToString ("")
+        val camel = tokens.map { toCamelCase(it) }
+        val head = camel.first()
+        val tail = camel.subList(1, camel.count())
+            .joinToString("") { it.capitalize() }
 
-        return "${endpoint.method.method}${name}"
+        return head + tail
     }
 
     private fun createParameters(endpoint: Endpoint): String {
