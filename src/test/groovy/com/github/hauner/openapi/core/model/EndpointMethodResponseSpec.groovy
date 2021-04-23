@@ -65,4 +65,34 @@ class EndpointMethodResponseSpec extends Specification {
         result[1].errors.collect {it.contentType} == ['text/plain']
     }
 
+    void "provides distinct response content type groups" () {
+        def endpoint = endpoint('/foo', HttpMethod.GET) { eb ->
+            eb.responses { rs ->
+                rs.status ('200') {r ->
+                    r.response ('application/json',
+                        new CollectionDataType (new StringDataType ())) {
+                    }
+                }
+                rs.status ('400') {r ->
+                    r.response ('application/json',
+                        new CollectionDataType (new StringDataType ())) {
+                    }
+                }
+                rs.status ('401') {r ->
+                    r.response ('application/json',
+                        new CollectionDataType (new StringDataType ())) {
+                    }
+                }
+            }
+        }
+
+        when:
+        def result = endpoint.endpointResponses
+
+        then:
+        result.size () == 1
+        result[0].contentTypes == ['application/json'] as Set
+
+    }
+
 }
