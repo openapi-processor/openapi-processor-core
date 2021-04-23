@@ -22,10 +22,10 @@ class EndpointContentTypesSpec extends Specification {
         }
 
         expect:
-        endpoint.consumesContentTypes == []
+        endpoint.consumesContentTypes == [] as Set
     }
 
-    void "provides consuming content types" () {
+    void "provides distinct consuming content types" () {
         def endpoint = endpoint('/foo', HttpMethod.GET) { e ->
             e.parameters () { ps ->
                 ps.body("body", "text/plain", new StringDataType())
@@ -56,7 +56,7 @@ class EndpointContentTypesSpec extends Specification {
         }
 
         expect:
-        endpoint.consumesContentTypes == ['multipart/form-data']
+        endpoint.consumesContentTypes == ['multipart/form-data'] as Set
     }
 
     void "provides no producing content types without response" () {
