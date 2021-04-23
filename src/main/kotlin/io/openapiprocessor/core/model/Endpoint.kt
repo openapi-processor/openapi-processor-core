@@ -60,19 +60,18 @@ class Endpoint(
     }
 
     /**
-     * provides a list of all consumed content types of this endpoint including multipart/form-data.
+     * provides a set of all consumed content types of this endpoint including multipart/form-data.
      *
      * multipart/form-data is special because a multipart request body with multiple properties is
      * converted to multiple {@link MultipartParameter}s in the internal model. The request body
      * information is no longer available.
      *
-     * @return the list of content types
+     * @return the set of content types
      */
-    fun getConsumesContentTypes(): List<String> {
+    fun getConsumesContentTypes(): Set<String> {
         val contentTypes = requestBodies
             .map { it.contentType }
-            .toSet()
-            .toMutableList()
+            .toMutableSet()
 
         val multipart = parameters.find {
             it is MultipartParameter
