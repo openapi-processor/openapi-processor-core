@@ -8,9 +8,9 @@ plugins {
     id "org.sonarqube" version "3.1.1"
     id 'org.jetbrains.dokka' version '1.4.20'
     id 'org.jetbrains.kotlin.jvm' version '1.4.31'
-//    id 'io.codearte.nexus-staging' version '0.22.0'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
     id 'com.github.ben-manes.versions' version '0.38.0'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
 group projectGroupId
@@ -199,6 +199,16 @@ sonarqube {
     property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
   }
 }
+
+nexusPublishing {
+    repositories {
+        sonatype() {
+            username = publishUser
+            password = publishKey
+        }
+    }
+}
+
 
 apply from: "${rootProject.rootDir}/gradle/publishing.gradle"
 apply from: "${rootProject.rootDir}/gradle/publishing.tasks.gradle.kts"
