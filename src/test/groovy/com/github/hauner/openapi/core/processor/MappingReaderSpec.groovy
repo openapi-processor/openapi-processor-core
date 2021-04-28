@@ -107,21 +107,6 @@ map:
         mapping
     }
 
-    void "warns use of old mapping version key" () {
-        def yaml = """\
-openapi-processor-spring: v2
-"""
-
-        def reader = new MappingReader()
-        reader.log = log
-
-        when:
-        reader.read (yaml)
-
-        then:
-        1 * log.warn (*_)
-    }
-
     void "warns use of old mapping format" () {
         def yaml = """\
 openapi-processor-mapping: v1
