@@ -1,0 +1,12 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: generated
+  bean-validation: true
+
+map:
+  paths:
+    /fooL:
+      types:
+        - type: array => java.util.Collection
+
