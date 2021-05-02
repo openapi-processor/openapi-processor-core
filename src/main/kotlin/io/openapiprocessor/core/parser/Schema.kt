@@ -56,4 +56,6 @@ interface Schema {
     // default false
     fun isExclusiveMinimum (): Boolean
 
+    val pattern: String?
+
 }

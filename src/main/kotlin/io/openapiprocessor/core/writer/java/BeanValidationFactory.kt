@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.model.datatypes.*
+import kotlin.text.Regex.Companion.escapeReplacement
 
 /**
  * creates bean validation imports and annotations.
@@ -43,6 +44,10 @@ open class BeanValidationFactory {
             imports.add(BeanValidation.DECIMAL_MAX.import)
         }
 
+        if (dataType.patternConstraint()) {
+            imports.add(BeanValidation.PATTERN.import)
+        }
+
         return imports
     }
 
@@ -67,6 +72,10 @@ open class BeanValidationFactory {
 
         if (dataType.hasMaxConstraint()) {
             annotations.add(createDecimalMaxAnnotation (dataType))
+        }
+
+        if (dataType.patternConstraint()) {
+            annotations.add(createPatternAnnotation(dataType))
         }
 
         return annotations
@@ -131,9 +140,11 @@ open class BeanValidationFactory {
                 "@Size(max = ${size.max})"
             }
         }
-
     }
 
+    private fun createPatternAnnotation(dataType: DataType): String {
+        return """@Pattern("${escapeReplacement(dataType.constraints?.pattern!!)}")"""
+    }
 }
 
 private fun DataType.isModel(): Boolean = this is ModelDataType
@@ -179,3 +190,5 @@ private fun DataType.hasMaxConstraint(): Boolean = isNumber() && constraints?.ma
 private fun DataType.lengthConstraints(): SizeConstraints = constraints?.lengthConstraints!!
 
 private fun DataType.itemConstraints(): SizeConstraints = constraints?.itemConstraints!!
+
+private fun DataType.patternConstraint(): Boolean = constraints?.pattern != null

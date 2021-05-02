@@ -8,10 +8,7 @@ package io.openapiprocessor.core.writer.java
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.openapiprocessor.core.model.datatypes.ArrayDataType
-import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.*
 
 class BeanValidationFactorySpec: StringSpec({
 
@@ -63,6 +60,28 @@ class BeanValidationFactorySpec: StringSpec({
         info.typeName shouldBe "List<String>"
         info.imports shouldBe listOf()
         info.annotations shouldBe emptyList()
+    }
+
+    "applies @Pattern to String" {
+        val validation = BeanValidationFactory()
+
+        val dataType = StringDataType(DataTypeConstraints(pattern = "regex"))
+        val info = validation.validate(dataType)
+
+        info.typeName shouldBe "String"
+        info.imports shouldBe listOf(BeanValidation.PATTERN.import)
+        info.annotations shouldBe listOf("""${BeanValidation.PATTERN.annotation}("regex")""")
+    }
+
+    "applies @Pattern to String with escaping" {
+        val validation = BeanValidationFactory()
+
+        val dataType = StringDataType(DataTypeConstraints(pattern = """\.\\"""))
+        val info = validation.validate(dataType)
+
+        info.typeName shouldBe "String"
+        info.imports shouldBe listOf(BeanValidation.PATTERN.import)
+        info.annotations shouldBe listOf("""${BeanValidation.PATTERN.annotation}("\\.\\\\")""")
     }
 
 })

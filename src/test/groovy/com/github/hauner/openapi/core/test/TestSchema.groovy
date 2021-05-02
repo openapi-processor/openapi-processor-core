@@ -53,6 +53,7 @@ class TestSchema implements Schema {
     boolean exclusiveMaximum = false
     BigDecimal minimum
     boolean exclusiveMinimum = false
+    String pattern
 
     Schema item
     Map<String, Schema> properties

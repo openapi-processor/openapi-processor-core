@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public interface EndpointApi {
@@ -46,5 +47,8 @@ public interface EndpointApi {
 
     @Mapping("/endpoint/obj")
     void postEndpointObj(@Valid @Parameter Obj1 body);
+
+    @Mapping("/endpoint/pattern")
+    void getEndpointPattern(@Pattern(".*\\.\\\\") @Parameter String anything);
 
 }

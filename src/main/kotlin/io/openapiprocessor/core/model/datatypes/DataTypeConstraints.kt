@@ -20,6 +20,7 @@ class DataTypeConstraints(
     var /*val*/ exclusiveMaximum: Boolean = false,
     var /*val*/ minItems: Int = 0,
     var /*val*/ maxItems: Int? = null,
+    var pattern: String? = null,
     var /*val*/ required: List<String> = emptyList()
 
 ) {
@@ -43,7 +44,7 @@ class DataTypeConstraints(
         get() = NumberConstraint(maximum!!, exclusiveMaximum)
 
     fun isRequired(prop: String): Boolean {
-        return required.contains(prop);
+        return required.contains(prop)
     }
 
 }

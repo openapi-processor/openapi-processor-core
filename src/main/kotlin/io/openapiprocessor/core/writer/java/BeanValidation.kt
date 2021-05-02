@@ -9,6 +9,7 @@ enum class BeanValidation(val typeName: String) {
     DECIMAL_MAX("javax.validation.constraints.DecimalMax"),
     DECIMAL_MIN("javax.validation.constraints.DecimalMin"),
     NOT_NULL("javax.validation.constraints.NotNull"),
+    PATTERN("javax.validation.constraints.Pattern"),
     SIZE("javax.validation.constraints.Size"),
     VALID("javax.validation.Valid");
 

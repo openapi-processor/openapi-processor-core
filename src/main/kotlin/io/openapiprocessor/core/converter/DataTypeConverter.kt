@@ -238,7 +238,8 @@ class DataTypeConverter(
             schemaInfo.getMinimum(),
             schemaInfo.getExclusiveMinimum(),
             schemaInfo.getMaximum(),
-            schemaInfo.getExclusiveMaximum()
+            schemaInfo.getExclusiveMaximum(),
+            pattern = schemaInfo.pattern
         )
 
         return when(typeFormat) {

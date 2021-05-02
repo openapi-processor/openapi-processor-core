@@ -103,4 +103,7 @@ class Schema(val schema: O4jSchema) : ParserSchema {
 
     override fun isExclusiveMinimum(): Boolean = schema.exclusiveMinimum ?: false
 
+    override val pattern: String?
+        get() = schema.pattern
+
 }

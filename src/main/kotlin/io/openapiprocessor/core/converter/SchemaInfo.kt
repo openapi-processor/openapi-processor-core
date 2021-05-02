@@ -215,6 +215,9 @@ class SchemaInfo(
         return schema?.isExclusiveMinimum()!!
     }
 
+    val pattern: String?
+        get() = schema?.pattern
+
     /**
      * iterate over properties
      */

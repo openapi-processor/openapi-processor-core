@@ -113,4 +113,8 @@ class Schema(private val schema: SwaggerSchema<*>): ParserSchema {
 
     override fun isExclusiveMinimum(): Boolean = schema.exclusiveMinimum ?: false
 
+    override val pattern: String?
+        get() = schema.pattern
+
+
 }
