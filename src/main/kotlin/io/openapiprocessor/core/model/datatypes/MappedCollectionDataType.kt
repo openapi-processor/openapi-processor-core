@@ -34,6 +34,10 @@ open class MappedCollectionDataType(
         return "${type}<${item.getName()}>"
     }
 
+    fun getName(annotation: String): String {
+        return "${type}<$annotation ${item.getName()}>"
+    }
+
     override fun getPackageName(): String {
         return pkg
     }

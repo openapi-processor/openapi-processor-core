@@ -32,14 +32,13 @@ import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static io.openapiprocessor.core.writer.java.BeanValidation.DECIMAL_MAX
+import static io.openapiprocessor.core.writer.java.BeanValidation.DECIMAL_MIN
+import static io.openapiprocessor.core.writer.java.BeanValidation.NOT_NULL
+import static io.openapiprocessor.core.writer.java.BeanValidation.SIZE
+import static io.openapiprocessor.core.writer.java.BeanValidation.VALID
+
 class BeanValidationFactorySpec extends Specification {
-
-    public static final String NOT_NULL = "javax.validation.constraints.NotNull"
-    public static final String SIZE = "javax.validation.constraints.Size"
-    public static final String VALID = "javax.validation.Valid"
-    public static final String DECIMAL_MIN = "javax.validation.constraints.DecimalMin"
-    public static final String DECIMAL_MAX = "javax.validation.constraints.DecimalMax"
-
     BeanValidationFactory validation = new BeanValidationFactory ()
 
     @Unroll
@@ -48,32 +47,30 @@ class BeanValidationFactorySpec extends Specification {
             'Foo', '', [:], null, false, null)
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        imports == resultImports as Set<String>
-        annotations == resultAnnnotation
+        info.imports == resultImports as Set<String>
+        info.annotations == resultAnnnotations
 
         where:
-        resultImports     | resultAnnnotation
-        [VALID]           | "@Valid"
+        resultImports  | resultAnnnotations
+        [VALID.import] | [VALID.annotation]
     }
 
     void "does not apply @Valid to non Object types" () {
         def dataType = new OtherDataType()
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        imports == resultImports as Set<String>
-        annotations == resultAnnnotation
+        info.imports == resultImports as Set<String>
+        info.annotations == resultAnnnotations
 
         where:
-        resultImports | resultAnnnotation
-        []            | ""
+        resultImports | resultAnnnotations
+        []            | []
     }
 
     @Unroll
@@ -86,25 +83,24 @@ class BeanValidationFactorySpec extends Specification {
         def dataType = new StringDataType(constraints, false, null)
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        containsImports (imports, resultImports)
-        containsAnnotations (annotations, resultAnnotations)
+        info.imports.containsAll (resultImports)
+        info.annotations.containsAll (resultAnnotations)
 
         where:
         minLength | maxLength || resultImports | resultAnnotations
-        0         | null      || []            | ""
-        1         | null      || [SIZE]        | "@Size(min = 1)"
-        1         | 2         || [SIZE]        | "@Size(min = 1, max = 2)"
+        0         | null      || []            | []
+        1         | null      || [SIZE.import] | ["@Size(min = 1)"]
+        1         | 2         || [SIZE.import] | ["@Size(min = 1, max = 2)"]
 //      minLength defaults to 0 if not set
-//      null      | null      || []            | ""
-//      null      | 0         || [SIZE]        | "@Size(max = 0)"
-//      null      | 2         || [SIZE]        | "@Size(max = 2)"
-        0         | null      || []            | ""
-        0         | 0         || [SIZE]        | "@Size(max = 0)"
-        0         | 2         || [SIZE]        | "@Size(max = 2)"
+//      null      | null      || []            | []
+//      null      | 0         || [SIZE.import] | ["@Size(max = 0)"]
+//      null      | 2         || [SIZE.import] | ["@Size(max = 2)"]
+        0         | null      || []            | []
+        0         | 0         || [SIZE.import] | ["@Size(max = 0)"]
+        0         | 2         || [SIZE.import] | ["@Size(max = 2)"]
     }
 
     @Unroll
@@ -117,25 +113,24 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = new ArrayDataType(new NoneDataType(), constraints, false)
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        imports.containsAll (resultImports)
-        annotations.contains (resultAnnotations)
+        info.imports.containsAll (resultImports)
+        info.annotations.containsAll (resultAnnotations)
 
         where:
         minItems | maxItems || resultImports | resultAnnotations
-        0        | null     || []            | ""
-        1        | null     || [SIZE]        | "@Size(min = 1)"
-        1        | 2        || [SIZE]        | "@Size(min = 1, max = 2)"
+        0        | null     || []            | []
+        1        | null     || [SIZE.import] | ["@Size(min = 1)"]
+        1        | 2        || [SIZE.import] | ["@Size(min = 1, max = 2)"]
 //      minItems defaults to 0 if not set
-//      null     | null     || []            | ""
-//      null     | 0        || [SIZE]        | "@Size(max = 0)"
-//      null     | 2        || [SIZE]        | "@Size(max = 2)"
-        0        | null     || []            | ""
-        0        | 0        || [SIZE]        | "@Size(max = 0)"
-        0        | 2        || [SIZE]        | "@Size(max = 2)"
+//      null     | null     || []            | []
+//      null     | 0        || [SIZE.import] | ["@Size(max = 0)"]
+//      null     | 2        || [SIZE.import] | ["@Size(max = 2)"]
+        0        | null     || []            | []
+        0        | 0        || [SIZE.import] | ["@Size(max = 0)"]
+        0        | 2        || [SIZE.import] | ["@Size(max = 2)"]
     }
 
     @Unroll
@@ -153,25 +148,24 @@ class BeanValidationFactorySpec extends Specification {
             false)
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        imports.containsAll (resultImports)
-        annotations.contains (resultAnnotations)
+        info.imports.containsAll (resultImports)
+        info.annotations.containsAll (resultAnnotations)
 
         where:
-        minItems | maxItems || resultImports    | resultAnnotations
-        0        | null     || []       | ""
-        1        | null     || [SIZE] | "@Size(min = 1)"
-        1        | 2        || [SIZE] | "@Size(min = 1, max = 2)"
+        minItems | maxItems || resultImports | resultAnnotations
+        0        | null     || []            | []
+        1        | null     || [SIZE.import] | ["@Size(min = 1)"]
+        1        | 2        || [SIZE.import] | ["@Size(min = 1, max = 2)"]
 //      minItems defaults to 0 if not set
-//      null     | null     || []            | ""
-//      null     | 0        || [SIZE]        | "@Size(max = 0)"
-//      null     | 2        || [SIZE]        | "@Size(max = 2)"
-        0        | null     || []            | ""
-        0        | 0        || [SIZE]        | "@Size(max = 0)"
-        0        | 2        || [SIZE]        | "@Size(max = 2)"
+//      null     | null     || []            | []
+//      null     | 0        || [SIZE.import] | ["@Size(max = 0)"]
+//      null     | 2        || [SIZE.import] | ["@Size(max = 2)"]
+        0        | null     || []            | []
+        0        | 0        || [SIZE.import] | ["@Size(max = 0)"]
+        0        | 2        || [SIZE.import] | ["@Size(max = 2)"]
     }
 
     @Unroll
@@ -179,21 +173,20 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = createDataType (type, new DataTypeConstraints ())
 
         when:
-        def imports = validation.collectImports (dataType, required)
-        def annotations = validation.createAnnotations (dataType, required)
+        def info = validation.validate (dataType, required)
 
         then:
-        imports.containsAll (resultImports)
-        annotations.contains (resultAnnotations)
+        info.imports.containsAll (resultImports)
+        info.annotations.containsAll (resultAnnotations)
 
         where:
-        type                     | required || resultImports | resultAnnotations
-        IntegerDataType          | false    || []            | ""
-        IntegerDataType          | true     || [NOT_NULL]    | "@NotNull"
-        StringDataType           | false    || []            | ""
-        StringDataType           | true     || [NOT_NULL]    | "@NotNull"
-        MappedCollectionDataType | false    || []            | ""
-        MappedCollectionDataType | true     || [NOT_NULL]    | "@NotNull"
+        type                     | required || resultImports     | resultAnnotations
+        IntegerDataType          | false    || []                | []
+        IntegerDataType          | true     || [NOT_NULL.import] | ["@NotNull"]
+        StringDataType           | false    || []                | []
+        StringDataType           | true     || [NOT_NULL.import] | ["@NotNull"]
+        MappedCollectionDataType | false    || []                | []
+        MappedCollectionDataType | true     || [NOT_NULL.import] | ["@NotNull"]
     }
 
     @Unroll
@@ -206,42 +199,41 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = createDataType (type, constraints)
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        imports.containsAll (resultImports)
-        annotations.contains (resultAnnotations)
+        info.imports.containsAll (resultImports)
+        info.annotations.containsAll (resultAnnotations)
 
         where:
-        type            | minimum | exclusiveMinimum || resultImports | resultAnnotations
+        type            | minimum | exclusiveMinimum || resultImports        | resultAnnotations
 //      exclusiveMinimum defaults to false if not set
-//      IntegerDataType | null    | null             || []            | ""
-        IntegerDataType | null    | true             || []            | ""
-        IntegerDataType | null    | false            || []            | ""
-//      IntegerDataType | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        IntegerDataType | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
-        IntegerDataType | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        IntegerDataType | 0       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "0")'
-//      LongDataType    | null    | null             || []            | ""
-        LongDataType    | null    | true             || []            | ""
-        LongDataType    | null    | false            || []            | ""
-//      LongDataType    | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        LongDataType    | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
-        LongDataType    | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-//      FloatDataType   | null    | null             || []            | ""
-        FloatDataType   | null    | true             || []            | ""
-        FloatDataType   | null    | false            || []            | ""
-//      FloatDataType   | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        FloatDataType   | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
-        FloatDataType   | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-//      DoubleDataType  | null    | null             || []            | ""
-        DoubleDataType  | null    | true             || []            | ""
-        DoubleDataType  | null    | false            || []            | ""
-//      DoubleDataType  | 1       | null             || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-        DoubleDataType  | 1       | true             || [DECIMAL_MIN] | '@DecimalMin(value = "1", inclusive = false)'
-        DoubleDataType  | 1       | false            || [DECIMAL_MIN] | '@DecimalMin(value = "1")'
-//      StringDataType  | 1       | null             || []            | ""
+//      IntegerDataType | null    | null             || []                   | []
+        IntegerDataType | null    | true             || []                   | []
+        IntegerDataType | null    | false            || []                   | []
+//      IntegerDataType | 1       | null             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+        IntegerDataType | 1       | true             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1", inclusive = false)']
+        IntegerDataType | 1       | false            || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+        IntegerDataType | 0       | false            || [DECIMAL_MIN.import] | ['@DecimalMin(value = "0")']
+//      LongDataType    | null    | null             || []                   | []
+        LongDataType    | null    | true             || []                   | []
+        LongDataType    | null    | false            || []                   | []
+//      LongDataType    | 1       | null             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+        LongDataType    | 1       | true             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1", inclusive = false)']
+        LongDataType    | 1       | false            || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+//      FloatDataType   | null    | null             || []                   | []
+        FloatDataType   | null    | true             || []                   | []
+        FloatDataType   | null    | false            || []                   | []
+//      FloatDataType   | 1       | null             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+        FloatDataType   | 1       | true             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1", inclusive = false)']
+        FloatDataType   | 1       | false            || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+//      DoubleDataType  | null    | null             || []                   | []
+        DoubleDataType  | null    | true             || []                   | []
+        DoubleDataType  | null    | false            || []                   | []
+//      DoubleDataType  | 1       | null             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+        DoubleDataType  | 1       | true             || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1", inclusive = false)']
+        DoubleDataType  | 1       | false            || [DECIMAL_MIN.import] | ['@DecimalMin(value = "1")']
+//      StringDataType  | 1       | null             || []                   | []
     }
 
     @Unroll
@@ -254,42 +246,41 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = createDataType (type, constraints)
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        imports.containsAll (resultImports)
-        annotations.contains (resultAnnotations)
+        info.imports.containsAll (resultImports)
+        info.annotations.containsAll (resultAnnotations)
 
         where:
-        type            | maximum | exclusiveMaximum || resultImports | resultAnnotations
+        type            | maximum | exclusiveMaximum || resultImports        | resultAnnotations
 //      exclusiveMaximum defaults to false if not set
-//      IntegerDataType | null    | null             || []            | ""
-        IntegerDataType | null    | true             || []            | ""
-        IntegerDataType | null    | false            || []            | ""
-//      IntegerDataType | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        IntegerDataType | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
-        IntegerDataType | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        IntegerDataType | 0       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "0")'
-//      LongDataType    | null    | null             || []            | ""
-        LongDataType    | null    | true             || []            | ""
-        LongDataType    | null    | false            || []            | ""
-//      LongDataType    | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        LongDataType    | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
-        LongDataType    | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-//      FloatDataType   | null    | null             || []            | ""
-        FloatDataType   | null    | true             || []            | ""
-        FloatDataType   | null    | false            || []            | ""
-//      FloatDataType   | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        FloatDataType   | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
-        FloatDataType   | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-//      DoubleDataType  | null    | null             || []            | ""
-        DoubleDataType  | null    | true             || []            | ""
-        DoubleDataType  | null    | false            || []            | ""
-//      DoubleDataType  | 1       | null             || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-        DoubleDataType  | 1       | true             || [DECIMAL_MAX] | '@DecimalMax(value = "1", inclusive = false)'
-        DoubleDataType  | 1       | false            || [DECIMAL_MAX] | '@DecimalMax(value = "1")'
-//      StringDataType  | 1       | null             || []            | ""
+//      IntegerDataType | null    | null             || []                   | []
+        IntegerDataType | null    | true             || []                   | []
+        IntegerDataType | null    | false            || []                   | []
+//      IntegerDataType | 1       | null             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+        IntegerDataType | 1       | true             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1", inclusive = false)']
+        IntegerDataType | 1       | false            || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+        IntegerDataType | 0       | false            || [DECIMAL_MAX.import] | ['@DecimalMax(value = "0")']
+//      LongDataType    | null    | null             || []                   | []
+        LongDataType    | null    | true             || []                   | []
+        LongDataType    | null    | false            || []                   | []
+//      LongDataType    | 1       | null             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+        LongDataType    | 1       | true             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1", inclusive = false)']
+        LongDataType    | 1       | false            || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+//      FloatDataType   | null    | null             || []                   | []
+        FloatDataType   | null    | true             || []                   | []
+        FloatDataType   | null    | false            || []                   | []
+//      FloatDataType   | 1       | null             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+        FloatDataType   | 1       | true             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1", inclusive = false)']
+        FloatDataType   | 1       | false            || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+//      DoubleDataType  | null    | null             || []                   | []
+        DoubleDataType  | null    | true             || []                   | []
+        DoubleDataType  | null    | false            || []                   | []
+//      DoubleDataType  | 1       | null             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+        DoubleDataType  | 1       | true             || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1", inclusive = false)']
+        DoubleDataType  | 1       | false            || [DECIMAL_MAX.import] | ['@DecimalMax(value = "1")']
+//      StringDataType  | 1       | null             || []                   | []
     }
 
     @Unroll
@@ -303,21 +294,20 @@ class BeanValidationFactorySpec extends Specification {
         DataType dataType = new DoubleDataType (constraints, false, null)
 
         when:
-        def imports = validation.collectImports (dataType, false)
-        def annotations = validation.createAnnotations (dataType, false)
+        def info = validation.validate (dataType, false)
 
         then:
-        imports.containsAll (resultImports)
-        annotations.contains (resultAnnotations)
+        info.imports.containsAll (resultImports)
+        info.annotations.containsAll (resultAnnotations)
 
         where:
-        minimum | exclusiveMinimum | maximum | exclusiveMaximum || resultImports              | resultAnnotations
-        1       | false            | 2       | false            || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1") @DecimalMax(value = "2")'
-        1       | true             | 2       | false            || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1", inclusive = false) @DecimalMax(value = "2")'
-        1       | false            | 2       | true             || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1") @DecimalMax(value = "2", inclusive = false)'
-        1       | true             | 2       | true             || [DECIMAL_MIN, DECIMAL_MAX] | '@DecimalMin(value = "1", inclusive = false) @DecimalMax(value = "2", inclusive = false)'
-        1       | true             | null    | true             || [DECIMAL_MIN]              | '@DecimalMin(value = "1", inclusive = false)'
-        null    | true             | 2       | true             || [DECIMAL_MAX]              | '@DecimalMax(value = "2", inclusive = false)'
+        minimum | exclusiveMinimum | maximum | exclusiveMaximum || resultImports                            | resultAnnotations
+        1       | false            | 2       | false            || [DECIMAL_MIN.import, DECIMAL_MAX.import] | ['@DecimalMin(value = "1")', '@DecimalMax(value = "2")']
+        1       | true             | 2       | false            || [DECIMAL_MIN.import, DECIMAL_MAX.import] | ['@DecimalMin(value = "1", inclusive = false)', '@DecimalMax(value = "2")']
+        1       | false            | 2       | true             || [DECIMAL_MIN.import, DECIMAL_MAX.import] | ['@DecimalMin(value = "1")', '@DecimalMax(value = "2", inclusive = false)']
+        1       | true             | 2       | true             || [DECIMAL_MIN.import, DECIMAL_MAX.import] | ['@DecimalMin(value = "1", inclusive = false)', '@DecimalMax(value = "2", inclusive = false)']
+        1       | true             | null    | true             || [DECIMAL_MIN.import]                     | ['@DecimalMin(value = "1", inclusive = false)']
+        null    | true             | 2       | true             || [DECIMAL_MAX.import]                     | ['@DecimalMax(value = "2", inclusive = false)']
     }
 
     private DataType createDataType (Class clazz, DataTypeConstraints constraints) {
@@ -347,18 +337,6 @@ class BeanValidationFactorySpec extends Specification {
                 )
         }
         null
-    }
-
-    private boolean containsImports (Set source, List match) {
-        source.containsAll (match)
-    }
-
-    private boolean containsAnnotations (String annotations, String match) {
-        if (!match || match.empty) {
-            return true
-        }
-
-        annotations.contains (match)
     }
 
     class OtherDataType implements DataType {

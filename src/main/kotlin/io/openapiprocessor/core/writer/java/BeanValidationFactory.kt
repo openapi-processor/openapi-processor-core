@@ -12,41 +12,49 @@ import io.openapiprocessor.core.model.datatypes.*
  */
 open class BeanValidationFactory {
 
-    fun collectImports(dataType: DataType, required: Boolean = false): Set<String> {
+    fun validate(dataType: DataType, required: Boolean = false): BeanValidationInfo {
+        return BeanValidationInfo(
+            annotateGenericItem(dataType),
+            collectImports(dataType, required),
+            collectAnnotations(dataType, required)
+        )
+    }
+
+    private fun collectImports(dataType: DataType, required: Boolean = false): Set<String> {
         val imports = mutableSetOf<String>()
 
-        if (dataType.isObject()) {
-            imports.add("javax.validation.Valid")
+        if (requiresValidImport(dataType)) {
+            imports.add(BeanValidation.VALID.import)
         }
 
         if (required) {
-            imports.add("javax.validation.constraints.NotNull")
+            imports.add(BeanValidation.NOT_NULL.import)
         }
 
         if (dataType.hasSizeConstraints()) {
-            imports.add("javax.validation.constraints.Size")
+            imports.add(BeanValidation.SIZE.import)
         }
 
         if (dataType.hasMinConstraint()) {
-            imports.add("javax.validation.constraints.DecimalMin")
+            imports.add(BeanValidation.DECIMAL_MIN.import)
         }
 
         if (dataType.hasMaxConstraint()) {
-            imports.add("javax.validation.constraints.DecimalMax")
+            imports.add(BeanValidation.DECIMAL_MAX.import)
         }
 
         return imports
     }
 
-    fun createAnnotations(dataType: DataType, required: Boolean = false): String {
+    private fun collectAnnotations(dataType: DataType, required: Boolean = false): List<String> {
         val annotations = mutableListOf<String>()
 
-        if (dataType.isObject()) {
-            annotations.add(createValidAnnotation())
+        if (dataType.isModel() || dataType.isArrayOfModel()) {
+            annotations.add(BeanValidation.VALID.annotation)
         }
 
         if (required) {
-            annotations.add(createNotNullAnnotation())
+            annotations.add(BeanValidation.NOT_NULL.annotation)
         }
 
         if (dataType.hasSizeConstraints()) {
@@ -61,12 +69,29 @@ open class BeanValidationFactory {
             annotations.add(createDecimalMaxAnnotation (dataType))
         }
 
-        return annotations.joinToString (" ")
+        return annotations
     }
 
-    private fun createValidAnnotation(): String = "@Valid"
+    private fun annotateGenericItem(dataType: DataType): String {
+        if (!dataType.isCollectionOfModel())
+            return dataType.getName()
 
-    private fun createNotNullAnnotation(): String = "@NotNull"
+        return (dataType as MappedCollectionDataType).getName(BeanValidation.VALID.annotation)
+    }
+
+    private fun requiresValidImport(dataType: DataType): Boolean {
+        if (dataType.isModel())
+            return true
+
+        if (dataType !is CollectionDataType)
+            return false
+
+        val itemDataType = dataType.item
+        if (!itemDataType.isModel())
+            return false
+
+        return true
+    }
 
     private fun createDecimalMinAnnotation(dataType: DataType): String {
         val minimum = dataType.constraints?.minimumConstraint!!
@@ -111,22 +136,33 @@ open class BeanValidationFactory {
 
 }
 
-private fun DataType.isObject(): Boolean = this is ObjectDataType
+private fun DataType.isModel(): Boolean = this is ModelDataType
+
+private fun DataType.isArrayOfModel(): Boolean {
+    if (this !is ArrayDataType)
+        return false
+
+    return item.isModel()
+}
+
+private fun DataType.isCollectionOfModel(): Boolean {
+    if (this !is MappedCollectionDataType)
+        return false
+
+    return item.isModel()
+}
 
 private fun DataType.isString(): Boolean = this is StringDataType
 
 private fun DataType.isCollection(): Boolean =
       this is ArrayDataType
    || this is MappedCollectionDataType
-   || this is MappedMapDataType
 
 private fun DataType.isNumber(): Boolean =
       this is FloatDataType
    || this is DoubleDataType
    || this is IntegerDataType
    || this is LongDataType
-
-private fun DataType.hasNotNullableConstraint(): Boolean = !(constraints?.nullable ?: false)
 
 private fun DataType.hasArrayConstraints(): Boolean = constraints?.hasItemConstraints() ?: false
 
