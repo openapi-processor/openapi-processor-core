@@ -10,7 +10,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.builder.api.endpoint
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.model.datatypes.CollectionDataType
+import io.openapiprocessor.core.support.datatypes.CollectionDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.parameters.ParameterBase
 import io.openapiprocessor.core.support.TestMappingAnnotationWriter

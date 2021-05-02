@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.model.datatypes
+package io.openapiprocessor.core.support.datatypes
+
+import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 
 /**
- * OpenAPI type 'array' maps to List<>.
+ * OpenAPI type 'array' maps to Collection<>.
  *
  * @author Martin Hauner
  * @author Bastian Wilhelm
  */
-class ListDataType(
+class CollectionDataType(
     item: DataType
 ): MappedCollectionDataType(
-    List::class.java.simpleName,
-    List::class.java.packageName,
-    item
-)
+    Collection::class.java.simpleName,
+    Collection::class.java.packageName,
+    item)
