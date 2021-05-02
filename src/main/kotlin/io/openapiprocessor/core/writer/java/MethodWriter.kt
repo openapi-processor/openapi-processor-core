@@ -85,8 +85,8 @@ open class MethodWriter(
             var methodDefinition = ""
 
             if (apiOptions.beanValidation) {
-                methodDefinition += " " + beanValidationFactory
-                    .createAnnotations(it.dataType, it.required)
+                val info = beanValidationFactory.validate(it.dataType, it.required)
+                methodDefinition += " " + info.annotations.joinToString(" ")
             }
 
             val annotation = createParameterAnnotation (it)
@@ -102,7 +102,8 @@ open class MethodWriter(
             val body = endpoint.getRequestBody()
             var beanValidationAnnotations = ""
             if (apiOptions.beanValidation) {
-                beanValidationAnnotations += " ${beanValidationFactory.createAnnotations (body.dataType)}"
+                val info = beanValidationFactory.validate(body.dataType, false)
+                beanValidationAnnotations += " ${info.annotations.joinToString(" ")}"
             }
             val param = "$beanValidationAnnotations ${createParameterAnnotation(body)} ${body.dataType.getName()} ${body.name}"
             ps.add (param.trim())

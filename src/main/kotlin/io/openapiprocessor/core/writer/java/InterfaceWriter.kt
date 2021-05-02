@@ -74,7 +74,8 @@ class InterfaceWriter(
 
             ep.parameters.forEach { p ->
                 if (apiOptions.beanValidation) {
-                    imports.addAll (validationAnnotations.collectImports (p.dataType, p.required))
+                    val info = validationAnnotations.validate(p.dataType, p.required)
+                    imports.addAll (info.imports)
                 }
 
                 if (p.withAnnotation) {
@@ -92,7 +93,8 @@ class InterfaceWriter(
                 imports.add (annotations.getAnnotation (b).fullyQualifiedName)
                 imports.addAll (b.dataTypeImports)
                 if (apiOptions.beanValidation) {
-                    imports.addAll (validationAnnotations.collectImports (b.dataType, false))
+                    val info = validationAnnotations.validate(b.dataType, false)
+                    imports.addAll (info.imports)
                 }
             }
 

@@ -74,15 +74,17 @@ class DataTypeWriter(
             result += "    @Deprecated\n"
         }
 
+        var propTypeName = propDataType.getName()
         if(apiOptions.beanValidation) {
-            val annotations = validationAnnotations.createAnnotations(propDataType, required)
-            if (annotations.isNotEmpty()) {
-                result += "    $annotations\n"
+            val info = validationAnnotations.validate(propDataType, required)
+            if (info.hasAnnotations) {
+                result += "    ${info.annotations.joinToString(" ")}\n"
             }
+            propTypeName = info.typeName
         }
 
-        result += "    @JsonProperty(\"${propertyName}\")\n"
-        result += "    private ${propDataType.getName()} ${javaPropertyName}"
+        result += "    @JsonProperty(\"$propertyName\")\n"
+        result += "    private $propTypeName $javaPropertyName"
 
         // null may have an init value
         if (propDataType is NullDataType && propDataType.init != null) {
@@ -137,10 +139,9 @@ class DataTypeWriter(
         imports.addAll(dataType.referencedImports)
 
         if (apiOptions.beanValidation) {
-            val properties = dataType.getProperties()
-            properties.forEach { (propName, propDataType) ->
-                imports.addAll(validationAnnotations.collectImports(
-                        propDataType, dataType.isRequired(propName)))
+            dataType.forEach { propName, propDataType ->
+                val info = validationAnnotations.validate(propDataType, dataType.isRequired(propName))
+                imports.addAll(info.imports)
             }
         }
 
