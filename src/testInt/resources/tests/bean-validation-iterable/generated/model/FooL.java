@@ -7,6 +7,7 @@ package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
+import javax.validation.Valid;
 
 public class FooL {
 
