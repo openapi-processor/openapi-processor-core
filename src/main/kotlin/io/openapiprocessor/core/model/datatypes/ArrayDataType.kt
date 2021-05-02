@@ -23,10 +23,10 @@ package io.openapiprocessor.core.model.datatypes
  * @author Bastian Wilhelm
  */
 class ArrayDataType(
-    val item: DataType,
+    override val item: DataType,
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-): DataType {
+): DataType, CollectionDataType {
 
     override fun getName(): String {
         return "${item.getName()}[]"

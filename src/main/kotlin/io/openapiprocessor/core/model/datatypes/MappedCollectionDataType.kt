@@ -23,14 +23,12 @@ package io.openapiprocessor.core.model.datatypes
  * @author Martin Hauner
  */
 open class MappedCollectionDataType(
-
     private val type: String,
     private val pkg: String,
-    /*private*/ val item: DataType,
+    override val item: DataType,
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-
-): DataType {
+): DataType, CollectionDataType {
 
     override fun getName(): String {
         return "${type}<${item.getName()}>"
