@@ -24,6 +24,7 @@ package io.openapiprocessor.core.model.datatypes
  *
  * @author Martin Hauner
  */
+@Deprecated(message = "not needed anymore")
 class MappedMapDataType(
     type: String,
     pkg: String,
