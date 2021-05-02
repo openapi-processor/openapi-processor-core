@@ -9,6 +9,7 @@ class TestSets {
 
     static def ALL = [
         'bean-validation',
+        'bean-validation-iterable',
         'deprecated',
         'endpoint-exclude',
         'endpoint-http-mapping',                    // framework specific
