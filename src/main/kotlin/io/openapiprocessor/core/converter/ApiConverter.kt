@@ -22,7 +22,7 @@ import io.openapiprocessor.core.writer.java.toClass
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-const val MULTIPART = "multipart/form-data"
+const val MULTIPART = "multipart/"
 const val INTERFACE_DEFAULT_NAME = ""
 
 /**
@@ -125,7 +125,7 @@ class  ApiConverter(
             return
         }
 
-        requestBody.getContent().forEach { contentType, mediaType ->
+        requestBody.getContent().forEach { (contentType, mediaType) ->
             val info = SchemaInfo(
                 SchemaInfo.Endpoint(ep.path, ep.method),
                 getInlineRequestBodyName (ep.path, ep.method),
@@ -133,8 +133,9 @@ class  ApiConverter(
                 mediaType.getSchema(),
                 resolver)
 
-            if (contentType == MULTIPART) {
-                ep.parameters.addAll (createMultipartParameter(info, requestBody.getRequired()))
+            if (contentType.startsWith(MULTIPART)) {
+                // TODO mediaType.encodings: map property -> contentType
+                ep.parameters.addAll (createMultipartParameter(info, /* mediaType.encodings */ requestBody.getRequired()))
             } else {
                 ep.requestBodies.add (createRequestBody (contentType, info, requestBody.getRequired(), dataTypes))
             }
@@ -245,40 +246,17 @@ class  ApiConverter(
 
     private fun createMultipartParameter(info: SchemaInfo, required: Boolean): Collection<ModelParameter> {
         val dataType = convertDataType(info, DataTypes())
-        if (! (dataType is ObjectDataType)) {
+        if (dataType !is ObjectDataType) {
             throw MultipartResponseBodyException(info.getPath())
         }
 
-        return dataType.getProperties().map {
-            val parameter = object: Parameter {
-
-                override fun getIn(): String {
-                    return "multipart"
-                }
-
-                override fun getName(): String {
-                    return it.key
-                }
-
-                override fun getSchema(): Schema {
-                    null!!
-                }
-
-                override fun isDeprecated(): Boolean {
-                    return false
-                }
-
-                override fun isRequired(): Boolean {
-                    return true
-                }
-
-                override val description: String?
-                    get() = null
-
-            }
-
-            framework.createMultipartParameter (parameter, it.value)
+        val parameters = mutableListOf<ModelParameter>()
+        dataType.forEach { property, propertyDataType ->
+            val mpp = MultipartParameter(property, "")
+            val parameter = framework.createMultipartParameter(mpp, propertyDataType)
+            parameters.add(parameter)
         }
+        return parameters
     }
 
     private fun createResponses(ep: Endpoint, httpStatus: String, response: Response, dataTypes: DataTypes, resolver: RefResolver): List<ModelResponse> {

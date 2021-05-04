@@ -23,6 +23,7 @@ import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkBase
+import io.openapiprocessor.core.parser.ParserType
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse
@@ -194,6 +195,75 @@ paths:
 
         then:
         cv.dataTypes.modelDataTypes.empty
+    }
+
+    void "converts request body multipart/* object" () {
+        def openApi = parse (
+"""\
+openapi: 3.0.2
+info:
+  title: params-request-body-multipart
+  version: 1.0.0
+
+paths:
+  /multipart:
+    post:
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                json:
+                  type: object
+                  properties:
+                    foo:
+                      type: string
+                    bar:
+                      type: string
+            encoding:
+              file:
+                contentType: application/octet-stream
+              json:
+                contentType: application/json          
+      responses:
+        '204':
+          description: empty
+""", ParserType.OPENAPI4J
+        )
+
+        def options = new ApiOptions(packageName: 'pkg', typeMappings: [
+            new EndpointTypeMapping('/multipart', null, [
+                new TypeMapping (
+                    'string',
+                    'binary',
+                    'multipart.Multipart')
+            ])
+        ])
+
+        when:
+        def api = new ApiConverter (options, new FrameworkBase())
+            .convert (openApi)
+
+        then:
+        def itf = api.interfaces.first ()
+        def ep = itf.endpoints.first ()
+        def file = ep.parameters[0]
+        def json = ep.parameters[1]
+
+        file.name == 'file'
+        file.required
+        file.dataType.name == 'Multipart'
+        file.dataType.imports == ['multipart.Multipart'] as Set
+
+        json.name == 'json'
+        json.required
+        json.dataType.name == 'MultipartPostRequestBodyJson'
+        json.dataType.imports == ['pkg.model.MultipartPostRequestBodyJson'] as Set
     }
 
 }
