@@ -70,7 +70,7 @@ class BeanValidationFactorySpec: StringSpec({
 
         info.typeName shouldBe "String"
         info.imports shouldBe listOf(BeanValidation.PATTERN.import)
-        info.annotations shouldBe listOf("""${BeanValidation.PATTERN.annotation}("regex")""")
+        info.annotations shouldBe listOf("""${BeanValidation.PATTERN.annotation}(regexp = "regex")""")
     }
 
     "applies @Pattern to String with escaping" {
@@ -81,7 +81,7 @@ class BeanValidationFactorySpec: StringSpec({
 
         info.typeName shouldBe "String"
         info.imports shouldBe listOf(BeanValidation.PATTERN.import)
-        info.annotations shouldBe listOf("""${BeanValidation.PATTERN.annotation}("\\.\\\\")""")
+        info.annotations shouldBe listOf("""${BeanValidation.PATTERN.annotation}(regexp = "\\.\\\\")""")
     }
 
 })

@@ -6,7 +6,7 @@
 package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.model.datatypes.*
-import kotlin.text.Regex.Companion.escapeReplacement
+import org.apache.commons.lang3.StringEscapeUtils
 
 /**
  * creates bean validation imports and annotations.
@@ -143,7 +143,7 @@ open class BeanValidationFactory {
     }
 
     private fun createPatternAnnotation(dataType: DataType): String {
-        return """@Pattern("${escapeReplacement(dataType.constraints?.pattern!!)}")"""
+        return """@Pattern(regexp = "${StringEscapeUtils.escapeJava(dataType.constraints?.pattern!!)}")"""
     }
 }
 

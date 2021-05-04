@@ -49,6 +49,6 @@ public interface EndpointApi {
     void postEndpointObj(@Valid @Parameter Obj1 body);
 
     @Mapping("/endpoint/pattern")
-    void getEndpointPattern(@Pattern(".*\\.\\\\") @Parameter String anything);
+    void getEndpointPattern(@Pattern(regexp = ".*\\.\\\\") @Parameter String anything);
 
 }
