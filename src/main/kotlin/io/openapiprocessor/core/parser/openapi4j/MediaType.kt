@@ -15,7 +15,7 @@ import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
 class MediaType(val mediaType: O4jMediaType): ParserMediaType {
     override fun getSchema() = Schema(mediaType.schema)
 
-    override val encoding: Map<String, Encoding>
+    override val encodings: Map<String, Encoding>
         get() {
             val encoding = mutableMapOf<String, Encoding>()
             mediaType.encodings?.forEach {

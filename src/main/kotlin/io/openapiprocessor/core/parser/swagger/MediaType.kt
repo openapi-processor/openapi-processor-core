@@ -15,7 +15,7 @@ import io.swagger.v3.oas.models.media.MediaType as SwaggerMediaType
 class MediaType(val mediaType: SwaggerMediaType): ParserMediaType {
     override fun getSchema() = Schema(mediaType.schema)
 
-    override val encoding: Map<String, Encoding>
+    override val encodings: Map<String, Encoding>
         get() {
             val encoding = mutableMapOf<String, Encoding>()
             mediaType.encoding?.forEach {

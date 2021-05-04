@@ -10,5 +10,5 @@ package io.openapiprocessor.core.parser
  */
 interface MediaType {
     fun getSchema(): Schema
-    val encoding: Map<String, Encoding>
+    val encodings: Map<String, Encoding>
 }
