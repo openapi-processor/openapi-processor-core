@@ -16,6 +16,7 @@
 
 package io.openapiprocessor.core.parser.openapi4j
 
+import io.openapiprocessor.core.parser.Encoding
 import io.openapiprocessor.core.parser.MediaType as ParserMediaType
 import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
 
@@ -25,7 +26,14 @@ import org.openapi4j.parser.model.v3.MediaType as O4jMediaType
  * @author Martin Hauner
  */
 class MediaType(val mediaType: O4jMediaType): ParserMediaType {
-
     override fun getSchema() = Schema(mediaType.schema)
 
+    override val encoding: Map<String, Encoding>
+        get() {
+            val encoding = mutableMapOf<String, Encoding>()
+            mediaType.encodings?.forEach {
+                encoding[it.key] = Encoding(it.value.contentType)
+            }
+            return encoding
+        }
 }

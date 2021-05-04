@@ -22,7 +22,6 @@ package io.openapiprocessor.core.parser
  * @author Martin Hauner
  */
 interface MediaType {
-
     fun getSchema(): Schema
-
+    val encoding: Map<String, Encoding>
 }
