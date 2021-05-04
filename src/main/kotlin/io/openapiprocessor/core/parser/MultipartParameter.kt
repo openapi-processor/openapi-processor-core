@@ -8,7 +8,7 @@ package io.openapiprocessor.core.parser
 /**
  * "fake" parameter for framework specific annotation selection
  */
-class MultipartParameter(val parameter: String, val contentType: String): Parameter {
+class MultipartParameter(val parameter: String, val contentType: String? = null): Parameter {
 
     override fun getIn(): String {
         return "multipart"
