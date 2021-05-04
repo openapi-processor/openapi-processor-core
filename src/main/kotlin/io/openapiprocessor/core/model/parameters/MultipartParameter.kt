@@ -10,7 +10,7 @@ import io.openapiprocessor.core.model.datatypes.DataType
 /**
  * default implementation of a multipart parameter.
  */
-class MultipartParameter(
+open class MultipartParameter(
 
     name: String,
     dataType: DataType,
