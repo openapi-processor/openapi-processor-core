@@ -199,20 +199,25 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      * @param path the endpoint path
      * @return true/false
      */
-    fun isExcludedEndpoint(path: String, method: HttpMethod): Boolean {
+     fun isExcludedEndpoint(path: String, method: HttpMethod): Boolean {
+        var methodExluded = false
+        var allExcluded = false
+
         val ep = typeMappings
             .filterIsInstance<EndpointTypeMapping>()
             .filter(EndpointTypeMatcher(path, method))
+
         if (ep.isNotEmpty())
-            return ep.first().exclude
+            methodExluded = ep.first().exclude
 
         val epAll = typeMappings
             .filterIsInstance<EndpointTypeMapping>()
             .filter(EndpointTypeMatcher(path, null))
-        if (epAll.isNotEmpty())
-            return epAll.first().exclude
 
-        return false
+        if (epAll.isNotEmpty())
+            allExcluded = epAll.first().exclude
+
+        return methodExluded || allExcluded
     }
 
     /**

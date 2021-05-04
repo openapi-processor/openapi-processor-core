@@ -201,7 +201,7 @@ class MappingFinderEndpointMethodSpec: StringSpec({
         result.targetTypeName.shouldBe("io.openapiprocessor.MultiWrapper")
     }
 
-    "endpoint/method excluded" {
+    "endpoint/method exclude" {
         val finder = MappingFinder(
             listOf(
                 EndpointTypeMapping("/foo", null, emptyList()),
@@ -215,10 +215,24 @@ class MappingFinderEndpointMethodSpec: StringSpec({
         result.shouldBeTrue()
     }
 
-    "endpoint excluded" {
+    "endpoint exclude" {
         val finder = MappingFinder(
             listOf(
                 EndpointTypeMapping("/foo", null, emptyList(), true)
+            )
+        )
+
+        val info = SchemaInfo(foo, "", "", null, resolver)
+        val result = finder.isExcludedEndpoint(info.getPath(), info.getMethod())
+
+        result.shouldBeTrue()
+    }
+
+    "endpoint & endpoint/method exclude if any is true" {
+        val finder = MappingFinder(
+            listOf(
+                EndpointTypeMapping("/foo", null, emptyList(), true),
+                EndpointTypeMapping("/foo", HttpMethod.GET, emptyList(), false)
             )
         )
 
