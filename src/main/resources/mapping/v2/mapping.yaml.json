@@ -105,26 +105,29 @@
     "Methods": {
       "description": "http method mapping rules (since core 2021.2).",
       "type": "object",
-      "get": {
-        "$ref": "#/definitions/Mappings"
-      },
-      "put": {
-        "$ref": "#/definitions/Mappings"
-      },
-      "post": {
-        "$ref": "#/definitions/Mappings"
-      },
-      "delete": {
-        "$ref": "#/definitions/Mappings"
-      },
-      "options": {
-        "$ref": "#/definitions/Mappings"
-      },
-      "head": {
-        "$ref": "#/definitions/Mappings"
-      },
-      "patch": {
-        "$ref": "#/definitions/Mappings"
+      "additionalProperties": false,
+      "properties": {
+        "get": {
+          "$ref": "#/definitions/Mappings"
+        },
+        "put": {
+          "$ref": "#/definitions/Mappings"
+        },
+        "post": {
+          "$ref": "#/definitions/Mappings"
+        },
+        "delete": {
+          "$ref": "#/definitions/Mappings"
+        },
+        "options": {
+          "$ref": "#/definitions/Mappings"
+        },
+        "head": {
+          "$ref": "#/definitions/Mappings"
+        },
+        "patch": {
+          "$ref": "#/definitions/Mappings"
+        }
       }
     },
     "ResultMapping": {
