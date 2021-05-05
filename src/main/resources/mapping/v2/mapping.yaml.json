@@ -47,10 +47,10 @@
     },
     "Map": {
       "description": "global & path specific mapping rules.",
-      "allOf": [
-        {
+      "allOf": [{
           "$ref": "#/definitions/Mappings"
         }, {
+          "additionalProperties": false,
           "properties": {
             "paths": {
               "$ref": "#/definitions/Paths"
@@ -78,6 +78,7 @@
     "Mappings": {
       "description": "mapping rules.",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "result": {
           "$ref": "#/definitions/ResultMapping"
@@ -166,6 +167,7 @@
       "items": [{
         "description": "maps a schema to a a Java type.",
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "type": {
             "$ref": "#/definitions/TypeMappingFormat"
@@ -183,6 +185,7 @@
       "items": [{
         "description": "maps a parameter name to a Java type.",
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "name": {
             "$ref": "#/definitions/TypeMappingFormat"
@@ -209,6 +212,7 @@
       "items": {
         "description": "maps a content type to a Java type.",
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "content": {
             "$ref": "#/definitions/TypeMappingFormat"
@@ -228,6 +232,7 @@
     "Exclude": {
       "description": "generate endpoint to a separate 'Excluded' interface.",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "exclude": {
           "type": "boolean"
