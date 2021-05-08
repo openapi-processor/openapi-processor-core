@@ -28,6 +28,15 @@
           "description": "generate javadoc from OpenAPI 'description' properties (since core 2021.1).",
           "type": "boolean",
           "default": false
+        },
+        "model-name-suffix": {
+          "description": "suffix for model class names and enum names. Default is none, i.e. an empty string (since core 2021.4).",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "Resource",
+            "Dto"
+          ]
         }
       }
     },
@@ -40,21 +49,21 @@
           "description": "wrapper object of a http response.",
           "type": "string",
           "examples": [
-            "result: org.springframework.http.ResponseEntity"
+            "org.springframework.http.ResponseEntity"
           ]
         },
         "single": {
           "description": "reactive wrapper of single types.",
           "type": "string",
           "examples": [
-            "single: reactor.core.publisher.Mono"
+            "reactor.core.publisher.Mono"
           ]
         },
         "multi": {
           "description": "reactive wrapper of array types.",
           "type": "string",
           "examples": [
-            "reactor.core.publisher.Flux"
+            "core.publisher.Flux"
           ]
         },
         "null": {
@@ -103,7 +112,7 @@
             "name"
           ],
           "examples": [
-            "name: foo => io.openapiprocessor.Foo"
+            "foo => io.openapiprocessor.Foo"
           ],
           "items": [
             {
@@ -151,7 +160,7 @@
               "content"
             ],
             "examples": [
-              "content: application/json => io.openapiprocessor.Foo"
+              "application/json => io.openapiprocessor.Foo"
             ],
             "additionalProperties": false,
             "properties": {
@@ -190,21 +199,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -253,7 +262,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -301,7 +310,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -333,21 +342,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -396,7 +405,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -444,7 +453,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -478,21 +487,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -541,7 +550,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -589,7 +598,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -623,21 +632,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -686,7 +695,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -734,7 +743,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -768,21 +777,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -831,7 +840,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -879,7 +888,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -913,21 +922,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -976,7 +985,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -1024,7 +1033,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -1058,21 +1067,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -1121,7 +1130,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -1169,7 +1178,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -1203,21 +1212,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -1266,7 +1275,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -1314,7 +1323,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -1361,21 +1370,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -1424,7 +1433,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -1472,7 +1481,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -1504,21 +1513,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -1567,7 +1576,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -1615,7 +1624,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -1649,21 +1658,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -1712,7 +1721,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -1760,7 +1769,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -1794,21 +1803,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -1857,7 +1866,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -1905,7 +1914,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -1939,21 +1948,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -2002,7 +2011,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -2050,7 +2059,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -2084,21 +2093,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -2147,7 +2156,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -2195,7 +2204,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -2229,21 +2238,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -2292,7 +2301,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -2340,7 +2349,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -2374,21 +2383,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -2437,7 +2446,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -2485,7 +2494,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -2523,21 +2532,21 @@
           "description": "wrapper object of a http response.",
           "type": "string",
           "examples": [
-            "result: org.springframework.http.ResponseEntity"
+            "org.springframework.http.ResponseEntity"
           ]
         },
         "single": {
           "description": "reactive wrapper of single types.",
           "type": "string",
           "examples": [
-            "single: reactor.core.publisher.Mono"
+            "reactor.core.publisher.Mono"
           ]
         },
         "multi": {
           "description": "reactive wrapper of array types.",
           "type": "string",
           "examples": [
-            "reactor.core.publisher.Flux"
+            "core.publisher.Flux"
           ]
         },
         "null": {
@@ -2586,7 +2595,7 @@
             "name"
           ],
           "examples": [
-            "name: foo => io.openapiprocessor.Foo"
+            "foo => io.openapiprocessor.Foo"
           ],
           "items": [
             {
@@ -2634,7 +2643,7 @@
               "content"
             ],
             "examples": [
-              "content: application/json => io.openapiprocessor.Foo"
+              "application/json => io.openapiprocessor.Foo"
             ],
             "additionalProperties": false,
             "properties": {
@@ -2673,21 +2682,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -2736,7 +2745,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -2784,7 +2793,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -2818,21 +2827,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -2881,7 +2890,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -2929,7 +2938,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -2963,21 +2972,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -3026,7 +3035,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -3074,7 +3083,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -3108,21 +3117,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -3171,7 +3180,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -3219,7 +3228,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -3253,21 +3262,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -3316,7 +3325,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -3364,7 +3373,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -3398,21 +3407,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -3461,7 +3470,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -3509,7 +3518,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -3543,21 +3552,21 @@
               "description": "wrapper object of a http response.",
               "type": "string",
               "examples": [
-                "result: org.springframework.http.ResponseEntity"
+                "org.springframework.http.ResponseEntity"
               ]
             },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
               "examples": [
-                "single: reactor.core.publisher.Mono"
+                "reactor.core.publisher.Mono"
               ]
             },
             "multi": {
               "description": "reactive wrapper of array types.",
               "type": "string",
               "examples": [
-                "reactor.core.publisher.Flux"
+                "core.publisher.Flux"
               ]
             },
             "null": {
@@ -3606,7 +3615,7 @@
                 "name"
               ],
               "examples": [
-                "name: foo => io.openapiprocessor.Foo"
+                "foo => io.openapiprocessor.Foo"
               ],
               "items": [
                 {
@@ -3654,7 +3663,7 @@
                   "content"
                 ],
                 "examples": [
-                  "content: application/json => io.openapiprocessor.Foo"
+                  "application/json => io.openapiprocessor.Foo"
                 ],
                 "additionalProperties": false,
                 "properties": {
@@ -3685,21 +3694,21 @@
       "description": "wrapper object of a http response.",
       "type": "string",
       "examples": [
-        "result: org.springframework.http.ResponseEntity"
+        "org.springframework.http.ResponseEntity"
       ]
     },
     "SingleMapping": {
       "description": "reactive wrapper of single types.",
       "type": "string",
       "examples": [
-        "single: reactor.core.publisher.Mono"
+        "reactor.core.publisher.Mono"
       ]
     },
     "MultiMapping": {
       "description": "reactive wrapper of array types.",
       "type": "string",
       "examples": [
-        "reactor.core.publisher.Flux"
+        "core.publisher.Flux"
       ]
     },
     "NullMapping": {
@@ -3748,7 +3757,7 @@
         "name"
       ],
       "examples": [
-        "name: foo => io.openapiprocessor.Foo"
+        "foo => io.openapiprocessor.Foo"
       ],
       "items": [
         {
@@ -3796,7 +3805,7 @@
           "content"
         ],
         "examples": [
-          "content: application/json => io.openapiprocessor.Foo"
+          "application/json => io.openapiprocessor.Foo"
         ],
         "additionalProperties": false,
         "properties": {
@@ -3874,6 +3883,15 @@
           "description": "generate javadoc from OpenAPI 'description' properties (since core 2021.1).",
           "type": "boolean",
           "default": false
+        },
+        "model-name-suffix": {
+          "description": "suffix for model class names and enum names. Default is none, i.e. an empty string (since core 2021.4).",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "Resource",
+            "Dto"
+          ]
         }
       }
     },
@@ -3886,21 +3904,21 @@
           "description": "wrapper object of a http response.",
           "type": "string",
           "examples": [
-            "result: org.springframework.http.ResponseEntity"
+            "org.springframework.http.ResponseEntity"
           ]
         },
         "single": {
           "description": "reactive wrapper of single types.",
           "type": "string",
           "examples": [
-            "single: reactor.core.publisher.Mono"
+            "reactor.core.publisher.Mono"
           ]
         },
         "multi": {
           "description": "reactive wrapper of array types.",
           "type": "string",
           "examples": [
-            "reactor.core.publisher.Flux"
+            "core.publisher.Flux"
           ]
         },
         "null": {
@@ -3949,7 +3967,7 @@
             "name"
           ],
           "examples": [
-            "name: foo => io.openapiprocessor.Foo"
+            "foo => io.openapiprocessor.Foo"
           ],
           "items": [
             {
@@ -3997,7 +4015,7 @@
               "content"
             ],
             "examples": [
-              "content: application/json => io.openapiprocessor.Foo"
+              "application/json => io.openapiprocessor.Foo"
             ],
             "additionalProperties": false,
             "properties": {
@@ -4036,21 +4054,21 @@
                   "description": "wrapper object of a http response.",
                   "type": "string",
                   "examples": [
-                    "result: org.springframework.http.ResponseEntity"
+                    "org.springframework.http.ResponseEntity"
                   ]
                 },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
                   "examples": [
-                    "single: reactor.core.publisher.Mono"
+                    "reactor.core.publisher.Mono"
                   ]
                 },
                 "multi": {
                   "description": "reactive wrapper of array types.",
                   "type": "string",
                   "examples": [
-                    "reactor.core.publisher.Flux"
+                    "core.publisher.Flux"
                   ]
                 },
                 "null": {
@@ -4099,7 +4117,7 @@
                     "name"
                   ],
                   "examples": [
-                    "name: foo => io.openapiprocessor.Foo"
+                    "foo => io.openapiprocessor.Foo"
                   ],
                   "items": [
                     {
@@ -4147,7 +4165,7 @@
                       "content"
                     ],
                     "examples": [
-                      "content: application/json => io.openapiprocessor.Foo"
+                      "application/json => io.openapiprocessor.Foo"
                     ],
                     "additionalProperties": false,
                     "properties": {
@@ -4179,21 +4197,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -4242,7 +4260,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -4290,7 +4308,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -4324,21 +4342,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -4387,7 +4405,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -4435,7 +4453,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -4469,21 +4487,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -4532,7 +4550,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -4580,7 +4598,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -4614,21 +4632,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -4677,7 +4695,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -4725,7 +4743,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -4759,21 +4777,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -4822,7 +4840,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -4870,7 +4888,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -4904,21 +4922,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -4967,7 +4985,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -5015,7 +5033,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
@@ -5049,21 +5067,21 @@
                       "description": "wrapper object of a http response.",
                       "type": "string",
                       "examples": [
-                        "result: org.springframework.http.ResponseEntity"
+                        "org.springframework.http.ResponseEntity"
                       ]
                     },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
                       "examples": [
-                        "single: reactor.core.publisher.Mono"
+                        "reactor.core.publisher.Mono"
                       ]
                     },
                     "multi": {
                       "description": "reactive wrapper of array types.",
                       "type": "string",
                       "examples": [
-                        "reactor.core.publisher.Flux"
+                        "core.publisher.Flux"
                       ]
                     },
                     "null": {
@@ -5112,7 +5130,7 @@
                         "name"
                       ],
                       "examples": [
-                        "name: foo => io.openapiprocessor.Foo"
+                        "foo => io.openapiprocessor.Foo"
                       ],
                       "items": [
                         {
@@ -5160,7 +5178,7 @@
                           "content"
                         ],
                         "examples": [
-                          "content: application/json => io.openapiprocessor.Foo"
+                          "application/json => io.openapiprocessor.Foo"
                         ],
                         "additionalProperties": false,
                         "properties": {
