@@ -35,7 +35,9 @@ openapi-processor-mapping: v2
 
 options:
     package-name: com.github.hauner.openapi
-    bean-validation: true 
+    model-name-suffix: Resource
+    bean-validation: true
+    javadoc: true
 
 map:
   result: plain
