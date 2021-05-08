@@ -42,6 +42,14 @@
           "description": "generate javadoc from OpenAPI 'description' properties (since core 2021.1).",
           "type": "boolean",
           "default": false
+        },
+        "model-name-suffix": {
+          "description": "suffix for model class names and enum names. Default is none, i.e. an empty string (since core 2021.4).",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "Resource", "Dto"
+          ]
         }
       }
     },
