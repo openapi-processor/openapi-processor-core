@@ -15,6 +15,9 @@ options: # general processor options (optional)
 
   javadoc: true
 
+  # suffix for model class names and enum names. Default is none.
+  model-name-suffix: Resource
+
 map: # the type mappings
 
   # global mappings, apply to all paths/endpoints
