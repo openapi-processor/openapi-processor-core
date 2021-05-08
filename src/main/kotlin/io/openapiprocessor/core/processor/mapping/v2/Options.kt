@@ -5,6 +5,8 @@
 
 package io.openapiprocessor.core.processor.mapping.v2
 
+import io.openapiprocessor.core.support.Empty
+
 /**
  * general options
  */
@@ -28,6 +30,11 @@ data class Options(
     /**
      * generate javadoc (optional)
      */
-    val javadoc: Boolean = false
+    val javadoc: Boolean = false,
+
+    /**
+     * generate model source files with suffix (optional)
+     */
+    val modelNameSuffix: String = String.Empty
 
 )

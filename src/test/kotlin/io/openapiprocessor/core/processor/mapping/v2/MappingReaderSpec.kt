@@ -6,6 +6,7 @@ package io.openapiprocessor.core.processor.mapping.v2
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -67,6 +68,22 @@ class MappingReaderSpec: StringSpec ({
 
         // then:
         verify(exactly = 1) { log.warn("\$.options: is missing but it is required") }
+    }
+
+    "reads model-name-suffix" {
+        val yaml = """
+            |openapi-processor-mapping: v2
+            |options:
+            |  model-name-suffix: Suffix
+        """.trimMargin()
+
+        val reader = MappingReader()
+
+        // when:
+        val mapping = reader.read (yaml) as Mapping
+
+        // then:
+        mapping.options.modelNameSuffix shouldBe "Suffix"
     }
 
 })
