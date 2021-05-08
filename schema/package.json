@@ -1,0 +1,14 @@
+{
+  "name": "schema-flatener",
+  "version": "1.0.0",
+  "description": "resolve $refs, merge allOf",
+  "devDependencies": {
+    "@apidevtools/json-schema-ref-parser": "^9.0.7",
+    "@tsconfig/node14": "^1.0.0",
+    "@types/json-schema-merge-allof": "0.6.0",
+    "@types/node": "^15.0.2",
+    "json-schema-merge-allof": "^0.8.1",
+    "typescript": "^4.2.4",
+    "ts-node": "^9.1.1"
+  }
+}

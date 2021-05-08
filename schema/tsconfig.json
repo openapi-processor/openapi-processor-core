@@ -1,0 +1,9 @@
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+
+  "compilerOptions": {
+  },
+  "files": [
+    "src/schema.ts"
+  ]
+}
