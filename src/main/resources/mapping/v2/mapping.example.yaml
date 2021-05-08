@@ -13,6 +13,7 @@ options: # general processor options (optional)
   # validation annotation (optional): true or false (default)
   bean-validation: false
 
+  # generate javadoc from OpenAPI 'description' properties (since core 2021.1).
   javadoc: true
 
   # suffix for model class names and enum names. Default is none.
