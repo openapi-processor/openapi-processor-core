@@ -135,21 +135,21 @@
       "description": "wrapper object of a http response.",
       "type": "string",
       "examples": [
-        "result: org.springframework.http.ResponseEntity"
+        "org.springframework.http.ResponseEntity"
       ]
     },
     "SingleMapping": {
       "description": "reactive wrapper of single types.",
       "type": "string",
       "examples": [
-        "single: reactor.core.publisher.Mono"
+        "reactor.core.publisher.Mono"
       ]
     },
     "MultiMapping": {
       "description": "reactive wrapper of array types.",
       "type": "string",
       "examples": [
-        "reactor.core.publisher.Flux"
+        "core.publisher.Flux"
       ]
     },
     "NullMapping": {
@@ -202,7 +202,7 @@
         "name"
       ],
       "examples": [
-        "name: foo => io.openapiprocessor.Foo"
+        "foo => io.openapiprocessor.Foo"
       ]
     },
     "ResponseMappings": {
@@ -225,7 +225,7 @@
           "content"
         ],
         "examples": [
-          "content: application/json => io.openapiprocessor.Foo"
+          "application/json => io.openapiprocessor.Foo"
         ]
       }
     },
