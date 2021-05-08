@@ -28,7 +28,7 @@ open class MappingValidator {
     }
 
     private fun getSchema(): InputStream {
-        return this.javaClass.getResourceAsStream("/mapping/v2/mapping.yaml.json")!!
+        return this.javaClass.getResourceAsStream("/mapping/v2/mapping.flat.yaml.json")!!
     }
 
 }
