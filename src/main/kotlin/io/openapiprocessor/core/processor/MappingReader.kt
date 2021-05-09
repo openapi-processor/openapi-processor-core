@@ -51,12 +51,13 @@ class MappingReader(private val validator: MappingValidator = MappingValidator()
         val versionMapper = createVersionParser ()
         val version = versionMapper.readValue (mapping, VersionMapping::class.java)
 
-        if (version.isDeprecatedVersionKey ()) {
-            log.warn ("the mapping version key \"openapi-processor-spring\" is deprecated, please use \"openapi-processor-mapping\"")
-        }
-
         if (version.isV2()) {
+            if (version.isDeprecatedVersionKey ()) {
+                log.warn ("the mapping version key \"openapi-processor-spring\" is deprecated, please use \"openapi-processor-mapping\"")
+            }
+
             validate(mapping)
+
             val mapper = createV2Parser()
             return mapper.readValue (mapping, MappingV2::class.java)
         } else {
