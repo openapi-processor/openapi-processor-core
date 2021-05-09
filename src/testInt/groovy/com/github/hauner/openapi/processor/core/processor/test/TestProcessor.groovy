@@ -7,11 +7,10 @@ package com.github.hauner.openapi.processor.core.processor.test
 
 import io.openapiprocessor.core.converter.ApiConverter
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.OptionsConverter
 import io.openapiprocessor.core.framework.FrameworkBase
 import io.openapiprocessor.core.parser.OpenApi
 import io.openapiprocessor.core.parser.Parser
-import io.openapiprocessor.core.processor.MappingConverter
-import io.openapiprocessor.core.processor.MappingReader
 import io.openapiprocessor.core.writer.java.ApiWriter
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DataTypeWriter
@@ -85,39 +84,8 @@ class TestProcessor implements OpenApiProcessor {
     }
 
     private static ApiOptions convertOptions (Map<String, ?> processorOptions) {
-        def reader = new MappingReader ()
-        def converter = new MappingConverter ()
-        def mapping
-
-        if (processorOptions.containsKey ('mapping')) {
-            mapping = reader.read (processorOptions.mapping as String)
-
-        } else {
-            log.error ("error: missing 'mapping' configuration!")
-        }
-
-        def options = new ApiOptions ()
-        options.targetDir = processorOptions.targetDir
+        def options = new OptionsConverter().convertOptions (processorOptions)
         options.validate ()
-
-        if (mapping) {
-            if (mapping?.options?.packageName != null) {
-                options.packageName = mapping.options.packageName
-            } else {
-                log.warn ("no 'options:package-name' set in mapping!")
-            }
-
-            if (mapping?.options?.beanValidation != null) {
-                options.beanValidation = mapping.options.beanValidation
-            }
-
-            if (mapping?.options?.javadoc != null) {
-                options.javadoc = mapping.options.javadoc
-            }
-
-            options.typeMappings = converter.convert (mapping)
-        }
-
         options
     }
 
