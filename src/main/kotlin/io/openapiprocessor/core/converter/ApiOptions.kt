@@ -14,12 +14,6 @@ import io.openapiprocessor.core.support.Empty
 class ApiOptions {
 
     /**
-     * the path to the open api yaml file.
-     */
-    @Deprecated("unused")
-    lateinit var apiPath: String
-
-    /**
      * the destination folder for generating interfaces & models. This is the parent of the
      * {@link #packageName} folder tree.
      */
