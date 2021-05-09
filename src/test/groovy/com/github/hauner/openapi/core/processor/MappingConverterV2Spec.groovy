@@ -38,8 +38,8 @@ class MappingConverterV2Spec extends Specification {
     @Unroll
     void "reads global type mapping: (#input.source)" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-
+openapi-processor-mapping: v2
+options: {}
 map:
   types:
     - type: ${input.source}
@@ -143,8 +143,8 @@ map:
 
     void "reads global response type mapping" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-
+openapi-processor-mapping: v2
+options: {}
 map:
   responses:
     - content: application/vnd.array => java.util.List
@@ -167,8 +167,8 @@ map:
 
     void "reads global parameter type mapping" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   parameters:
     - name: foo => mapping.Foo
@@ -199,8 +199,8 @@ map:
 
     void "reads endpoint exclude flag" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   paths:
     /foo:
@@ -225,8 +225,8 @@ map:
 
     void "reads endpoint parameter type mapping" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   paths:
     /foo:
@@ -254,8 +254,8 @@ map:
 
     void "reads endpoint add mapping" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   paths:
     /foo:
@@ -284,15 +284,15 @@ map:
 
     void "reads endpoint add mapping with annotation" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   paths:
     /foo:
       parameters:
         - add: foo => io.micronaut.http.annotation.RequestAttribute(ANY) java.lang.String
-          annotations:
-            - bar 
+#          annotations:
+#            - bar 
 """
 
         when:
@@ -318,8 +318,8 @@ map:
 
     void "reads endpoint response type mapping" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   paths:
     /foo:
@@ -348,8 +348,8 @@ map:
 
     void "reads global result mapping #result" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   result: $result
 """
@@ -371,8 +371,8 @@ map:
 
     void "reads endpoint result mapping #result" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   paths:
     /foo:
@@ -401,8 +401,8 @@ map:
 
     void "reads global single & multi mapping" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   single: $single
   multi: $multi
@@ -428,8 +428,8 @@ map:
 
     void "reads endpoint single & multi mapping" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-    
+openapi-processor-mapping: v2
+options: {}
 map:
   paths:
     /foo:
@@ -462,8 +462,7 @@ map:
 
     void "does not fail on 'empty' options: key" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-
+openapi-processor-mapping: v2
 options:
 """
 
@@ -477,8 +476,8 @@ options:
 
     void "does not fail on 'empty' map: key" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
-
+openapi-processor-mapping: v2
+options: {}
 map:
 """
 
@@ -492,7 +491,7 @@ map:
 
     void "does not fail on 'empty' mapping.yaml" () {
         String yaml = """\
-openapi-processor-mapping: v2.0
+openapi-processor-mapping: v2
 """
 
         when:

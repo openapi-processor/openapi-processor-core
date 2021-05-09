@@ -26,7 +26,7 @@ class MappingConverterEndpointMethodSpec: StringSpec({
     "reads endpoint method type mapping" {
         val yaml = """
                    |openapi-processor-mapping: v2
-                   | 
+                   |options: {} 
                    |map:
                    |  paths:
                    |    /foo:
@@ -65,7 +65,7 @@ class MappingConverterEndpointMethodSpec: StringSpec({
         ) { method ->
             val yaml = """
                        |openapi-processor-mapping: v2
-                       | 
+                       |options: {} 
                        |map:
                        |  paths:
                        |    /foo:
