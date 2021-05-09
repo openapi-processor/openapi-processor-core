@@ -35,7 +35,7 @@ typeArguments
   ;
 
 typeArgumentList
-  : typeArgument (',' typeArgument)*
+  : typeArgument? (',' typeArgument)*
   ;
 
 typeArgument
