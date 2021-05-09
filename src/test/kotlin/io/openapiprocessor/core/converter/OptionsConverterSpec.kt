@@ -90,12 +90,14 @@ class OptionsConverterSpec: StringSpec({
                 openapi-processor-mapping: v2
                 options:
                   package-name: generated
+                  model-name-suffix: Suffix
                   bean-validation: true
                   javadoc: true
             """.trimIndent()
         ))
 
         options.packageName shouldBe "generated"
+        options.modelNameSuffix shouldBe "Suffix"
         options.beanValidation shouldBe true
         options.javadoc shouldBe true
     }

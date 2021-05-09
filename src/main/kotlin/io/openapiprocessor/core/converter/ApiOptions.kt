@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.converter
 
 import io.openapiprocessor.core.converter.mapping.Mapping
+import io.openapiprocessor.core.support.Empty
 
 /**
  * Options of the processor.
@@ -44,6 +45,11 @@ class ApiOptions {
      * *experimental*
      */
     var javadoc = false
+
+    /**
+     * suffix for model class names and enum names. Default is none, ie. an empty string.
+     */
+    var modelNameSuffix = String.Empty
 
     /**
      * provide additional type mapping information to map OpenAPI types to java types. The list can
