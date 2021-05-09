@@ -136,6 +136,9 @@
         },
         "patch": {
           "$ref": "#/definitions/Mappings"
+        },
+        "trace": {
+          "$ref": "#/definitions/Mappings"
         }
       }
     },

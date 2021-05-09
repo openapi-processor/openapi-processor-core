@@ -1347,6 +1347,151 @@
                       }
                     }
                   }
+                },
+                "trace": {
+                  "description": "mapping rules.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "result": {
+                      "description": "wrapper object of a http response.",
+                      "type": "string",
+                      "examples": [
+                        "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "single": {
+                      "description": "reactive wrapper of single types.",
+                      "type": "string",
+                      "examples": [
+                        "reactor.core.publisher.Mono"
+                      ]
+                    },
+                    "multi": {
+                      "description": "reactive wrapper of array types.",
+                      "type": "string",
+                      "examples": [
+                        "core.publisher.Flux"
+                      ]
+                    },
+                    "null": {
+                      "description": "null wrapper of 'nullable' object properties (since core 2021.2).",
+                      "type": "string",
+                      "examples": [
+                        "org.openapitools.jackson.nullable.JsonNullable",
+                        "org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()"
+                      ]
+                    },
+                    "types": {
+                      "description": "basic type mappings.",
+                      "type": "array",
+                      "minItems": 1,
+                      "items": [
+                        {
+                          "description": "maps a schema to a a Java type.",
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "type": {
+                              "description": "schema => fully qualified Java type.",
+                              "type": "string",
+                              "pattern": "^.+\\s+=>\\s+.+$",
+                              "examples": [
+                                "array => java.util.Collection",
+                                "FooSchema => io.openapiprocessor.Foo"
+                              ]
+                            },
+                            "generics": {
+                              "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "parameters": {
+                      "description": "parameter type mappings.",
+                      "type": "array",
+                      "minItems": 1,
+                      "required": [
+                        "name"
+                      ],
+                      "examples": [
+                        "foo => io.openapiprocessor.Foo"
+                      ],
+                      "items": [
+                        {
+                          "description": "maps a parameter name to a Java type.",
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "name": {
+                              "description": "schema => fully qualified Java type.",
+                              "type": "string",
+                              "pattern": "^.+\\s+=>\\s+.+$",
+                              "examples": [
+                                "array => java.util.Collection",
+                                "FooSchema => io.openapiprocessor.Foo"
+                              ]
+                            },
+                            "add": {
+                              "description": "schema => fully qualified Java type.",
+                              "type": "string",
+                              "pattern": "^.+\\s+=>\\s+.+$",
+                              "examples": [
+                                "array => java.util.Collection",
+                                "FooSchema => io.openapiprocessor.Foo"
+                              ]
+                            },
+                            "generics": {
+                              "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "responses": {
+                      "description": "response (content) type mappings.",
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "description": "maps a content type to a Java type.",
+                        "type": "object",
+                        "required": [
+                          "content"
+                        ],
+                        "examples": [
+                          "application/json => io.openapiprocessor.Foo"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "content": {
+                            "description": "schema => fully qualified Java type.",
+                            "type": "string",
+                            "pattern": "^.+\\s+=>\\s+.+$",
+                            "examples": [
+                              "array => java.util.Collection",
+                              "FooSchema => io.openapiprocessor.Foo"
+                            ]
+                          },
+                          "generics": {
+                            "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -2518,6 +2663,151 @@
                   }
                 }
               }
+            },
+            "trace": {
+              "description": "mapping rules.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "result": {
+                  "description": "wrapper object of a http response.",
+                  "type": "string",
+                  "examples": [
+                    "org.springframework.http.ResponseEntity"
+                  ]
+                },
+                "single": {
+                  "description": "reactive wrapper of single types.",
+                  "type": "string",
+                  "examples": [
+                    "reactor.core.publisher.Mono"
+                  ]
+                },
+                "multi": {
+                  "description": "reactive wrapper of array types.",
+                  "type": "string",
+                  "examples": [
+                    "core.publisher.Flux"
+                  ]
+                },
+                "null": {
+                  "description": "null wrapper of 'nullable' object properties (since core 2021.2).",
+                  "type": "string",
+                  "examples": [
+                    "org.openapitools.jackson.nullable.JsonNullable",
+                    "org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()"
+                  ]
+                },
+                "types": {
+                  "description": "basic type mappings.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": [
+                    {
+                      "description": "maps a schema to a a Java type.",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "type": {
+                          "description": "schema => fully qualified Java type.",
+                          "type": "string",
+                          "pattern": "^.+\\s+=>\\s+.+$",
+                          "examples": [
+                            "array => java.util.Collection",
+                            "FooSchema => io.openapiprocessor.Foo"
+                          ]
+                        },
+                        "generics": {
+                          "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "parameters": {
+                  "description": "parameter type mappings.",
+                  "type": "array",
+                  "minItems": 1,
+                  "required": [
+                    "name"
+                  ],
+                  "examples": [
+                    "foo => io.openapiprocessor.Foo"
+                  ],
+                  "items": [
+                    {
+                      "description": "maps a parameter name to a Java type.",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "name": {
+                          "description": "schema => fully qualified Java type.",
+                          "type": "string",
+                          "pattern": "^.+\\s+=>\\s+.+$",
+                          "examples": [
+                            "array => java.util.Collection",
+                            "FooSchema => io.openapiprocessor.Foo"
+                          ]
+                        },
+                        "add": {
+                          "description": "schema => fully qualified Java type.",
+                          "type": "string",
+                          "pattern": "^.+\\s+=>\\s+.+$",
+                          "examples": [
+                            "array => java.util.Collection",
+                            "FooSchema => io.openapiprocessor.Foo"
+                          ]
+                        },
+                        "generics": {
+                          "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "responses": {
+                  "description": "response (content) type mappings.",
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "description": "maps a content type to a Java type.",
+                    "type": "object",
+                    "required": [
+                      "content"
+                    ],
+                    "examples": [
+                      "application/json => io.openapiprocessor.Foo"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "content": {
+                        "description": "schema => fully qualified Java type.",
+                        "type": "string",
+                        "pattern": "^.+\\s+=>\\s+.+$",
+                        "examples": [
+                          "array => java.util.Collection",
+                          "FooSchema => io.openapiprocessor.Foo"
+                        ]
+                      },
+                      "generics": {
+                        "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -3544,6 +3834,151 @@
           }
         },
         "patch": {
+          "description": "mapping rules.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "result": {
+              "description": "wrapper object of a http response.",
+              "type": "string",
+              "examples": [
+                "org.springframework.http.ResponseEntity"
+              ]
+            },
+            "single": {
+              "description": "reactive wrapper of single types.",
+              "type": "string",
+              "examples": [
+                "reactor.core.publisher.Mono"
+              ]
+            },
+            "multi": {
+              "description": "reactive wrapper of array types.",
+              "type": "string",
+              "examples": [
+                "core.publisher.Flux"
+              ]
+            },
+            "null": {
+              "description": "null wrapper of 'nullable' object properties (since core 2021.2).",
+              "type": "string",
+              "examples": [
+                "org.openapitools.jackson.nullable.JsonNullable",
+                "org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()"
+              ]
+            },
+            "types": {
+              "description": "basic type mappings.",
+              "type": "array",
+              "minItems": 1,
+              "items": [
+                {
+                  "description": "maps a schema to a a Java type.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "description": "schema => fully qualified Java type.",
+                      "type": "string",
+                      "pattern": "^.+\\s+=>\\s+.+$",
+                      "examples": [
+                        "array => java.util.Collection",
+                        "FooSchema => io.openapiprocessor.Foo"
+                      ]
+                    },
+                    "generics": {
+                      "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "parameters": {
+              "description": "parameter type mappings.",
+              "type": "array",
+              "minItems": 1,
+              "required": [
+                "name"
+              ],
+              "examples": [
+                "foo => io.openapiprocessor.Foo"
+              ],
+              "items": [
+                {
+                  "description": "maps a parameter name to a Java type.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "description": "schema => fully qualified Java type.",
+                      "type": "string",
+                      "pattern": "^.+\\s+=>\\s+.+$",
+                      "examples": [
+                        "array => java.util.Collection",
+                        "FooSchema => io.openapiprocessor.Foo"
+                      ]
+                    },
+                    "add": {
+                      "description": "schema => fully qualified Java type.",
+                      "type": "string",
+                      "pattern": "^.+\\s+=>\\s+.+$",
+                      "examples": [
+                        "array => java.util.Collection",
+                        "FooSchema => io.openapiprocessor.Foo"
+                      ]
+                    },
+                    "generics": {
+                      "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "responses": {
+              "description": "response (content) type mappings.",
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "description": "maps a content type to a Java type.",
+                "type": "object",
+                "required": [
+                  "content"
+                ],
+                "examples": [
+                  "application/json => io.openapiprocessor.Foo"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "content": {
+                    "description": "schema => fully qualified Java type.",
+                    "type": "string",
+                    "pattern": "^.+\\s+=>\\s+.+$",
+                    "examples": [
+                      "array => java.util.Collection",
+                      "FooSchema => io.openapiprocessor.Foo"
+                    ]
+                  },
+                  "generics": {
+                    "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "trace": {
           "description": "mapping rules.",
           "type": "object",
           "additionalProperties": false,
@@ -5059,6 +5494,151 @@
                   }
                 },
                 "patch": {
+                  "description": "mapping rules.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "result": {
+                      "description": "wrapper object of a http response.",
+                      "type": "string",
+                      "examples": [
+                        "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "single": {
+                      "description": "reactive wrapper of single types.",
+                      "type": "string",
+                      "examples": [
+                        "reactor.core.publisher.Mono"
+                      ]
+                    },
+                    "multi": {
+                      "description": "reactive wrapper of array types.",
+                      "type": "string",
+                      "examples": [
+                        "core.publisher.Flux"
+                      ]
+                    },
+                    "null": {
+                      "description": "null wrapper of 'nullable' object properties (since core 2021.2).",
+                      "type": "string",
+                      "examples": [
+                        "org.openapitools.jackson.nullable.JsonNullable",
+                        "org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()"
+                      ]
+                    },
+                    "types": {
+                      "description": "basic type mappings.",
+                      "type": "array",
+                      "minItems": 1,
+                      "items": [
+                        {
+                          "description": "maps a schema to a a Java type.",
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "type": {
+                              "description": "schema => fully qualified Java type.",
+                              "type": "string",
+                              "pattern": "^.+\\s+=>\\s+.+$",
+                              "examples": [
+                                "array => java.util.Collection",
+                                "FooSchema => io.openapiprocessor.Foo"
+                              ]
+                            },
+                            "generics": {
+                              "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "parameters": {
+                      "description": "parameter type mappings.",
+                      "type": "array",
+                      "minItems": 1,
+                      "required": [
+                        "name"
+                      ],
+                      "examples": [
+                        "foo => io.openapiprocessor.Foo"
+                      ],
+                      "items": [
+                        {
+                          "description": "maps a parameter name to a Java type.",
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "name": {
+                              "description": "schema => fully qualified Java type.",
+                              "type": "string",
+                              "pattern": "^.+\\s+=>\\s+.+$",
+                              "examples": [
+                                "array => java.util.Collection",
+                                "FooSchema => io.openapiprocessor.Foo"
+                              ]
+                            },
+                            "add": {
+                              "description": "schema => fully qualified Java type.",
+                              "type": "string",
+                              "pattern": "^.+\\s+=>\\s+.+$",
+                              "examples": [
+                                "array => java.util.Collection",
+                                "FooSchema => io.openapiprocessor.Foo"
+                              ]
+                            },
+                            "generics": {
+                              "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "responses": {
+                      "description": "response (content) type mappings.",
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "description": "maps a content type to a Java type.",
+                        "type": "object",
+                        "required": [
+                          "content"
+                        ],
+                        "examples": [
+                          "application/json => io.openapiprocessor.Foo"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "content": {
+                            "description": "schema => fully qualified Java type.",
+                            "type": "string",
+                            "pattern": "^.+\\s+=>\\s+.+$",
+                            "examples": [
+                              "array => java.util.Collection",
+                              "FooSchema => io.openapiprocessor.Foo"
+                            ]
+                          },
+                          "generics": {
+                            "description": "fully qualified Java types used as generic parameters of the type mapping.",
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "trace": {
                   "description": "mapping rules.",
                   "type": "object",
                   "additionalProperties": false,
