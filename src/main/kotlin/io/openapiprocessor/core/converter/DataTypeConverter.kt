@@ -11,6 +11,7 @@ import io.openapiprocessor.core.model.DataTypeCollector
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.Documentation
 import io.openapiprocessor.core.model.datatypes.*
+import io.openapiprocessor.core.writer.java.ModelClassNameCreator
 import java.util.*
 import kotlin.collections.LinkedHashMap
 
@@ -199,7 +200,7 @@ class DataTypeConverter(
         )
 
         val objectType = ObjectDataType (
-            schemaInfo.getName(),
+            getNameWithSuffix(schemaInfo.getName()),
             listOf(options.packageName, "model").joinToString("."),
             properties = properties,
             constraints = constraints,
@@ -207,7 +208,7 @@ class DataTypeConverter(
             documentation = Documentation(description = schemaInfo.description)
         )
 
-        dataTypes.add (objectType)
+        dataTypes.add (schemaInfo.getName(), objectType)
         return objectType
     }
 
@@ -318,13 +319,13 @@ class DataTypeConverter(
         }
 
         val enumType = StringEnumDataType (
-            enumName,
+            getNameWithSuffix(enumName),
             listOf(options.packageName, "model").joinToString("."),
             schemaInfo.getEnumValues() as List<String>,
             constraints,
             schemaInfo.getDeprecated())
 
-        dataTypes.add (enumType)
+        dataTypes.add (enumName, enumType)
         return enumType
     }
 
@@ -392,6 +393,10 @@ class DataTypeConverter(
             it.getName() == info.getName() && !it.isRefObject()
         }
         return found != null
+    }
+
+    private fun getNameWithSuffix(name: String): String {
+        return ModelClassNameCreator(options.modelNameSuffix).createName(name)
     }
 
 }
