@@ -32,7 +32,11 @@ class DataTypeCollector(
                 dataType.genericTypes
                     .filter { it.startsWith(generatedPackageName) }
                     .forEach {
-                        dataTypes.addRef(it.substringAfterLast("."))
+                        val name = it.substringAfterLast(".")
+                        val found = dataTypes.find(name)
+                        if (found != null) {
+                            collect(found)
+                        }
                     }
             }
             is AllOfObjectDataType -> {
