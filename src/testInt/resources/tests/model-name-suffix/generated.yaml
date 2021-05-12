@@ -1,0 +1,7 @@
+items:
+  - generated/api/Api.java
+  - generated/model/FooResource.java
+  - generated/model/FooInlineResource.java
+  - generated/model/BarResource.java
+  - generated/model/ParamResource.java
+  - generated/model/BodyResource.java
