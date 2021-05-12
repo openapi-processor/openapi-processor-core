@@ -25,7 +25,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import io.mockk.mockk as stub
 
-@Suppress("BlockingMethodInNonBlockingContext")
 class ApiWriterSpec: StringSpec({
     isolationMode = IsolationMode.InstancePerTest
 
@@ -51,7 +50,7 @@ class ApiWriterSpec: StringSpec({
             .answers {
                 firstArg<Writer>().write("Foo enum!\n")
             }
-            .andThen {
+            .andThenAnswer {
                 firstArg<Writer>().write("Bar enum!\n")
             }
 
@@ -136,6 +135,7 @@ class ApiWriterSpec: StringSpec({
         Files.isDirectory(model) shouldBe true
     }
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     "does not fail if target folder structure already exists" {
         Files.createDirectories(options.getSourceDir("api"))
         Files.createDirectories(options.getSourceDir("model"))
