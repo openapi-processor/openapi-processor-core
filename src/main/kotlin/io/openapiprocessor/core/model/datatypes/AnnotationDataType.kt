@@ -9,13 +9,13 @@ package io.openapiprocessor.core.model.datatypes
  * additional annotation type.
  */
 class AnnotationDataType(
-    private val type: String,
+    private val name: String,
     private val pkg: String,
     private val parameters: String?
 ): DataType {
 
     override fun getName(): String {
-        return type
+        return name
     }
 
     override fun getPackageName(): String {

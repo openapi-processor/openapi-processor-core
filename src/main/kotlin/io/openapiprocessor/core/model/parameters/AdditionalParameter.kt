@@ -12,14 +12,12 @@ import io.openapiprocessor.core.model.datatypes.DataType
  * Additional parameter model.
  */
 class AdditionalParameter(
-
     name: String,
     dataType: DataType,
     val annotationDataType: AnnotationDataType? = null,
     required: Boolean = false,
     deprecated: Boolean = false,
     description: String? = null
-
 ): ParameterBase(name, dataType, required, deprecated, description) {
 
     override val withAnnotation: Boolean

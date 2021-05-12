@@ -6,13 +6,13 @@
 package io.openapiprocessor.core.model.datatypes
 
 class NoDataType(
-    private val type: String,
+    private val name: String,
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 ): DataType {
 
     override fun getName(): String {
-        return type
+        return name
     }
 
     override fun getPackageName(): String {
