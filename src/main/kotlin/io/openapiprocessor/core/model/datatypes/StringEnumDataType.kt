@@ -9,7 +9,7 @@ package io.openapiprocessor.core.model.datatypes
  * OpenAPI type 'string' with enum constraint maps to enum class.
  */
 class StringEnumDataType(
-    private val type: String,
+    private val name: DataTypeName,
     private val pkg: String,
     val values: List<String> = emptyList(),
     override val constraints: DataTypeConstraints? = null,
@@ -17,7 +17,11 @@ class StringEnumDataType(
 ): DataType {
 
     override fun getName(): String {
-        return type
+        return name.id
+    }
+
+    override fun getTypeName(): String {
+        return name.type
     }
 
     override fun getPackageName(): String {
@@ -25,7 +29,7 @@ class StringEnumDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf("${getPackageName()}.${getName()}")
+        return setOf("${getPackageName()}.${getTypeName()}")
     }
 
 }

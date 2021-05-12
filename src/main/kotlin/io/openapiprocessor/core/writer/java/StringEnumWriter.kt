@@ -39,7 +39,7 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
             target.write("\n")
         }
 
-        target.write("public enum ${dataType.getName()} {\n")
+        target.write("public enum ${dataType.getTypeName()} {\n")
 
         val values = mutableListOf<String>()
         dataType.values.forEach {
@@ -50,7 +50,7 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
 
         target.write (
             """
-            |    private ${dataType.getName()}(String value) {
+            |    private ${dataType.getTypeName()}(String value) {
             |        this.value = value;
             |    }
             |
@@ -70,8 +70,8 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
         target.write(
             """
             |    @JsonCreator
-            |    public static ${dataType.getName()} fromValue(String value) {
-            |        for (${dataType.getName()} val : ${dataType.getName()}.values()) {
+            |    public static ${dataType.getTypeName()} fromValue(String value) {
+            |        for (${dataType.getTypeName()} val : ${dataType.getTypeName()}.values()) {
             |            if (val.value.equals(value)) {
             |                return val;
             |            }

@@ -7,6 +7,7 @@ package io.openapiprocessor.core.model
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.openapiprocessor.core.model.datatypes.DataTypeName
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
@@ -33,13 +34,13 @@ class DataTypesSpec : StringSpec({
     }
 
     "does not provide unused enum data types" {
-        dataTypes.add(StringEnumDataType("Foo", "any"))
+        dataTypes.add(StringEnumDataType(DataTypeName("Foo"), "any"))
 
         dataTypes.getEnumDataTypes().size shouldBe 0
     }
 
     "does provide used enum data types" {
-        dataTypes.add(StringEnumDataType("Foo", "any"))
+        dataTypes.add(StringEnumDataType(DataTypeName("Foo"), "any"))
         dataTypes.addRef("Foo")
 
         dataTypes.getEnumDataTypes().size shouldBe 1

@@ -56,9 +56,35 @@ class ApiWriterSpec: StringSpec({
             }
 
         val dts = DataTypes()
-        dts.add(StringEnumDataType("Foo", "${options.packageName}.model"))
+        dts.add(StringEnumDataType(DataTypeName("Foo"), "${options.packageName}.model"))
         dts.addRef("Foo")
-        dts.add(StringEnumDataType("Bar", "${options.packageName}.model"))
+        dts.add(StringEnumDataType(DataTypeName("Bar"), "${options.packageName}.model"))
+        dts.addRef("Bar")
+        val api = Api(dataTypes = dts)
+
+        // when:
+        ApiWriter(options, stub(), stub(), enumWriter, false)
+            .write(api)
+
+        // then:
+        textOf("Foo.java") shouldBe "Foo enum!\n"
+        textOf("Bar.java") shouldBe "Bar enum!\n"
+    }
+
+    "generates model enum source files in model target folder with modified name" {
+        val enumWriter = stub<StringEnumWriter>()
+        every { enumWriter.write(any(), any()) }
+            .answers {
+                firstArg<Writer>().write("Foo enum!\n")
+            }
+            .andThenAnswer {
+                firstArg<Writer>().write("Bar enum!\n")
+            }
+
+        val dts = DataTypes()
+        dts.add(StringEnumDataType(DataTypeName("Foo", "FooX"), "${options.packageName}.model"))
+        dts.addRef("Foo")
+        dts.add(StringEnumDataType(DataTypeName("Bar", "BarX"), "${options.packageName}.model"))
         dts.addRef("Bar")
         val api = Api(dataTypes = dts)
 
@@ -79,7 +105,7 @@ class ApiWriterSpec: StringSpec({
             }
 
         val dts = DataTypes()
-        dts.add (StringEnumDataType("Foo", "${options.packageName}.model"))
+        dts.add (StringEnumDataType(DataTypeName("Foo"), "${options.packageName}.model"))
         dts.addRef("Foo")
         val api = Api(dataTypes = dts)
 

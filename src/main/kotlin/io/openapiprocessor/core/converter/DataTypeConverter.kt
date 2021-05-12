@@ -319,7 +319,7 @@ class DataTypeConverter(
         }
 
         val enumType = StringEnumDataType (
-            getNameWithSuffix(enumName),
+            DataTypeName(enumName, getTypeNameWithSuffix(enumName)),
             listOf(options.packageName, "model").joinToString("."),
             schemaInfo.getEnumValues() as List<String>,
             constraints,
@@ -395,7 +395,7 @@ class DataTypeConverter(
         return found != null
     }
 
-    private fun getNameWithSuffix(name: String): String {
+    private fun getTypeNameWithSuffix(name: String): String {
         return ModelClassNameCreator(options.modelNameSuffix).createName(name)
     }
 

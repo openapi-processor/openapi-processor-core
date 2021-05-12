@@ -26,8 +26,9 @@ interface DataType {
      *
      * @return the type name.
      */
-    val typeName: String
-        get() = getName()
+    fun getTypeName(): String {
+        return getName()
+    }
 
     /**
      * The "package" of this type without [typeName].

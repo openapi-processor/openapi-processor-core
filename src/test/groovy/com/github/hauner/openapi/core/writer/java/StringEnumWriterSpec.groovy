@@ -17,6 +17,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.support.datatypes.DataTypeName
 import io.openapiprocessor.core.writer.java.SimpleWriter
 import io.openapiprocessor.core.writer.java.StringEnumWriter
 import spock.lang.Specification
@@ -28,7 +29,8 @@ class StringEnumWriterSpec extends Specification {
     def target = new StringWriter ()
 
     void "writes 'generated' comment" () {
-        def dataType = new StringEnumDataType('Foo', 'pkg', [], null, false)
+        def dataType = new StringEnumDataType(
+            new DataTypeName('Foo'), 'pkg', [], null, false)
 
         when:
         writer.write (target, dataType)
@@ -39,7 +41,8 @@ class StringEnumWriterSpec extends Specification {
 
     void "writes 'package'" () {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType('Foo', pkg, [], null, false)
+        def dataType = new StringEnumDataType(
+            new DataTypeName('Foo'), pkg, [], null, false)
 
         when:
         writer.write (target, dataType)
@@ -53,23 +56,30 @@ package $pkg;
 
     void "writes enum class"() {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType('Foo', pkg, [], null, false)
+        def dataType = new StringEnumDataType(
+            new DataTypeName(id, type), pkg, [], null, false)
 
         when:
         writer.write (target, dataType)
 
         then:
         target.toString ().contains ("""\
-public enum Foo {
+public enum $type {
 """)
         target.toString ().contains ("""\
 }
 """)
+
+        where:
+        id    | type
+        'Foo' | 'Foo'
+        'Foo' | 'FooX'
     }
 
     void "writes enum values"() {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType('Foo', pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
+        def dataType = new StringEnumDataType(
+            new DataTypeName('Foo'), pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
 
         when:
         writer.write (target, dataType)
@@ -86,7 +96,8 @@ public enum Foo {
 
     void "writes value member"() {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType('Foo', pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
+        def dataType = new StringEnumDataType(
+            new DataTypeName('Foo'), pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
 
         when:
         writer.write (target, dataType)
@@ -100,7 +111,8 @@ public enum Foo {
 
     void "writes enum constructor"() {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType ('Foo', pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
+        def dataType = new StringEnumDataType (
+            new DataTypeName(id, type), pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
 
         when:
         writer.write (target, dataType)
@@ -108,16 +120,22 @@ public enum Foo {
         then:
         target.toString ().contains ("""\
 
-    private Foo(String value) {
+    private $type(String value) {
         this.value = value;
     }
 
 """)
+
+        where:
+        id    | type
+        'Foo' | 'Foo'
+        'Foo' | 'FooX'
     }
 
     void "writes @JsonValue method for serialization"() {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType ('Foo', pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
+        def dataType = new StringEnumDataType (
+            new DataTypeName('Foo'), pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
 
         when:
         writer.write (target, dataType)
@@ -135,7 +153,8 @@ public enum Foo {
 
     void "writes @JsonCreator method for de-serialization"() {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType ('Foo', pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
+        def dataType = new StringEnumDataType (
+            new DataTypeName(id, type), pkg, ['foo', '_foo-2', 'foo-foo'], null, false)
 
         when:
         writer.write (target, dataType)
@@ -144,8 +163,8 @@ public enum Foo {
         target.toString ().contains ("""\
 
     @JsonCreator
-    public static Foo fromValue(String value) {
-        for (Foo val : Foo.values()) {
+    public static $type fromValue(String value) {
+        for ($type val : ${type}.values()) {
             if (val.value.equals(value)) {
                 return val;
             }
@@ -154,11 +173,17 @@ public enum Foo {
     }
 
 """)
+
+        where:
+        id    | type
+        'Foo' | 'Foo'
+        'Foo' | 'FooX'
     }
 
     void "writes jackson imports" () {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new StringEnumDataType('Foo', pkg, [], null, false)
+        def dataType = new StringEnumDataType(
+            new DataTypeName('Foo'), pkg, [], null, false)
 
         when:
         writer.write (target, dataType)
