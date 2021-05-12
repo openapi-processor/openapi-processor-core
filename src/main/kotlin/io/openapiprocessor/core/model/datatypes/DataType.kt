@@ -13,14 +13,24 @@ import io.openapiprocessor.core.model.Documentation
 interface DataType {
 
     /**
-     * The Java type name without package.
+     * the identifier used to reference this datatype. This is usually the name from the openapi
+     * description. If it is an inline type it is a generated name.
      *
-     * @return the type name.
+     * @return the name id.
      */
     fun getName(): String
 
     /**
-     * The package of this type without class.
+     * The type name without "package". Often identical to [getName] except when it is not. Used
+     * to modify the *output* name of the datatype.
+     *
+     * @return the type name.
+     */
+    val typeName: String
+        get() = getName()
+
+    /**
+     * The "package" of this type without [typeName].
      */
     fun getPackageName(): String
 
