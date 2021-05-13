@@ -103,7 +103,7 @@ class DataTypeConverter(
             }
 
             objectType = AllOfObjectDataType(
-                schemaInfo.getName(),
+                DataTypeName(schemaInfo.getName(), getTypeNameWithSuffix(schemaInfo.getName())),
                 listOf(options.packageName, "model").joinToString ("."),
                 items,
                 null,

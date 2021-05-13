@@ -9,7 +9,7 @@ package io.openapiprocessor.core.model.datatypes
  * OpenAPI "allOf" composed schema type.
  */
 class AllOfObjectDataType(
-    private val type: String,
+    private val name: DataTypeName,
     private val pkg: String,
     private val items: List<DataType> = emptyList(),
     override val constraints: DataTypeConstraints? = null,
@@ -18,7 +18,11 @@ class AllOfObjectDataType(
 ): DataType, ModelDataType {
 
     override fun getName(): String {
-        return type
+        return name.id
+    }
+
+    override fun getTypeName(): String {
+        return name.type
     }
 
     override fun getPackageName(): String {
@@ -26,7 +30,7 @@ class AllOfObjectDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf(getPackageName() + "." + getName())
+        return setOf(getPackageName() + "." + getTypeName())
     }
 
     override val referencedImports: Set<String>
