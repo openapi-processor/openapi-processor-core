@@ -44,14 +44,13 @@ class DataTypeWriter(
 
         target.write("public class ${dataType.getTypeName()} {\n\n")
 
-        val properties = dataType.getProperties()
-        properties.forEach { (propName, propDataType) ->
+        dataType.forEach { propName, propDataType ->
             val javaPropertyName = toCamelCase(propName)
             target.write(getProp(propName, javaPropertyName, propDataType,
                 dataType.isRequired(propName)))
         }
 
-        properties.forEach { (propName, propDataType) ->
+        dataType.forEach { propName, propDataType ->
             val javaPropertyName = toCamelCase(propName)
             target.write(getGetter(javaPropertyName, propDataType))
             target.write(getSetter(javaPropertyName, propDataType))
@@ -132,7 +131,7 @@ class DataTypeWriter(
     private fun collectImports(packageName: String, dataType: ModelDataType): List<String> {
         val imports = mutableSetOf<String>()
 
-        if (dataType.getProperties().isNotEmpty()) {
+        dataType.forEach { _, _ ->
             imports.add("com.fasterxml.jackson.annotation.JsonProperty")
         }
 
