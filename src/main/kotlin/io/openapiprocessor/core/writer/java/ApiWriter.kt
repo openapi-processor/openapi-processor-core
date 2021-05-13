@@ -74,7 +74,7 @@ class ApiWriter(
 
     private fun writeObjectDataTypes(api: Api) {
         api.forEachModelDataType {
-            val target = modelFolder.resolve ("${it.getName()}.java")
+            val target = modelFolder.resolve ("${it.getTypeName()}.java")
             val writer = BufferedWriter(PathWriter(target))
             writeDataType(writer, it)
             writer.close()
@@ -83,7 +83,7 @@ class ApiWriter(
 
     private fun writeEnumDataTypes(api: Api) {
         api.forEachEnumDataType {
-            val target = modelFolder.resolve("${it.getName()}.java")
+            val target = modelFolder.resolve("${it.getTypeName()}.java")
             val writer = BufferedWriter(PathWriter(target))
             writeEnumDataType(writer, it)
             writer.close()

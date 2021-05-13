@@ -8,6 +8,8 @@ package io.openapiprocessor.core.writer.java
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.blocking.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.verify
@@ -17,6 +19,7 @@ import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.*
+import io.openapiprocessor.core.model.datatypes.ObjectDataType as ObjectDataTypeP
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.support.text
 import io.openapiprocessor.core.tempFolder
@@ -46,55 +49,25 @@ class ApiWriterSpec: StringSpec({
     }
 
     "generates model enum source files in model target folder" {
-        val enumWriter = stub<StringEnumWriter>()
-        every { enumWriter.write(any(), any()) }
-            .answers {
-                firstArg<Writer>().write("Foo enum!\n")
-            }
-            .andThenAnswer {
-                firstArg<Writer>().write("Bar enum!\n")
-            }
+        forAll(row("Foo", "Foo"), row("Fooo", "FoooX")) { id, type ->
+            val enumWriter = stub<StringEnumWriter>()
+            every { enumWriter.write(any(), any()) }
+                .answers {
+                    firstArg<Writer>().write("${arg<DataType>(1).getTypeName()} enum!\n")
+                }
 
-        val dts = DataTypes()
-        dts.add(StringEnumDataType(DataTypeName("Foo"), "${options.packageName}.model"))
-        dts.addRef("Foo")
-        dts.add(StringEnumDataType(DataTypeName("Bar"), "${options.packageName}.model"))
-        dts.addRef("Bar")
-        val api = Api(dataTypes = dts)
+            val dts = DataTypes()
+            dts.add(StringEnumDataType(DataTypeName(id, type), "${options.packageName}.model"))
+            dts.addRef(id)
+            val api = Api(dataTypes = dts)
 
-        // when:
-        ApiWriter(options, stub(), stub(), enumWriter, false)
-            .write(api)
+            // when:
+            ApiWriter(options, stub(), stub(), enumWriter, false)
+                .write(api)
 
-        // then:
-        textOf("Foo.java") shouldBe "Foo enum!\n"
-        textOf("Bar.java") shouldBe "Bar enum!\n"
-    }
-
-    "generates model enum source files in model target folder with modified name" {
-        val enumWriter = stub<StringEnumWriter>()
-        every { enumWriter.write(any(), any()) }
-            .answers {
-                firstArg<Writer>().write("Foo enum!\n")
-            }
-            .andThenAnswer {
-                firstArg<Writer>().write("Bar enum!\n")
-            }
-
-        val dts = DataTypes()
-        dts.add(StringEnumDataType(DataTypeName("Foo", "FooX"), "${options.packageName}.model"))
-        dts.addRef("Foo")
-        dts.add(StringEnumDataType(DataTypeName("Bar", "BarX"), "${options.packageName}.model"))
-        dts.addRef("Bar")
-        val api = Api(dataTypes = dts)
-
-        // when:
-        ApiWriter(options, stub(), stub(), enumWriter, false)
-            .write(api)
-
-        // then:
-        textOf("Foo.java") shouldBe "Foo enum!\n"
-        textOf("Bar.java") shouldBe "Bar enum!\n"
+            // then:
+            textOf("$type.java") shouldBe "$type enum!\n"
+        }
     }
 
     "re-formats model enum source file" {
@@ -167,7 +140,6 @@ class ApiWriterSpec: StringSpec({
         textOfApi("BarApi.java") shouldBe "Bar interface!"
     }
 
-
     "generates interface with valid java class name" {
         val itfWriter = io.mockk.mockk<InterfaceWriter>()
         every { itfWriter.write(any(), any()) } answers {
@@ -187,27 +159,25 @@ class ApiWriterSpec: StringSpec({
     }
 
     "generates model sources in model target folder" {
-        val dtWriter = io.mockk.mockk<DataTypeWriter>()
-        every { dtWriter.write(any(), any()) } answers {
-            arg<Writer>(0).write("${arg<ObjectDataType>(1).getName()} class!")
+        forAll(row("Foo", "Foo"), row("Fooo", "FoooX")) { id, type ->
+            val dtWriter = io.mockk.mockk<DataTypeWriter>()
+            every { dtWriter.write(any(), any()) } answers {
+                arg<Writer>(0).write("${arg<DataType>(1).getTypeName()} class!\n")
+            }
+
+            val dts = DataTypes()
+            dts.add(ObjectDataTypeP(DataTypeName(id, type), "${options.packageName}.model"))
+            dts.addRef(id)
+            val api = Api(dataTypes = dts)
+
+            // when:
+            ApiWriter(options, stub(), dtWriter, stub(), false)
+                .write(api)
+
+            // then:
+            textOf("$type.java") shouldBe "$type class!\n"
         }
-
-        val dt = DataTypes()
-        dt.add(ObjectDataType("Foo", "${options.packageName}.model", linkedMapOf()))
-        dt.addRef("Foo")
-        dt.add(ObjectDataType("Bar", "${options.packageName}.model", linkedMapOf()))
-        dt.addRef("Bar")
-        val api = Api(dataTypes = dt)
-
-        // when:
-        ApiWriter(options, stub(), dtWriter, stub(), false)
-            .write (api)
-
-        // then:
-        textOf("Foo.java") shouldBe "Foo class!"
-        textOf("Bar.java") shouldBe "Bar class!"
     }
-
 
     "generates model for object data types only" {
         val dtWriter = io.mockk.mockk<DataTypeWriter>()
