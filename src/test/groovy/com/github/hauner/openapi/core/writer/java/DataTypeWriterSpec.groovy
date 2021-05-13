@@ -26,7 +26,7 @@ import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.SimpleWriter
 import spock.lang.Specification
 
-import static com.github.hauner.openapi.core.test.AssertHelper.extractImports
+import static io.openapiprocessor.core.AssertKt.extractImports
 
 class DataTypeWriterSpec extends Specification {
     def headerWriter = Mock SimpleWriter
@@ -73,7 +73,7 @@ package $pkg;
         writer.write (target, dataType)
 
         then:
-        def result = extractImports (target.toString ())
+        def result = extractImports (target)
         result.contains("""\
 import external.Isbn;
 """)
@@ -88,7 +88,7 @@ import external.Isbn;
         writer.write (target, dataType)
 
         then:
-        def result = extractImports (target.toString ())
+        def result = extractImports (target)
         result.contains("""\
 import java.util.List;
 """)
@@ -239,7 +239,7 @@ public class Bar {
         writer.write (target, dataType)
 
         then:
-        def result = extractImports (target.toString ())
+        def result = extractImports (target)
         result.contains("""\
 import com.fasterxml.jackson.annotation.JsonProperty;
 """)
