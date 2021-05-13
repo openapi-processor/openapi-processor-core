@@ -7,6 +7,7 @@ package io.openapiprocessor.core.model.datatypes
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 
 class ComposedObjectDataTypeSpec : StringSpec({
 

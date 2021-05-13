@@ -1,6 +1,6 @@
 package com.github.hauner.openapi.core.learn
 
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import spock.lang.Specification
 

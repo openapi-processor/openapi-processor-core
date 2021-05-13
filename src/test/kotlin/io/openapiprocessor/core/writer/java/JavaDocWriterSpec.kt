@@ -16,6 +16,7 @@ import io.openapiprocessor.core.builder.api.endpoint
 import io.openapiprocessor.core.model.Documentation
 import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.model.parameters.ParameterBase
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 
 class JavaDocWriterSpec: StringSpec({
 

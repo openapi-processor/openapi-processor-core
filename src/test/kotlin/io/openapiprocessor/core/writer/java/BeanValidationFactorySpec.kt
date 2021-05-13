@@ -9,6 +9,7 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.model.datatypes.*
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 
 class BeanValidationFactorySpec: StringSpec({
 

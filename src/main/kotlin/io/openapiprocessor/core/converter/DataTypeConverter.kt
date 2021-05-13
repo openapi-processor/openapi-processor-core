@@ -200,7 +200,7 @@ class DataTypeConverter(
         )
 
         val objectType = ObjectDataType (
-            getNameWithSuffix(schemaInfo.getName()),
+            DataTypeName(schemaInfo.getName(), getTypeNameWithSuffix(schemaInfo.getName())),
             listOf(options.packageName, "model").joinToString("."),
             properties = properties,
             constraints = constraints,

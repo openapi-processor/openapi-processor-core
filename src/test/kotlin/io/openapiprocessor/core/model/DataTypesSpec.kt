@@ -8,9 +8,9 @@ package io.openapiprocessor.core.model
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.model.datatypes.DataTypeName
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 
 class DataTypesSpec : StringSpec({
 

@@ -64,7 +64,8 @@ class DataTypeConverterSuffixSpec: StringSpec({
         dataTypes.find("Foo") shouldBeSameInstanceAs datatype
 
         datatype.shouldBeInstanceOf<ObjectDataType>()
-        datatype.getName().shouldBe("FooSuffix")
+        datatype.getName().shouldBe("Foo")
+        datatype.getTypeName().shouldBe("FooSuffix")
     }
 
     "ignores suffix if model data type name already ends with the suffix" {
@@ -113,6 +114,7 @@ class DataTypeConverterSuffixSpec: StringSpec({
 
         datatype.shouldBeInstanceOf<ObjectDataType>()
         datatype.getName().shouldBe("FooWithSuffix")
+        datatype.getTypeName().shouldBe("FooWithSuffix")
     }
 
     "adds suffix to model enum data type name" {

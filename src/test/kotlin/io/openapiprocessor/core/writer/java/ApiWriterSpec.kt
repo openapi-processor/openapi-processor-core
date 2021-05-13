@@ -17,6 +17,7 @@ import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.*
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.support.text
 import io.openapiprocessor.core.tempFolder
 import java.io.File

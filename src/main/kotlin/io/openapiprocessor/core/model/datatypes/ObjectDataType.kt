@@ -10,17 +10,22 @@ import io.openapiprocessor.core.model.Documentation
 /**
  * OpenAPI named object schemas type or an inline object schema.
  */
-class ObjectDataType(
-    private val type: String,
+open class ObjectDataType(
+    private val name: DataTypeName,
     private val pkg: String,
-    private val properties: LinkedHashMap<String, DataType> = linkedMapOf(), // preserves order
+    /** linked map to preserve order */
+    private val properties: LinkedHashMap<String, DataType> = linkedMapOf(),
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
 ): DataType, ModelDataType {
 
     override fun getName(): String {
-        return type
+        return name.id
+    }
+
+    override fun getTypeName(): String {
+        return name.type
     }
 
     override fun getPackageName(): String {

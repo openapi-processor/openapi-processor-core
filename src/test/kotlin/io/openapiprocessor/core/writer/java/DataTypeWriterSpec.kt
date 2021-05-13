@@ -12,7 +12,7 @@ import io.mockk.mockk
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.extractImports
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import java.io.StringWriter
 

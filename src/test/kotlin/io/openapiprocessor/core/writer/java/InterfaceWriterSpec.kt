@@ -23,6 +23,7 @@ import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.parameters.ParameterBase
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import java.io.StringWriter
 import java.io.Writer
 import io.mockk.mockk as stub

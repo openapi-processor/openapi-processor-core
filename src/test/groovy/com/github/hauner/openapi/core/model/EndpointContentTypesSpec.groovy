@@ -6,8 +6,8 @@
 package com.github.hauner.openapi.core.model
 
 import io.openapiprocessor.core.model.HttpMethod
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import spock.lang.Specification
 
 import static io.openapiprocessor.core.builder.api.EndpointBuilderKt.endpoint
