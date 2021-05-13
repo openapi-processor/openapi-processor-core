@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2020 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -12,7 +12,6 @@ import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 
 class BeanValidationFactorySpec: StringSpec({
-
     isolationMode = IsolationMode.InstancePerTest
 
     "applies @Valid to 'array' with object items" {
