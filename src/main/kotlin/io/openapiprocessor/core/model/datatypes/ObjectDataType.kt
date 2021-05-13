@@ -52,11 +52,6 @@ open class ObjectDataType(
         return properties[name]!!
     }
 
-    @Deprecated("do not override groovys getProperties()", ReplaceWith("getProperties()"))
-    fun getObjectProperties(): Map<String, DataType> {
-        return getProperties()
-    }
-
     override fun getProperties(): Map<String, DataType> {
         return properties
     }

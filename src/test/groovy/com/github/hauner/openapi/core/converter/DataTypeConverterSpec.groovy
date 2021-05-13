@@ -148,9 +148,9 @@ class DataTypeConverterSpec extends Specification {
         then:
         assert dt.dataTypes.size () == 2
         def bar = dt.find ('Bar') as ObjectDataType
-        bar.objectProperties['val'].name == 'String'
+        bar.properties['val'].name == 'String'
         def foo = dt.find ('Foo') as ObjectDataType
-        foo.objectProperties['bar'] == bar
+        foo.properties['bar'] == bar
     }
 
     void "converts simple array schema to Array[]" () {
@@ -219,7 +219,7 @@ paths:
         def itf = api.interfaces.first ()
         def ep = itf.endpoints.first ()
         def rsp = ep.getFirstResponse ('200')
-        def props = (rsp.responseType as ObjectDataType).objectProperties
+        def props = (rsp.responseType as ObjectDataType).properties
         rsp.responseType.name == 'InlineGetResponse200'
         rsp.responseType.packageName == "${options.packageName}.model"
         props.size () == 2
@@ -273,10 +273,10 @@ components:
         def book = dataTypes.find ('Book') as ObjectDataType
         assert book.name == 'Book'
         assert book.packageName == "${options.packageName}.model"
-        assert book.objectProperties.size () == 2
-        def isbn = book.objectProperties.get('isbn')
+        assert book.properties.size () == 2
+        def isbn = book.properties.get('isbn')
         assert isbn.name == 'String'
-        def title = book.objectProperties.get('title')
+        def title = book.properties.get('title')
         assert title.name == 'String'
     }
 
@@ -423,7 +423,7 @@ paths:
         def ep = itf.endpoints.first ()
         def rsp = ep.getFirstResponse ('200')
         def rt = rsp.responseType as ObjectDataType
-        def keys = rt.objectProperties.keySet ()
+        def keys = rt.properties.keySet ()
 
         keys[0] == 'b'
         keys[1] == 'a'

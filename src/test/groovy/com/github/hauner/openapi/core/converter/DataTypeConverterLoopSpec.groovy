@@ -67,7 +67,7 @@ components:
         def ep = itf.endpoints.first ()
         def rp = ep.getFirstResponse ('200')
         def rt = rp.responseType
-        def sf = rt.objectProperties.self
+        def sf = rt.properties.self
         rt instanceof ObjectDataType
         sf instanceof LazyDataType
         sf.name == 'Self'

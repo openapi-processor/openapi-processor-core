@@ -171,7 +171,7 @@ components:
         def ep = itf.endpoints.first ()
         def rsp = ep.getFirstResponse ('200')
         rsp.responseType.name == 'Bar'
-        rsp.responseType.objectProperties.foo.deprecated
+        rsp.responseType.properties.foo.deprecated
     }
 
 
