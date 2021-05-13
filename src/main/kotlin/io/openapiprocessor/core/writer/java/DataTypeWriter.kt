@@ -42,7 +42,7 @@ class DataTypeWriter(
             target.write(javadocWriter.convert(dataType))
         }
 
-        target.write("public class ${dataType.getName()} {\n\n")
+        target.write("public class ${dataType.getTypeName()} {\n\n")
 
         val properties = dataType.getProperties()
         properties.forEach { (propName, propDataType) ->
@@ -74,7 +74,7 @@ class DataTypeWriter(
             result += "    @Deprecated\n"
         }
 
-        var propTypeName = propDataType.getName()
+        var propTypeName = propDataType.getTypeName()
         if(apiOptions.beanValidation) {
             val info = validationAnnotations.validate(propDataType, required)
             if (info.hasAnnotations) {
@@ -102,7 +102,7 @@ class DataTypeWriter(
         }
 
         result += """
-            |    public ${propDataType.getName()} get${propertyName.capitalize()}() {
+            |    public ${propDataType.getTypeName()} get${propertyName.capitalize()}() {
             |        return ${propertyName};
             |    }
             |
@@ -119,7 +119,7 @@ class DataTypeWriter(
         }
 
         result += """
-            |    public void set${propertyName.capitalize()}(${propDataType.getName()} ${propertyName}) {
+            |    public void set${propertyName.capitalize()}(${propDataType.getTypeName()} ${propertyName}) {
             |        this.${propertyName} = ${propertyName};
             |    }
             |

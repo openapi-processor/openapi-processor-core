@@ -33,7 +33,7 @@ open class ObjectDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf("${getPackageName()}.${getName()}")
+        return setOf("${getPackageName()}.${getTypeName()}")
     }
 
     override val referencedImports: Set<String>
