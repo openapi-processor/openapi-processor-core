@@ -23,9 +23,7 @@ class ComposedObjectDataTypeSpec : StringSpec({
             ))
         ))
 
-        val properties = composed.getProperties()
-
-        properties.keys shouldBe linkedSetOf("foo", "foobar", "bar", "barfoo")
+        composed.properties.keys shouldBe linkedSetOf("foo", "foobar", "bar", "barfoo")
     }
 
 })

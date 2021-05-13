@@ -52,7 +52,7 @@ open class ObjectDataType(
         return properties[name]!!
     }
 
-    override fun getProperties(): Map<String, DataType> {
+    fun getProperties(): Map<String, DataType> {
         return properties
     }
 

@@ -9,7 +9,6 @@ package io.openapiprocessor.core.model.datatypes
  * OpenAPI "allOf" composed schema type.
  */
 class AllOfObjectDataType(
-
     private val type: String,
     private val pkg: String,
     private val of: String,
@@ -40,26 +39,27 @@ class AllOfObjectDataType(
                 .toSet()
         }
 
-    override fun getProperties(): Map<String, DataType> {
-        val properties = linkedMapOf<String, DataType>()
-
-        if (of == "allOf") {
-            items.forEach {
-                if (it is ObjectDataType) {
-                    properties.putAll(it.getProperties())
-                }
-            }
-        }
-
-        return properties
-    }
-
     override fun isRequired(prop: String): Boolean {
         return constraints?.isRequired(prop) ?: false
     }
 
     override fun forEach(action: (property: String, dataType: DataType) -> Unit) {
-        for (p in getProperties()) action(p.key, p.value)
+        items.filterIsInstance<ObjectDataType>()
+            .forEach {
+                it.forEach(action)
+            }
     }
+
+    val properties: LinkedHashMap<String, DataType>
+        get() {
+            val properties = linkedMapOf<String, DataType>()
+
+            items.filterIsInstance<ObjectDataType>()
+                .forEach {
+                    properties.putAll(it.getProperties())
+                }
+
+            return properties
+        }
 
 }

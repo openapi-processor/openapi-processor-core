@@ -12,9 +12,6 @@ interface ModelDataType: DataType {
      */
     fun forEach(action: (property: String, dataType: DataType) -> Unit)
 
-    @Deprecated(message = "use forEach() instead", replaceWith = ReplaceWith("forEach()"))
-    fun getProperties(): Map<String, DataType>
-
     fun isRequired(prop: String): Boolean
 
 }
