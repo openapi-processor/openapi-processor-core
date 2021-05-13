@@ -105,7 +105,6 @@ class DataTypeConverter(
             objectType = AllOfObjectDataType(
                 schemaInfo.getName(),
                 listOf(options.packageName, "model").joinToString ("."),
-                schemaInfo.itemOf()!!,
                 items,
                 null,
                 schemaInfo.getDeprecated()

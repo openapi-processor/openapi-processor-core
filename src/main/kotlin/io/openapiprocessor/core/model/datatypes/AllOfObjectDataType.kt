@@ -11,7 +11,6 @@ package io.openapiprocessor.core.model.datatypes
 class AllOfObjectDataType(
     private val type: String,
     private val pkg: String,
-    private val of: String,
     private val items: List<DataType> = emptyList(),
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false

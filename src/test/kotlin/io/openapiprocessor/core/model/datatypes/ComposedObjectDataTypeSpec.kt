@@ -12,7 +12,7 @@ import io.openapiprocessor.core.support.datatypes.ObjectDataType
 class ComposedObjectDataTypeSpec : StringSpec({
 
     "loop properties of allOf objects as if it was a single object" {
-        val composed = AllOfObjectDataType("Foo", "pkg", "allOf", listOf(
+        val composed = AllOfObjectDataType("Foo", "pkg", listOf(
             ObjectDataType("Foo", "pkg", linkedMapOf(
                 Pair("foo", StringDataType()),
                 Pair("foobar", StringDataType())
