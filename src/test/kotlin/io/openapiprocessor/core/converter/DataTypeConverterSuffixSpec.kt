@@ -19,9 +19,9 @@ import io.openapiprocessor.core.support.getSchemaInfo
 import io.openapiprocessor.core.support.parse
 
 class DataTypeConverterSuffixSpec: StringSpec({
-    val dataTypes = DataTypes()
 
     "adds suffix to model data type name" {
+        val dataTypes = DataTypes()
         val options = ApiOptions()
         options.modelNameSuffix = "Suffix"
 
@@ -71,6 +71,7 @@ class DataTypeConverterSuffixSpec: StringSpec({
     }
 
     "adds suffix to model enum data type name" {
+        val dataTypes = DataTypes()
         val options = ApiOptions()
         options.modelNameSuffix = "Suffix"
 
@@ -119,6 +120,7 @@ class DataTypeConverterSuffixSpec: StringSpec({
     }
 
     "adds suffix to allOf model data type name" {
+        val dataTypes = DataTypes()
         val options = ApiOptions()
         options.modelNameSuffix = "Suffix"
 
