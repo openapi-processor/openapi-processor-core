@@ -14,7 +14,6 @@ class AllOfObjectDataType(
     private val items: List<DataType> = emptyList(),
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
-
 ): DataType, ModelDataType {
 
     override fun getName(): String {
