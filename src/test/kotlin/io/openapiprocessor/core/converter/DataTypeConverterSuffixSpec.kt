@@ -11,9 +11,11 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.model.datatypes.AllOfObjectDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.support.getBodySchemaInfo
+import io.openapiprocessor.core.support.getSchemaInfo
 import io.openapiprocessor.core.support.parse
 
 class DataTypeConverterSuffixSpec: StringSpec({
@@ -68,55 +70,6 @@ class DataTypeConverterSuffixSpec: StringSpec({
         datatype.getTypeName().shouldBe("FooSuffix")
     }
 
-    "ignores suffix if model data type name already ends with the suffix" {
-        val options = ApiOptions()
-        options.modelNameSuffix = "Suffix"
-
-        val openApi = parse("""
-           openapi: 3.0.2
-           info:
-             title: API
-             version: 1.0.0
-           
-           paths:
-             /foo:
-               post:
-                 requestBody:
-                   content:
-                     application/json:
-                       schema:
-                         ${'$'}ref: '#/components/schemas/FooWithSuffix'
-                 responses:
-                   '204':
-                     description: empty
-           
-           components:
-             schemas:
-           
-               FooWithSuffix:
-                 description: a Foo
-                 type: object
-                 properties:
-                   foo:
-                     type: string
-                 
-        """.trimIndent())
-
-        val schemaInfo = openApi.getBodySchemaInfo("FooWithSuffix",
-            "/foo", HttpMethod.POST, "application/json")
-
-        // when:
-        val converter = DataTypeConverter(options)
-        val datatype = converter.convert(schemaInfo, dataTypes)
-
-        // then:
-        dataTypes.find("FooWithSuffix") shouldBeSameInstanceAs datatype
-
-        datatype.shouldBeInstanceOf<ObjectDataType>()
-        datatype.getName().shouldBe("FooWithSuffix")
-        datatype.getTypeName().shouldBe("FooWithSuffix")
-    }
-
     "adds suffix to model enum data type name" {
         val options = ApiOptions()
         options.modelNameSuffix = "Suffix"
@@ -165,52 +118,50 @@ class DataTypeConverterSuffixSpec: StringSpec({
         datatype.getTypeName().shouldBe("BarSuffix")
     }
 
-    "ignores suffix if model enum data type name already ends with the suffix" {
-         val options = ApiOptions()
-         options.modelNameSuffix = "Suffix"
+    "adds suffix to allOf model data type name" {
+        val options = ApiOptions()
+        options.modelNameSuffix = "Suffix"
 
-         val openApi = parse("""
-            openapi: 3.0.2
-            info:
-              title: API
-              version: 1.0.0
-            
-            paths:
-              /foo:
-                post:
-                  requestBody:
-                    content:
-                      application/json:
-                        schema:
-                          ${'$'}ref: '#/components/schemas/BarWithSuffix'
-                  responses:
-                    '204':
-                      description: empty
-            
-            components:
-              schemas:
-            
-                 BarWithSuffix:
-                   type: string
-                   enum:
-                     - bar-1
-                     - bar-2
-                  
-         """.trimIndent())
+        val openApi = parse("""
+openapi: 3.0.2
+info:
+  title: merge allOf into same object
+  version: 1.0.0
 
-         val schemaInfo = openApi.getBodySchemaInfo("BarWithSuffix",
-             "/foo", HttpMethod.POST, "application/json")
+paths:
+  /foo:
+    get:
+      responses:
+        '200':
+          description: allOf object
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      prop1:
+                        type: string
+                  - type: object
+                    properties:
+                      prop2:
+                        type: string
+                 
+        """.trimIndent())
 
-         // when:
-         val converter = DataTypeConverter(options)
-         val datatype = converter.convert(schemaInfo, dataTypes)
+        val schemaInfo = openApi.getSchemaInfo("Foo",
+            "/foo", HttpMethod.GET, "200", "application/json")
 
-         // then:
-         dataTypes.find("BarWithSuffix") shouldBeSameInstanceAs datatype
+        // when:
+        val converter = DataTypeConverter(options)
+        val datatype = converter.convert(schemaInfo, dataTypes)
 
-         datatype.shouldBeInstanceOf<StringEnumDataType>()
-         datatype.getName().shouldBe("BarWithSuffix")
-         datatype.getTypeName().shouldBe("BarWithSuffix")
-     }
+        // then:
+        dataTypes.find("Foo") shouldBeSameInstanceAs datatype
+
+        datatype.shouldBeInstanceOf<AllOfObjectDataType>()
+        datatype.getName().shouldBe("Foo")
+        datatype.getTypeName().shouldBe("FooSuffix")
+    }
 
 })
