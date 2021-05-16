@@ -103,6 +103,6 @@ fun OpenApi.getBodySchemaInfo(name: String, path: String, method: HttpMethod, me
 : SchemaInfo {
     val schema = getBodySchema(path, method, mediaType)
     return SchemaInfo(SchemaInfo.Endpoint(path, method),
-        path.substring(1).capitalize() + "RequestBody",
+        path.substring(1).replaceFirstChar { it.uppercase() } + "RequestBody",
         mediaType, schema, getRefResolver())
 }

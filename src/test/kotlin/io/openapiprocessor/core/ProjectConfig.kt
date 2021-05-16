@@ -30,7 +30,7 @@ object SystemTagExtension: TagExtension {
 
     private fun isWindows(): Boolean {
         return System.getProperty("os.name")
-            .toLowerCase()
+            .lowercase()
             .contains("windows")
     }
 
