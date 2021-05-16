@@ -15,6 +15,7 @@ class TestSets {
         'endpoint-http-mapping',                    // framework specific
 //        'javadoc',                              // pending
         'method-operation-id',
+        'model-name-suffix',
         'object-nullable-properties',
         'object-without-properties',
         'params-additional',
