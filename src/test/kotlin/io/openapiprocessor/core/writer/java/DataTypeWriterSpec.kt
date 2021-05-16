@@ -14,6 +14,7 @@ import io.openapiprocessor.core.extractImports
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.support.datatypes.ListDataType
 import java.io.StringWriter
 
 class DataTypeWriterSpec: StringSpec({
@@ -56,6 +57,19 @@ class DataTypeWriterSpec: StringSpec({
             |    private String foo;
             |
             """.trimMargin()
+    }
+
+    "writes import of nested generic list type" {
+        val dataType = ObjectDataType("Foo", "pkg",
+            linkedMapOf("foos" to ListDataType(StringDataType())
+        ), null, false)
+
+        // when:
+        writer.write(target, dataType)
+
+        // then:
+        val imports = extractImports(target)
+        imports shouldContain "import java.util.List;"
     }
 
 })
