@@ -16,7 +16,11 @@ class NullDataType(
 ): DataType {
 
     override fun getName(): String {
-        return "$type<${dataType.getName()}>"
+        return "$name<${dataType.getName()}>"
+    }
+
+    override fun getTypeName(): String {
+        return "$name<${dataType.getTypeName()}>"
     }
 
     override fun getPackageName(): String {
