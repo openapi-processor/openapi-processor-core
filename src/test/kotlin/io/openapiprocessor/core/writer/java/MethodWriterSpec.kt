@@ -174,4 +174,28 @@ class MethodWriterSpec: StringSpec({
             """.trimMargin()
     }
 
+    "writes single response methods with type name" {
+        val endpoint = endpoint("/foo") {
+            responses {
+                status("200") {
+                    response (
+                        "application/json",
+                        ObjectDataType(DataTypeName("Foo", "FooX"), "pkg", linkedMapOf())
+                    )
+                }
+            }
+        }
+
+        // when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first())
+
+        // then:
+        target.toString () shouldBe
+            """    
+            |    @CoreMapping
+            |    FooX getFoo();
+            |
+            """.trimMargin()
+    }
+
 })

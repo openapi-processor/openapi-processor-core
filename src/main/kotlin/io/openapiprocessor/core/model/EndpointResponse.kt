@@ -97,7 +97,7 @@ class EndpointResponse(
         return "Object"
     }
 
-    private fun getSingleResponseTypeName(): String = main.responseType.getName()
+    private fun getSingleResponseTypeName(): String = main.responseType.getTypeName()
 
     private fun getImportsMulti(): Set<String> {
         val rt = main.responseType
