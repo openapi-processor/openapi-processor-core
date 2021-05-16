@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 the original authors
+ * Copyright 2019-2020 the original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.processor.core.processor.test
+package io.openapiprocessor.core.test
 
-import io.openapiprocessor.core.model.Endpoint
-import io.openapiprocessor.core.model.EndpointResponse
-import io.openapiprocessor.core.writer.java.MappingAnnotationWriter
+import io.openapiprocessor.core.model.parameters.Parameter
+import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
 
 /**
- * simple {@link MappingAnnotationWriter} implementation for testing.
+ * simple {@link ParameterAnnotationWriter} implementation for testing.
  *
  * @author Martin Hauner
  */
-class TestMappingAnnotationWriter implements MappingAnnotationWriter {
+class TestParameterAnnotationWriter implements ParameterAnnotationWriter {
 
     @Override
-    void write (Writer target, Endpoint endpoint, EndpointResponse endpointResponse) {
-        target.write ("""${TestFrameworkAnnotations.MAPPING.annotationName}("${endpoint.path}")""")
+    void write (Writer target, Parameter parameter) {
+        target.write (TestFrameworkAnnotations.PARAMETER.annotationName)
     }
 
 }

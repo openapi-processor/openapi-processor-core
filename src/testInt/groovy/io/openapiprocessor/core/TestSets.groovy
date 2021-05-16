@@ -3,7 +3,7 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-package com.github.hauner.openapi.processor.core
+package io.openapiprocessor.core
 
 class TestSets {
 

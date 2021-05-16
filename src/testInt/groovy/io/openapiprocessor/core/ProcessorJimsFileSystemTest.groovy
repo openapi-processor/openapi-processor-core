@@ -3,12 +3,12 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-package com.github.hauner.openapi.processor.core
+package io.openapiprocessor.core
 
 import io.openapiprocessor.core.parser.ParserType
-import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
+import io.openapiprocessor.core.test.TestProcessor
 import io.openapiprocessor.test.TestSet
 import io.openapiprocessor.test.TestSetRunner
 import spock.lang.Specification

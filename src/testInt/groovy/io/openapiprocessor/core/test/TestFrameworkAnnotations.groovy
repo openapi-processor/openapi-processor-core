@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.hauner.openapi.processor.core.processor.test
+package io.openapiprocessor.core.test
 
 import io.openapiprocessor.core.framework.FrameworkAnnotation
 import io.openapiprocessor.core.framework.FrameworkAnnotations
