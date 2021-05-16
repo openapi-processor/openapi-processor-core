@@ -5,11 +5,28 @@
 
 package io.openapiprocessor.core.writer.java
 
+import io.openapiprocessor.core.model.datatypes.DataType
+import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
+import io.openapiprocessor.core.model.datatypes.ModelDataType
+
 class BeanValidationInfo(
-    val typeName: String,
+    val dataType: DataType,
     val imports: Set<String>,
     val annotations: List<String>
 ) {
+    val typeName: String
+        get() {
+            // no collection or array
+            if (dataType !is MappedCollectionDataType)
+                return dataType.getTypeName()
+
+            if (dataType.item !is ModelDataType)
+                return dataType.getTypeName()
+
+            return dataType.getTypeNameWithAnnotatedItem(BeanValidation.VALID.annotation)
+        }
+
     val hasAnnotations
         get() = annotations.isNotEmpty()
+
 }

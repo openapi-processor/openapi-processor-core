@@ -15,7 +15,7 @@ open class BeanValidationFactory {
 
     fun validate(dataType: DataType, required: Boolean = false): BeanValidationInfo {
         return BeanValidationInfo(
-            annotateGenericItem(dataType),
+            dataType,
             collectImports(dataType, required),
             collectAnnotations(dataType, required)
         )
@@ -81,13 +81,6 @@ open class BeanValidationFactory {
         return annotations
     }
 
-    private fun annotateGenericItem(dataType: DataType): String {
-        if (!dataType.isCollectionOfModel())
-            return dataType.getName()
-
-        return (dataType as MappedCollectionDataType).getName(BeanValidation.VALID.annotation)
-    }
-
     private fun requiresValidImport(dataType: DataType): Boolean {
         if (dataType.isModel())
             return true
@@ -151,13 +144,6 @@ private fun DataType.isModel(): Boolean = this is ModelDataType
 
 private fun DataType.isArrayOfModel(): Boolean {
     if (this !is ArrayDataType)
-        return false
-
-    return item.isModel()
-}
-
-private fun DataType.isCollectionOfModel(): Boolean {
-    if (this !is MappedCollectionDataType)
         return false
 
     return item.isModel()
