@@ -19,8 +19,12 @@ class LazyDataType(
         return dataType.getName()
     }
 
+    override fun getTypeName(): String {
+        return dataType.getTypeName()
+    }
+
     override fun getPackageName(): String {
-        return  dataType.getPackageName()
+        return dataType.getPackageName()
     }
 
     override fun getImports(): Set<String> {
