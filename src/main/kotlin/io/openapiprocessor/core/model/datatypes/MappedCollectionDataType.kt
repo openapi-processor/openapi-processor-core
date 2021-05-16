@@ -34,7 +34,7 @@ open class MappedCollectionDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf(getPackageName() + "." + name) + item.getImports()
+        return setOf("${getPackageName()}.${name}") + item.getImports()
     }
 
 }
