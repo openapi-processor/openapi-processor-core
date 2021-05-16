@@ -12,6 +12,7 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.model.datatypes.AllOfObjectDataType
+import io.openapiprocessor.core.model.datatypes.ArrayDataType
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.support.getBodySchemaInfo
@@ -164,6 +165,54 @@ paths:
         datatype.shouldBeInstanceOf<AllOfObjectDataType>()
         datatype.getName().shouldBe("Foo")
         datatype.getTypeName().shouldBe("FooSuffix")
+    }
+
+    "adds suffix to array model data type name" {
+        val dataTypes = DataTypes()
+        val options = ApiOptions()
+        options.modelNameSuffix = "Suffix"
+
+        val openApi = parse("""
+openapi: 3.0.2
+info:
+  title: array
+  version: 1.0.0
+
+paths:
+  /foo:
+    get:
+      responses:
+        '200':
+          description: array
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  ${'$'}ref: '#/components/schemas/Foo'
+
+components:
+ schemas:
+
+    Foo:
+      type: object
+      properties:
+        bar:
+          type: string          
+
+        """.trimIndent())
+
+        val schemaInfo = openApi.getSchemaInfo("FooResponse200",
+            "/foo", HttpMethod.GET, "200", "application/json")
+
+        // when:
+        val converter = DataTypeConverter(options)
+        val datatype = converter.convert(schemaInfo, dataTypes)
+
+        // then:
+        datatype.shouldBeInstanceOf<ArrayDataType>()
+        datatype.getName().shouldBe("Foo[]")
+        datatype.getTypeName().shouldBe("FooSuffix[]")
     }
 
 })

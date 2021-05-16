@@ -18,6 +18,10 @@ class ArrayDataType(
         return "${item.getName()}[]"
     }
 
+    override fun getTypeName(): String {
+        return "${item.getTypeName()}[]"
+    }
+
     override fun getPackageName(): String {
         return item.getPackageName()
     }
