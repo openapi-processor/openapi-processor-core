@@ -94,7 +94,7 @@ open class MethodWriter(
                 methodDefinition += " $annotation"
             }
 
-            methodDefinition += " ${it.dataType.getName()} ${toCamelCase (it.name)}"
+            methodDefinition += " ${it.dataType.getTypeName()} ${toCamelCase (it.name)}"
             methodDefinition.trim()
         }.toMutableList()
 
@@ -105,7 +105,7 @@ open class MethodWriter(
                 val info = beanValidationFactory.validate(body.dataType, false)
                 beanValidationAnnotations += " ${info.annotations.joinToString(" ")}"
             }
-            val param = "$beanValidationAnnotations ${createParameterAnnotation(body)} ${body.dataType.getName()} ${body.name}"
+            val param = "$beanValidationAnnotations ${createParameterAnnotation(body)} ${body.dataType.getTypeName()} ${body.name}"
             ps.add (param.trim())
         }
 

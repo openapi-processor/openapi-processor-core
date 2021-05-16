@@ -10,11 +10,13 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.builder.api.endpoint
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.support.datatypes.CollectionDataType
+import io.openapiprocessor.core.model.datatypes.DataTypeName
 import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.parameters.ParameterBase
 import io.openapiprocessor.core.support.TestMappingAnnotationWriter
 import io.openapiprocessor.core.support.TestParameterAnnotationWriter
+import io.openapiprocessor.core.support.datatypes.CollectionDataType
 import java.io.StringWriter
 
 class MethodWriterSpec: StringSpec({
@@ -116,6 +118,58 @@ class MethodWriterSpec: StringSpec({
             |    Collection<String> getFooOperationIdApplicationJson();
             |    @CoreMapping
             |    Collection<String> getFooOperationIdApplicationXml();
+            |
+            """.trimMargin()
+    }
+
+    "writes parameter with type name" {
+        val endpoint = endpoint("/foo") {
+            parameters {
+                any(object : ParameterBase("foo", ObjectDataType(
+                    DataTypeName("Foo", "FooX"), "pkg", linkedMapOf()), true) {
+                })
+            }
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        // when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        // then:
+        target.toString () shouldBe
+            """    
+            |    @CoreMapping
+            |    void getFoo(@Parameter FooX foo);
+            |
+            """.trimMargin()
+    }
+
+    "writes request body parameter with type name" {
+        val endpoint = endpoint("/foo") {
+            parameters {
+                body("body", "application/json",
+                    ObjectDataType(DataTypeName("Foo", "FooX"), "pkg",
+                        linkedMapOf()))
+            }
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        // when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        // then:
+        target.toString () shouldBe
+            """    
+            |    @CoreMapping
+            |    void getFoo(@Parameter FooX body);
             |
             """.trimMargin()
     }
