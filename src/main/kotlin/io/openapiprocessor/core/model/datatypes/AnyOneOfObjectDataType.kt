@@ -9,7 +9,7 @@ package io.openapiprocessor.core.model.datatypes
  * OpenAPI "oneOf/anyOf" composed schema type.
  */
 class AnyOneOfObjectDataType(
-    private val type: String,
+    private val name: String,
     private val pkg: String,
     private val of: String,
     private val items: List<DataType> = emptyList(),
@@ -18,7 +18,7 @@ class AnyOneOfObjectDataType(
 ): DataType {
 
     override fun getName(): String {
-        return type
+        return name
     }
 
     override fun getPackageName(): String {
