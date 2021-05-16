@@ -20,7 +20,7 @@ import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
 import io.openapiprocessor.core.writer.java.StringEnumWriter
 import groovy.util.logging.Slf4j
-import io.openapiprocessor.api.OpenApiProcessor
+import io.openapiprocessor.api.v1.OpenApiProcessor
 
 /**
  *  Simple processor for testing.

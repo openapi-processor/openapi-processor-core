@@ -5,11 +5,11 @@
 
 package io.openapiprocessor.core.support
 
-import com.github.hauner.openapi.test.streamhandler.Memory
 import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import io.openapiprocessor.core.parser.ParserType
 import io.openapiprocessor.core.parser.openapi4j.OpenApi as O4jOpenApi
 import io.openapiprocessor.core.parser.swagger.OpenApi as SwaggerOpenApi
+import io.openapiprocessor.test.stream.Memory
 import io.swagger.v3.parser.OpenAPIV3Parser
 import org.openapi4j.parser.OpenApi3Parser
 import org.openapi4j.parser.validation.v3.OpenApi3Validator

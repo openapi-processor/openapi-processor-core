@@ -16,11 +16,11 @@
 
 package com.github.hauner.openapi.processor.core
 
-import com.github.hauner.openapi.test.TestSet
 import io.openapiprocessor.core.parser.ParserType
 import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
+import io.openapiprocessor.test.TestSet
 import io.openapiprocessor.test.TestSetRunner
 import spock.lang.Specification
 import spock.lang.Unroll

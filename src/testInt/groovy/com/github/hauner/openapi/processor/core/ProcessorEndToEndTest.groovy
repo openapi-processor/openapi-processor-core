@@ -18,7 +18,7 @@ package com.github.hauner.openapi.processor.core
 
 import io.openapiprocessor.core.parser.ParserType
 import com.github.hauner.openapi.processor.core.processor.test.TestProcessor
-import com.github.hauner.openapi.test.TestSet
+import io.openapiprocessor.test.TestSet
 import io.openapiprocessor.test.TestSetRunner
 import spock.lang.Specification
 import spock.lang.TempDir
