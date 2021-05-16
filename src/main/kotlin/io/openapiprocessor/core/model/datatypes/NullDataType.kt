@@ -9,10 +9,10 @@ package io.openapiprocessor.core.model.datatypes
  * Null(able) data type wrapper. Assumes a single generic parameter.
  */
 class NullDataType(
-    private val type: String,
+    private val name: String,
     private val pkg: String,
-    val init: String?,
-    private val dataType: DataType
+    private val dataType: DataType,
+    val init: String? = null
 ): DataType {
 
     override fun getName(): String {
@@ -24,7 +24,7 @@ class NullDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf("${getPackageName()}.$type") + dataType.getImports()
+        return setOf("${getPackageName()}.$name") + dataType.getImports()
     }
 
 }

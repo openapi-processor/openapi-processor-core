@@ -37,8 +37,8 @@ open class NullDataTypeWrapper(
         return NullDataType (
             targetType.getName(),
             targetType.getPkg(),
-            init,
-            dataType
+            dataType,
+            init
         )
     }
 
