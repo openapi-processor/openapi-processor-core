@@ -10,7 +10,7 @@ package io.openapiprocessor.core.model.datatypes
  * generic parameter.
  */
 open class MappedCollectionDataType(
-    private val type: String,
+    private val name: String,
     private val pkg: String,
     override val item: DataType,
     override val constraints: DataTypeConstraints? = null,
@@ -18,11 +18,15 @@ open class MappedCollectionDataType(
 ): DataType, CollectionDataType {
 
     override fun getName(): String {
-        return "${type}<${item.getName()}>"
+        return "${name}<${item.getName()}>"
     }
 
-    fun getName(annotation: String): String {
-        return "${type}<$annotation ${item.getName()}>"
+    override fun getTypeName(): String {
+        return "${name}<${item.getTypeName()}>"
+    }
+
+    fun getTypeNameWithAnnotatedItem(annotation: String): String {
+        return "${name}<$annotation ${item.getTypeName()}>"
     }
 
     override fun getPackageName(): String {
@@ -30,7 +34,7 @@ open class MappedCollectionDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf(getPackageName() + "." + type) + item.getImports()
+        return setOf(getPackageName() + "." + name) + item.getImports()
     }
 
 }
