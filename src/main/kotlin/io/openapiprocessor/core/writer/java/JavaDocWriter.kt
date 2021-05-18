@@ -66,7 +66,7 @@ open class JavaDocWriter {
             comment += "\n"
 
         endpoint.parameters.forEach {
-            comment += convert(it.description, "@param ${it.name}")
+            comment += convert(it.description, "@param ${toCamelCase (it.name)}")
             comment += "\n"
         }
 
