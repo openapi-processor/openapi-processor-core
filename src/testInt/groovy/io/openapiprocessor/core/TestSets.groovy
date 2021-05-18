@@ -13,7 +13,7 @@ class TestSets {
         'deprecated',
         'endpoint-exclude',
         'endpoint-http-mapping',                    // framework specific
-//        'javadoc',                              // pending
+        'javadoc',
         'method-operation-id',
         'model-name-suffix',
         'object-nullable-properties',
