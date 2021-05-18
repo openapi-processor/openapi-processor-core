@@ -24,10 +24,10 @@ public interface Api {
      *
      * more
      *
-     * @param foo this is a <em>parameter</em> description
+     * @param fOO this is a <em>parameter</em> description
      * @return this is a <em>response</em> description
      */
     @Mapping("/foo")
-    Foo getFoo(@Parameter Foo foo);
+    Foo getFoo(@Parameter Foo fOO);
 
 }

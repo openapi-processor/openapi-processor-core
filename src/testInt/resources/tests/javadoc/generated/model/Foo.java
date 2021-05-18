@@ -11,15 +11,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Foo {
 
     /** <em>property</em> description */
-    @JsonProperty("foobar")
-    private String foobar;
+    @JsonProperty("foo-bar")
+    private String fooBar;
 
-    public String getFoobar() {
-        return foobar;
+    public String getFooBar() {
+        return fooBar;
     }
 
-    public void setFoobar(String foobar) {
-        this.foobar = foobar;
+    public void setFooBar(String fooBar) {
+        this.fooBar = fooBar;
     }
 
 }

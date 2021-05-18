@@ -19,7 +19,7 @@ paths:
           more
 
       parameters:
-        - name: foo
+        - name: f-o-o
           description: this is a *parameter* description
           example: this is an example
           in: query
@@ -41,7 +41,7 @@ components:
         this is the *Foo* schema description
       type: object
       properties:
-        foobar:
+        foo-bar:
           description: >
             *property* description
           type: string
