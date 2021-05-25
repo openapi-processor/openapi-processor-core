@@ -82,6 +82,15 @@ class DataTypes {
     }
 
     /**
+     * remove a data type.
+     *
+     * @param dataType the source data type
+     */
+    fun del(dataType: DataType) {
+        dataTypeInfos.remove (dataType.getName())
+    }
+
+    /**
      * find data type by name.
      *
      * @param name the data type name

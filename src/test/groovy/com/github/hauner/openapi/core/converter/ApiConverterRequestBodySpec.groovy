@@ -266,4 +266,70 @@ paths:
         json.dataType.imports == ['pkg.model.MultipartPostRequestBodyJson'] as Set
     }
 
+    void "add refs request body multipart/* objects" () {
+        def openApi = parse (
+"""\
+openapi: 3.0.2
+info:
+  title: params-request-body-multipart
+  version: 1.0.0
+
+paths:
+  /multipart:
+    post:
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                json:
+                  type: object
+                  properties:
+                    foo:
+                      \$ref: '#/components/schemas/Foo'
+                    bar:
+                      type: string
+            encoding:
+              file:
+                contentType: application/octet-stream
+              json:
+                contentType: application/json          
+      responses:
+        '204':
+          description: empty
+          
+components:
+  schemas:
+    Foo:
+      type: object
+      properties:
+        foo:
+          type: string
+""", ParserType.OPENAPI4J
+        )
+
+        def options = new ApiOptions(packageName: 'pkg', typeMappings: [
+            new EndpointTypeMapping('/multipart', null, [
+                new TypeMapping (
+                    'string',
+                    'binary',
+                    'multipart.Multipart')
+            ])
+        ])
+
+        when:
+        def api = new ApiConverter (options, new FrameworkBase())
+            .convert (openApi)
+
+        then:
+        def dts = api.dataTypes
+        dts.find ("Foo")
+        dts.find ("MultipartPostRequestBodyJson")
+        dts.find ("MultipartPostRequestBody") == null
+    }
 }

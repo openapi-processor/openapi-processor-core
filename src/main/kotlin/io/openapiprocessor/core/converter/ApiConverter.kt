@@ -134,7 +134,7 @@ class  ApiConverter(
                 resolver)
 
             if (contentType.startsWith(MULTIPART)) {
-                ep.parameters.addAll (createMultipartParameter(info, mediaType.encodings))
+                ep.parameters.addAll (createMultipartParameter(info, mediaType.encodings, dataTypes))
             } else {
                 ep.requestBodies.add (createRequestBody (contentType, info, requestBody.getRequired(), dataTypes))
             }
@@ -243,12 +243,14 @@ class  ApiConverter(
         return framework.createRequestBody(contentType, required, changedType)
     }
 
-    private fun createMultipartParameter(info: SchemaInfo, encodings: Map<String, Encoding>): Collection<ModelParameter> {
-        val dataType = convertDataType(info, DataTypes())
+    private fun createMultipartParameter(info: SchemaInfo, encodings: Map<String, Encoding>,
+        dataTypes: DataTypes): Collection<ModelParameter> {
+        val dataType = convertDataType(info, dataTypes)
         if (dataType !is ObjectDataType) {
             throw MultipartResponseBodyException(info.getPath())
         }
 
+        dataTypes.del(dataType)
         val parameters = mutableListOf<ModelParameter>()
         dataType.forEach { property, propertyDataType ->
             val mpp = MultipartParameter(property, encodings[property]?.contentType)
