@@ -9,7 +9,7 @@ plugins {
     id 'org.jetbrains.dokka' version '1.4.32'
     id 'org.jetbrains.kotlin.jvm' version '1.5.10'
     id 'org.unbroken-dome.test-sets' version '4.0.0'
-    id 'com.github.ben-manes.versions' version '0.38.0'
+    id 'com.github.ben-manes.versions' version '0.39.0'
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
@@ -104,7 +104,7 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
 
     implementation 'org.openapi4j:openapi-parser:1.0.7'
-    implementation ('io.swagger.parser.v3:swagger-parser:2.0.25') {
+    implementation ('io.swagger.parser.v3:swagger-parser:2.0.26') {
         exclude group: 'io.swagger.parser.v3', module: 'swagger-parser-v2-converter'
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
