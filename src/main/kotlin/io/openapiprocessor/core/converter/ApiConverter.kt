@@ -303,11 +303,11 @@ class  ApiConverter(
     }
 
     private fun getInlineRequestBodyName(path: String, method: HttpMethod): String {
-        return toClass(path) + method.method.capitalize() + "RequestBody"
+        return toClass(path) + method.method.replaceFirstChar { it.uppercase() } + "RequestBody"
     }
 
     private fun getInlineResponseName(path: String, method: HttpMethod, httpStatus: String): String {
-        return toClass(path) + method.method.capitalize() + "Response" + httpStatus
+        return toClass(path) + method.method.replaceFirstChar { it.uppercase() } + "Response" + httpStatus
     }
 
     private fun isExcluded(path: String, method: HttpMethod): Boolean {
