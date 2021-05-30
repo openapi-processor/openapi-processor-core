@@ -26,6 +26,11 @@ data class Map(
     val multi: String? = null,
 
     /**
+     * controller method response
+     */
+    val responseType: ResponseType? = ResponseType.ALL,
+
+    /**
      * null wrapper, e.g. JsonNullable<>
      */
     //val `null`: String? = null,
