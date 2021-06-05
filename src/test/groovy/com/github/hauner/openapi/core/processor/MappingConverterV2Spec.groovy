@@ -18,12 +18,14 @@ package com.github.hauner.openapi.core.processor
 
 import io.openapiprocessor.core.converter.mapping.AddParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
+import io.openapiprocessor.core.converter.mapping.OptionMapping
 import io.openapiprocessor.core.converter.mapping.ParameterTypeMapping
 import io.openapiprocessor.core.converter.mapping.ResponseTypeMapping
 import io.openapiprocessor.core.converter.mapping.ResultTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.processor.MappingConverter
 import io.openapiprocessor.core.processor.MappingReader
+import io.openapiprocessor.core.processor.mapping.v2.ResultStyle
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -458,6 +460,30 @@ map:
         where:
         single << ['reactor.core.publisher.Mono']
         multi << ['reactor.core.publisher.Flux']
+    }
+
+    void "reads global result style mapping #resultStyle" () {
+        String yaml = """\
+openapi-processor-mapping: v2
+options: {}
+map:
+  result-style: $resultStyle
+"""
+
+        when:
+        def mapping = reader.read (yaml)
+        def mappings = converter.convert (mapping)
+
+        then:
+        mappings.size () == 1
+        def type = mappings.first () as OptionMapping
+        type.name == 'resultStyle'
+        type.value == expected
+
+        where:
+        resultStyle | expected
+        'all'       | ResultStyle.ALL
+        'success'   | ResultStyle.SUCCESS
     }
 
     void "does not fail on 'empty' options: key" () {

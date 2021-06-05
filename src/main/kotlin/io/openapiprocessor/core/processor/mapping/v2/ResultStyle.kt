@@ -5,7 +5,7 @@
 
 package io.openapiprocessor.core.processor.mapping.v2
 
-enum class ResponseType(val kind: String) {
+enum class ResultStyle(val kind: String) {
     ALL("all"),
     SUCCESS("success")
 }

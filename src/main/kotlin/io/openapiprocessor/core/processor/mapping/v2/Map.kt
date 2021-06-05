@@ -16,6 +16,11 @@ data class Map(
     val result: String? = null,
 
     /**
+     * controller method return type, eg. **success** response or **all** responses
+     */
+    val resultStyle: ResultStyle? = null,
+
+    /**
      * single mapping, e.g. Mono<>
      */
     val single: String? = null,
@@ -24,11 +29,6 @@ data class Map(
      * multi mapping, e.g. Flux<>
      */
     val multi: String? = null,
-
-    /**
-     * controller method response
-     */
-    val responseType: ResponseType? = ResponseType.ALL,
 
     /**
      * null wrapper, e.g. JsonNullable<>
