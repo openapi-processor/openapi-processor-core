@@ -285,7 +285,7 @@ class MappingFinderSpec: StringSpec({
             ResultStyle.ALL,
             ResultStyle.SUCCESS
         ).forAll { style ->
-            val finder = MappingFinder(listOf(OptionMapping("resultStyle", style)))
+            val finder = MappingFinder(listOf(ResultStyleOptionMapping(style)))
 
             val result = finder.findResultStyleMapping()
 

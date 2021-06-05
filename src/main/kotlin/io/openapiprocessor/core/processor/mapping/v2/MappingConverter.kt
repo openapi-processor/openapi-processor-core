@@ -35,7 +35,7 @@ class MappingConverter(val mapping: MappingV2) {
         }
 
         if(mapping.map.resultStyle != null) {
-            result.add(convertOption("resultStyle", mapping.map.resultStyle))
+            result.add(convertResultStyleOption(mapping.map.resultStyle))
         }
 
         if(mapping.map.single != null) {
@@ -70,8 +70,8 @@ class MappingConverter(val mapping: MappingV2) {
         return result
     }
 
-    private fun <T> convertOption(name: String, value: T): Mapping {
-        return OptionMapping(name, value)
+    private fun convertResultStyleOption(value: ResultStyle): Mapping {
+        return ResultStyleOptionMapping(value)
     }
 
     private fun convertResult (result: String): Mapping {

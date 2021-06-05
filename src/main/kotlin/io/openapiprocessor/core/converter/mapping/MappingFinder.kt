@@ -135,9 +135,7 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
      */
     fun findResultStyleMapping(): ResultStyle {
         val matches = typeMappings
-            .filterIsInstance(OptionMapping::class.java)
-            .filter { it.name == "resultStyle" }
-            .map { it as OptionMapping<ResultStyle> }
+            .filterIsInstance(ResultStyleOptionMapping::class.java)
 
         // default
         if (matches.isEmpty())
