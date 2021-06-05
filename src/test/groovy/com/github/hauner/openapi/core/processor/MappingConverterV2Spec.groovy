@@ -497,7 +497,7 @@ options:
         converter.convert (mapping)
 
         then:
-        notThrown ()
+        notThrown (Exception)
     }
 
     void "does not fail on 'empty' map: key" () {
@@ -512,7 +512,7 @@ map:
         converter.convert (mapping)
 
         then:
-        notThrown ()
+        notThrown (Exception)
     }
 
     void "does not fail on 'empty' mapping.yaml" () {
@@ -525,7 +525,7 @@ openapi-processor-mapping: v2
         converter.convert (mapping)
 
         then:
-        notThrown ()
+        notThrown (Exception)
     }
 
 }
