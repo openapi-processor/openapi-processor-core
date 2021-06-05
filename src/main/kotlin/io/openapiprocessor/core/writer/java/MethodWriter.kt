@@ -14,15 +14,16 @@ import io.openapiprocessor.core.writer.java.MappingAnnotationWriter as CoreMappi
 import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter as CoreParameterAnnotationWriter
 import java.io.StringWriter
 import java.io.Writer
+import java.util.*
 
 /**
  * Writer for Java interface methods, i.e. endpoints.
  */
 open class MethodWriter(
-    private val /*val*/ apiOptions: ApiOptions,
-    private val /*val*/ mappingAnnotationWriter: CoreMappingAnnotationWriter,
-    private var /*val*/ parameterAnnotationWriter: CoreParameterAnnotationWriter,
-    private val /*val*/ beanValidationFactory: BeanValidationFactory,
+    private val apiOptions: ApiOptions,
+    private val mappingAnnotationWriter: CoreMappingAnnotationWriter,
+    private var parameterAnnotationWriter: CoreParameterAnnotationWriter,
+    private val beanValidationFactory: BeanValidationFactory,
     private val javadocWriter: JavaDocWriter = JavaDocWriter()
 ) {
 
@@ -75,7 +76,7 @@ open class MethodWriter(
         val camel = tokens.map { toCamelCase(it) }
         val head = camel.first()
         val tail = camel.subList(1, camel.count())
-            .joinToString("") { it.capitalize() }
+            .joinToString("") { it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() } }
 
         return head + tail
     }
