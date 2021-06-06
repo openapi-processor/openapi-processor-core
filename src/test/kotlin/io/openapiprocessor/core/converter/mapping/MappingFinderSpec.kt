@@ -280,6 +280,14 @@ class MappingFinderSpec: StringSpec({
         result.targetTypeName.shouldBe("org.openapitools.jackson.nullable.JsonNullable")
     }
 
+    "find unset result style option mapping" {
+        val finder = MappingFinder(listOf())
+
+        val result = finder.findResultStyleMapping()
+
+        result.shouldBe(null)
+    }
+
     "find result style option mapping" {
         ResultStyle.values().forAll { style ->
             val finder = MappingFinder(listOf(ResultStyleOptionMapping(style)))

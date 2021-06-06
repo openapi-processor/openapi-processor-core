@@ -131,15 +131,14 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     /**
      * get (global) result style option mapping value.
      *
-     * @return the [ResultStyle] if set, else the default value [ResultStyle.ALL]
+     * @return the [ResultStyle] if set, otherwise null.
      */
-    fun findResultStyleMapping(): ResultStyle {
+    fun findResultStyleMapping(): ResultStyle? {
         val matches = typeMappings
             .filterIsInstance(ResultStyleOptionMapping::class.java)
 
-        // default
         if (matches.isEmpty())
-            return ResultStyle.SUCCESS
+            return null
 
         return matches.first().value
     }
