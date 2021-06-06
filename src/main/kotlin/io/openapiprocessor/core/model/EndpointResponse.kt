@@ -7,6 +7,7 @@ package io.openapiprocessor.core.model
 
 import io.openapiprocessor.core.model.datatypes.AnyOneOfObjectDataType
 import io.openapiprocessor.core.model.datatypes.ResultDataType
+import io.openapiprocessor.core.processor.mapping.v2.ResultStyle
 
 /**
  * The responses that can be returned by an endpoint method for one (successful) response.
@@ -29,18 +30,36 @@ class EndpointResponse(
         get() = main.contentType
 
     /**
-     * provides the response type.
+     * provides the response type based on the requested style.
      *
-     * If the endpoint has multiple responses and there is no result data type the response type
-     * is `Object`. If the response has a result data type the response type is `ResultDataType<?>`.
+     * [ResultStyle.SUCCESS]
+     * - response type is the single success response type regardless of the number of available
+     * error responses.
+     *
+     * [ResultStyle.ALL]
+     * - If the endpoint has multiple responses the response type is `Object`. If the response is
+     * wrapped by a result data type (i.e. wrapper) the response type is `ResultDataType<?>`.
+     * - If the endpoint has only a success response type it is used as the response type.
+     *
+     * @param style required style
+     * @return the response data type in the requested style
+     */
+    fun getResponseType(style: ResultStyle): String {
+        if (isAnyOneOfResponse())
+            return getMultiResponseTypeName()
+
+        if (style == ResultStyle.ALL && errors.isNotEmpty())
+            return getMultiResponseTypeName()
+
+        return getSingleResponseTypeName()
+    }
+
+    /**
+     * test only: provides the response type.
      */
     val responseType: String
         get() {
-            return if (hasMultipleResponses()) {
-                getMultiResponseTypeName()
-            } else {
-                getSingleResponseTypeName()
-            }
+            return getResponseType(ResultStyle.SUCCESS)
         }
 
     val description: String?
@@ -49,16 +68,19 @@ class EndpointResponse(
     /**
      * provides the imports required for {@link #getResponseType()}.
      *
+     * @param style required style
      * @return list of imports
      */
-    val responseImports: Set<String>
-        get() {
-            return if (hasMultipleResponses()) {
-                getImportsMulti()
-            } else {
-                getImportsSingle()
-            }
-        }
+
+    fun getResponseImports(style: ResultStyle): Set<String> {
+        if (isAnyOneOfResponse())
+            return getImportsMulti()
+
+        if (style == ResultStyle.ALL && errors.isNotEmpty())
+            return getImportsMulti()
+
+        return getImportsSingle()
+    }
 
     /**
      * returns a list with all content types.
@@ -76,14 +98,8 @@ class EndpointResponse(
             return result
         }
 
-    /**
-     * if this response has multiple types.
-     */
-    private fun hasMultipleResponses(): Boolean {
-        if (main.responseType is AnyOneOfObjectDataType) {
-            return true
-        }
-        return errors.isNotEmpty()
+    private fun isAnyOneOfResponse(): Boolean {
+        return main.responseType is AnyOneOfObjectDataType
     }
 
     /**
@@ -109,14 +125,7 @@ class EndpointResponse(
     }
 
     private fun getImportsSingle(): Set<String> {
-        val imports = mutableSetOf<String>()
-
-        imports.addAll (main.imports)
-        errors.forEach {
-            imports.addAll (it.imports)
-        }
-
-        return imports
+        return main.imports
     }
 
 }

@@ -18,6 +18,7 @@ package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.resultStyle
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.parameters.AdditionalParameter
@@ -99,7 +100,9 @@ class InterfaceWriter(
             }
 
             ep.endpointResponses.forEach { mr ->
-                val responseImports: MutableSet<String> = mr.responseImports.toMutableSet()
+                val responseImports: MutableSet<String> = mr.getResponseImports(
+                    apiOptions.resultStyle).toMutableSet()
+
                 if (responseImports.isNotEmpty()) {
                     imports.addAll (responseImports)
                 }
