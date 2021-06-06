@@ -133,7 +133,7 @@ paths:
             opts,
             Stub (SimpleWriter),
             new MethodWriter(
-                new ApiOptions(),
+                opts,
                 Stub (MappingAnnotationWriter),
                 Stub (ParameterAnnotationWriter),
                 Stub (BeanValidationFactory),
