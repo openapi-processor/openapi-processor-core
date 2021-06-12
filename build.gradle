@@ -68,7 +68,7 @@ check.dependsOn testInt
 sourceSets {
     main {
         java {
-            srcDir 'build/antlr'
+            srcDirs 'build/antlr', "${buildDir}/version"
         }
     }
 }
@@ -89,6 +89,7 @@ compileKotlin {
 }
 
 compileKotlin.dependsOn generateGrammarSource
+compileKotlin.dependsOn "generateVersion"
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
@@ -194,5 +195,6 @@ nexusPublishing {
 }
 
 
+apply plugin: VersionPlugin
 apply from: "${rootProject.rootDir}/gradle/publishing.gradle"
 apply from: "${rootProject.rootDir}/gradle/publishing.tasks.gradle.kts"
