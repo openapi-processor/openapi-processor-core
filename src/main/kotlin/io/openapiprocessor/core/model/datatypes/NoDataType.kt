@@ -5,6 +5,13 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+/**
+ * OpenAPI schema that is *no* schema. For example the *readOnly* item in
+ *
+ * allOf:
+ *  - readOnly: true
+ *  - $ref: '#/components/schemas/Foo'
+ */
 class NoDataType(
     private val name: String,
     override val constraints: DataTypeConstraints? = null,
