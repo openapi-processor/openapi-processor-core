@@ -39,4 +39,33 @@ class ComposedObjectDataTypeSpec : StringSpec({
         composed.getImports() shouldBe setOf("pkg.FooX")
     }
 
+    // https://github.com/openapi-processor/openapi-processor-spring/issues/128
+    "allOf creates imports for all items" {
+        val composed = AllOfObjectDataType(DataTypeName("Foo"), "pkg", listOf(
+            ObjectDataType("Foo", "pkg", linkedMapOf(
+                "foo" to OffsetDateTimeDataType()
+            )),
+            ObjectDataType("Bar", "pkg", linkedMapOf(
+                "bar" to ObjectDataType("BarBar", "pkg", linkedMapOf(
+                    "barbar" to OffsetDateTimeDataType()
+                ))
+            ))
+        ))
+
+        composed.getImports() shouldBe setOf("pkg.Foo")
+        composed.referencedImports shouldBe setOf("java.time.OffsetDateTime", "pkg.BarBar")
+    }
+
+    "allOf creates does not leak import for type-less item" {
+        val composed = AllOfObjectDataType(DataTypeName("Foo"), "pkg", listOf(
+            ObjectDataType("Bar", "pkg", linkedMapOf(
+                "bar" to StringDataType())
+            ),
+            NoDataType("Leak")
+        ))
+
+        composed.getImports() shouldBe setOf("pkg.Foo")
+        composed.referencedImports shouldBe setOf("java.lang.String")
+    }
+
 })
