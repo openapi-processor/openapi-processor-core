@@ -34,10 +34,8 @@ class AllOfObjectDataType(
 
     override val referencedImports: Set<String>
         get() {
-            return items
-                .filterIsInstance<ObjectDataType>()
-                .map { it.getImports() }
-                .flatten()
+            return properties.values
+                .flatMap { it.getImports() }
                 .toSet()
         }
 
