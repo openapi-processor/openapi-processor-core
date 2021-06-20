@@ -11,6 +11,7 @@ import io.openapiprocessor.core.model.DataTypeCollector
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.Documentation
 import io.openapiprocessor.core.model.datatypes.*
+import io.openapiprocessor.core.support.firstCharToUpperCase
 import io.openapiprocessor.core.writer.java.ModelClassNameCreator
 import java.util.*
 import kotlin.collections.LinkedHashMap
@@ -309,8 +310,7 @@ class DataTypeConverter(
 
         // in case of an inline definition the name may be lowercase, make sure the enum
         // class gets an uppercase name!
-        val enumName = schemaInfo.getName()
-            .replaceFirstChar { it.uppercase () }
+        val enumName = schemaInfo.getName().firstCharToUpperCase()
 
         val found = dataTypes.find(enumName)
         if (found != null) {

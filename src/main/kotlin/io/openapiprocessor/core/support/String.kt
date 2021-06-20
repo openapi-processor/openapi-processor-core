@@ -7,3 +7,7 @@ package io.openapiprocessor.core.support
 
 val String.Companion.Empty: String
     get() = ""
+
+fun String.firstCharToUpperCase() = this.replaceFirstChar {
+    it.uppercase()
+}
