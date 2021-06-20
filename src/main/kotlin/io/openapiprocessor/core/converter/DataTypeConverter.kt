@@ -102,15 +102,10 @@ class DataTypeConverter(
                 return filtered.first()
             }
 
-            val constraints = DataTypeConstraints(
-                    required = items.flatMap { it.constraints?.required ?: emptyList() }
-            )
-
             objectType = AllOfObjectDataType(
                 DataTypeName(schemaInfo.getName(), getTypeNameWithSuffix(schemaInfo.getName())),
                 listOf(options.packageName, "model").joinToString ("."),
                 items,
-                constraints,
                 schemaInfo.getDeprecated()
             )
         } else {
