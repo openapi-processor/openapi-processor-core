@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.model.datatypes
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 
@@ -66,6 +67,38 @@ class ComposedObjectDataTypeSpec : StringSpec({
 
         composed.getImports() shouldBe setOf("pkg.Foo")
         composed.referencedImports shouldBe setOf("java.lang.String")
+    }
+
+    "allOf handles 'required' constraint of all items" {
+        val composed = AllOfObjectDataType(DataTypeName("AllOf"), "pkg", listOf(
+            ObjectDataType("Foo", "pkg", linkedMapOf(
+                "foo" to StringDataType(),
+                "fux" to StringDataType()
+            ), constraints = DataTypeConstraints(required = listOf("foo", "fux"))),
+            ObjectDataType(
+                "Bar", "pkg", linkedMapOf(
+                    "bar" to StringDataType(),
+                    "bux" to StringDataType()
+            ), constraints = DataTypeConstraints(required = listOf("bar", "bux")))
+        ))
+
+        composed.constraints!!.required shouldContainAll listOf("foo", "fux", "bar", "bux")
+    }
+
+    "allOf without 'required' has null constraints" {
+        val composed = AllOfObjectDataType(DataTypeName("AllOf"), "pkg", listOf(
+            ObjectDataType("Foo", "pkg", linkedMapOf(
+                "foo" to StringDataType(),
+                "fux" to StringDataType()
+            ), constraints = DataTypeConstraints()),
+            ObjectDataType(
+                "Bar", "pkg", linkedMapOf(
+                    "bar" to StringDataType(),
+                    "bux" to StringDataType()
+            ), constraints = null)
+        ))
+
+        composed.constraints shouldBe null
     }
 
 })

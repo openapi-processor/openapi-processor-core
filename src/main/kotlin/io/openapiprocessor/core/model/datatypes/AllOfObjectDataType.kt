@@ -12,7 +12,6 @@ class AllOfObjectDataType(
     private val name: DataTypeName,
     private val pkg: String,
     private val items: List<DataType> = emptyList(),
-    override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 ): DataType, ModelDataType {
 
@@ -37,6 +36,18 @@ class AllOfObjectDataType(
             return properties.values
                 .flatMap { it.getImports() }
                 .toSet()
+        }
+
+    override val constraints: DataTypeConstraints?
+        get() {
+            val required = items.filterIsInstance<ObjectDataType>()
+                .flatMap { it.constraints?.required ?: emptyList() }
+
+            if (required.isEmpty()) {
+                return null
+            }
+
+            return DataTypeConstraints(required = required)
         }
 
     override fun isRequired(prop: String): Boolean {
