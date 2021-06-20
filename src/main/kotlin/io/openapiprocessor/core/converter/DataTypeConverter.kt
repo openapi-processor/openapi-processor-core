@@ -79,7 +79,6 @@ class DataTypeConverter(
             items.add (itemType)
         }
 
-        val objectType: DataType
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
             return MappedDataType(
@@ -96,6 +95,7 @@ class DataTypeConverter(
             return found
         }
 
+        val objectType: DataType
         if (schemaInfo.isComposedAllOf()) {
             val filtered = items.filterNot { item -> item is NoDataType }
             if (filtered.size == 1) {
@@ -309,7 +309,8 @@ class DataTypeConverter(
 
         // in case of an inline definition the name may be lowercase, make sure the enum
         // class gets an uppercase name!
-        val enumName = schemaInfo.getName().capitalize ()
+        val enumName = schemaInfo.getName()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
         val found = dataTypes.find(enumName)
         if (found != null) {
