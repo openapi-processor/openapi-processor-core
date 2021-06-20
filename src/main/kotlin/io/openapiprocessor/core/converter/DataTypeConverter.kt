@@ -106,7 +106,6 @@ class DataTypeConverter(
                 DataTypeName(schemaInfo.getName(), getTypeNameWithSuffix(schemaInfo.getName())),
                 listOf(options.packageName, "model").joinToString ("."),
                 items,
-                null,
                 schemaInfo.getDeprecated()
             )
         } else {
