@@ -310,7 +310,7 @@ class DataTypeConverter(
         // in case of an inline definition the name may be lowercase, make sure the enum
         // class gets an uppercase name!
         val enumName = schemaInfo.getName()
-            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            .replaceFirstChar { it.uppercase () }
 
         val found = dataTypes.find(enumName)
         if (found != null) {
