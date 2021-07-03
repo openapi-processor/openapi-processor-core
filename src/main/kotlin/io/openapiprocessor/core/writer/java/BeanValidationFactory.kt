@@ -13,8 +13,15 @@ import org.apache.commons.lang3.StringEscapeUtils
  */
 open class BeanValidationFactory {
 
+    /**
+     * override to add annotations to the model object class.
+     */
+    open fun validate(dataType: ModelDataType): BeanValidationInfo {
+        return BeanValidationInfoObject(dataType, emptySet(), emptyList())
+    }
+
     fun validate(dataType: DataType, required: Boolean = false): BeanValidationInfo {
-        return BeanValidationInfo(
+        return BeanValidationInfoProperty(
             dataType,
             collectImports(dataType, required),
             collectAnnotations(dataType, required)

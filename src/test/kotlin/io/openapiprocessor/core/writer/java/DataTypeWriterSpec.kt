@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2020 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -12,6 +12,7 @@ import io.mockk.mockk
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.extractImports
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.support.datatypes.ListDataType
@@ -21,7 +22,7 @@ class DataTypeWriterSpec: StringSpec({
     val headerWriter: SimpleWriter = mockk(relaxed = true)
     val options = ApiOptions()
 
-    val writer = DataTypeWriter(options, headerWriter, BeanValidationFactory())
+    var writer = DataTypeWriter(options, headerWriter, BeanValidationFactory())
     val target = StringWriter()
 
     "writes @NotNull import for required property" {
@@ -70,6 +71,53 @@ class DataTypeWriterSpec: StringSpec({
         // then:
         val imports = extractImports(target)
         imports shouldContain "import java.util.List;"
+    }
+
+    "writes additional object annotation import" {
+        options.beanValidation = true
+        val validation = object : BeanValidationFactory() {
+            override fun validate(dataType: ModelDataType): BeanValidationInfo {
+                return BeanValidationInfoObject(
+                    dataType, setOf("foo.Foo"), listOf("@Foo"))
+            }
+        }
+
+        writer = DataTypeWriter(options, headerWriter, validation)
+
+        val dataType = ObjectDataType("Foo",
+            "pkg", linkedMapOf("foo" to StringDataType()))
+
+        // when:
+        writer.write(target, dataType)
+
+        // then:
+        val imports = extractImports(target)
+        imports shouldContain "import foo.Foo;"
+    }
+
+    "writes additional object annotation" {
+        options.beanValidation = true
+        val validation = object : BeanValidationFactory() {
+            override fun validate(dataType: ModelDataType): BeanValidationInfo {
+                return BeanValidationInfoObject(
+                    dataType, setOf("foo.Foo"), listOf("@Foo"))
+            }
+        }
+        writer = DataTypeWriter(options, headerWriter, validation)
+
+        val dataType = ObjectDataType("Foo",
+            "pkg", linkedMapOf("foo" to StringDataType()))
+
+        // when:
+        writer.write(target, dataType)
+
+        // then:
+        target.toString() shouldContain
+            """    
+            |@Foo
+            |public class Foo {
+            |
+            """.trimMargin()
     }
 
 })

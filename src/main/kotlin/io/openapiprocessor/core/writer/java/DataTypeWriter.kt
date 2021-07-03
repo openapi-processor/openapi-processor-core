@@ -10,6 +10,7 @@ import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.model.datatypes.NullDataType
 import java.io.Writer
+import java.util.*
 
 /**
  * Writer for POJO classes.
@@ -40,6 +41,15 @@ class DataTypeWriter(
 
         if (apiOptions.javadoc) {
             target.write(javadocWriter.convert(dataType))
+        }
+
+        if (apiOptions.beanValidation) {
+            val objectInfo = validationAnnotations.validate(dataType)
+            if(objectInfo.hasAnnotations) {
+                objectInfo.annotations.forEach {
+                    target.write("$it\n")
+                }
+            }
         }
 
         target.write("public class ${dataType.getTypeName()} {\n\n")
@@ -101,7 +111,11 @@ class DataTypeWriter(
         }
 
         result += """
-            |    public ${propDataType.getTypeName()} get${propertyName.capitalize()}() {
+            |    public ${propDataType.getTypeName()} get${propertyName.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(
+                Locale.getDefault()
+            ) else it.toString()
+        }}() {
             |        return ${propertyName};
             |    }
             |
@@ -118,7 +132,11 @@ class DataTypeWriter(
         }
 
         result += """
-            |    public void set${propertyName.capitalize()}(${propDataType.getTypeName()} ${propertyName}) {
+            |    public void set${propertyName.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(
+                Locale.getDefault()
+            ) else it.toString()
+        }}(${propDataType.getTypeName()} ${propertyName}) {
             |        this.${propertyName} = ${propertyName};
             |    }
             |
@@ -138,9 +156,16 @@ class DataTypeWriter(
         imports.addAll(dataType.referencedImports)
 
         if (apiOptions.beanValidation) {
+            val objectInfo = validationAnnotations.validate(dataType)
+            if (objectInfo.hasAnnotations) {
+                imports.addAll(objectInfo.imports)
+            }
+
             dataType.forEach { propName, propDataType ->
-                val info = validationAnnotations.validate(propDataType, dataType.isRequired(propName))
-                imports.addAll(info.imports)
+                val propInfo = validationAnnotations.validate(
+                    propDataType, dataType.isRequired(propName))
+
+                imports.addAll(propInfo.imports)
             }
         }
 
