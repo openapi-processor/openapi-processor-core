@@ -35,12 +35,12 @@ class DataTypeWriter(
             target.write("\n")
         }
 
-        if (dataType.deprecated) {
-            target.write("@Deprecated\n")
-        }
-
         if (apiOptions.javadoc) {
             target.write(javadocWriter.convert(dataType))
+        }
+
+        if (dataType.deprecated) {
+            target.write("@Deprecated\n")
         }
 
         if (apiOptions.beanValidation) {
