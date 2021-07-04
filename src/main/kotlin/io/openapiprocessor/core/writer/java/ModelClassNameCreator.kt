@@ -5,6 +5,8 @@
 
 package io.openapiprocessor.core.writer.java
 
+import io.openapiprocessor.core.support.capitalizeFirstChar
+
 /**
  * create a class name, possibly adding a suffix if any is configured.
  */
@@ -14,10 +16,10 @@ class ModelClassNameCreator(private val suffix: String) {
         if (dataTypeName.isEmpty())
             return dataTypeName
 
-        if (dataTypeName.endsWith(suffix.capitalize()))
+        if (dataTypeName.endsWith(suffix.capitalizeFirstChar()))
             return dataTypeName
 
-        return "$dataTypeName${suffix.capitalize()}"
+        return "$dataTypeName${suffix.capitalizeFirstChar()}"
     }
 
 }

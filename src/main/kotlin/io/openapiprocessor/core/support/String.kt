@@ -8,6 +8,6 @@ package io.openapiprocessor.core.support
 val String.Companion.Empty: String
     get() = ""
 
-fun String.firstCharToUpperCase() = this.replaceFirstChar {
+fun String.capitalizeFirstChar() = this.replaceFirstChar {
     it.uppercase()
 }

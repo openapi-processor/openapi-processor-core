@@ -9,6 +9,7 @@ import io.openapiprocessor.core.converter.mapping.MappingSchema
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema
+import io.openapiprocessor.core.support.capitalizeFirstChar
 
 /**
  * Helper for [DataTypeConverter]. Holds an OpenAPI schema with context information, e.g. name and
@@ -234,7 +235,7 @@ class SchemaInfo(
         schema?.getItems()?.forEachIndexed { index, schema ->
             action(SchemaInfo(
                 endpoint = endpoint,
-                name = "${name}_${itemOf()!!.capitalize()}_${index}",
+                name = "${name}_${itemOf()!!.capitalizeFirstChar()}_${index}",
                 schema = schema,
                 resolver = resolver
             ))
@@ -345,11 +346,11 @@ class SchemaInfo(
     }
 
     private fun getArrayItemName(schema: Schema): String {
-        return "Array" + name.capitalize()
+        return "Array" + name.capitalizeFirstChar()
     }
 
     private fun getNestedTypeName(nestedName: String): String {
-        return name + nestedName.capitalize()
+        return name + nestedName.capitalizeFirstChar()
     }
 
 }

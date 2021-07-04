@@ -18,8 +18,11 @@
 
 package io.openapiprocessor.core.writer.java
 
+import io.openapiprocessor.core.support.capitalizeFirstChar
 import java.lang.Character.isJavaIdentifierPart
 import java.lang.Character.isJavaIdentifierStart
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * converts a source string to a valid (camel case) java identifier. One way, ie it is not
@@ -60,7 +63,7 @@ fun toCamelCase(src: String): String {
  * @author Martin Hauner
  */
 fun toClass(src: String): String {
-    return toCamelCase(src).capitalize()
+    return toCamelCase(src).capitalizeFirstChar()
 }
 
 /**
@@ -99,9 +102,9 @@ private fun joinCamelCase(words: List<String>): String {
 
     words.forEachIndexed { idx, p ->
         if (idx == 0) {
-            sb.append(p.toLowerCase())
+            sb.append(p.lowercase())
         } else {
-            sb.append(p.toLowerCase().capitalize())
+            sb.append(p.lowercase().capitalizeFirstChar())
         }
     }
 
@@ -121,7 +124,7 @@ private fun joinCamelCase(words: List<String>): String {
  * @author Martin Hauner
  */
 private fun joinEnum(words: List<String>): String {
-    val result = words.joinToString("_") { it.toUpperCase() }
+    val result = words.joinToString("_") { it.uppercase(Locale.getDefault()) }
 
     if (result.isEmpty()) {
         return "INVALID"

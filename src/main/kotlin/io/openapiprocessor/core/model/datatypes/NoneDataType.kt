@@ -15,6 +15,9 @@
  */
 
 package io.openapiprocessor.core.model.datatypes
+
+import io.openapiprocessor.core.support.capitalizeFirstChar
+
 /**
  * OpenAPI no type.
  *
@@ -46,7 +49,7 @@ class NoneDataType(): DataType {
      * @return
      */
     fun wrappedInResult(): DataType {
-        return NoneDataType(type.capitalize ())
+        return NoneDataType(type.capitalizeFirstChar ())
     }
 
 }
