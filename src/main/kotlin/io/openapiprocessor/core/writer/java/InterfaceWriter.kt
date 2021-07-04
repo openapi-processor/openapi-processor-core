@@ -8,8 +8,11 @@ package io.openapiprocessor.core.writer.java
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Endpoint
+import io.openapiprocessor.core.model.EndpointResponse
 import io.openapiprocessor.core.model.Interface
+import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.parameters.AdditionalParameter
+import io.openapiprocessor.core.model.parameters.Parameter
 import java.io.Writer
 
 /**
@@ -59,42 +62,56 @@ class InterfaceWriter(
             }
 
             ep.parameters.forEach { p ->
-                if (apiOptions.beanValidation) {
-                    val info = validationAnnotations.validate(p.dataType, p.required)
-                    imports.addAll (info.imports)
-                }
-
-                if (p.withAnnotation) {
-                    imports.add (annotations.getAnnotation (p).fullyQualifiedName)
-                }
-
-                if (p is AdditionalParameter && p.annotationDataType != null) {
-                    imports.addAll (p.annotationDataType.getImports())
-                }
-
-                imports.addAll (p.dataTypeImports)
+                addImports(p, imports)
             }
 
             ep.requestBodies.forEach { b ->
-                imports.add (annotations.getAnnotation (b).fullyQualifiedName)
-                imports.addAll (b.dataTypeImports)
-                if (apiOptions.beanValidation) {
-                    val info = validationAnnotations.validate(b.dataType, false)
-                    imports.addAll (info.imports)
-                }
+                addImports(b, imports)
             }
 
-            ep.endpointResponses.forEach { mr ->
-                val responseImports: MutableSet<String> = mr.responseImports.toMutableSet()
-                if (responseImports.isNotEmpty()) {
-                    imports.addAll (responseImports)
-                }
+            ep.endpointResponses.forEach { r ->
+                addImports(r, imports)
             }
         }
 
         return importFilter
             .filter(packageName, imports)
             .sorted ()
+    }
+
+    private fun addImports(parameter: Parameter, imports: MutableSet<String>) {
+        if (apiOptions.beanValidation) {
+            val info = validationAnnotations.validate(parameter.dataType, parameter.required)
+            imports.addAll(info.imports)
+        }
+
+        if (parameter.withAnnotation) {
+            imports.add(annotations.getAnnotation(parameter).fullyQualifiedName)
+        }
+
+        if (parameter is AdditionalParameter && parameter.annotationDataType != null) {
+            imports.addAll(parameter.annotationDataType.getImports())
+        }
+
+        imports.addAll(parameter.dataTypeImports)
+    }
+
+    private fun addImports(body: RequestBody, imports: MutableSet<String>) {
+        imports.add(annotations.getAnnotation(body).fullyQualifiedName)
+        imports.addAll(body.dataTypeImports)
+
+        if (apiOptions.beanValidation) {
+            val info = validationAnnotations.validate(body.dataType, false)
+            imports.addAll(info.imports)
+        }
+    }
+
+    private fun addImports(response: EndpointResponse, imports: MutableSet<String>) {
+        val responseImports: MutableSet<String> = response.responseImports.toMutableSet()
+
+        if (responseImports.isNotEmpty()) {
+            imports.addAll(responseImports)
+        }
     }
 
 }
