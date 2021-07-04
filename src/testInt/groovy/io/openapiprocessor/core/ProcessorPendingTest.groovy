@@ -7,6 +7,7 @@ package io.openapiprocessor.core
 
 import io.openapiprocessor.core.parser.ParserType
 import io.openapiprocessor.core.test.TestProcessor
+import io.openapiprocessor.test.FileSupport
 import io.openapiprocessor.test.TestSet
 import io.openapiprocessor.test.TestSetRunner
 import spock.lang.Ignore
@@ -32,7 +33,7 @@ class ProcessorPendingTest extends Specification {
 
     @Unroll
     void "native - #testSet"() {
-        def runner = new TestSetRunner (testSet)
+        def runner = new TestSetRunner (testSet, new FileSupport(getClass ()))
         def success = runner.runOnNativeFileSystem (folder)
 
         expect:
