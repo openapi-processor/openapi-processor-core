@@ -52,6 +52,15 @@
             "org.springframework.http.ResponseEntity"
           ]
         },
+        "resultStyle": {
+          "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+          "type": "string",
+          "default": "success",
+          "examples": [
+            "all",
+            "success"
+          ]
+        },
         "single": {
           "description": "reactive wrapper of single types.",
           "type": "string",
@@ -202,6 +211,15 @@
                     "org.springframework.http.ResponseEntity"
                   ]
                 },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
+                  ]
+                },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
@@ -343,6 +361,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
@@ -490,6 +517,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -633,6 +669,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
@@ -780,6 +825,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -923,6 +977,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
@@ -1070,6 +1133,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -1215,6 +1287,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -1358,6 +1439,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
@@ -1518,6 +1608,15 @@
                 "org.springframework.http.ResponseEntity"
               ]
             },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
+              ]
+            },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
@@ -1659,6 +1758,15 @@
                   "type": "string",
                   "examples": [
                     "org.springframework.http.ResponseEntity"
+                  ]
+                },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
                   ]
                 },
                 "single": {
@@ -1806,6 +1914,15 @@
                     "org.springframework.http.ResponseEntity"
                   ]
                 },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
+                  ]
+                },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
@@ -1949,6 +2066,15 @@
                   "type": "string",
                   "examples": [
                     "org.springframework.http.ResponseEntity"
+                  ]
+                },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
                   ]
                 },
                 "single": {
@@ -2096,6 +2222,15 @@
                     "org.springframework.http.ResponseEntity"
                   ]
                 },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
+                  ]
+                },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
@@ -2239,6 +2374,15 @@
                   "type": "string",
                   "examples": [
                     "org.springframework.http.ResponseEntity"
+                  ]
+                },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
                   ]
                 },
                 "single": {
@@ -2386,6 +2530,15 @@
                     "org.springframework.http.ResponseEntity"
                   ]
                 },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
+                  ]
+                },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
@@ -2531,6 +2684,15 @@
                     "org.springframework.http.ResponseEntity"
                   ]
                 },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
+                  ]
+                },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
@@ -2674,6 +2836,15 @@
                   "type": "string",
                   "examples": [
                     "org.springframework.http.ResponseEntity"
+                  ]
+                },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
                   ]
                 },
                 "single": {
@@ -2823,6 +2994,15 @@
           "type": "string",
           "examples": [
             "org.springframework.http.ResponseEntity"
+          ]
+        },
+        "resultStyle": {
+          "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+          "type": "string",
+          "default": "success",
+          "examples": [
+            "all",
+            "success"
           ]
         },
         "single": {
@@ -2975,6 +3155,15 @@
                 "org.springframework.http.ResponseEntity"
               ]
             },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
+              ]
+            },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
@@ -3118,6 +3307,15 @@
               "type": "string",
               "examples": [
                 "org.springframework.http.ResponseEntity"
+              ]
+            },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
               ]
             },
             "single": {
@@ -3265,6 +3463,15 @@
                 "org.springframework.http.ResponseEntity"
               ]
             },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
+              ]
+            },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
@@ -3408,6 +3615,15 @@
               "type": "string",
               "examples": [
                 "org.springframework.http.ResponseEntity"
+              ]
+            },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
               ]
             },
             "single": {
@@ -3555,6 +3771,15 @@
                 "org.springframework.http.ResponseEntity"
               ]
             },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
+              ]
+            },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
@@ -3698,6 +3923,15 @@
               "type": "string",
               "examples": [
                 "org.springframework.http.ResponseEntity"
+              ]
+            },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
               ]
             },
             "single": {
@@ -3845,6 +4079,15 @@
                 "org.springframework.http.ResponseEntity"
               ]
             },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
+              ]
+            },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
@@ -3990,6 +4233,15 @@
                 "org.springframework.http.ResponseEntity"
               ]
             },
+            "resultStyle": {
+              "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+              "type": "string",
+              "default": "success",
+              "examples": [
+                "all",
+                "success"
+              ]
+            },
             "single": {
               "description": "reactive wrapper of single types.",
               "type": "string",
@@ -4130,6 +4382,15 @@
       "type": "string",
       "examples": [
         "org.springframework.http.ResponseEntity"
+      ]
+    },
+    "ResultStyleMapping": {
+      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+      "type": "string",
+      "default": "success",
+      "examples": [
+        "all",
+        "success"
       ]
     },
     "SingleMapping": {
@@ -4342,6 +4603,15 @@
             "org.springframework.http.ResponseEntity"
           ]
         },
+        "resultStyle": {
+          "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+          "type": "string",
+          "default": "success",
+          "examples": [
+            "all",
+            "success"
+          ]
+        },
         "single": {
           "description": "reactive wrapper of single types.",
           "type": "string",
@@ -4492,6 +4762,15 @@
                     "org.springframework.http.ResponseEntity"
                   ]
                 },
+                "resultStyle": {
+                  "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                  "type": "string",
+                  "default": "success",
+                  "examples": [
+                    "all",
+                    "success"
+                  ]
+                },
                 "single": {
                   "description": "reactive wrapper of single types.",
                   "type": "string",
@@ -4633,6 +4912,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
@@ -4780,6 +5068,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -4923,6 +5220,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
@@ -5070,6 +5376,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -5213,6 +5528,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
@@ -5360,6 +5684,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -5505,6 +5838,15 @@
                         "org.springframework.http.ResponseEntity"
                       ]
                     },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
+                      ]
+                    },
                     "single": {
                       "description": "reactive wrapper of single types.",
                       "type": "string",
@@ -5648,6 +5990,15 @@
                       "type": "string",
                       "examples": [
                         "org.springframework.http.ResponseEntity"
+                      ]
+                    },
+                    "resultStyle": {
+                      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+                      "type": "string",
+                      "default": "success",
+                      "examples": [
+                        "all",
+                        "success"
                       ]
                     },
                     "single": {
