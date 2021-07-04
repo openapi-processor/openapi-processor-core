@@ -105,7 +105,7 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
 
     implementation 'org.openapi4j:openapi-parser:1.0.7'
-    implementation ('io.swagger.parser.v3:swagger-parser:2.0.26') {
+    implementation ('io.swagger.parser.v3:swagger-parser:2.0.27') {
         exclude group: 'io.swagger.parser.v3', module: 'swagger-parser-v2-converter'
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
