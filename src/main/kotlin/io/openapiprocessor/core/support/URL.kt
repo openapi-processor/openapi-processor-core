@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.misc
+package io.openapiprocessor.core.support
 
 import java.net.URL
 import java.nio.file.Paths

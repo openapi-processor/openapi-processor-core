@@ -16,7 +16,7 @@
 
 package io.openapiprocessor.core.parser.openapi4j
 
-import io.openapiprocessor.core.misc.toURL
+import io.openapiprocessor.core.support.toURL
 import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import org.openapi4j.parser.OpenApi3Parser
 import org.openapi4j.parser.validation.v3.OpenApi3Validator

@@ -22,6 +22,7 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.NotWindows
 import io.openapiprocessor.core.Windows
+import io.openapiprocessor.core.support.toURL
 
 
 class PathSpec: StringSpec({

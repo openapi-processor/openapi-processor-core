@@ -16,7 +16,7 @@
 
 package io.openapiprocessor.core.parser.swagger
 
-import io.openapiprocessor.core.misc.toURL
+import io.openapiprocessor.core.support.toURL
 import io.swagger.v3.parser.OpenAPIV3Parser
 import io.swagger.v3.parser.core.models.ParseOptions
 import io.swagger.v3.parser.core.models.SwaggerParseResult

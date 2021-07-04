@@ -11,7 +11,7 @@ import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
-import io.openapiprocessor.core.misc.toURL
+import io.openapiprocessor.core.support.toURL
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import java.io.BufferedWriter
 import java.io.StringWriter
