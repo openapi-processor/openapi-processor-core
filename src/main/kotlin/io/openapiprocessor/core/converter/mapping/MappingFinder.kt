@@ -8,6 +8,7 @@ package io.openapiprocessor.core.converter.mapping
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.matcher.*
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.processor.mapping.v2.ResultStyle
 
 /**
  * find mappings of a given schema info in the type mapping list.
@@ -125,6 +126,21 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
             return null
 
         return matches.first() as ResultTypeMapping
+    }
+
+    /**
+     * get (global) result style option mapping value.
+     *
+     * @return the [ResultStyle] if set, otherwise null.
+     */
+    fun findResultStyleMapping(): ResultStyle? {
+        val matches = typeMappings
+            .filterIsInstance(ResultStyleOptionMapping::class.java)
+
+        if (matches.isEmpty())
+            return null
+
+        return matches.first().value
     }
 
     /**

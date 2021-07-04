@@ -26,6 +26,9 @@ map: # the type mappings
   # response wrapper (optional)
   result: org.springframework.http.ResponseEntity
 
+  # result style (optional, default "success")
+  resultStyle: all
+
   # reactive single wrapper (optional)
   single: reactor.core.publisher.Mono
 

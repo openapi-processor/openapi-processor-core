@@ -7,6 +7,7 @@ package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.resultStyle
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
 import io.openapiprocessor.core.model.Interface
@@ -107,7 +108,8 @@ class InterfaceWriter(
     }
 
     private fun addImports(response: EndpointResponse, imports: MutableSet<String>) {
-        val responseImports: MutableSet<String> = response.responseImports.toMutableSet()
+        val responseImports: MutableSet<String> = response.getResponseImports(
+                    apiOptions.resultStyle).toMutableSet()
 
         if (responseImports.isNotEmpty()) {
             imports.addAll(responseImports)

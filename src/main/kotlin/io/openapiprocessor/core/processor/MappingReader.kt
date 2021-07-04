@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.processor
 
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.module.SimpleModule
@@ -84,10 +85,11 @@ class MappingReader(private val validator: MappingValidator = MappingValidator()
             .nullIsSameAsDefault (true)
             .build ()
 
-        return ObjectMapper (YAMLFactory ())
-            .configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .setPropertyNamingStrategy (PropertyNamingStrategies.KEBAB_CASE)
-            .registerModules (kotlinModule, module)
+        return ObjectMapper(YAMLFactory())
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS, true)
+            .setPropertyNamingStrategy(PropertyNamingStrategies.KEBAB_CASE)
+            .registerModules(kotlinModule, module)
     }
 
     private fun createV1Parser(): ObjectMapper {

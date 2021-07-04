@@ -7,6 +7,7 @@ package io.openapiprocessor.core.converter.mapping
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -14,6 +15,7 @@ import io.mockk.mockk
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.RefResolver
+import io.openapiprocessor.core.processor.mapping.v2.ResultStyle
 
 class MappingFinderSpec: StringSpec({
     val resolver = mockk<RefResolver>()
@@ -276,6 +278,24 @@ class MappingFinderSpec: StringSpec({
         result.shouldNotBeNull()
         result.sourceTypeName.shouldBe("null")
         result.targetTypeName.shouldBe("org.openapitools.jackson.nullable.JsonNullable")
+    }
+
+    "find unset result style option mapping" {
+        val finder = MappingFinder(listOf())
+
+        val result = finder.findResultStyleMapping()
+
+        result.shouldBe(null)
+    }
+
+    "find result style option mapping" {
+        ResultStyle.values().forAll { style ->
+            val finder = MappingFinder(listOf(ResultStyleOptionMapping(style)))
+
+            val result = finder.findResultStyleMapping()
+
+            result.shouldBe(style)
+        }
     }
 
 })

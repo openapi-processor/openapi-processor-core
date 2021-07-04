@@ -1,0 +1,7 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: generated
+
+map:
+#  result-style: success # default

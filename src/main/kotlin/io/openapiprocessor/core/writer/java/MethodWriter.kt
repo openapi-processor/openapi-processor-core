@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.resultStyle
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
 import io.openapiprocessor.core.model.parameters.AdditionalParameter
@@ -15,6 +16,7 @@ import io.openapiprocessor.core.writer.java.MappingAnnotationWriter as CoreMappi
 import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter as CoreParameterAnnotationWriter
 import java.io.StringWriter
 import java.io.Writer
+import java.util.*
 
 /**
  * Writer for Java interface methods, i.e. endpoints.
@@ -44,8 +46,8 @@ open class MethodWriter(
 
         target.write (
             """
-            |    ${createMappingAnnotation (endpoint, endpointResponse)}
-            |    ${endpointResponse.responseType} ${createMethodName (endpoint, endpointResponse)}(${createParameters(endpoint)});
+            |    ${createMappingAnnotation(endpoint, endpointResponse)}
+            |    ${createResult(endpointResponse)} ${createMethodName(endpoint, endpointResponse)}(${createParameters(endpoint)});
             |
             """.trimMargin())
     }
@@ -54,6 +56,10 @@ open class MethodWriter(
         val annotation = StringWriter()
         mappingAnnotationWriter.write(annotation, endpoint, endpointResponse)
         return annotation.toString ()
+    }
+
+    private fun createResult(endpointResponse: EndpointResponse): String {
+        return endpointResponse.getResponseType(apiOptions.resultStyle)
     }
 
     private fun createMethodName(endpoint: Endpoint, endpointResponse: EndpointResponse): String {
