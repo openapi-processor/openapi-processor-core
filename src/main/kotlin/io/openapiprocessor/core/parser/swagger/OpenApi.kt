@@ -56,7 +56,6 @@ class OpenApi(private val result: SwaggerParseResult): ParserOpenApi {
         warnings.forEach {
             log.warn(it)
         }
-
     }
 
 }
