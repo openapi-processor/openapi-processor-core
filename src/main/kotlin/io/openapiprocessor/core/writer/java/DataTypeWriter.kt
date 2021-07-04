@@ -12,6 +12,8 @@ import io.openapiprocessor.core.model.datatypes.NullDataType
 import java.io.Writer
 import java.util.*
 
+private const val deprecated =  "@Deprecated"
+
 /**
  * Writer for POJO classes.
  */
@@ -40,7 +42,7 @@ class DataTypeWriter(
         }
 
         if (dataType.deprecated) {
-            target.write("@Deprecated\n")
+            target.write("$deprecated\n")
         }
 
         if (apiOptions.beanValidation) {
@@ -79,9 +81,7 @@ class DataTypeWriter(
             result += javadocWriter.convert(propDataType)
         }
 
-        if (propDataType.deprecated) {
-            result += "    @Deprecated\n"
-        }
+        result += ifDeprecated(propDataType)
 
         var propTypeName = propDataType.getTypeName()
         if(apiOptions.beanValidation) {
@@ -106,9 +106,7 @@ class DataTypeWriter(
 
     private fun getGetter(propertyName: String, propDataType: DataType): String {
         var result = ""
-        if (propDataType.deprecated) {
-            result += "    @Deprecated\n"
-        }
+        result += ifDeprecated(propDataType)
 
         result += """
             |    public ${propDataType.getTypeName()} get${propertyName.replaceFirstChar {
@@ -127,9 +125,7 @@ class DataTypeWriter(
 
     private fun getSetter(propertyName: String, propDataType: DataType): String {
         var result = ""
-        if (propDataType.deprecated) {
-            result += "    @Deprecated\n"
-        }
+        result += ifDeprecated(propDataType)
 
         result += """
             |    public void set${propertyName.replaceFirstChar {
@@ -144,6 +140,14 @@ class DataTypeWriter(
         """.trimMargin()
 
         return result
+    }
+
+    private fun ifDeprecated(propDataType: DataType): String {
+        return if (propDataType.deprecated) {
+            "    $deprecated\n"
+        } else {
+            ""
+        }
     }
 
     private fun collectImports(packageName: String, dataType: ModelDataType): List<String> {
