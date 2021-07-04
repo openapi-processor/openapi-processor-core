@@ -91,6 +91,9 @@
         "result": {
           "$ref": "#/definitions/ResultMapping"
         },
+        "resultStyle": {
+          "$ref": "#/definitions/ResultStyleMapping"
+        },
         "single": {
           "$ref": "#/definitions/SingleMapping"
         },
@@ -147,6 +150,15 @@
       "type": "string",
       "examples": [
         "org.springframework.http.ResponseEntity"
+      ]
+    },
+    "ResultStyleMapping": {
+      "description": "result style of a http response. 'success' uses success (ok) response type, 'all' uses Object/? type (since core 2021.5).",
+      "type": "string",
+      "default": "success",
+      "examples": [
+        "all",
+        "success"
       ]
     },
     "SingleMapping": {
