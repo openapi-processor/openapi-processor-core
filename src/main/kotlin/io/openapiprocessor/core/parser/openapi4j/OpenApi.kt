@@ -39,6 +39,7 @@ class OpenApi(
     override fun getRefResolver(): ParserRefResolver = RefResolver (api)
 
     override fun printWarnings() {
+        // already prints warnings
     }
 
 }
