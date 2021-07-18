@@ -9,8 +9,8 @@ import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.model.datatypes.NullDataType
+import io.openapiprocessor.core.support.capitalizeFirstChar
 import java.io.Writer
-import java.util.*
 
 private const val deprecated =  "@Deprecated"
 
@@ -109,11 +109,7 @@ class DataTypeWriter(
         result += ifDeprecated(propDataType)
 
         result += """
-            |    public ${propDataType.getTypeName()} get${propertyName.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(
-                Locale.getDefault()
-            ) else it.toString()
-        }}() {
+            |    public ${propDataType.getTypeName()} get${propertyName.capitalizeFirstChar()}() {
             |        return ${propertyName};
             |    }
             |
@@ -128,11 +124,7 @@ class DataTypeWriter(
         result += ifDeprecated(propDataType)
 
         result += """
-            |    public void set${propertyName.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(
-                Locale.getDefault()
-            ) else it.toString()
-        }}(${propDataType.getTypeName()} ${propertyName}) {
+            |    public void set${propertyName.capitalizeFirstChar()}(${propDataType.getTypeName()} ${propertyName}) {
             |        this.${propertyName} = ${propertyName};
             |    }
             |
