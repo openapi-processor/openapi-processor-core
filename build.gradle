@@ -32,7 +32,7 @@ String getBuildSignKey(String property) {
 
 ext {
     processorApiVersion = '2021.1'
-    processorTestVersion = '2021.3-SNAPSHOT'
+    processorTestVersion = '2021.3'
     jacksonVersion = '2.12.3'
     groovyVersion = '3.0.8'
 
@@ -94,6 +94,13 @@ compileKotlin.dependsOn "generateVersion"
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+//id 'info.solidsoft.pitest' version '1.6.0'
+//pitest {
+//    verbose = true
+//    testPlugin = "junit5"
+//    junit5PluginVersion = "0.12"
+//}
 
 dependencies {
     components.all(JacksonPlatformRule)
