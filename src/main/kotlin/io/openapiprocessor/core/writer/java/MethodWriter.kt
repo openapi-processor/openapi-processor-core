@@ -104,7 +104,7 @@ open class MethodWriter(
             val body = endpoint.getRequestBody()
 
             val dataTypeValue = if (apiOptions.beanValidation) {
-                val info = beanValidationFactory.validate(body.dataType, false)
+                val info = beanValidationFactory.validate(body.dataType, body.required)
                 info.inout.dataTypeValue
             } else {
                 body.dataType.getTypeName()

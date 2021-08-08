@@ -102,8 +102,9 @@ class InterfaceWriter(
         imports.addAll(body.dataTypeImports)
 
         if (apiOptions.beanValidation) {
-            val info = validationAnnotations.validate(body.dataType, false)
-            imports.addAll(info.imports)
+            val info = validationAnnotations.validate(body.dataType, body.required)
+            val io = info.inout
+            imports.addAll(io.imports)
         }
     }
 
