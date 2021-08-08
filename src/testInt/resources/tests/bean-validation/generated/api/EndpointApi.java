@@ -19,36 +19,36 @@ public interface EndpointApi {
 
     @Mapping("/endpoint/required")
     void getEndpointRequired(
-            @Parameter String requiredFalse, @NotNull @Parameter String requiredTrue);
+            @Parameter String requiredFalse, @Parameter @NotNull String requiredTrue);
 
     @Mapping("/endpoint/length")
     void getEndpointLength(
-            @Size(min = 2) @Parameter String minLength,
-            @Size(max = 4) @Parameter String maxLength,
-            @Size(min = 2, max = 4) @Parameter String minMaxLength);
+            @Parameter @Size(min = 2) String minLength,
+            @Parameter @Size(max = 4) String maxLength,
+            @Parameter @Size(min = 2, max = 4) String minMaxLength);
 
     @Mapping("/endpoint/minmax")
     void getEndpointMinmax(
-            @DecimalMin(value = "10") @Parameter Integer min,
-            @DecimalMin(value = "10", inclusive = false) @Parameter Integer minEx,
-            @DecimalMax(value = "20") @Parameter Integer max,
-            @DecimalMax(value = "20", inclusive = false) @Parameter Integer maxEx,
-            @DecimalMin(value = "10") @DecimalMax(value = "20") @Parameter Integer minMax,
-            @DecimalMin(value = "10", inclusive = false)
+            @Parameter @DecimalMin(value = "10") Integer min,
+            @Parameter @DecimalMin(value = "10", inclusive = false) Integer minEx,
+            @Parameter @DecimalMax(value = "20") Integer max,
+            @Parameter @DecimalMax(value = "20", inclusive = false) Integer maxEx,
+            @Parameter @DecimalMin(value = "10") @DecimalMax(value = "20") Integer minMax,
+            @Parameter
+                    @DecimalMin(value = "10", inclusive = false)
                     @DecimalMax(value = "20", inclusive = false)
-                    @Parameter
                     Integer minMaxEx);
 
     @Mapping("/endpoint/items")
     void getEndpointItems(
-            @Size(min = 2) @Parameter String[] min,
-            @Size(max = 4) @Parameter String[] max,
-            @Size(min = 2, max = 4) @Parameter String[] minMax);
+            @Parameter @Size(min = 2) String[] min,
+            @Parameter @Size(max = 4) String[] max,
+            @Parameter @Size(min = 2, max = 4) String[] minMax);
 
     @Mapping("/endpoint/obj")
-    void postEndpointObj(@Valid @Parameter Obj1 body);
+    void postEndpointObj(@Parameter @Valid Obj1 body);
 
     @Mapping("/endpoint/pattern")
-    void getEndpointPattern(@Pattern(regexp = ".*\\.\\\\") @Parameter String anything);
+    void getEndpointPattern(@Parameter @Pattern(regexp = ".*\\.\\\\") String anything);
 
 }

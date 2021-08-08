@@ -14,9 +14,9 @@ import javax.validation.Valid;
 public interface Api {
 
     @Mapping("/foo")
-    void postFoo(@Valid @Parameter Foo body);
+    void postFoo(@Parameter @Valid Foo body);
 
     @Mapping("/fooL")
-    void postFooL(@Valid @Parameter FooL body);
+    void postFooL(@Parameter @Valid FooL body);
 
 }
