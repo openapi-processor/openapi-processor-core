@@ -21,8 +21,7 @@ interface BeanValidationInfo {
     val inout: BeanValidationValue
 }
 
-// BeanValidationInfoSimple
-class BeanValidationInfoProperty(
+class BeanValidationInfoSimple(
     override val dataType: DataType,
     override val imports: Set<String>,
     override val annotations: List<String>

@@ -17,7 +17,7 @@ open class BeanValidationFactory {
      * override to add annotations to the model object class.
      */
     open fun validate(dataType: ModelDataType): BeanValidationInfo {
-        return BeanValidationInfoProperty(dataType, emptySet(), emptyList())
+        return BeanValidationInfoSimple(dataType, emptySet(), emptyList())
     }
 
     fun validate(dataType: DataType, required: Boolean = false): BeanValidationInfo {
@@ -29,7 +29,7 @@ open class BeanValidationFactory {
                 validate(dataType.item, false)
             )
         } else {
-            BeanValidationInfoProperty(
+            BeanValidationInfoSimple(
                 dataType,
                 collectImports(dataType, required),
                 collectAnnotations(dataType, required)
