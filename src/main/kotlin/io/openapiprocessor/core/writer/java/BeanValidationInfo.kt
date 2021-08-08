@@ -5,48 +5,140 @@
 
 package io.openapiprocessor.core.writer.java
 
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
-import io.openapiprocessor.core.model.datatypes.ModelDataType
+import io.openapiprocessor.core.model.datatypes.*
+
+data class BeanValidationValue(
+    val dataTypeValue: String,
+    val imports: Set<String>,
+    val annotations: List<String>)
 
 interface BeanValidationInfo {
     val dataType: DataType
     val imports: Set<String>
     val annotations: List<String>
 
-    val typeName: String
-        get() {
-            return dataType.getTypeName()
-        }
-
-    val hasAnnotations
-        get() = annotations.isNotEmpty()
-
+    val prop: BeanValidationValue
+    val inout: BeanValidationValue
 }
 
-class BeanValidationInfoObject(
-    override val dataType: DataType,
-    override val imports: Set<String>,
-    override val annotations: List<String>
-): BeanValidationInfo
-
-
+// BeanValidationInfoSimple
 class BeanValidationInfoProperty(
     override val dataType: DataType,
     override val imports: Set<String>,
     override val annotations: List<String>
 ): BeanValidationInfo {
 
-    override val typeName: String
+    override val prop: BeanValidationValue
         get() {
-            // no collection or array
-            if (dataType !is MappedCollectionDataType)
-                return dataType.getTypeName()
+            return BeanValidationValue(dataType.getTypeName(), imports, annotations)
+        }
 
-            if (dataType.item !is ModelDataType)
-                return dataType.getTypeName()
+    override val inout: BeanValidationValue
+        get() {
+            val dt = mutableListOf<String>()
+            dt.addAll(annotations)
+            dt.add(dataType.getTypeName())
+            return BeanValidationValue(dt.joinToString(" "), imports, emptyList())
+        }
+}
 
-            return dataType.getTypeNameWithAnnotatedItem(BeanValidation.VALID.annotation)
+class BeanValidationInfoCollection(
+    override val dataType: DataType,
+    override val imports: Set<String>,
+    override val annotations: List<String>,
+    val item: BeanValidationInfo
+): BeanValidationInfo {
+
+    override val prop: BeanValidationValue
+        get() {
+            dataType as CollectionDataType
+
+            return if (item.dataType is ModelDataType) {
+                val allImports = mutableSetOf<String>()
+                allImports.addAll(imports)
+                if (dataType !is ArrayDataType) {
+                    allImports.add(BeanValidation.VALID.import)
+                }
+
+                val colAnnotations = mutableListOf<String>()
+                colAnnotations.addAll(annotations)
+
+                val itemAnnotations = mutableSetOf<String>()
+                if (dataType !is ArrayDataType) {
+                    itemAnnotations.add(BeanValidation.VALID.annotation)
+                }
+
+                BeanValidationValue(
+                    dataType.getTypeName(emptySet(), itemAnnotations),
+                    allImports,
+                    colAnnotations
+                )
+            } else {
+                val allImports = mutableSetOf<String>()
+                allImports.addAll(imports)
+                if (dataType !is ArrayDataType) {
+                    allImports.addAll(item.imports)
+                }
+
+                val colAnnotations = mutableListOf<String>()
+                colAnnotations.addAll(annotations)
+
+                val itemAnnotations = mutableSetOf<String>()
+                if (dataType !is ArrayDataType) {
+                    itemAnnotations.addAll(item.annotations)
+                }
+
+                BeanValidationValue(
+                    dataType.getTypeName(emptySet(), itemAnnotations),
+                    allImports,
+                    colAnnotations
+                )
+            }
+        }
+
+    override val inout: BeanValidationValue
+        get() {
+            val cdt = dataType as CollectionDataType
+
+            return if (item.dataType is ModelDataType) {
+                val allImports = mutableSetOf<String>()
+                allImports.addAll(imports)
+                if (dataType !is ArrayDataType) {
+                    allImports.add(BeanValidation.VALID.import)
+                }
+
+                val colAnnotations = mutableSetOf<String>()
+                colAnnotations.addAll(annotations)
+
+                val itemAnnotations = mutableSetOf<String>()
+                if (dataType !is ArrayDataType) {
+                    itemAnnotations.add(BeanValidation.VALID.annotation)
+                }
+
+                BeanValidationValue(
+                    cdt.getTypeName(colAnnotations, itemAnnotations),
+                    allImports,
+                    emptyList())
+            } else {
+                val allImports = mutableSetOf<String>()
+                allImports.addAll(imports)
+                if (dataType !is ArrayDataType) {
+                    allImports.addAll(item.imports)
+                }
+
+                val colAnnotations = mutableSetOf<String>()
+                colAnnotations.addAll(annotations)
+
+                val itemAnnotations = mutableSetOf<String>()
+                if (dataType !is ArrayDataType) {
+                    itemAnnotations.addAll(item.annotations)
+                }
+
+                BeanValidationValue(
+                    cdt.getTypeName(colAnnotations, itemAnnotations),
+                    allImports,
+                    emptyList())
+            }
         }
 
 }

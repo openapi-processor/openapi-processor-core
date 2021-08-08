@@ -22,6 +22,17 @@ class ArrayDataType(
         return "${item.getTypeName()}[]"
     }
 
+    override fun getTypeName(annotations: Set<String>, itemAnnotations: Set<String>): String {
+        val sb = StringBuilder()
+
+        if (annotations.isNotEmpty()) {
+            sb.append(annotations.joinToString(" ", "", " "))
+        }
+        sb.append(getTypeName())
+
+        return sb.toString()
+    }
+
     override fun getPackageName(): String {
         return item.getPackageName()
     }

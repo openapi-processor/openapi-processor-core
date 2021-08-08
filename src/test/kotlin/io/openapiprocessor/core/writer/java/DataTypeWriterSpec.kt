@@ -77,7 +77,7 @@ class DataTypeWriterSpec: StringSpec({
         options.beanValidation = true
         val validation = object : BeanValidationFactory() {
             override fun validate(dataType: ModelDataType): BeanValidationInfo {
-                return BeanValidationInfoObject(
+                return BeanValidationInfoProperty(
                     dataType, setOf("foo.Foo"), listOf("@Foo"))
             }
         }
@@ -99,7 +99,7 @@ class DataTypeWriterSpec: StringSpec({
         options.beanValidation = true
         val validation = object : BeanValidationFactory() {
             override fun validate(dataType: ModelDataType): BeanValidationInfo {
-                return BeanValidationInfoObject(
+                return BeanValidationInfoProperty(
                     dataType, setOf("foo.Foo"), listOf("@Foo"))
             }
         }

@@ -25,8 +25,20 @@ open class MappedCollectionDataType(
         return "${name}<${item.getTypeName()}>"
     }
 
-    fun getTypeNameWithAnnotatedItem(annotation: String): String {
-        return "${name}<$annotation ${item.getTypeName()}>"
+    override fun getTypeName(annotations: Set<String>, itemAnnotations: Set<String>): String {
+        val sb = StringBuilder()
+
+        if (annotations.isNotEmpty()) {
+            sb.append(annotations.joinToString(" ", "", " "))
+        }
+        sb.append("$name<")
+
+        if (itemAnnotations.isNotEmpty()) {
+            sb.append(itemAnnotations.joinToString(" ", "", " "))
+        }
+        sb.append("${item.getTypeName()}>")
+
+        return sb.toString()
     }
 
     override fun getPackageName(): String {

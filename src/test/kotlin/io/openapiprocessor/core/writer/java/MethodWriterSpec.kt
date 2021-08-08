@@ -54,7 +54,7 @@ class MethodWriterSpec: StringSpec({
         target.toString () shouldBe
             """    
             |    @CoreMapping
-            |    void getFoo(@NotNull @Parameter String foo);
+            |    void getFoo(@Parameter @NotNull String foo);
             |
             """.trimMargin()
     }

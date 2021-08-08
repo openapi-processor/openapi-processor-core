@@ -7,4 +7,6 @@ package io.openapiprocessor.core.model.datatypes
 
 interface CollectionDataType {
     val item: DataType
+
+    fun getTypeName(annotations: Set<String>, itemAnnotations: Set<String>): String
 }

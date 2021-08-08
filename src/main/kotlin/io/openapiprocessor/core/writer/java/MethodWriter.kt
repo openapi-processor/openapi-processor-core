@@ -89,30 +89,28 @@ open class MethodWriter(
 
     private fun createParameters(endpoint: Endpoint): String {
         val ps = endpoint.parameters.map {
-            var methodDefinition = ""
 
-            if (apiOptions.beanValidation) {
+            val dataTypeValue = if (apiOptions.beanValidation) {
                 val info = beanValidationFactory.validate(it.dataType, it.required)
-                methodDefinition += " " + info.annotations.joinToString(" ")
+                info.inout.dataTypeValue
+            } else {
+                it.dataType.getTypeName()
             }
 
-            val annotation = createParameterAnnotation (it)
-            if (annotation.isNotEmpty()) {
-                methodDefinition += " $annotation"
-            }
-
-            methodDefinition += " ${it.dataType.getTypeName()} ${toCamelCase (it.name)}"
-            methodDefinition.trim()
+             "${createParameterAnnotation(it)} $dataTypeValue ${toCamelCase (it.name)}".trim()
         }.toMutableList()
 
         if (endpoint.requestBodies.isNotEmpty()) {
             val body = endpoint.getRequestBody()
-            var beanValidationAnnotations = ""
-            if (apiOptions.beanValidation) {
+
+            val dataTypeValue = if (apiOptions.beanValidation) {
                 val info = beanValidationFactory.validate(body.dataType, false)
-                beanValidationAnnotations += " ${info.annotations.joinToString(" ")}"
+                info.inout.dataTypeValue
+            } else {
+                body.dataType.getTypeName()
             }
-            val param = "$beanValidationAnnotations ${createParameterAnnotation(body)} ${body.dataType.getTypeName()} ${body.name}"
+
+            val param = "${createParameterAnnotation(body)} $dataTypeValue ${body.name}"
             ps.add (param.trim())
         }
 
