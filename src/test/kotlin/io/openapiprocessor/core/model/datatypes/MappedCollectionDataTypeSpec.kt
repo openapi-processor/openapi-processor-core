@@ -31,4 +31,26 @@ class MappedCollectionDataTypeSpec : StringSpec({
         }
     }
 
+    "annotates collection and/or model item type" {
+        val collection = MappedCollectionDataType("List", "java",
+            ObjectDataType(DataTypeName("Foo", "FooX"), "pkg", linkedMapOf()))
+
+        collection.getTypeName(emptySet(), emptySet()) shouldBe "List<FooX>"
+
+        collection.getTypeName(
+            setOf("@One", "@Two"),
+            emptySet()
+        ) shouldBe "@One @Two List<FooX>"
+
+        collection.getTypeName(
+            emptySet(),
+            setOf("@One", "@Two")
+        ) shouldBe "List<@One @Two FooX>"
+
+        collection.getTypeName(
+            setOf("@One", "@Two"),
+            setOf("@OneItem", "@TwoItem")
+        ) shouldBe "@One @Two List<@OneItem @TwoItem FooX>"
+    }
+
 })

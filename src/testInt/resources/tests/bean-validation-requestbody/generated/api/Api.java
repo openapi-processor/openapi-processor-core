@@ -7,16 +7,12 @@ package generated.api;
 
 import annotation.Mapping;
 import annotation.Parameter;
-import generated.model.Foo;
-import generated.model.FooL;
-import javax.validation.Valid;
+import java.util.List;
+import javax.validation.constraints.Size;
 
 public interface Api {
 
     @Mapping("/foo")
-    void postFoo(@Parameter @Valid Foo body);
-
-    @Mapping("/fooL")
-    void postFooL(@Parameter @Valid FooL body);
+    void postFoo(@Parameter List<@Size(min = 2, max = 2) String> body);
 
 }

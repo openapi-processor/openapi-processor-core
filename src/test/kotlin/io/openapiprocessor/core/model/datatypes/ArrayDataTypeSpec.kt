@@ -27,4 +27,31 @@ class ArrayDataTypeSpec : StringSpec({
         }
     }
 
+    "annotates collection and/or model item type" {
+        val collection = ArrayDataType(
+            ObjectDataType(DataTypeName("Foo", "FooX"), "pkg", linkedMapOf()))
+
+        collection.getTypeName(
+            emptySet(),
+            emptySet()
+        ) shouldBe "FooX[]"
+
+        collection.getTypeName(
+            setOf("@One", "@Two"),
+            emptySet()
+        ) shouldBe "@One @Two FooX[]"
+
+        // can't annotate item of array
+
+        collection.getTypeName(
+            emptySet(),
+            setOf("@One", "@Two")
+        ) shouldBe "FooX[]"
+
+        collection.getTypeName(
+            setOf("@One", "@Two"),
+            setOf("@OneItem", "@TwoItem")
+        ) shouldBe "@One @Two FooX[]"
+    }
+
 })

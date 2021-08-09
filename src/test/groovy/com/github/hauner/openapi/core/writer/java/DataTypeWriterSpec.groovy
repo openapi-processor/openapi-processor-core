@@ -6,6 +6,7 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.model.datatypes.DataTypeName
 import io.openapiprocessor.core.model.datatypes.ObjectDataType as ObjectDataTypeP
 import io.openapiprocessor.core.model.datatypes.StringDataType
@@ -76,7 +77,7 @@ package $pkg;
 
     void "writes import of generic list type" () {
         def dataType = new ObjectDataType ('Book', 'mine', [
-            'authors': new ListDataType (new StringDataType())
+            'authors': new ListDataType (new StringDataType(), new DataTypeConstraints())
         ], null, false, null)
 
         when:
@@ -89,8 +90,9 @@ package $pkg;
 
     void "writes import of generic object list type" () {
         def dataType = new ObjectDataType ('Foo', 'mine', [
-            'bars': new ListDataType (new ObjectDataTypeP (new DataTypeName(id, type), 'other', [:],
-                null, false, null))
+            'bars': new ListDataType (
+                new ObjectDataTypeP (new DataTypeName(id, type), 'other', [:],
+                    null, false, null), new DataTypeConstraints())
         ], null, false, null)
 
         when:

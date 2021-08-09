@@ -47,10 +47,8 @@ class DataTypeWriter(
 
         if (apiOptions.beanValidation) {
             val objectInfo = validationAnnotations.validate(dataType)
-            if(objectInfo.hasAnnotations) {
-                objectInfo.annotations.forEach {
-                    target.write("$it\n")
-                }
+            objectInfo.annotations.forEach {
+                target.write("$it\n")
             }
         }
 
@@ -86,10 +84,11 @@ class DataTypeWriter(
         var propTypeName = propDataType.getTypeName()
         if(apiOptions.beanValidation) {
             val info = validationAnnotations.validate(propDataType, required)
-            if (info.hasAnnotations) {
-                result += "    ${info.annotations.joinToString(" ")}\n"
+            val prop = info.prop
+            prop.annotations.forEach {
+                result += "    ${it}\n"
             }
-            propTypeName = info.typeName
+            propTypeName = prop.dataTypeValue
         }
 
         result += "    @JsonProperty(\"$propertyName\")\n"
@@ -152,16 +151,16 @@ class DataTypeWriter(
         imports.addAll(dataType.referencedImports)
 
         if (apiOptions.beanValidation) {
-            val objectInfo = validationAnnotations.validate(dataType)
-            if (objectInfo.hasAnnotations) {
-                imports.addAll(objectInfo.imports)
-            }
+            val info = validationAnnotations.validate(dataType)
+            val prop = info.prop
+            imports.addAll(prop.imports)
 
             dataType.forEach { propName, propDataType ->
                 val propInfo = validationAnnotations.validate(
                     propDataType, dataType.isRequired(propName))
 
-                imports.addAll(propInfo.imports)
+                val propProp = propInfo.prop
+                imports.addAll(propProp.imports)
             }
         }
 

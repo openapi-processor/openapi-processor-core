@@ -17,15 +17,24 @@ open class BeanValidationFactory {
      * override to add annotations to the model object class.
      */
     open fun validate(dataType: ModelDataType): BeanValidationInfo {
-        return BeanValidationInfoObject(dataType, emptySet(), emptyList())
+        return BeanValidationInfoSimple(dataType, emptySet(), emptyList())
     }
 
     fun validate(dataType: DataType, required: Boolean = false): BeanValidationInfo {
-        return BeanValidationInfoProperty(
-            dataType,
-            collectImports(dataType, required),
-            collectAnnotations(dataType, required)
-        )
+        return if (dataType is CollectionDataType) {
+            BeanValidationInfoCollection(
+                dataType,
+                collectImports(dataType, required),
+                collectAnnotations(dataType, required),
+                validate(dataType.item, false)
+            )
+        } else {
+            BeanValidationInfoSimple(
+                dataType,
+                collectImports(dataType, required),
+                collectAnnotations(dataType, required)
+            )
+        }
     }
 
     private fun collectImports(dataType: DataType, required: Boolean = false): Set<String> {
@@ -58,6 +67,7 @@ open class BeanValidationFactory {
         return imports
     }
 
+    // uses list to keep order
     private fun collectAnnotations(dataType: DataType, required: Boolean = false): List<String> {
         val annotations = mutableListOf<String>()
 
