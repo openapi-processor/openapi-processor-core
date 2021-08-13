@@ -50,7 +50,8 @@ class TestSets {
         'response-single-multi-mapping',
         'schema-composed',
         'schema-composed-allof',
-        'schema-composed-allof-notype'
+        'schema-composed-allof-notype',
+        'schema-composed-nested'
     ]
 
 }

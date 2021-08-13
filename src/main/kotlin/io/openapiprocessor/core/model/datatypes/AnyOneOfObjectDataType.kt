@@ -21,12 +21,16 @@ class AnyOneOfObjectDataType(
         return name
     }
 
+    override fun getTypeName(): String {
+        return "Object"
+    }
+
     override fun getPackageName(): String {
         return pkg
     }
 
     override fun getImports(): Set<String> {
-        return setOf("${getPackageName()}.${getName()}")
+        return emptySet()
     }
 
     fun forEach(action: (dataType: DataType) -> Unit) {
