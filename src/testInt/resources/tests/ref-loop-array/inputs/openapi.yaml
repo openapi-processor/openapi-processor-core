@@ -7,7 +7,7 @@ paths:
   /response-ref:
     get:
       responses:
-        200:
+        '200':
           description: array item $ref
           content:
             application/json:
