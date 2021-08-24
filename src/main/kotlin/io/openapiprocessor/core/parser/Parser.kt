@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.parser
 
 import io.openapiprocessor.core.parser.swagger.Parser as Swagger
+import io.openapiprocessor.core.parser.openapi.Parser as OpenApiParser
 import io.openapiprocessor.core.parser.openapi4j.Parser as OpenApi4J
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -28,10 +29,14 @@ class Parser {
                 log.info("using OPENAPI4J parser")
                 return OpenApi4J().parse(apiPath)
             }
+            ParserType.BUILTIN.name -> {
+                log.info("using BUILTIN parser")
+                return OpenApiParser().parse(apiPath)
+            }
             else -> {
                 if (parser != null) {
                     log.warn("unknown parser type: {}", parser)
-                    log.warn("available parsers: SWAGGER, OPENAPI4J")
+                    log.warn("available parsers: SWAGGER, OPENAPI4J, BUILTIN")
                 }
                 return Swagger().parse(apiPath)
             }

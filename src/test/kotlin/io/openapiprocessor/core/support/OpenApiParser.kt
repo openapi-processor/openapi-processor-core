@@ -13,6 +13,7 @@ import io.openapiprocessor.test.stream.Memory
 import io.swagger.v3.parser.OpenAPIV3Parser
 import org.openapi4j.parser.OpenApi3Parser
 import org.openapi4j.parser.validation.v3.OpenApi3Validator
+import java.lang.Exception
 import java.net.URL
 
 /**
@@ -24,6 +25,7 @@ fun parse(apiYaml: String, parserType: ParserType = ParserType.SWAGGER): ParserO
     return when (parserType) {
         ParserType.SWAGGER -> parseWithSwagger(apiYaml)
         ParserType.OPENAPI4J -> parseWithOpenApi4j(apiYaml)
+        ParserType.BUILTIN -> throw Exception()
     }
 }
 
