@@ -16,10 +16,12 @@
 
 package io.openapiprocessor.core.parser.swagger
 
+import io.openapiprocessor.core.parser.ParserException
 import io.openapiprocessor.core.support.toURL
 import io.swagger.v3.parser.OpenAPIV3Parser
 import io.swagger.v3.parser.core.models.ParseOptions
-import io.swagger.v3.parser.core.models.SwaggerParseResult
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 
 const val SCHEME_RESOURCE = "resource:"
@@ -30,15 +32,49 @@ const val SCHEME_RESOURCE = "resource:"
  * @author Martin Hauner
  */
 open class Parser {
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
+
+    private enum class Source {URL, STRING}
 
     fun parse(apiPath: String): ParserOpenApi {
+        try {
+            return run(apiPath, Source.URL)
+        } catch (ex: Exception) {
+            log.error("can't read OpenAPI description!")
+            throw ParserException(ex)
+        }
+    }
+
+    /** test only */
+    fun parseString(api: String): ParserOpenApi {
+        try {
+            return run(api, Source.STRING)
+        } catch (ex: Exception) {
+            throw ParserException(ex)
+        }
+    }
+
+    private fun run(api: String, source: Source): ParserOpenApi {
         val opts = ParseOptions()
         // loads $refs to other files into #/components/schema and replaces the $refs to the
         // external files with $refs to #/components/schema.
         opts.isResolve = true
 
-        val result: SwaggerParseResult = OpenAPIV3Parser()
-                  .readLocation(preparePath(apiPath), null, opts)
+        val result = when(source) {
+            Source.URL -> {
+                OpenAPIV3Parser().readLocation(preparePath(api), null, opts)
+            }
+            Source.STRING -> {
+                OpenAPIV3Parser().readContents(api, null, opts)
+            }
+        }
+
+        if (result.openAPI == null) {
+            result.messages?.forEach {
+                log.error(it)
+            }
+            throw FailedException()
+        }
 
         return OpenApi(result)
     }

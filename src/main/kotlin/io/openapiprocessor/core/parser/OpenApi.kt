@@ -26,6 +26,8 @@ interface OpenApi {
     fun getPaths(): Map<String, Path>
 
     fun getRefResolver(): RefResolver
+
     fun printWarnings()
+    fun hasWarnings(): Boolean
 
 }

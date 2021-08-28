@@ -9,6 +9,8 @@ import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
 import io.openapiprocessor.core.parser.Path as ParserPath
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import org.openapi4j.core.validation.ValidationResults
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.openapi4j.parser.model.v3.OpenApi3 as O4jOpenApi
 import org.openapi4j.parser.model.v3.Path as O4jPath
 
@@ -19,6 +21,8 @@ class OpenApi(
     private val api: O4jOpenApi,
     private val validations: ValidationResults,
 ): ParserOpenApi {
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
+
     private val refResolver: RefResolverNative = RefResolverNative(api)
 
     override fun getPaths(): Map<String, ParserPath> {
@@ -39,7 +43,14 @@ class OpenApi(
     override fun getRefResolver(): ParserRefResolver = RefResolver (api)
 
     override fun printWarnings() {
-        // already prints warnings
+        validations.items()
+            .forEach {
+                log.warn("{} - {} ({}}", it.severity(), it.message(), it.code())
+            }
+    }
+
+    override fun hasWarnings(): Boolean {
+        return validations.items().isNotEmpty()
     }
 
 }

@@ -45,17 +45,13 @@ class OpenApi(private val result: SwaggerParseResult): ParserOpenApi {
     override fun getRefResolver(): ParserRefResolver = RefResolver (result.openAPI)
 
     override fun printWarnings() {
-        print (result.messages)
-    }
-
-    private fun print (warnings: List<String>) {
-        if (warnings.isEmpty()) {
-            return
-        }
-
-        warnings.forEach {
+        result.messages?.forEach {
             log.warn(it)
         }
+    }
+
+    override fun hasWarnings(): Boolean {
+        return result.messages.isNotEmpty()
     }
 
 }
