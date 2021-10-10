@@ -32,7 +32,7 @@ String getBuildSignKey(String property) {
 
 ext {
     processorApiVersion = '2021.1'
-    processorTestVersion = '2021.6-SNAPSHOT'
+    processorTestVersion = '2021.5'
     groovyVersion = '3.0.9'
 
     publishUser = getBuildProperty ('PUBLISH_USER')
