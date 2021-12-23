@@ -53,7 +53,7 @@ class SchemaInfo(
      * schema.
      *
      * The swagger parser (resolve option) creates schemas for intermediate $refs where the name is
-     * based on the filename. This breaks code generation because the original/public name of the
+     * based on the filename. It breaks code generation because the original/public name of the
      * schema is lost.
      */
     private var refName: Boolean = false
@@ -218,6 +218,12 @@ class SchemaInfo(
 
     val pattern: String?
         get() = schema?.pattern
+
+    val readOnly: Boolean
+        get() = schema?.readOnly ?: false
+
+    val writeOnly: Boolean
+        get() = schema?.writeOnly ?: false
 
     /**
      * iterate over properties

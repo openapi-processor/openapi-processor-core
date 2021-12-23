@@ -116,5 +116,10 @@ class Schema(private val schema: SwaggerSchema<*>): ParserSchema {
     override val pattern: String?
         get() = schema.pattern
 
+    override val readOnly: Boolean
+        get() = schema.readOnly ?: false
+
+    override val writeOnly: Boolean
+        get() = schema.writeOnly ?: false
 
 }
