@@ -162,6 +162,13 @@ class DataTypeConverter(
             if (propSchemaInfo.getNullable()) {
                 propDataType = nullWrapper.wrap(propDataType, schemaInfo)
             }
+
+            propDataType = PropertyDataType(
+                propSchemaInfo.readOnly,
+                propSchemaInfo.writeOnly,
+                propDataType
+            )
+
             properties[propName] = propDataType
         }
 

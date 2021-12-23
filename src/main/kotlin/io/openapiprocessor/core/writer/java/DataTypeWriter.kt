@@ -9,6 +9,7 @@ import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.model.datatypes.NullDataType
+import io.openapiprocessor.core.model.datatypes.PropertyDataType
 import io.openapiprocessor.core.support.capitalizeFirstChar
 import java.io.Writer
 
@@ -56,7 +57,7 @@ class DataTypeWriter(
 
         dataType.forEach { propName, propDataType ->
             val javaPropertyName = toCamelCase(propName)
-            target.write(getProp(propName, javaPropertyName, propDataType,
+            target.write(getProp(propName, javaPropertyName, propDataType as PropertyDataType,
                 dataType.isRequired(propName)))
         }
 
@@ -70,8 +71,10 @@ class DataTypeWriter(
     }
 
     private fun getProp(
-        propertyName: String, javaPropertyName: String,
-        propDataType: DataType, required: Boolean): String {
+        propertyName: String,
+        javaPropertyName: String,
+        propDataType: PropertyDataType,
+        required: Boolean): String {
 
         var result = ""
 
@@ -91,16 +94,42 @@ class DataTypeWriter(
             propTypeName = prop.dataTypeValue
         }
 
-        result += "    @JsonProperty(\"$propertyName\")\n"
+        result += "    ${getPropertyAnnotation(propertyName, propDataType)}\n"
         result += "    private $propTypeName $javaPropertyName"
 
-        // null may have an init value
-        if (propDataType is NullDataType && propDataType.init != null) {
-            result += " = ${propDataType.init}"
+        // null (JsonNullable) may have an init value
+        val dataType = propDataType.dataType
+        if (dataType is NullDataType && dataType.init != null) {
+            result += " = ${dataType.init}"
         }
 
         result += ";\n\n"
         return result
+    }
+
+    private fun getPropertyAnnotation(propertyName: String, propDataType: PropertyDataType): String {
+        val access = getAccess(propDataType)
+
+        var result = "@JsonProperty("
+        if (access != null) {
+            result += "value = \"$propertyName\", access = JsonProperty.Access.${access.value}"
+        } else {
+            result += "\"$propertyName\""
+        }
+
+        result += ")"
+        return result
+    }
+
+    private fun getAccess(propDataType: PropertyDataType): PropertyAccess? {
+        if (!propDataType.readOnly && !propDataType.writeOnly)
+            return null
+
+        return when {
+            propDataType.readOnly -> PropertyAccess("READ_ONLY")
+            propDataType.writeOnly -> PropertyAccess("WRITE_ONLY")
+            else -> throw IllegalStateException()
+        }
     }
 
     private fun getGetter(propertyName: String, propDataType: DataType): String {
@@ -170,3 +199,5 @@ class DataTypeWriter(
     }
 
 }
+
+class PropertyAccess(val value: String)
