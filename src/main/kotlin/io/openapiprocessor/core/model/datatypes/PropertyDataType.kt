@@ -5,6 +5,8 @@
 
 package io.openapiprocessor.core.model.datatypes
 
+import io.openapiprocessor.core.model.Documentation
+
 /**
  * schema "properties" data type wrapper. readOnly/writeOnly may be different on each use of the
  * same schema as a property in another schema.
@@ -19,6 +21,10 @@ open class PropertyDataType(
         return dataType.getName()
     }
 
+    override fun getTypeName(): String {
+        return dataType.getTypeName()
+    }
+
     override fun getPackageName(): String {
         return dataType.getPackageName()
     }
@@ -26,6 +32,18 @@ open class PropertyDataType(
     override fun getImports(): Set<String> {
         return dataType.getImports()
     }
+
+    override val referencedImports: Set<String>
+        get() = dataType.referencedImports
+
+    override val constraints: DataTypeConstraints?
+        get() = dataType.constraints
+
+    override val deprecated: Boolean
+        get() = dataType.deprecated
+
+    override val documentation: Documentation?
+        get() = dataType.documentation
 
 }
 
