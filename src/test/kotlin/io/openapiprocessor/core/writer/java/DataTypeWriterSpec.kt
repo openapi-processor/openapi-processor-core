@@ -13,6 +13,7 @@ import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.extractImports
 import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.model.datatypes.ModelDataType
+import io.openapiprocessor.core.model.datatypes.PropertyDataType
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.support.datatypes.ListDataType
@@ -120,6 +121,26 @@ class DataTypeWriterSpec: StringSpec({
             |public class Foo {
             |
             """.trimMargin()
+    }
+
+    "writes properties with @JsonProperty access annotation" {
+        val dataType = ObjectDataType ("Foo", "pkg", linkedMapOf(
+            "foo" to PropertyDataType (true, false, StringDataType ()),
+            "bar" to PropertyDataType (false, true, StringDataType ())
+        ))
+
+        // when:
+        writer.write (target, dataType)
+
+        // then:
+        target.toString ().contains ("""\
+    @JsonProperty(value = "foo", access = JsonProperty.Access.READ_ONLY)
+    private String foo;
+
+    @JsonProperty(value = "bar", access = JsonProperty.Access.WRITE_ONLY)
+    private String bar;
+
+""")
     }
 
 })
