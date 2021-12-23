@@ -31,7 +31,7 @@ interface DataType {
     }
 
     /**
-     * The "package" of this type without [typeName].
+     * The "package" of this type without [getTypeName].
      */
     fun getPackageName(): String
 
