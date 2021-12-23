@@ -155,7 +155,7 @@ class DataTypeConverter(
     }
 
     private fun createObjectDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
-        val properties = LinkedHashMap<String, DataType>()
+        val properties = LinkedHashMap<String, PropertyDataType>()
         schemaInfo.eachProperty { propName: String, propSchemaInfo: SchemaInfo ->
             var propDataType = convert(propSchemaInfo, dataTypes)
 

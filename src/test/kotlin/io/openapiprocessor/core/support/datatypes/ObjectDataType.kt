@@ -6,8 +6,7 @@
 package io.openapiprocessor.core.support.datatypes
 
 import io.openapiprocessor.core.model.Documentation
-import io.openapiprocessor.core.model.datatypes.DataType
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
+import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.model.datatypes.DataTypeName
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 
@@ -17,7 +16,7 @@ import io.openapiprocessor.core.model.datatypes.ObjectDataType
 class ObjectDataType(
     nameId: String,
     pkg: String,
-    properties: LinkedHashMap<String, DataType> = linkedMapOf(),
+    properties: LinkedHashMap<String, PropertyDataType> = linkedMapOf(),
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false,
     documentation: Documentation? = null
