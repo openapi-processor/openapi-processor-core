@@ -6,7 +6,8 @@
 package io.openapiprocessor.core.model.datatypes
 
 /**
- * Null(able) data type wrapper. Assumes a single generic parameter.
+ * Null(able) data type wrapper, i.e. [org.openapitools.jackson.nullable.JsonNullable]. Assumes a
+ * single generic parameter.
  */
 class NullDataType(
     private val name: String,
