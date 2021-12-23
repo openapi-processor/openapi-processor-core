@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.openapiprocessor.core.misc
+package io.openapiprocessor.core.support
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -22,8 +22,6 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.NotWindows
 import io.openapiprocessor.core.Windows
-import io.openapiprocessor.core.support.toURL
-
 
 class PathSpec: StringSpec({
 
