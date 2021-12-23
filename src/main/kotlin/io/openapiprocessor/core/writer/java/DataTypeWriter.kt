@@ -86,7 +86,7 @@ class DataTypeWriter(
 
         var propTypeName = propDataType.getTypeName()
         if(apiOptions.beanValidation) {
-            val info = validationAnnotations.validate(propDataType, required)
+            val info = validationAnnotations.validate(propDataType.dataType, required)
             val prop = info.prop
             prop.annotations.forEach {
                 result += "    ${it}\n"
@@ -185,9 +185,8 @@ class DataTypeWriter(
             imports.addAll(prop.imports)
 
             dataType.forEach { propName, propDataType ->
-                val propInfo = validationAnnotations.validate(
-                    propDataType, dataType.isRequired(propName))
-
+                val target = getTarget(propDataType)
+                val propInfo = validationAnnotations.validate(target, dataType.isRequired(propName))
                 val propProp = propInfo.prop
                 imports.addAll(propProp.imports)
             }
@@ -196,6 +195,13 @@ class DataTypeWriter(
         return DefaultImportFilter()
             .filter(packageName, imports)
             .sorted()
+    }
+
+    private fun getTarget(dataType: DataType): DataType {
+        if (dataType is PropertyDataType)
+            return dataType.dataType
+
+        return dataType
     }
 
 }

@@ -16,6 +16,8 @@ import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.support.datatypes.ListDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
 import java.io.StringWriter
 
 class DataTypeWriterSpec: StringSpec({
@@ -29,7 +31,7 @@ class DataTypeWriterSpec: StringSpec({
         options.beanValidation = true
 
         val dataType = ObjectDataType("Foo", "pkg", linkedMapOf(
-            Pair("foo", StringDataType())
+            Pair("foo", propertyDataTypeString())
         ), DataTypeConstraints(required = listOf("foo")), false)
 
         // when:
@@ -44,7 +46,7 @@ class DataTypeWriterSpec: StringSpec({
         options.beanValidation = true
 
         val dataType = ObjectDataType("Foo", "pkg", linkedMapOf(
-            Pair("foo", StringDataType())
+            Pair("foo", propertyDataTypeString())
         ), DataTypeConstraints(required = listOf("foo")), false)
 
         // when:
@@ -62,8 +64,8 @@ class DataTypeWriterSpec: StringSpec({
 
     "writes import of nested generic list type" {
         val dataType = ObjectDataType("Foo", "pkg",
-            linkedMapOf("foos" to ListDataType(StringDataType())
-        ), null, false)
+            linkedMapOf("foos" to propertyDataType(ListDataType(StringDataType()))
+        ))
 
         // when:
         writer.write(target, dataType)
@@ -85,7 +87,7 @@ class DataTypeWriterSpec: StringSpec({
         writer = DataTypeWriter(options, headerWriter, validation)
 
         val dataType = ObjectDataType("Foo",
-            "pkg", linkedMapOf("foo" to StringDataType()))
+            "pkg", linkedMapOf("foo" to propertyDataTypeString()))
 
         // when:
         writer.write(target, dataType)
@@ -106,7 +108,7 @@ class DataTypeWriterSpec: StringSpec({
         writer = DataTypeWriter(options, headerWriter, validation)
 
         val dataType = ObjectDataType("Foo",
-            "pkg", linkedMapOf("foo" to StringDataType()))
+            "pkg", linkedMapOf("foo" to propertyDataTypeString()))
 
         // when:
         writer.write(target, dataType)

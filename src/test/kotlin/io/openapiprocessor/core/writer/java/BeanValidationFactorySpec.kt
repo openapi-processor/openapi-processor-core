@@ -11,6 +11,8 @@ import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.support.datatypes.ListDataType
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
 
 class BeanValidationFactorySpec: StringSpec({
     isolationMode = IsolationMode.InstancePerTest
@@ -19,7 +21,9 @@ class BeanValidationFactorySpec: StringSpec({
         val validation = BeanValidationFactory()
 
         val dataType = ArrayDataType(
-            ObjectDataType("Foo", "pkg", linkedMapOf("foo" to StringDataType())
+            ObjectDataType("Foo", "pkg", linkedMapOf(
+                "foo" to propertyDataTypeString()
+            )
         ))
         val info = validation.validate(dataType)
 
@@ -55,7 +59,7 @@ class BeanValidationFactorySpec: StringSpec({
         val validation = BeanValidationFactory()
 
         val dataType = MappedCollectionDataType("List", "pkg",
-            ObjectDataType("Foo", "pkg", linkedMapOf("foo" to StringDataType())
+            ObjectDataType("Foo", "pkg", linkedMapOf("foo" to propertyDataTypeString())
         ))
         val info = validation.validate(dataType)
 
@@ -150,9 +154,9 @@ class BeanValidationFactorySpec: StringSpec({
 
         val dataType = ListDataType(
             ObjectDataType("Foo", "pkg",
-                linkedMapOf("foo" to StringDataType(
+                linkedMapOf("foo" to propertyDataType(StringDataType(
                     constraints = DataTypeConstraints(minLength = 2, maxLength = 3))
-                )))
+                ))))
         val info = validation.validate(dataType, true)
 
         val prop = info.prop
@@ -198,9 +202,9 @@ class BeanValidationFactorySpec: StringSpec({
 
         val dataType = ArrayDataType(
             ObjectDataType("Foo", "pkg",
-                linkedMapOf("foo" to StringDataType(
+                linkedMapOf("foo" to propertyDataType(StringDataType(
                     constraints = DataTypeConstraints(minLength = 2, maxLength = 3))
-                )))
+                ))))
         val info = validation.validate(dataType, true)
 
         val prop = info.prop
