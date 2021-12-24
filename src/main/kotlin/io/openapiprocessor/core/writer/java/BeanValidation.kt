@@ -8,6 +8,7 @@ package io.openapiprocessor.core.writer.java
 enum class BeanValidation(val typeName: String) {
     DECIMAL_MAX("javax.validation.constraints.DecimalMax"),
     DECIMAL_MIN("javax.validation.constraints.DecimalMin"),
+    EMAIL("javax.validation.constraints.Email"),
     NOT_NULL("javax.validation.constraints.NotNull"),
     PATTERN("javax.validation.constraints.Pattern"),
     SIZE("javax.validation.constraints.Size"),

@@ -21,8 +21,8 @@ class DataTypeConstraints(
     var /*val*/ minItems: Int = 0,
     var /*val*/ maxItems: Int? = null,
     var pattern: String? = null,
-    var /*val*/ required: List<String> = emptyList()
-
+    var /*val*/ required: List<String> = emptyList(),
+    val format: String? = null
 ) {
 
     fun getDefault(): Any? = defaultValue

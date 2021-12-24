@@ -220,4 +220,20 @@ class BeanValidationFactorySpec: StringSpec({
         io.annotations shouldBe emptySet()
     }
 
+    "applies @Email to String" {
+        val validation = BeanValidationFactory()
+
+        val dataType = StringDataType(constraints = DataTypeConstraints(format = "email"))
+        val info = validation.validate(dataType)
+
+        val prop = info.prop
+        prop.dataTypeValue shouldBe "String"
+        info.imports shouldBe setOf(BeanValidation.EMAIL.import)
+        info.annotations shouldBe setOf(BeanValidation.EMAIL.annotation)
+
+        val io = info.inout
+        io.dataTypeValue shouldBe """${BeanValidation.EMAIL.annotation} String"""
+        io.imports shouldBe setOf(BeanValidation.EMAIL.import)
+        io.annotations shouldBe emptySet()
+    }
 })
