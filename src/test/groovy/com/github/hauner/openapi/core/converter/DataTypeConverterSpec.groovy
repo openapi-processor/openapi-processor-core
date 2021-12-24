@@ -150,7 +150,7 @@ class DataTypeConverterSpec extends Specification {
         def bar = dt.find ('Bar') as ObjectDataType
         bar.properties['val'].name == 'String'
         def foo = dt.find ('Foo') as ObjectDataType
-        foo.properties['bar'] == bar
+        foo.properties['bar'].dataType == bar
     }
 
     void "converts simple array schema to Array[]" () {

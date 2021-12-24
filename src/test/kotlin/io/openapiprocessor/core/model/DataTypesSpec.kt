@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2021 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -8,6 +8,7 @@ package io.openapiprocessor.core.model
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.model.datatypes.DataTypeName
+import io.openapiprocessor.core.model.datatypes.PropertyDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
@@ -18,7 +19,10 @@ class DataTypesSpec : StringSpec({
 
     "does not provide unused model data types" {
         dataTypes.add(ObjectDataType("Foo", "any", linkedMapOf(
-            Pair("foo", StringDataType())
+            Pair("foo", PropertyDataType(
+                readOnly = false,
+                writeOnly = false,
+                dataType = StringDataType()))
         )))
 
         dataTypes.getModelDataTypes().size shouldBe 0
@@ -26,7 +30,11 @@ class DataTypesSpec : StringSpec({
 
     "does provide used model data types" {
         dataTypes.add(ObjectDataType("Foo", "any", linkedMapOf(
-            Pair("foo", StringDataType())
+            Pair("foo", PropertyDataType(
+                readOnly = false,
+                writeOnly = false,
+                dataType = StringDataType()
+            ))
         )))
         dataTypes.addRef("Foo")
 

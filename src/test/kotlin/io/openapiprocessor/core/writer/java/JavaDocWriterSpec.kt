@@ -17,6 +17,7 @@ import io.openapiprocessor.core.model.Documentation
 import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.model.parameters.ParameterBase
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
 
 class JavaDocWriterSpec: StringSpec({
 
@@ -229,7 +230,7 @@ class JavaDocWriterSpec: StringSpec({
 
     "converts property schema without description to empty string" {
         val datatype = ObjectDataType( "Foo", "pkg", linkedMapOf(
-            Pair("bar", StringDataType())
+            Pair("bar", propertyDataTypeString())
         ))
 
         val html = writer.convert(datatype)

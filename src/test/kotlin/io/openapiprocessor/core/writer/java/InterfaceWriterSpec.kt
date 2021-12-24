@@ -24,6 +24,7 @@ import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.Parameter
 import io.openapiprocessor.core.model.parameters.ParameterBase
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
 import java.io.StringWriter
 import java.io.Writer
 import io.mockk.mockk as stub
@@ -186,8 +187,8 @@ class InterfaceWriterSpec: StringSpec({
             endpoint("/foo") {
                 parameters {
                     query("foo", ObjectDataType("Foo", "model", linkedMapOf(
-                        Pair("foo1", StringDataType()),
-                        Pair("foo2", StringDataType())
+                        Pair("foo1", propertyDataTypeString()),
+                        Pair("foo2", propertyDataTypeString())
                     )))
                 }
                 responses { status("200") }

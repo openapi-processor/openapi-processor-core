@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: read/write only
+  version: 1.0.0
+
+paths:
+
+  /foo:
+    get:
+      responses:
+        '200':
+          description: the foo result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+
+    Foo:
+      type: object
+      properties:
+        bar:
+          $ref: '#/components/schemas/Bar'
+        barRO:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/Bar'
+        barWO:
+          writeOnly: true
+          allOf:
+            - $ref: '#/components/schemas/Bar'
+        barNameRO:
+          readOnly: true
+          type: string
+        barNameWO:
+          writeOnly: true
+          type: string
+
+    Bar:
+      type: object
+      properties:
+        bar:
+          type: string
