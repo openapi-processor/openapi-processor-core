@@ -12,8 +12,6 @@ import io.openapiprocessor.test.stream.Memory
 
 class ParserSpec : StringSpec({
 
-
-
     "catch parser validation exception" {
         Memory.add("openapi.yaml", """
             openapi: 3.0.3
