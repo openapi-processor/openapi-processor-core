@@ -109,7 +109,7 @@ dependencies {
     implementation platform("com.fasterxml.jackson:jackson-bom:2.13.1")
 
     implementation 'org.openapi4j:openapi-parser:1.0.7'
-    implementation ('io.swagger.parser.v3:swagger-parser:2.0.28') {
+    implementation ('io.swagger.parser.v3:swagger-parser:2.0.29') {
         exclude group: 'io.swagger.parser.v3', module: 'swagger-parser-v2-converter'
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }

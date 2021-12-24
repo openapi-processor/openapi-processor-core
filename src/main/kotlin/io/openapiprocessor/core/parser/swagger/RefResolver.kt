@@ -27,13 +27,13 @@ class RefResolver(private val openapi: OpenAPI): ParserRefResolver {
         return ParserNamedSchema(refName, Schema(schema))
     }
 
-    private fun getRefName(ref: String): String? {
+    private fun getRefName(ref: String): String {
         val split = ref.split('#')
         if (split.size > 1) {
             val hash = split[1]
             return hash.substring(hash.lastIndexOf('/') + 1)
         }
-        return null
+        return ref
     }
 
 }

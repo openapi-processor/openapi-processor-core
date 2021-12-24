@@ -21,7 +21,7 @@ class ProcessorPendingSpec: StringSpec({
     val folder = tempdir()
 
     for (testSet in sources()) {
-        "native - $testSet".config(enabled = false) {
+        "native - $testSet".config(enabled = true) {
             TestSetRunner(testSet, FileSupport(ProcessorPendingSpec::class.java))
                 .runOnNativeFileSystem(folder)
                 .shouldBeTrue()
@@ -31,8 +31,9 @@ class ProcessorPendingSpec: StringSpec({
 
 private fun sources(): Collection<TestSet> {
     return listOf(
-        testSet("javadoc", TestProcessor(), ParserType.SWAGGER),
-        testSet("javadoc", TestProcessor(), ParserType.OPENAPI4J)
+        testSet("ref-chain-spring-124.1", TestProcessor(), ParserType.SWAGGER),
+//        testSet("bean-validation", TestProcessor(), ParserType.SWAGGER),
+//        testSet("javadoc", TestProcessor(), ParserType.OPENAPI4J)
     )
 }
 
