@@ -6,8 +6,8 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id "org.sonarqube" version "3.3"
-    id 'org.jetbrains.dokka' version '1.5.31'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id 'org.jetbrains.dokka' version '1.6.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
     id 'org.unbroken-dome.test-sets' version '4.0.0'
     id 'com.github.ben-manes.versions' version '0.39.0'
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
@@ -102,11 +102,11 @@ compileTestKotlin {
 //}
 
 dependencies {
-    antlr 'org.antlr:antlr4:4.9.2'
+    antlr 'org.antlr:antlr4:4.9.3'
 
     compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
-    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.5.31")
-    implementation platform("com.fasterxml.jackson:jackson-bom:2.13.0")
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.6.10")
+    implementation platform("com.fasterxml.jackson:jackson-bom:2.13.1")
 
     implementation 'org.openapi4j:openapi-parser:1.0.7'
     implementation ('io.swagger.parser.v3:swagger-parser:2.0.28') {
@@ -117,9 +117,9 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation ('org.apache.commons:commons-text:1.9')
     implementation ('com.atlassian.commonmark:commonmark:0.17.0')
-    implementation ('com.google.googlejavaformat:google-java-format:1.11.0')
+    implementation ('com.google.googlejavaformat:google-java-format:1.13.0')
     implementation ('com.google.guava:guava:31.0.1-jre')
-    implementation ('com.networknt:json-schema-validator:1.0.61')
+    implementation ('com.networknt:json-schema-validator:1.0.64')
 
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     testImplementation ("io.openapiprocessor:openapi-processor-test:$processorTestVersion")
@@ -128,7 +128,7 @@ dependencies {
     testImplementation ("org.codehaus.groovy:groovy")
     testImplementation ("org.codehaus.groovy:groovy-nio")
     testImplementation ('org.spockframework:spock-core:2.0-groovy-3.0')
-    testImplementation platform("org.junit:junit-bom:5.8.1")
+    testImplementation platform("org.junit:junit-bom:5.8.2")
     testImplementation ("org.junit.jupiter:junit-jupiter-api")
     testImplementation ("org.junit.jupiter:junit-jupiter-params")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine")
