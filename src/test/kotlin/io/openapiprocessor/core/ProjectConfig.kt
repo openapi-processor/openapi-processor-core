@@ -6,7 +6,7 @@
 package io.openapiprocessor.core
 
 import io.kotest.core.Tag
-import io.kotest.core.Tags
+import io.kotest.core.TagExpression
 import io.kotest.core.TestConfiguration
 import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.extensions.TagExtension
@@ -19,12 +19,12 @@ object NotWindows: Tag()
 
 object SystemTagExtension: TagExtension {
 
-    override fun tags(): Tags {
+    override fun tags(): TagExpression {
 
         return if(isWindows()) {
-            Tags.exclude(NotWindows)
+            TagExpression.exclude(NotWindows)
         } else {
-            Tags.exclude(Windows)
+            TagExpression.exclude(Windows)
         }
     }
 

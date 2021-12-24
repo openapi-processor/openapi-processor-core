@@ -5,9 +5,8 @@
 
 package io.openapiprocessor.core.writer.java
 
-import io.kotest.core.datatest.forAll
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.data.row
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import io.mockk.every
@@ -239,17 +238,19 @@ class JavaDocWriterSpec: StringSpec({
     }
 
     "converts property schema description to javadoc comment" {
+        data class Type(val dt: DataType)
+
         val description = "*markdown* description with **text**"
 
-        forAll(
-            row(IntegerDataType(documentation = Documentation(description = description))),
-            row(LongDataType(documentation = Documentation(description = description))),
-            row(FloatDataType(documentation = Documentation(description = description))),
-            row(DoubleDataType(documentation = Documentation(description = description))),
-            row(BooleanDataType(documentation = Documentation(description = description))),
-            row(StringDataType(documentation = Documentation(description = description))),
-            row(LocalDateDataType(documentation = Documentation(description = description))),
-            row(OffsetDateTimeDataType(documentation = Documentation(description = description)))
+        withData(
+            Type(IntegerDataType(documentation = Documentation(description = description))),
+            Type(LongDataType(documentation = Documentation(description = description))),
+            Type(FloatDataType(documentation = Documentation(description = description))),
+            Type(DoubleDataType(documentation = Documentation(description = description))),
+            Type(BooleanDataType(documentation = Documentation(description = description))),
+            Type(StringDataType(documentation = Documentation(description = description))),
+            Type(LocalDateDataType(documentation = Documentation(description = description))),
+            Type(OffsetDateTimeDataType(documentation = Documentation(description = description)))
         ) { (type: DataType) ->
 
             val html = writer.convert(type)

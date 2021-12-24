@@ -12,13 +12,7 @@ import io.openapiprocessor.test.stream.Memory
 
 class ParserSpec : StringSpec({
 
-    "catch parser resource exception" {
-        val parser = Parser()
 
-        shouldThrow<ParserException> {
-            parser.parse("memory:openapi.yaml")
-        }
-    }
 
     "catch parser validation exception" {
         Memory.add("openapi.yaml", """
@@ -29,6 +23,14 @@ class ParserSpec : StringSpec({
         """.trimIndent()
         )
 
+        val parser = Parser()
+
+        shouldThrow<ParserException> {
+            parser.parse("memory:openapi.yaml")
+        }
+    }
+
+    "catch parser resource exception" {
         val parser = Parser()
 
         shouldThrow<ParserException> {
