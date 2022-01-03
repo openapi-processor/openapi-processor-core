@@ -1,4 +1,6 @@
 items:
   - generated/api/Api.java
+  - generated/api/MixedApi.java
+  - generated/api/NoneApi.java
   - generated/model/Error.java
   - generated/model/Foo.java

@@ -64,6 +64,10 @@ open class BeanValidationFactory {
             imports.add(BeanValidation.PATTERN.import)
         }
 
+        if (dataType.emailConstraint()) {
+            imports.add(BeanValidation.EMAIL.import)
+        }
+
         return imports
     }
 
@@ -93,6 +97,10 @@ open class BeanValidationFactory {
 
         if (dataType.patternConstraint()) {
             annotations.add(createPatternAnnotation(dataType))
+        }
+
+        if (dataType.emailConstraint()) {
+            annotations.add(BeanValidation.EMAIL.annotation)
         }
 
         return annotations
@@ -195,3 +203,5 @@ private fun DataType.lengthConstraints(): SizeConstraints = constraints?.lengthC
 private fun DataType.itemConstraints(): SizeConstraints = constraints?.itemConstraints!!
 
 private fun DataType.patternConstraint(): Boolean = constraints?.pattern != null
+
+private fun DataType.emailConstraint(): Boolean = "email" == constraints?.format

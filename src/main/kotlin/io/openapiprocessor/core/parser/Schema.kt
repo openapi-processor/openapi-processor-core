@@ -58,4 +58,6 @@ interface Schema {
 
     val pattern: String?
 
+    val readOnly: Boolean
+    val writeOnly: Boolean
 }

@@ -1,0 +1,6 @@
+== validate OpenAPI files
+
+run spectral
+
+  spectral lint ./**/inputs/openapi.yaml
+

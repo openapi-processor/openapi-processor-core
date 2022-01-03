@@ -53,6 +53,9 @@ class DataTypeCollector(
             is StringEnumDataType -> {
                 dataTypes.addRef(dataType.getName())
             }
+            is PropertyDataType -> {
+                collect(dataType.dataType)
+            }
         }
     }
 

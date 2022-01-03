@@ -21,6 +21,7 @@ import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.model.datatypes.LazyDataType
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
+import io.openapiprocessor.core.model.datatypes.PropertyDataType
 import spock.lang.Specification
 
 import static com.github.hauner.openapi.core.test.OpenApiParser.parse
@@ -66,9 +67,11 @@ components:
         def itf = api.interfaces.first ()
         def ep = itf.endpoints.first ()
         def rp = ep.getFirstResponse ('200')
-        def rt = rp.responseType
-        def sf = rt.properties.self
+        def rt = rp.responseType as ObjectDataType
+        def pt = rt.properties.self
+        def sf = pt.dataType
         rt instanceof ObjectDataType
+        pt instanceof PropertyDataType
         sf instanceof LazyDataType
         sf.name == 'Self'
         sf.packageName == 'io.openapiprocessor.generated.model'

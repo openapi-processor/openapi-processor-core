@@ -7,10 +7,7 @@ package io.openapiprocessor.core.model
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.openapiprocessor.core.model.datatypes.AnyOneOfObjectDataType
-import io.openapiprocessor.core.model.datatypes.DataTypeName
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.StringDataType
+import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.processor.mapping.v2.ResultStyle
 
 class EndpointResponseSpec: StringSpec({
@@ -40,7 +37,11 @@ class EndpointResponseSpec: StringSpec({
     "result style all without errors uses single response" {
         val er = EndpointResponse(
             Response("", ObjectDataType(DataTypeName("Foo"), "pkg", linkedMapOf(
-                "bar" to StringDataType()
+                "bar" to PropertyDataType(
+                    readOnly = false,
+                    writeOnly = false,
+                    dataType = StringDataType()
+                )
             ))),
             emptySet()
         )
@@ -52,7 +53,11 @@ class EndpointResponseSpec: StringSpec({
     "result style single uses single response" {
         val er = EndpointResponse(
             Response("", ObjectDataType(DataTypeName("Foo"), "pkg", linkedMapOf(
-                "bar" to StringDataType()
+                "bar" to PropertyDataType(
+                    readOnly = false,
+                    writeOnly = false,
+                    dataType = StringDataType()
+                )
             ))),
             setOf(Response("text/plain", StringDataType()))
         )

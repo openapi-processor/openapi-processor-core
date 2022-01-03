@@ -1,0 +1,5 @@
+items:
+  - inputs/openapi.yaml
+  - inputs/one.yaml
+  - inputs/two.yaml
+  - inputs/mapping.yaml

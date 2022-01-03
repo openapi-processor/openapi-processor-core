@@ -6,11 +6,8 @@
 package com.github.hauner.openapi.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
 import io.openapiprocessor.core.model.datatypes.DataTypeName
-import io.openapiprocessor.core.model.datatypes.ObjectDataType as ObjectDataTypeP
 import io.openapiprocessor.core.model.datatypes.StringDataType
-import io.openapiprocessor.core.support.datatypes.ListDataType
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DataTypeWriter
@@ -20,6 +17,9 @@ import spock.lang.Specification
 
 import static io.openapiprocessor.core.AssertKt.extractBody
 import static io.openapiprocessor.core.AssertKt.extractImports
+import static io.openapiprocessor.core.support.datatypes.Builder.listDataType
+import static io.openapiprocessor.core.support.datatypes.Builder.objectDataType
+import static io.openapiprocessor.core.support.datatypes.Builder.propertyDataType
 
 class DataTypeWriterSpec extends Specification {
     def headerWriter = Mock SimpleWriter
@@ -29,8 +29,7 @@ class DataTypeWriterSpec extends Specification {
     def target = new StringWriter ()
 
     void "writes 'generated' comment" () {
-        def dataType = new ObjectDataType(
-            'Book', '', [:], null, false, null)
+        def dataType = objectDataType ('Book', '')
 
         when:
         writer.write (target, dataType)
@@ -41,8 +40,7 @@ class DataTypeWriterSpec extends Specification {
 
     void "writes 'package'" () {
         def pkg = 'io.openapiprocessor.test'
-        def dataType = new ObjectDataType (
-            'Book', pkg, [:], null, false, null)
+        def dataType = objectDataType ('Book', pkg)
 
         when:
         writer.write (target, dataType)
@@ -57,10 +55,9 @@ package $pkg;
     void "writes imports of nested types" () {
         def pkg = 'external'
 
-        def dataType = new ObjectDataType ('Book', 'mine', [
-            'isbn': new ObjectDataTypeP (new DataTypeName(id, type), pkg, [:],
-                null, false, null)
-        ], null, false, null)
+        def dataType = objectDataType ('Book', 'mine', [
+            'isbn': propertyDataType (objectDataType (new DataTypeName (id, type), pkg))
+        ])
 
         when:
         writer.write (target, dataType)
@@ -76,9 +73,9 @@ package $pkg;
     }
 
     void "writes import of generic list type" () {
-        def dataType = new ObjectDataType ('Book', 'mine', [
-            'authors': new ListDataType (new StringDataType(), new DataTypeConstraints())
-        ], null, false, null)
+        def dataType = objectDataType ('Book', 'mine', [
+            'authors': propertyDataType (listDataType (new StringDataType()))
+        ])
 
         when:
         writer.write (target, dataType)
@@ -89,11 +86,11 @@ package $pkg;
     }
 
     void "writes import of generic object list type" () {
-        def dataType = new ObjectDataType ('Foo', 'mine', [
-            'bars': new ListDataType (
-                new ObjectDataTypeP (new DataTypeName(id, type), 'other', [:],
-                    null, false, null), new DataTypeConstraints())
-        ], null, false, null)
+        def dataType = objectDataType ('Foo', 'mine', [
+            'bars': propertyDataType (listDataType (
+                objectDataType (new DataTypeName (id, type), 'other')
+            ))
+        ])
 
         when:
         writer.write (target, dataType)
@@ -110,9 +107,8 @@ package $pkg;
 
     void "writes class" () {
         def pkg = 'io.openapiprocessor.test'
-        def dataType = new ObjectDataTypeP (
-            new DataTypeName(id, type), pkg, [:],
-            null, true, null)
+
+        def dataType = objectDataType (new DataTypeName(id, type), pkg, [:])
 
         when:
         writer.write (target, dataType)
@@ -132,10 +128,11 @@ public class $type {
 
     void "writes simple properties"() {
         def pkg = 'io.openapiprocessor.test'
-        def dataType = new ObjectDataType ('Book', pkg, [
-            isbn: new StringDataType(),
-            title: new StringDataType ()
-        ], null, false, null)
+
+        def dataType = objectDataType ('Book', pkg, [
+            isbn : propertyDataType (new StringDataType ()),
+            title: propertyDataType (new StringDataType ())
+        ])
 
         when:
         writer.write (target, dataType)
@@ -151,12 +148,12 @@ public class $type {
 """)
     }
 
-    void "writes object property"() {
+    void "writes object property" () {
         def pkg = 'io.openapiprocessor.test'
-        def dataType = new ObjectDataType ('Foo', pkg, [
-            bar: new ObjectDataTypeP (new DataTypeName(id, type), 'other', [:],
-                null, false, null),
-        ], null, false, null)
+
+        def dataType = objectDataType ('Foo', pkg, [
+            bar: propertyDataType (objectDataType (new DataTypeName(id, type), 'other', [:]))
+        ])
 
         when:
         writer.write (target, dataType)
@@ -172,10 +169,11 @@ public class $type {
 
     void "writes property getters & setters" () {
         def pkg = 'io.openapiprocessor.test'
-        def dataType = new ObjectDataType ('Book', pkg, [
-            isbn: new StringDataType(),
-            title: new StringDataType ()
-        ], null, false, null)
+
+        def dataType = objectDataType ('Book', pkg, [
+            isbn : propertyDataType (new StringDataType ()),
+            title: propertyDataType (new StringDataType ())
+        ])
 
         when:
         writer.write (target, dataType)
@@ -205,10 +203,10 @@ public class $type {
 
     void "writes object property getter & setter" () {
         def pkg = 'com.github.hauner.openapi'
-        def dataType = new ObjectDataType ('Foo', pkg, [
-            bar: new ObjectDataTypeP (new DataTypeName(id, type), 'other', [:],
-                null, false, null),
-        ], null, false, null)
+
+        def dataType = objectDataType ('Foo', pkg, [
+            bar: propertyDataType (objectDataType (new DataTypeName (id, type), 'other'))
+        ])
 
         when:
         writer.write (target, dataType)
@@ -232,6 +230,7 @@ public class $type {
 
     void "writes deprecated class" () {
         def pkg = 'io.openapiprocessor.test'
+
         def dataType = new ObjectDataType (
             'Bar', pkg, [:],null, true, null)
 
@@ -249,9 +248,12 @@ public class Bar {
 
     void "writes deprecated property" () {
         def pkg = 'io.openapiprocessor.test'
-        def dataType = new ObjectDataType ('Book', pkg, [
-            isbn: new StringDataType(null, true, null)
-        ], null, false, null)
+
+        def dataType = objectDataType ('Book', pkg, [
+            isbn: propertyDataType (
+                new StringDataType(null, true, null)
+            )
+        ])
 
         when:
         writer.write (target, dataType)
@@ -266,9 +268,12 @@ public class Bar {
 
     void "writes deprecated property getters & setters" () {
         def pkg = 'io.openapiprocessor.test'
-        def dataType = new ObjectDataType ('Book', pkg, [
-            isbn: new StringDataType(null, true, null)
-        ], null, false, null)
+
+        def dataType = objectDataType ('Book', pkg, [
+            isbn: propertyDataType (
+                new StringDataType (null, true, null)
+            )
+        ])
 
         when:
         writer.write (target, dataType)
@@ -291,10 +296,10 @@ public class Bar {
     void "writes properties with valid java identifiers" () {
         def pkg = 'com.github.hauner.openapi'
 
-        def dataType = new ObjectDataType ('Book', pkg, [
-            'a-isbn' : new StringDataType (),
-            'a-title': new StringDataType ()
-        ], null, false, null)
+        def dataType = objectDataType ('Book', pkg, [
+            'a-isbn' : propertyDataType (new StringDataType ()),
+            'a-title': propertyDataType (new StringDataType ())
+        ])
 
         when:
         writer.write (target, dataType)
@@ -312,10 +317,10 @@ public class Bar {
     void "writes imports of @JsonProperty" () {
         def pkg = 'external'
 
-        def dataType = new ObjectDataType ('Book', pkg, [
-            'isbn' : new StringDataType (),
-            'title': new StringDataType ()
-        ], null, false, null)
+        def dataType = objectDataType ('Book', pkg, [
+            'isbn' : propertyDataType (new StringDataType ()),
+            'title': propertyDataType (new StringDataType ())
+        ])
 
         when:
         writer.write (target, dataType)
@@ -328,10 +333,10 @@ public class Bar {
     void "writes properties with @JsonProperty annotation" () {
         def pkg = 'com.github.hauner.openapi'
 
-        def dataType = new ObjectDataType ('Book', pkg, [
-                    'a-isbn': new StringDataType (),
-                    'a-title': new StringDataType ()
-                ], null, false, null)
+        def dataType = objectDataType ('Book', pkg, [
+            'a-isbn' : propertyDataType (new StringDataType ()),
+            'a-title': propertyDataType (new StringDataType ())
+        ])
 
         when:
         writer.write (target, dataType)

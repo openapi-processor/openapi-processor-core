@@ -9,18 +9,20 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataType
+import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
 
 class ComposedObjectDataTypeSpec : StringSpec({
 
     "loop properties of allOf objects as if it was a single object" {
         val composed = AllOfObjectDataType(DataTypeName("Foo"), "pkg", listOf(
             ObjectDataType("Foo", "pkg", linkedMapOf(
-                Pair("foo", StringDataType()),
-                Pair("foobar", StringDataType())
-            )),
+                    Pair("foo", propertyDataTypeString()),
+                    Pair("foobar", propertyDataTypeString()))
+            ),
             ObjectDataType("Bar", "pkg", linkedMapOf(
-                Pair("bar", StringDataType()),
-                Pair("barfoo", StringDataType())
+                Pair("bar", propertyDataTypeString()),
+                Pair("barfoo", propertyDataTypeString())
             ))
         ))
 
@@ -44,12 +46,12 @@ class ComposedObjectDataTypeSpec : StringSpec({
     "allOf creates imports for all items" {
         val composed = AllOfObjectDataType(DataTypeName("Foo"), "pkg", listOf(
             ObjectDataType("Foo", "pkg", linkedMapOf(
-                "foo" to OffsetDateTimeDataType()
+                "foo" to propertyDataType(OffsetDateTimeDataType())
             )),
             ObjectDataType("Bar", "pkg", linkedMapOf(
-                "bar" to ObjectDataType("BarBar", "pkg", linkedMapOf(
-                    "barbar" to OffsetDateTimeDataType()
-                ))
+                "bar" to propertyDataType(ObjectDataType("BarBar", "pkg", linkedMapOf(
+                    "barbar" to propertyDataType(OffsetDateTimeDataType())
+                )))
             ))
         ))
 
@@ -60,8 +62,8 @@ class ComposedObjectDataTypeSpec : StringSpec({
     "allOf creates does not leak import for type-less item" {
         val composed = AllOfObjectDataType(DataTypeName("Foo"), "pkg", listOf(
             ObjectDataType("Bar", "pkg", linkedMapOf(
-                "bar" to StringDataType())
-            ),
+                "bar" to propertyDataTypeString()
+            )),
             NoDataType("Leak")
         ))
 
@@ -72,13 +74,13 @@ class ComposedObjectDataTypeSpec : StringSpec({
     "allOf handles 'required' constraint of all items" {
         val composed = AllOfObjectDataType(DataTypeName("AllOf"), "pkg", listOf(
             ObjectDataType("Foo", "pkg", linkedMapOf(
-                "foo" to StringDataType(),
-                "fux" to StringDataType()
+                "foo" to propertyDataTypeString(),
+                "fux" to propertyDataTypeString()
             ), constraints = DataTypeConstraints(required = listOf("foo", "fux"))),
             ObjectDataType(
                 "Bar", "pkg", linkedMapOf(
-                    "bar" to StringDataType(),
-                    "bux" to StringDataType()
+                    "bar" to propertyDataTypeString(),
+                    "bux" to propertyDataTypeString()
             ), constraints = DataTypeConstraints(required = listOf("bar", "bux")))
         ))
 
@@ -88,13 +90,13 @@ class ComposedObjectDataTypeSpec : StringSpec({
     "allOf without 'required' has null constraints" {
         val composed = AllOfObjectDataType(DataTypeName("AllOf"), "pkg", listOf(
             ObjectDataType("Foo", "pkg", linkedMapOf(
-                "foo" to StringDataType(),
-                "fux" to StringDataType()
+                "foo" to propertyDataTypeString(),
+                "fux" to propertyDataTypeString()
             ), constraints = DataTypeConstraints()),
             ObjectDataType(
                 "Bar", "pkg", linkedMapOf(
-                    "bar" to StringDataType(),
-                    "bux" to StringDataType()
+                    "bar" to propertyDataTypeString(),
+                    "bux" to propertyDataTypeString()
             ), constraints = null)
         ))
 

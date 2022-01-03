@@ -11,6 +11,7 @@ import generated.model.Obj1;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -50,5 +51,8 @@ public interface EndpointApi {
 
     @Mapping("/endpoint/pattern")
     void getEndpointPattern(@Parameter @Pattern(regexp = ".*\\.\\\\") String anything);
+
+    @Mapping("/endpoint/email")
+    void getEndpointEmail(@Parameter @Email String anything);
 
 }

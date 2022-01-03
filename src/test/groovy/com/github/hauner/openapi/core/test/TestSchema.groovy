@@ -70,4 +70,13 @@ class TestSchema implements Schema {
         []
     }
 
+    @Override
+    boolean getReadOnly () {
+        return false
+    }
+
+    @Override
+    boolean getWriteOnly () {
+        return false
+    }
 }

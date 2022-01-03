@@ -1,0 +1,16 @@
+== not currently supported
+
+== swagger
+
+duplicate handling produces two schemas
+
+----
+Foo
+Foo_1
+----
+
+there is no way to change it.
+
+== openapi4j
+
+no duplicate handling, produces two `Foo` s

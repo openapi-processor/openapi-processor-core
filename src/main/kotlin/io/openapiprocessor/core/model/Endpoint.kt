@@ -162,13 +162,20 @@ class Endpoint(
     private fun getSuccessResponses(): Set<Response> {
         val result = mutableMapOf<String, Response>()
 
-        responses
-            .filterKeys { it.startsWith("2") }
-            .values
-            .flatten()
+        // prefer responses with content type.
+        filterSuccessResponses()
+            .filter { hasContentType(it) }
             .forEach {
                 result[it.contentType] = it
             }
+
+        // check for responses without content type (e.g. 204) to generate a void method.
+        if (result.isEmpty()) {
+            filterSuccessResponses()
+                .forEach {
+                    result[it.contentType] = it
+                }
+        }
 
         return result
             .values
@@ -177,27 +184,20 @@ class Endpoint(
 
     private fun getErrorResponses(): Set<Response> {
         return responses
-            .filterKeys { !it.startsWith("2") }
+            .filterKeys { !isSuccessCode(it) }
             .values
             .map { it.first() }
             .filter { !it.empty }
             .toSet()
     }
 
+    private fun filterSuccessResponses() = responses
+        .filterKeys { isSuccessCode(it) }
+        .values
+        .flatten()
+
+    private fun isSuccessCode(code: String) = code.startsWith("2")
+
+    private fun hasContentType(response: Response) = response.contentType != "?"
+
 }
-
-/*
-    private Set<Response> getSuccessResponses () {
-        Map<String, Response> result = [:]
-
-        responses.findAll {
-            it.key.startsWith ('2')
-        }.each {
-            it.value.each {
-                result.put (it.contentType, it)
-            }
-        }
-
-        result.values () as Set<Response>
-    }
- */

@@ -14,7 +14,7 @@ open class ObjectDataType(
     private val name: DataTypeName,
     private val pkg: String,
     /** linked map to preserve order */
-    private val properties: LinkedHashMap<String, DataType> = linkedMapOf(),
+    private val properties: LinkedHashMap<String, PropertyDataType> = linkedMapOf(),
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
@@ -44,15 +44,15 @@ open class ObjectDataType(
                 .toSet()
         }
 
-    fun addObjectProperty(name: String, type: DataType) {
+    fun addObjectProperty(name: String, type: PropertyDataType) {
         properties[name] = type
     }
 
-    fun getObjectProperty(name: String): DataType {
+    fun getObjectProperty(name: String): PropertyDataType {
         return properties[name]!!
     }
 
-    fun getProperties(): Map<String, DataType> {
+    fun getProperties(): Map<String, PropertyDataType> {
         return properties
     }
 
