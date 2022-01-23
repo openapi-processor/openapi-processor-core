@@ -5,70 +5,50 @@
 
 package io.openapiprocessor.core.parser.openapi
 
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import io.openapiprocessor.core.parser.Path
-import io.openapiprocessor.core.parser.RefResolver
-import io.openapiprocessor.core.support.toURL
+import io.openapiparser.*
+import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
+import io.openapiprocessor.core.parser.openapi.v30.OpenApi as ParserOpenApi30
+import io.openapiprocessor.core.parser.openapi.v31.OpenApi as ParserOpenApi31
+import io.openapiparser.jackson.JacksonConverter
+import io.openapiparser.reader.UriReader
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
-import io.openapiprocessor.core.parser.openapi.v30.OpenApi as OpenApi30
-import io.openapiprocessor.core.parser.openapi.v31.OpenApi as OpenApi31
-
-class BadOpenApi : ParserOpenApi {
-
-    override fun getPaths(): Map<String, Path> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getRefResolver(): RefResolver {
-        TODO("Not yet implemented")
-    }
-
-    override fun printWarnings() {
-        TODO("Not yet implemented")
-    }
-
-}
+import java.net.URI
+import io.openapiparser.model.v30.OpenApi as OpenApi30
+import io.openapiparser.model.v31.OpenApi as OpenApi31
 
 /**
- * openapi 3.0.x/3.1.x parser.
+ * openapi-parser
  */
-open class Parser {
+class Parser {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     fun parse(apiPath: String): ParserOpenApi {
-        val factory = YAMLFactory()
-        val mapper = ObjectMapper(factory)
-        val api = mapper.readValue(toURL(apiPath), object : TypeReference<Map<String, Any>>() {})
+        val baseUri = URI(apiPath)
 
-        // todo validate version
-        // is openapi file?
+        val resolver = ReferenceResolver(
+            baseUri,
+            UriReader(),
+            JacksonConverter(),
+            ReferenceRegistry()
+        )
 
-        val version = api["openapi"] as String
-        when  {
-            version.startsWith("3.0") -> {
-                // validate 3.0
-                // - must have "paths" key
-                // parse as 3.0
-                // return OpenApi30(.., validation errors)
-                return OpenApi30()
+        val context = Context(baseUri, resolver)
+
+        val parser = OpenApiParser(context)
+        val result = parser.parse()
+
+        when (result.version) {
+            OpenApiResult.Version.V30 -> {
+                return ParserOpenApi30(result.getModel(OpenApi30::class.java))
             }
-            version.startsWith("3.1") -> {
-                // validate 3.1
-                // - must have "paths" key
-                // parse as 3.1
-                // return OpenApi31(.., validation errors)
-                return OpenApi31()
+            OpenApiResult.Version.V31 -> {
+                return ParserOpenApi31(result.getModel(OpenApi31::class.java))
             }
             else -> {
-                // throw, should never come here
-                log.warn("unknown OpenAPI version: {}", version)
-                return BadOpenApi()
+                TODO()
             }
         }
-    }
 
+    }
 }

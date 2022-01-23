@@ -31,7 +31,11 @@ class ProcessorEndToEndTest extends Specification {
             new TestSet (name: it, processor: new TestProcessor (), parser: ParserType.OPENAPI4J.name ())
         }
 
-        swagger + openapi4j
+        def openapi = testSets.collect {
+            new TestSet (name: it, processor: new TestProcessor (), parser: ParserType.OPENAPI_PARSER.name ())
+        }
+
+        swagger + openapi4j + openapi
     }
 
     @TempDir
