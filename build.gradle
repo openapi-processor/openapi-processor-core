@@ -6,10 +6,10 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id "org.sonarqube" version "3.3"
-    id 'org.jetbrains.dokka' version '1.6.0'
+    id 'org.jetbrains.dokka' version '1.6.10'
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
     id 'org.unbroken-dome.test-sets' version '4.0.0'
-    id 'com.github.ben-manes.versions' version '0.39.0'
+    id 'com.github.ben-manes.versions' version '0.41.0'
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
@@ -32,7 +32,7 @@ String getBuildSignKey(String property) {
 
 ext {
     processorApiVersion = '2021.1'
-    processorTestVersion = '2021.5'
+    processorTestVersion = '2022.2-SNAPSHOT'
     groovyVersion = '3.0.9'
 
     publishUser = getBuildProperty ('PUBLISH_USER')
@@ -119,7 +119,7 @@ dependencies {
     implementation ('com.atlassian.commonmark:commonmark:0.17.0')
     implementation ('com.google.googlejavaformat:google-java-format:1.13.0')
     implementation ('com.google.guava:guava:31.0.1-jre')
-    implementation ('com.networknt:json-schema-validator:1.0.64')
+    implementation ('com.networknt:json-schema-validator:1.0.65')
 
     testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     testImplementation ("io.openapiprocessor:openapi-processor-test:$processorTestVersion")
@@ -132,9 +132,9 @@ dependencies {
     testImplementation ("org.junit.jupiter:junit-jupiter-api")
     testImplementation ("org.junit.jupiter:junit-jupiter-params")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("io.mockk:mockk:1.12.1")
-    testImplementation("io.kotest:kotest-runner-junit5:5.0.3")
-    testImplementation("io.kotest:kotest-framework-datatest:5.0.3")
+    testImplementation("io.mockk:mockk:1.12.2")
+    testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
+    testImplementation("io.kotest:kotest-framework-datatest:5.1.0")
     testImplementation ('ch.qos.logback:logback-classic:1.2.10')
     testImplementation("com.google.jimfs:jimfs:1.2")
 }
