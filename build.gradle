@@ -114,6 +114,21 @@ dependencies {
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
 
+//    implementation ('io.openapiprocessor:openapi-parser:2021.0-SNAPSHOT.0')
+    implementation (files("/Users/hauner/Development/openapi/openapi-parser/openapi-parser/build/libs/openapi-parser-2021.0-SNAPSHOT.0.jar"))
+    implementation (files("/Users/hauner/Development/openapi/openapi-parser/openapi-parser-validator/build/libs/openapi-parser-validator-2021.0-SNAPSHOT.0.jar"))
+    implementation (files("/Users/hauner/Development/openapi/openapi-parser/openapi-parser-support/build/libs/openapi-parser-support-2021.0-SNAPSHOT.0.jar"))
+    implementation (files("/Users/hauner/Development/openapi/openapi-parser/openapi-parser-jackson/build/libs/openapi-parser-jackson-2021.0-SNAPSHOT.0.jar"))
+    implementation (files("/Users/hauner/Development/openapi/openapi-parser/openapi-parser-interfaces/build/libs/openapi-parser-interfaces-2021.0-SNAPSHOT.0.jar"))
+
+//    implementation(project(":openapi-parser-base"))
+//    implementation(project(":openapi-parser-support"))
+//    implementation(project(":openapi-parser-validator"))
+//    implementation(project(":openapi-parser-interfaces"))
+//    implementation ('io.openapiprocessor:openapi-parser:0.1')
+//    implementation ('io.openapiprocessor:openapi-parser-base:0.1')
+//    implementation ('io.openapiprocessor:openapi-parser-jackson:0.1')
+
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation ('org.apache.commons:commons-text:1.9')
     implementation ('com.atlassian.commonmark:commonmark:0.17.0')
