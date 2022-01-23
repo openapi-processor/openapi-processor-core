@@ -18,13 +18,16 @@ import spock.lang.Unroll
 /**
  * helper to run selected integration tests.
  */
-@Ignore
+//@Ignore
 class ProcessorPendingTest extends Specification {
 
     static Collection<TestSet> sources () {
         return [
-            new TestSet(name: 'javadoc', processor: new TestProcessor(), parser: ParserType.SWAGGER),
-            new TestSet(name: 'javadoc', processor: new TestProcessor(), parser: ParserType.OPENAPI4J)
+//            new TestSet(name: 'javadoc', processor: new TestProcessor(), parser: ParserType.SWAGGER),
+//            new TestSet(name: 'javadoc', processor: new TestProcessor(), parser: ParserType.SWAGGER),
+//            new TestSet(name: 'schema-composed-allof-notype', processor: new TestProcessor(), parser: ParserType.OPENAPI_PARSER)
+//            new TestSet(name: 'schema-composed-allof-ref-sibling', processor: new TestProcessor(), parser: ParserType.OPENAPI_PARSER)
+            new TestSet(name: 'ref-chain-spring-124.1', processor: new TestProcessor(), parser: ParserType.OPENAPI_PARSER)
         ]
     }
 

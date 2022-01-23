@@ -26,11 +26,11 @@ class Parser {
                 return Swagger().parse(apiPath)
             }
             ParserType.OPENAPI4J.name -> {
-                log.info("using OPENAPI4J parser")
+                log.info("using (deprecated) OPENAPI4J parser")
                 return OpenApi4J().parse(apiPath)
             }
-            ParserType.BUILTIN.name -> {
-                log.info("using BUILTIN parser")
+            ParserType.OPENAPI_PARSER.name -> {
+                log.info("using OPENAPI_PARSER parser")
                 return OpenApiParser().parse(apiPath)
             }
             else -> {
