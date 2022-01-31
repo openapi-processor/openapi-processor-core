@@ -29,8 +29,7 @@ class ApiWriter(
     private val options: ApiOptions,
     private val interfaceWriter: InterfaceWriter,
     private val dataTypeWriter: DataTypeWriter,
-    private val enumWriter: StringEnumWriter,
-    private val enableFormatter: Boolean = true
+    private val enumWriter: StringEnumWriter
 ) {
     private var log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
@@ -140,7 +139,7 @@ class ApiWriter(
     }
 
     private fun initFormatter() {
-        if (enableFormatter) {
+        if (options.formatCode) {
             formatter = Formatter(
                 JavaFormatterOptions
                     .builder()

@@ -62,7 +62,8 @@ class ApiWriterSpec: StringSpec({
             val api = Api(dataTypes = dts)
 
             // when:
-            ApiWriter(options, stub(), stub(), enumWriter, false)
+            options.formatCode = false
+            ApiWriter(options, stub(), stub(), enumWriter)
                 .write(api)
 
             // then:
@@ -83,7 +84,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dts)
 
         // when:
-        ApiWriter(options, stub(), stub(), enumWriter, true)
+        ApiWriter(options, stub(), stub(), enumWriter)
             .write(api)
 
         // then:
@@ -132,7 +133,8 @@ class ApiWriterSpec: StringSpec({
         ))
 
         // when:
-        ApiWriter(options, itfWriter, stub(), stub(), false)
+        options.formatCode = false
+        ApiWriter(options, itfWriter, stub(), stub())
             .write (api)
 
         // then:
@@ -151,7 +153,8 @@ class ApiWriterSpec: StringSpec({
         ))
 
         // when:
-        ApiWriter(options, itfWriter, stub(), stub(), false)
+        options.formatCode = false
+        ApiWriter(options, itfWriter, stub(), stub())
             .write (api)
 
         // then:
@@ -171,7 +174,8 @@ class ApiWriterSpec: StringSpec({
             val api = Api(dataTypes = dts)
 
             // when:
-            ApiWriter(options, stub(), dtWriter, stub(), false)
+            options.formatCode = false
+            ApiWriter(options, stub(), dtWriter, stub())
                 .write(api)
 
             // then:
@@ -188,7 +192,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dt)
 
         // when:
-        ApiWriter(options, stub(), dtWriter, stub(), false)
+        ApiWriter(options, stub(), dtWriter, stub())
             .write (api)
 
         // then:
@@ -204,7 +208,7 @@ class ApiWriterSpec: StringSpec({
         }
 
         // when:
-        ApiWriter(options, itfWriter, stub(), stub(), true)
+        ApiWriter(options, itfWriter, stub(), stub())
             .write (Api(listOf(
                 `interface`("Foo", options.getSourceDir("api").toString()) {}
             )))
@@ -229,7 +233,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dt)
 
         // when:
-        ApiWriter(options, stub(), dtWriter, stub(), true)
+        ApiWriter(options, stub(), dtWriter, stub())
             .write (api)
 
         // then:
@@ -240,6 +244,26 @@ class ApiWriterSpec: StringSpec({
         """.trimMargin()
     }
 
+    "does not re-format sources if code formatting is disabled" {
+        val itfWriter = io.mockk.mockk<InterfaceWriter>()
+        every { itfWriter.write(any(), any()) } answers {
+            arg<Writer>(0).write("  interface  \n ${arg<Interface>(1).name}    {    }\n")
+        }
+
+        // when:
+        options.formatCode = false
+        ApiWriter(options, itfWriter, stub(), stub())
+            .write (Api(listOf(
+                `interface`("Foo", options.getSourceDir("api").toString()) {}
+            )))
+
+        // then:
+        textOfApi("FooApi.java") shouldBe """
+        |  interface  
+        | Foo    {    }
+        |
+        """.trimMargin()
+    }
 })
 
 
