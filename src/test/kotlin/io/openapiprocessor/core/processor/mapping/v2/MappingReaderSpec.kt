@@ -86,4 +86,19 @@ class MappingReaderSpec: StringSpec ({
         mapping.options.modelNameSuffix shouldBe "Suffix"
     }
 
+    "reads format-code" {
+        val yaml = """
+            |openapi-processor-mapping: v2
+            |options:
+            |  format-code: false
+        """.trimMargin()
+
+        val reader = MappingReader()
+
+        // when:
+        val mapping = reader.read (yaml) as Mapping
+
+        // then:
+        mapping.options.formatCode shouldBe false
+    }
 })

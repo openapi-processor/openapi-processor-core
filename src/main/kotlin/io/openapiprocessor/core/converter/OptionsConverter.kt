@@ -56,6 +56,7 @@ class OptionsConverter(private val checkObsoleteProcessorOptions: Boolean = fals
                 options.modelNameSuffix = mapping.options.modelNameSuffix
                 options.beanValidation = mapping.options.beanValidation
                 options.javadoc = mapping.options.javadoc
+                options.formatCode = mapping.options.formatCode
             }
         }
 

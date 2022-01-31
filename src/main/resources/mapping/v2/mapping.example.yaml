@@ -19,6 +19,9 @@ options: # general processor options (optional)
   # suffix for model class names and enum names. Default is none.
   model-name-suffix: Resource
 
+  # enable/disable code formatter: true (default) or false. (since core 2022.1.1)
+  format-code: false
+
 map: # the type mappings
 
   # global mappings, apply to all paths/endpoints

@@ -37,6 +37,7 @@ options:
     package-name: com.github.hauner.openapi
     model-name-suffix: Resource
     bean-validation: true
+    format-code: false
     javadoc: true
 
 map:

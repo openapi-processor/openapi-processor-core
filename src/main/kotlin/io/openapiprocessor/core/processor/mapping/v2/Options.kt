@@ -35,6 +35,10 @@ data class Options(
     /**
      * generate model source files with suffix (optional)
      */
-    val modelNameSuffix: String = String.Empty
+    val modelNameSuffix: String = String.Empty,
 
+    /**
+     * enable/disable the code formatter (optional)
+     */
+    val formatCode: Boolean = true
 )
