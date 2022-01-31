@@ -1,0 +1,8 @@
+== run schema converter
+
+ node interpreter: 14+
+ node parameters: --require ts-node/register
+
+from this directory:
+
+ node --require ts-node/register src/schema.ts

@@ -2,9 +2,9 @@
  * flatten & merge allOf
  */
 
-import $RefParser, {JSONSchema} from "@apidevtools/json-schema-ref-parser";
-import merge from "json-schema-merge-allof";
-import * as fs from "fs";
+import $RefParser, {JSONSchema} from '@apidevtools/json-schema-ref-parser';
+import merge from 'json-schema-merge-allof';
+import * as fs from 'fs';
 
 
 async function parse(schema: string): Promise<JSONSchema> {
