@@ -43,7 +43,7 @@ class ApiOptions {
     var javadoc = false
 
     /**
-     * suffix for model class names and enum names. Default is none, ie. an empty string.
+     * suffix for model class names and enum names. Default is none, i.e. an empty string.
      */
     var modelNameSuffix = String.Empty
 
