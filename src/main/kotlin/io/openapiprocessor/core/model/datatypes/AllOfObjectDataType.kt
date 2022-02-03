@@ -55,9 +55,8 @@ class AllOfObjectDataType(
     }
 
     override fun forEach(action: (property: String, dataType: DataType) -> Unit) {
-        items.filterIsInstance<ObjectDataType>()
-            .forEach {
-                it.forEach(action)
+        properties.forEach {
+                action(it.key, it.value)
             }
     }
 

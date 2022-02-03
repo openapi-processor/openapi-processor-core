@@ -21,3 +21,7 @@ paths:
                     properties:
                       prop2:
                         type: string
+                  - type: object
+                    properties:
+                      prop2:
+                        type: string
