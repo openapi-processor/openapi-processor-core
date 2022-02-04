@@ -25,7 +25,7 @@ import java.lang.RuntimeException
  */
 class UnknownDataTypeException(
     val name: String?,
-    val type: String,
+    val type: String?,
     var format: String?
 ): RuntimeException() {
 
