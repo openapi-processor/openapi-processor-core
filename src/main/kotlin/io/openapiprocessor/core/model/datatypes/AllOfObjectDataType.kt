@@ -56,8 +56,8 @@ class AllOfObjectDataType(
 
     override fun forEach(action: (property: String, dataType: DataType) -> Unit) {
         properties.forEach {
-                action(it.key, it.value)
-            }
+            action(it.key, it.value)
+        }
     }
 
     val properties: LinkedHashMap<String, DataType>
