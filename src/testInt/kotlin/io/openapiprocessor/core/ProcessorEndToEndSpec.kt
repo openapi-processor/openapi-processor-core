@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2022 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -8,15 +8,15 @@ package io.openapiprocessor.core
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.booleans.shouldBeTrue
-import io.openapiprocessor.core.parser.ParserType.INTERNAL
+import io.openapiprocessor.core.parser.ParserType.*
 import io.openapiprocessor.test.FileSupport
 import io.openapiprocessor.test.TestSet
 import io.openapiprocessor.test.TestSetRunner
 
 /**
- * helper to run selected integration tests.
+ * run end to end integration test.
  */
-class ProcessorPendingSpec: StringSpec({
+class ProcessorEndToEndSpec: StringSpec({
     val folder = tempdir()
 
     for (testSet in sources()) {
@@ -33,12 +33,21 @@ class ProcessorPendingSpec: StringSpec({
 })
 
 private fun sources(): Collection<TestSet> {
-    return listOf(
-//        testSet("params-additional-new", ParserType.SWAGGER, API_30),
-//        testSet("params-additional-new", ParserType.OPENAPI4J, API_30),
-        testSet("params-additional", INTERNAL, API_30),
-        testSet("params-additional", INTERNAL, API_31)
-    )
+    val swagger = ALL_30.map {
+        testSet(it.name, SWAGGER, it.openapi)
+    }
+
+    val openapi4j = ALL_30.map {
+        testSet(it.name, OPENAPI4J, it.openapi)
+    }
+
+    val openapi30 = ALL_30.map {
+        testSet(it.name, INTERNAL, it.openapi)
+    }
+
+//    val openapi31 = ALL_31.map {
+//        testSet(it.name, INTERNAL, it.openapi)
+//    }
+
+    return swagger + openapi4j + openapi30 //+ openapi31
 }
-
-
