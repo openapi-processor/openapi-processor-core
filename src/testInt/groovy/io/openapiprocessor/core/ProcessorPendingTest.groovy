@@ -10,7 +10,6 @@ import io.openapiprocessor.core.test.TestProcessor
 import io.openapiprocessor.test.FileSupport
 import io.openapiprocessor.test.TestSet
 import io.openapiprocessor.test.TestSetRunner
-import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.TempDir
 import spock.lang.Unroll
@@ -27,7 +26,7 @@ class ProcessorPendingTest extends Specification {
 //            new TestSet(name: 'javadoc', processor: new TestProcessor(), parser: ParserType.SWAGGER),
 //            new TestSet(name: 'schema-composed-allof-notype', processor: new TestProcessor(), parser: ParserType.OPENAPI_PARSER)
 //            new TestSet(name: 'schema-composed-allof-ref-sibling', processor: new TestProcessor(), parser: ParserType.OPENAPI_PARSER)
-            new TestSet(name: 'ref-chain-spring-124.1', processor: new TestProcessor(), parser: ParserType.OPENAPI_PARSER)
+            new TestSet(name: 'ref-chain-spring-124.1', processor: new TestProcessor(), parser: ParserType.INTERNAL)
         ]
     }
 
@@ -36,7 +35,8 @@ class ProcessorPendingTest extends Specification {
 
     @Unroll
     void "native - #testSet"() {
-        def runner = new TestSetRunner (testSet, new FileSupport(getClass ()))
+        def support = new FileSupport(getClass (), testSet.inputs, testSet.generated)
+        def runner = new TestSetRunner (testSet, support)
         def success = runner.runOnNativeFileSystem (folder)
 
         expect:

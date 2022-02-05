@@ -24,7 +24,7 @@ fun parse(apiYaml: String, parserType: ParserType = ParserType.SWAGGER): ParserO
     return when (parserType) {
         ParserType.SWAGGER -> parseWithSwagger(apiYaml)
         ParserType.OPENAPI4J -> parseWithOpenApi4j(apiYaml)
-        ParserType.OPENAPI_PARSER -> TODO()
+        ParserType.INTERNAL -> TODO()
     }
 }
 

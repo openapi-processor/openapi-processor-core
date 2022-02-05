@@ -11,5 +11,5 @@ package io.openapiprocessor.core.parser
 enum class ParserType {
     SWAGGER,
     OPENAPI4J,
-    OPENAPI_PARSER
+    INTERNAL
 }

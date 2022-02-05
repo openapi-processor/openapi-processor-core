@@ -29,14 +29,14 @@ class Parser {
                 log.info("using (deprecated) OPENAPI4J parser")
                 return OpenApi4J().parse(apiPath)
             }
-            ParserType.OPENAPI_PARSER.name -> {
-                log.info("using OPENAPI_PARSER parser")
+            ParserType.INTERNAL.name -> {
+                log.info("using INTERNAL parser")
                 return OpenApiParser().parse(apiPath)
             }
             else -> {
                 if (parser != null) {
                     log.warn("unknown parser type: {}", parser)
-                    log.warn("available parsers: SWAGGER, OPENAPI4J, BUILTIN")
+                    log.warn("available parsers: SWAGGER, OPENAPI4J, INTERNAL")
                 }
                 return Swagger().parse(apiPath)
             }
