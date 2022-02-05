@@ -6,7 +6,6 @@
 package io.openapiprocessor.core.parser.openapi.v30
 
 import io.openapiprocessor.core.parser.Path
-import io.openapiprocessor.core.parser.openapi.RefResolver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import io.openapiparser.model.v30.OpenApi as OpenApi30
