@@ -32,7 +32,7 @@ class ProcessorEndToEndTest extends Specification {
         }
 
         def openapi = testSets.collect {
-            new TestSet (name: it, processor: new TestProcessor (), parser: ParserType.OPENAPI_PARSER.name ())
+            new TestSet (name: it, processor: new TestProcessor (), parser: ParserType.INTERNAL.name ())
         }
 
         swagger + openapi4j + openapi
