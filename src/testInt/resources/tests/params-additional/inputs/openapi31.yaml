@@ -1,0 +1,8 @@
+openapi: 3.1.0
+info:
+  title: test additional endpoint parameters
+  version: 1.0.0
+
+paths:
+  /foo:
+    $ref: 'foo.yaml'
