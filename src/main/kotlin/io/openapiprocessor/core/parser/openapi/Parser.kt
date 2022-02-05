@@ -46,7 +46,7 @@ class Parser {
                 return ParserOpenApi31(result.getModel(OpenApi31::class.java))
             }
             else -> {
-                TODO()
+                TODO() // unsupported openapi version
             }
         }
 
