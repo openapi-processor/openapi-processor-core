@@ -1,0 +1,11 @@
+get:
+  parameters:
+    - name: foo
+      description: query, required
+      in: query
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: empty
