@@ -1,0 +1,23 @@
+openapi: 3.0.2
+info:
+  title: merge allOf & properties into same object
+  version: 1.0.0
+
+paths:
+  /query:
+    get:
+      responses:
+        '200':
+          description: create result from allOf object & object properties
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - type: object
+                    properties:
+                      prop1:
+                        type: string
+                properties:
+                  prop2:
+                    type: string

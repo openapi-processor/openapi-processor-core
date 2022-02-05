@@ -277,8 +277,8 @@ class DataTypeConverter(
                 OffsetDateTimeDataType (constraints, schemaInfo.getDeprecated(),
                     Documentation(description = schemaInfo.description))
             else ->
-                throw UnknownDataTypeException(schemaInfo.getName(), schemaInfo.getType(),
-                    schemaInfo.getFormat())
+                throw UnknownDataTypeException(
+                    schemaInfo.getName(), schemaInfo.getType(), schemaInfo.getFormat())
         }
     }
 

@@ -52,6 +52,7 @@ class TestSets {
         'schema-composed',
         'schema-composed-allof',
         'schema-composed-allof-notype',
+        'schema-composed-allof-properties',
         'schema-composed-nested'
     ]
 

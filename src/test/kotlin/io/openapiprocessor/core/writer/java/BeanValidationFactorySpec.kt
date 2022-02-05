@@ -7,6 +7,7 @@ package io.openapiprocessor.core.writer.java
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.support.datatypes.ListDataType
@@ -35,7 +36,7 @@ class BeanValidationFactorySpec: StringSpec({
         val io = info.inout
         io.dataTypeValue shouldBe "@Valid Foo[]"
         io.imports shouldBe setOf(BeanValidation.VALID.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "does not apply @Valid to 'array' with simple items" {
@@ -46,13 +47,13 @@ class BeanValidationFactorySpec: StringSpec({
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "String[]"
-        prop.imports shouldBe emptySet()
-        prop.annotations shouldBe emptySet()
+        prop.imports.shouldBeEmpty()
+        prop.annotations.shouldBeEmpty()
 
         val io = info.inout
         io.dataTypeValue shouldBe "String[]"
-        io.imports shouldBe emptySet()
-        io.annotations shouldBe emptySet()
+        io.imports.shouldBeEmpty()
+        io.annotations.shouldBeEmpty()
     }
 
     "applies @Valid to mapped collection with object items" {
@@ -66,12 +67,12 @@ class BeanValidationFactorySpec: StringSpec({
         val prop = info.prop
         prop.dataTypeValue shouldBe "List<@Valid Foo>"
         prop.imports shouldBe setOf(BeanValidation.VALID.import)
-        prop.annotations shouldBe emptySet()
+        prop.annotations.shouldBeEmpty()
 
         val io = info.inout
         io.dataTypeValue shouldBe "List<@Valid Foo>"
         io.imports shouldBe setOf(BeanValidation.VALID.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "does not apply @Valid to mapped collection with simple items" {
@@ -82,13 +83,13 @@ class BeanValidationFactorySpec: StringSpec({
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "List<String>"
-        prop.imports shouldBe emptySet()
-        prop.annotations shouldBe emptySet()
+        prop.imports.shouldBeEmpty()
+        prop.annotations.shouldBeEmpty()
 
         val io = info.inout
         io.dataTypeValue shouldBe "List<String>"
-        io.imports shouldBe emptySet()
-        io.annotations shouldBe emptySet()
+        io.imports.shouldBeEmpty()
+        io.annotations.shouldBeEmpty()
     }
 
     "applies @Pattern to String" {
@@ -105,7 +106,7 @@ class BeanValidationFactorySpec: StringSpec({
         val io = info.inout
         io.dataTypeValue shouldBe """${BeanValidation.PATTERN.annotation}(regexp = "regex") String"""
         io.imports shouldBe setOf(BeanValidation.PATTERN.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "applies @Pattern to String with escaping" {
@@ -122,7 +123,7 @@ class BeanValidationFactorySpec: StringSpec({
         val io = info.inout
         io.dataTypeValue shouldBe """${BeanValidation.PATTERN.annotation}(regexp = "\\.\\\\") String"""
         io.imports shouldBe setOf(BeanValidation.PATTERN.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "does apply validation annotations to 'collection' item" {
@@ -146,7 +147,7 @@ class BeanValidationFactorySpec: StringSpec({
         io.imports shouldBe setOf(
             BeanValidation.NOT_NULL.import,
             BeanValidation.SIZE.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "does apply validation annotations to 'collection' model items" {
@@ -172,7 +173,7 @@ class BeanValidationFactorySpec: StringSpec({
         io.imports shouldBe setOf(
             BeanValidation.NOT_NULL.import,
             BeanValidation.VALID.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "does apply validation annotations to 'array' item" {
@@ -194,7 +195,7 @@ class BeanValidationFactorySpec: StringSpec({
         io.dataTypeValue shouldBe "@NotNull String[]"
         io.imports shouldBe setOf(
             BeanValidation.NOT_NULL.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "does apply validation annotations to 'array' model items" {
@@ -221,7 +222,7 @@ class BeanValidationFactorySpec: StringSpec({
         io.imports shouldBe setOf(
             BeanValidation.NOT_NULL.import,
             BeanValidation.VALID.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 
     "applies @Email to String" {
@@ -238,6 +239,6 @@ class BeanValidationFactorySpec: StringSpec({
         val io = info.inout
         io.dataTypeValue shouldBe """${BeanValidation.EMAIL.annotation} String"""
         io.imports shouldBe setOf(BeanValidation.EMAIL.import)
-        io.annotations shouldBe emptySet()
+        io.annotations.shouldBeEmpty()
     }
 })

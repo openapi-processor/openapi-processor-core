@@ -37,6 +37,11 @@
             "Resource",
             "Dto"
           ]
+        },
+        "format-code": {
+          "description": "enable/disable code formatting (since core 2022.1.1).",
+          "type": "boolean",
+          "default": true
         }
       }
     },
@@ -4588,6 +4593,11 @@
             "Resource",
             "Dto"
           ]
+        },
+        "format-code": {
+          "description": "enable/disable code formatting (since core 2022.1.1).",
+          "type": "boolean",
+          "default": true
         }
       }
     },

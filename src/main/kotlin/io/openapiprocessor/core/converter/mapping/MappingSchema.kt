@@ -18,7 +18,7 @@ interface MappingSchema {
     fun getName(): String
     fun getContentType(): String
 
-    fun getType(): String
+    fun getType(): String?
     fun getFormat(): String?
 
     fun isPrimitive(): Boolean

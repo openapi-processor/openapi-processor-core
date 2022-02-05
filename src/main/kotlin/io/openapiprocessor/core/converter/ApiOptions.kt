@@ -43,9 +43,14 @@ class ApiOptions {
     var javadoc = false
 
     /**
-     * suffix for model class names and enum names. Default is none, ie. an empty string.
+     * suffix for model class names and enum names. Default is none, i.e. an empty string.
      */
     var modelNameSuffix = String.Empty
+
+    /**
+     * enable/disable the code formatter (optional).
+     */
+    var formatCode = true
 
     /**
      * provide additional type mapping information to map OpenAPI types to java types. The list can

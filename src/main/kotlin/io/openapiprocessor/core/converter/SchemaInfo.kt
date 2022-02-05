@@ -15,7 +15,7 @@ import io.openapiprocessor.core.support.capitalizeFirstChar
  * Helper for [DataTypeConverter]. Holds an OpenAPI schema with context information, e.g. name and
  * if this is an inline type with a generated name.
  */
-class SchemaInfo(
+open class SchemaInfo(
     /**
      * Endpoint path.
      */
@@ -79,8 +79,8 @@ class SchemaInfo(
      *
      * @return schema type
      */
-    override fun getType(): String {
-       return schema?.getType()!!
+    override fun getType(): String? {
+       return schema?.getType()
     }
 
     /**
@@ -238,6 +238,15 @@ class SchemaInfo(
      * iterate over composed items
      */
     fun eachItemOf(action: (info: SchemaInfo) -> Unit) {
+        if (schema?.getProperties()?.isNotEmpty() == true) {
+            action(SchemaInfoAllOf(
+                endpoint = endpoint,
+                name = "${name}_${itemOf()!!.capitalizeFirstChar()}",
+                schema = schema,
+                resolver = resolver
+            ))
+        }
+
         schema?.getItems()?.forEachIndexed { index, schema ->
             action(SchemaInfo(
                 endpoint = endpoint,
@@ -316,15 +325,15 @@ class SchemaInfo(
     }
 
     override fun isArray(): Boolean {
-        return schema?.getType().equals("array")
+        return getType().equals("array")
     }
 
     fun isObject(): Boolean {
-        return schema?.getType().equals("object")
+        return getType().equals("object")
     }
 
     fun isComposedObject(): Boolean {
-        return schema?.getType().equals("composed")
+        return getType().equals("composed")
     }
 
     fun isComposedAllOf(): Boolean {

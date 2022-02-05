@@ -62,8 +62,7 @@ class TestProcessor: OpenApiProcessor {
                     beanValidation,
                     JavaDocWriter()
                 ),
-                StringEnumWriter(headerWriter),
-                true
+                StringEnumWriter(headerWriter)
             )
 
             writer.write(api)

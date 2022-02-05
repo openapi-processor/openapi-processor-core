@@ -6,6 +6,8 @@
 package io.openapiprocessor.core.converter
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.support.Empty
@@ -15,7 +17,7 @@ class OptionsConverterSpec: StringSpec({
     "produces default options if input options are empty" {
         val converter = OptionsConverter()
 
-        val options = converter.convertOptions(emptyMap<String, Any>())
+        val options = converter.convertOptions(emptyMap())
 
         options.targetDir shouldBe null
         options.packageName shouldBe "io.openapiprocessor.generated"
@@ -23,6 +25,7 @@ class OptionsConverterSpec: StringSpec({
         options.javadoc shouldBe false
         options.modelNameSuffix shouldBe String.Empty
         options.typeMappings shouldHaveSize 0
+        options.formatCode.shouldBeTrue()
     }
 
     "should set target dir" {
@@ -93,6 +96,7 @@ class OptionsConverterSpec: StringSpec({
                   model-name-suffix: Suffix
                   bean-validation: true
                   javadoc: true
+                  format-code: false
             """.trimIndent()
         ))
 
@@ -100,6 +104,7 @@ class OptionsConverterSpec: StringSpec({
         options.modelNameSuffix shouldBe "Suffix"
         options.beanValidation shouldBe true
         options.javadoc shouldBe true
+        options.formatCode.shouldBeFalse()
     }
 
 })
