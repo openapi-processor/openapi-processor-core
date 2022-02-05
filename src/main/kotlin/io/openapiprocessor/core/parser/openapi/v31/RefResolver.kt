@@ -3,22 +3,21 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-package io.openapiprocessor.core.parser.openapi
+package io.openapiprocessor.core.parser.openapi.v31
 
 import io.openapiprocessor.core.parser.NamedSchema
-import io.openapiprocessor.core.parser.openapi.v30.Schema
 import io.openapiprocessor.core.parser.RefResolver as ParserRefResolver
 import io.openapiprocessor.core.parser.Schema as ParserSchema
-import io.openapiparser.model.v30.OpenApi as OpenApi30
-import io.openapiparser.model.v30.Schema as Schema30
+import io.openapiparser.model.v31.OpenApi as OpenApi31
+import io.openapiparser.model.v31.Schema as Schema31
 
 /**
  * openapi-parser $ref resolver.
  */
-class RefResolver(private val api: OpenApi30): ParserRefResolver {
+class RefResolver(private val api: OpenApi31): ParserRefResolver {
 
     override fun resolve(ref: ParserSchema): NamedSchema {
-        val schema: Schema30 = (ref as Schema).schema
+        val schema: Schema31 = (ref as Schema).schema
         return NamedSchema(getRefName(ref.getRef()!!), Schema(schema.refObject))
     }
 
