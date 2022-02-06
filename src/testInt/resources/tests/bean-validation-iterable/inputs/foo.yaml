@@ -1,0 +1,10 @@
+description: no array mapping
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'resources.yaml#/components/schemas/Foo'
+  responses:
+    '204':
+      description: empty

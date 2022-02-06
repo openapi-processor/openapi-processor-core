@@ -1,0 +1,11 @@
+openapi: 3.0.2
+info:
+  title: bean-validation iterable
+  version: 1.0.0
+
+paths:
+  /foo:
+    $ref: 'foo.yaml'
+
+  /fooL:
+    $ref: 'fooL.yaml'
