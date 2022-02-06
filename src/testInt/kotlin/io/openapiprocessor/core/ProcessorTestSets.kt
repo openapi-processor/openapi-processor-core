@@ -12,6 +12,7 @@ val ALL_30: List<TestSet> = listOf(
     TestSet("bean-validation-allof-required", API_30),
     TestSet("bean-validation-iterable", API_30),
     TestSet("bean-validation-requestbody", API_30),
+    TestSet("deprecated", API_30),
     TestSet("params-additional", API_30)
 )
 
@@ -20,5 +21,6 @@ val ALL_31: List<TestSet> = listOf(
     TestSet("bean-validation-allof-required", API_31),
     TestSet("bean-validation-iterable", API_31),
     TestSet("bean-validation-requestbody", API_31),
+    TestSet("deprecated", API_31),
     TestSet("params-additional", API_31)
 )

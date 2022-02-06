@@ -1,0 +1,17 @@
+get:
+  description: expect @Deprecated annotation on endpoint
+  deprecated: true
+  parameters:
+    - name: bar
+      description: expect @Deprecated annotation at parameter
+      deprecated: true
+      in: query
+      schema:
+        $ref: 'resources.yaml#/components/schemas/Bar'
+  responses:
+    '200':
+      description: expect @Deprecated annotation on schema & property
+      content:
+        application/json:
+            schema:
+              $ref: 'resources.yaml#/components/schemas/Bar'
