@@ -17,10 +17,11 @@ import io.openapiprocessor.test.TestSetRunner
  * run end to end integration test.
  */
 class ProcessorEndToEndSpec: StringSpec({
-    val folder = tempdir()
 
     for (testSet in sources()) {
         "native - $testSet".config(enabled = true) {
+            val folder = tempdir()
+
             val support = FileSupport(
                 ProcessorPendingSpec::class.java,
                 testSet.inputs, testSet.generated)
@@ -45,9 +46,9 @@ private fun sources(): Collection<TestSet> {
         testSet(it.name, INTERNAL, it.openapi)
     }
 
-//    val openapi31 = ALL_31.map {
-//        testSet(it.name, INTERNAL, it.openapi)
-//    }
+    val openapi31 = ALL_31.map {
+        testSet(it.name, INTERNAL, it.openapi)
+    }
 
-    return swagger + openapi4j + openapi30 //+ openapi31
+    return swagger + openapi4j + openapi30 + openapi31
 }

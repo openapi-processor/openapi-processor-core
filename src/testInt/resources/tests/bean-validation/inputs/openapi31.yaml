@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  title: test bean-validation cases
+  version: 1.0.0
+
+paths:
+  /endpoint/required:
+    $ref: 'required.yaml'
+
+  /endpoint/length:
+    $ref: 'length.yaml'
+
+  /endpoint/minmax:
+    $ref: 'minmax.yaml'
+
+  /endpoint/items:
+    $ref: 'items.yaml'
+
+  /endpoint/obj:
+    $ref: 'obj.yaml'
+
+  /endpoint/pattern:
+    $ref: 'pattern.yaml'
+
+  /endpoint/email:
+    $ref: 'email.yaml'

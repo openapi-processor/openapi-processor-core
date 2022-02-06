@@ -1,0 +1,13 @@
+get:
+  tags:
+    - endpoint
+  parameters:
+    - in: query
+      name: anything
+      schema:
+        type: string
+        pattern: .*\.\\
+        description: regex with escaping
+  responses:
+    '204':
+      description: empty

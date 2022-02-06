@@ -1,0 +1,33 @@
+post:
+  tags:
+    - endpoint
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '#/x-components/schemas/Obj1'
+  responses:
+    '204':
+      description: empty
+
+x-components:
+  schemas:
+    Obj1:
+      type: object
+      properties:
+        prop1:
+          type: string
+        prop2:
+          type: integer
+          format: int32
+          maximum: 3
+        prop3:
+          $ref: '#/x-components/schemas/Obj2'
+      required:
+        - prop1
+    Obj2:
+      type: object
+      properties:
+        prop4:
+          type: string
+          maxLength: 10

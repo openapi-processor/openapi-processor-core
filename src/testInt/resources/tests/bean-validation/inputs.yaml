@@ -1,3 +1,11 @@
 items:
-  - inputs/openapi.yaml
+  - inputs/openapi30.yaml
+  - inputs/openapi31.yaml
+  - inputs/required.yaml
+  - inputs/length.yaml
+  - inputs/minmax.yaml
+  - inputs/items.yaml
+  - inputs/obj.yaml
+  - inputs/pattern.yaml
+  - inputs/email.yaml
   - inputs/mapping.yaml
