@@ -1,0 +1,13 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: string
+            minLength: 2
+            maxLength: 2
+  responses:
+    200:
+      description: Description
