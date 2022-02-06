@@ -1,0 +1,24 @@
+components:
+  schemas:
+    Foo:
+      type: object
+      properties:
+        bars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bar'
+
+    FooL:
+      type: object
+      properties:
+        bars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bar'
+
+    Bar:
+      type: object
+      properties:
+        bar:
+          type: string
+          maxLength: 10

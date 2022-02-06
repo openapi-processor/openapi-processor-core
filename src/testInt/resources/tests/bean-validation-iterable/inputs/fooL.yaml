@@ -1,0 +1,10 @@
+description: array mapping to list
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'resources.yaml#/components/schemas/FooL'
+  responses:
+    '204':
+      description: empty
