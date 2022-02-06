@@ -11,6 +11,8 @@ import io.openapiprocessor.core.parser.openapi.v30.OpenApi as ParserOpenApi30
 import io.openapiprocessor.core.parser.openapi.v31.OpenApi as ParserOpenApi31
 import io.openapiparser.jackson.JacksonConverter
 import io.openapiparser.reader.UriReader
+import io.openapiparser.schema.DocumentStore
+import io.openapiparser.schema.Resolver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.URI
@@ -24,26 +26,16 @@ class Parser {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
     fun parse(apiPath: String): ParserOpenApi {
-        val baseUri = URI(apiPath)
+        val resolver = Resolver(UriReader(), JacksonConverter(), DocumentStore())
+        val parser = OpenApiParser(resolver)
+        val result = parser.parse(URI(apiPath))
 
-        val resolver = ReferenceResolver(
-            baseUri,
-            UriReader(),
-            JacksonConverter(),
-            ReferenceRegistry()
-        )
-
-        val context = Context(baseUri, resolver)
-
-        val parser = OpenApiParser(context)
-        val result = parser.parse()
-
-        when (result.version) {
+        return when (result.version) {
             OpenApiResult.Version.V30 -> {
-                return ParserOpenApi30(result.getModel(OpenApi30::class.java))
+                ParserOpenApi30(result.getModel(OpenApi30::class.java))
             }
             OpenApiResult.Version.V31 -> {
-                return ParserOpenApi31(result.getModel(OpenApi31::class.java))
+                ParserOpenApi31(result.getModel(OpenApi31::class.java))
             }
             else -> {
                 TODO() // unsupported openapi version
