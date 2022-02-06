@@ -1,0 +1,10 @@
+components:
+  schemas:
+
+    Bar:
+      type: object
+      deprecated: true
+      properties:
+        foobar:
+          deprecated: true
+          type: string

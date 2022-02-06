@@ -8,7 +8,6 @@ package io.openapiprocessor.core
 class TestSets {
 
     static def ALL = [
-        'deprecated',
         'endpoint-exclude',
         'endpoint-http-mapping',                    // framework specific
         'javadoc',

@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: test deprecated endpoint & property
+  version: 1.0.0
+
+paths:
+  /foo:
+    $ref: 'foo.yaml'
