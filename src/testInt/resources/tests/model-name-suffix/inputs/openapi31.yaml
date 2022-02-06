@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: model name suffix
+  version: 1.0.0
+
+paths:
+
+  /foo:
+    get:
+      parameters:
+        - in: query
+          name: param
+          schema:
+            $ref: '#/components/schemas/Param'
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: the foo result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+
+    Foo:
+      type: object
+      properties:
+        prop:
+          type: string
+        nested:
+          $ref: '#/components/schemas/Bar'
+        inline:
+          type: object
+          properties:
+            prop:
+              type: string
+
+    Bar:
+      type: object
+      properties:
+        prop:
+          type: string
+
+    Param:
+      type: object
+      properties:
+        prop:
+          type: string
+
+    Body:
+      type: object
+      properties:
+        prop:
+          type: string
+

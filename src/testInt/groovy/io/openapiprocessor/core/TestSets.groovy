@@ -8,18 +8,6 @@ package io.openapiprocessor.core
 class TestSets {
 
     static def ALL = [
-        'model-name-suffix',
-        'object-nullable-properties',
-        'object-read-write-properties',
-        'object-without-properties',
-        'params-additional',
-        'params-complex-data-types',                // framework specific
-        'params-endpoint',
-        'params-enum',
-        'params-path-simple-data-types',            // framework specific
-        'params-request-body',                      // framework specific
-        'params-request-body-multipart-form-data',  // framework specific
-        'params-simple-data-types',                 // framework specific
         'ref-array-items-nested',
         'ref-chain-spring-124.1',
         'ref-chain-spring-124.2',
