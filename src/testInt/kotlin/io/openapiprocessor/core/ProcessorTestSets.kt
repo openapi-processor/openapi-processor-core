@@ -8,9 +8,11 @@ package io.openapiprocessor.core
 data class TestSet(val name: String, val openapi: String)
 
 val ALL_30: List<TestSet> = listOf(
+    TestSet("bean-validation", API_30),
     TestSet("params-additional", API_30)
 )
 
 val ALL_31: List<TestSet> = listOf(
+    TestSet("bean-validation", API_31),
     TestSet("params-additional", API_31)
 )

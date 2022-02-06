@@ -1,0 +1,13 @@
+get:
+  tags:
+    - endpoint
+  parameters:
+    - in: query
+      name: anything
+      schema:
+        type: string
+        format: email
+        description: email format
+  responses:
+    '204':
+      description: empty

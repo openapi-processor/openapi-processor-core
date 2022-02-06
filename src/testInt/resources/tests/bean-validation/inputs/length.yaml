@@ -1,0 +1,23 @@
+get:
+  tags:
+    - endpoint
+  parameters:
+    - in: query
+      name: min-length
+      schema:
+        type: string
+        minLength: 2
+    - in: query
+      name: max-length
+      schema:
+        type: string
+        maxLength: 4
+    - in: query
+      name: min-max-length
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 4
+  responses:
+    '204':
+      description: empty

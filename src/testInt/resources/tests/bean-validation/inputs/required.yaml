@@ -1,0 +1,17 @@
+get:
+  tags:
+    - endpoint
+  parameters:
+    - in: query
+      name: required-false
+      required: false
+      schema:
+        type: string
+    - in: query
+      name: required-true
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: empty

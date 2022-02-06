@@ -1,0 +1,49 @@
+get:
+  tags:
+    - endpoint
+  parameters:
+    - in: query
+      name: min
+      schema:
+        type: integer
+        format: int32
+        minimum: 10
+    - in: query
+      name: min-ex
+      schema:
+        type: integer
+        format: int32
+        minimum: 10
+        exclusiveMinimum: true
+    - in: query
+      name: max
+      schema:
+        type: integer
+        format: int32
+        maximum: 20
+    - in: query
+      name: max-ex
+      schema:
+        type: integer
+        format: int32
+        maximum: 20
+        exclusiveMaximum: true
+    - in: query
+      name: min-max
+      schema:
+        type: integer
+        format: int32
+        minimum: 10
+        maximum: 20
+    - in: query
+      name: min-max-ex
+      schema:
+        type: integer
+        format: int32
+        minimum: 10
+        exclusiveMinimum: true
+        maximum: 20
+        exclusiveMaximum: true
+  responses:
+    '204':
+      description: empty
