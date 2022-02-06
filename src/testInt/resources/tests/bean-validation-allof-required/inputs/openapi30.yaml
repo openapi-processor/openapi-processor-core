@@ -1,0 +1,8 @@
+openapi: 3.0.2
+info:
+  title: merge allOf into same object
+  version: 1.0.0
+
+paths:
+  /query:
+    $ref: 'query.yaml'

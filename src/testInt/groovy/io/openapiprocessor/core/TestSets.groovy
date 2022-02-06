@@ -8,8 +8,6 @@ package io.openapiprocessor.core
 class TestSets {
 
     static def ALL = [
-        'bean-validation',
-        'bean-validation-allof-required',
         'bean-validation-iterable',
         'bean-validation-list-item-import',
         'bean-validation-requestbody',
