@@ -38,8 +38,7 @@ class Schema(val schema: Schema31) : ParserSchema {
             return null
         }
 
-        // todo multiple types
-        return schema.type.first()
+        return schema.type.first { it != "null" }
     }
 
     override fun getFormat(): String? = schema.format
@@ -115,7 +114,9 @@ class Schema(val schema: Schema31) : ParserSchema {
 
     override fun getRequired(): List<String> = schema.required.toList()
 
-    override fun getNullable(): Boolean = false // todo schema.nullable
+    override fun getNullable(): Boolean {
+        return schema.type.contains("null")
+    }
 
     override fun getMinLength(): Int? = schema.minLength?.toInt() ?: 0
 
