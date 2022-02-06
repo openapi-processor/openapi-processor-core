@@ -1,0 +1,18 @@
+get:
+  responses:
+    '200':
+      description: create result from allOff object
+      content:
+        application/json:
+          schema:
+            allOf:
+              - type: object
+                properties:
+                  prop1:
+                    type: string
+                required:
+                  - prop1
+              - type: object
+                properties:
+                  prop2:
+                    type: string
