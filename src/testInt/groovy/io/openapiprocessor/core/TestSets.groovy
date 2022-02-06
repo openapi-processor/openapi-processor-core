@@ -8,10 +8,6 @@ package io.openapiprocessor.core
 class TestSets {
 
     static def ALL = [
-        'endpoint-exclude',
-        'endpoint-http-mapping',                    // framework specific
-        'javadoc',
-        'method-operation-id',
         'model-name-suffix',
         'object-nullable-properties',
         'object-read-write-properties',
