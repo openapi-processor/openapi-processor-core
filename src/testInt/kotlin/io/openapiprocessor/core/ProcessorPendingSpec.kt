@@ -17,10 +17,11 @@ import io.openapiprocessor.test.TestSetRunner
  * helper to run selected integration tests.
  */
 class ProcessorPendingSpec: StringSpec({
-    val folder = tempdir()
 
     for (testSet in sources()) {
         "native - $testSet".config(enabled = true) {
+            val folder = tempdir()
+
             val support = FileSupport(
                 ProcessorPendingSpec::class.java,
                 testSet.inputs, testSet.generated)
