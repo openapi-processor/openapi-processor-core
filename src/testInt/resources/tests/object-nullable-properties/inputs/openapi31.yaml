@@ -34,13 +34,15 @@ components:
       type: object
       properties:
         bar:
-          nullable: true
-          type: string
+          type:
+            - string
+            - null
 
     Foo2:
       description: a Foo 2
       type: object
       properties:
         bar:
-          nullable: true
-          type: string
+          type:
+            - string
+            - null
