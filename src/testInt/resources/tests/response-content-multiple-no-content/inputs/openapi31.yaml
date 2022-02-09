@@ -1,0 +1,31 @@
+openapi: 3.1.0
+info:
+  title: test response content with multiple no content errors
+  version: 1.0.0
+
+paths:
+  /foo:
+    get:
+      responses:
+        '200':
+          description: json or plain text result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Not found.
+        '5XX':
+          description: Server error.
+
+components:
+  schemas:
+    Foo:
+      type: object
+      properties:
+        bar:
+          type: string

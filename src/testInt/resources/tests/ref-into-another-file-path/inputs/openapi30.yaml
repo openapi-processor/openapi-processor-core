@@ -1,0 +1,8 @@
+openapi: 3.0.3
+info:
+  title: test $ref into other file
+  version: 1.0.0
+
+paths:
+  /book:
+    $ref: book.api.yaml
