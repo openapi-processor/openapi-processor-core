@@ -10,10 +10,7 @@ import io.openapiprocessor.test.TestSet
 
 
 const val API_30 = "openapi30.yaml"
-const val IN_30 = "inputs30.yaml"
-
 const val API_31 = "openapi31.yaml"
-const val IN_31 = "inputs31.yaml"
 
 
 @Suppress("SameParameterValue")
