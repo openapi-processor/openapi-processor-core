@@ -1,0 +1,29 @@
+openapi: 3.0.3
+info:
+  title: $ref sibling with allOf
+  version: 1.0.0
+
+paths:
+  /all-of-sibling:
+    get:
+      responses:
+        '200':
+          description: object response with allOf to make the $ref a red only property
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  foo:
+                    readOnly: true
+                    allOf:
+                      - $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+
+    Foo:
+      type: object
+      properties:
+        foo:
+          type: string

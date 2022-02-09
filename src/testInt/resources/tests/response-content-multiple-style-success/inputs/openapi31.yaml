@@ -1,0 +1,83 @@
+openapi: 3.1.0
+info:
+  title: test multiple response contents
+  version: 1.0.0
+
+paths:
+  /foo:
+    description: multiple success with content type
+    get:
+      responses:
+        '200':
+          description: json or plain text result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+            text/plain:
+                schema:
+                  type: string
+        default:
+          description: error
+          content:
+            application/xml:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+  /foo-mixed:
+    description: multiple success with & without content type
+    get:
+      tags:
+        - mixed
+      responses:
+        '200':
+          description: json or plain text result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+            text/plain:
+                schema:
+                  type: string
+        '202':
+          description: other success, no content type
+        '204':
+          description: other success, no content type
+        default:
+          description: error
+          content:
+            application/xml:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+  /foo-none:
+    get:
+      description: responses without content type only
+      tags:
+        - none
+      responses:
+        '202':
+          description: other success, no content type
+        '204':
+          description: other success, no content type
+        default:
+          description: error
+          content:
+            application/xml:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+components:
+
+  schemas:
+    Foo:
+      type: object
+      properties:
+        bar:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string

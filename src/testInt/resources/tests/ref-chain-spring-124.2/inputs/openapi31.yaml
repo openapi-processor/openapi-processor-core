@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  title: nuts
+  version: '1.0'
+
+tags:
+  - name: user
+    description: user tag
+
+paths:
+  '/users/{userId}':
+    $ref: ./apis/user-userId.api.v1.yaml
+  '/user':
+    $ref: ./apis/user.api.v1.yaml
+  '/users':
+    $ref: ./apis/users.api.v1.yaml
+  '/user-page':
+    $ref: ./apis/user-page.api.v1.yaml
+
+components:
+  schemas:
+    Pageable:
+      $ref: ./models/pageable.model.v1.yaml#/Pageable
+    Page:
+      $ref: ./models/page.model.v1.yaml#/Page
+    UserContent:
+      $ref: ./models/user.model.v1.yaml#/UserContent
+    UserPage:
+      $ref: ./models/user.model.v1.yaml#/UserPage
+    User:
+      $ref: ./models/user.model.v1.yaml#/User
+    UserSearch:
+      $ref: ./models/user.model.v1.yaml#/UserSearch
+
+  examples:
+    UserExample:
+      $ref: ./examples/user.example.v1.yaml

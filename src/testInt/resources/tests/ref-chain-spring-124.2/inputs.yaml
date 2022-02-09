@@ -1,5 +1,6 @@
 items:
-  - inputs/openapi.yaml
+  - inputs/openapi30.yaml
+  - inputs/openapi31.yaml
   - inputs/mapping.yaml
   - inputs/apis/user.api.v1.yaml
   - inputs/apis/user-page.api.v1.yaml

@@ -29,6 +29,31 @@ val ALL_30: List<TestSet> = listOf(
     TestSet("params-request-body", API_30), // framework specific
     TestSet("params-request-body-multipart-form-data", API_30), // framework specific
     TestSet("params-simple-data-types", API_30), // framework specific
+    TestSet("ref-array-items-nested", API_30),
+    TestSet("ref-chain-spring-124.1", API_30),
+    TestSet("ref-chain-spring-124.2", API_30),
+    TestSet("ref-into-another-file", API_30),
+    TestSet("ref-into-another-file-path", API_30),
+    TestSet("ref-is-relative-to-current-file", API_30),
+    TestSet("ref-loop", API_30),
+    TestSet("ref-loop-array", API_30),
+    TestSet("ref-parameter", API_30),
+    TestSet("ref-parameter-with-primitive-mapping", API_30),
+    TestSet("ref-to-escaped-path-name", API_30),
+    TestSet("response-array-data-type-mapping", API_30),
+    TestSet("response-complex-data-types", API_30),
+    TestSet("response-content-multiple-no-content", API_30),
+    TestSet("response-content-multiple-style-all", API_30),
+    TestSet("response-content-multiple-style-success", API_30),
+    TestSet("response-content-single", API_30),
+    TestSet("response-result-mapping", API_30),
+    TestSet("response-simple-data-types", API_30),
+    TestSet("response-single-multi-mapping", API_30),
+    TestSet("schema-composed", API_30),
+    TestSet("schema-composed-allof", API_30),
+    TestSet("schema-composed-allof-notype", API_30),
+    TestSet("schema-composed-allof-properties", API_30),
+    TestSet("schema-composed-nested", API_30),
 )
 
 val ALL_31: List<TestSet> = listOf(
@@ -53,5 +78,29 @@ val ALL_31: List<TestSet> = listOf(
     TestSet("params-request-body", API_31), // framework specific
     TestSet("params-request-body-multipart-form-data", API_31), // framework specific
     TestSet("params-simple-data-types", API_31), // framework specific
-
+    TestSet("ref-array-items-nested", API_31),
+    TestSet("ref-chain-spring-124.1", API_31),
+    TestSet("ref-chain-spring-124.2", API_31),
+    TestSet("ref-into-another-file", API_31),
+    TestSet("ref-into-another-file-path", API_31),
+    TestSet("ref-is-relative-to-current-file", API_31),
+    TestSet("ref-loop", API_31),
+    TestSet("ref-loop-array", API_31),
+    TestSet("ref-parameter", API_31),
+    TestSet("ref-parameter-with-primitive-mapping", API_31),
+    TestSet("ref-to-escaped-path-name", API_31),
+    TestSet("response-array-data-type-mapping", API_31),
+    TestSet("response-complex-data-types", API_31),
+    TestSet("response-content-multiple-no-content", API_31),
+    TestSet("response-content-multiple-style-all", API_31),
+    TestSet("response-content-multiple-style-success", API_31),
+    TestSet("response-content-single", API_31),
+    TestSet("response-result-mapping", API_31),
+    TestSet("response-simple-data-types", API_31),
+    TestSet("response-single-multi-mapping", API_31),
+    TestSet("schema-composed", API_31),
+    TestSet("schema-composed-allof", API_31),
+    TestSet("schema-composed-allof-notype", API_31),
+    TestSet("schema-composed-allof-properties", API_31),
+    TestSet("schema-composed-nested", API_31),
 )
