@@ -31,6 +31,7 @@ class ProcessorEndToEndSpec: StringSpec({
             .shouldBeTrue()
         }
     }
+
 })
 
 private fun sources(): Collection<TestSet> {
