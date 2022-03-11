@@ -1,0 +1,10 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: generated
+
+map:
+  multi: reactor.core.publisher.Flux
+
+  types:
+    - type: array => java.util.List
