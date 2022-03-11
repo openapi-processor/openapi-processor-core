@@ -8,7 +8,7 @@ package io.openapiprocessor.core.converter.wrapper
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.SchemaInfo
 import io.openapiprocessor.core.converter.mapping.*
-import io.openapiprocessor.core.model.datatypes.ArrayDataType
+import io.openapiprocessor.core.model.datatypes.CollectionDataType
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.MappedCollectionDataType
 
@@ -51,7 +51,7 @@ class MultiDataTypeWrapper(
         return MappedCollectionDataType(
             targetType.getName(),
             targetType.getPkg(),
-            (dataType as ArrayDataType).item,
+            (dataType as CollectionDataType).item,
             null,
             false
         )
