@@ -46,6 +46,7 @@ class TestSets {
         'response-content-multiple-style-all',
         'response-content-multiple-style-success',
         'response-content-single',
+        'response-multi-mapping-with-array-type-mapping',
         'response-result-mapping',
         'response-simple-data-types',
         'response-single-multi-mapping',
