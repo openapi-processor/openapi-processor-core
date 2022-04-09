@@ -36,7 +36,7 @@ class ApiOptions {
     var beanValidation = false
 
     /**
-     * enable generation of javadoc comments based on the `description` OpenAPI property.
+     * enable/disable generation of javadoc comments based on the `description` OpenAPI property.
      *
      * *experimental*
      */
