@@ -7,10 +7,8 @@ package io.openapiprocessor.core.converter
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeInstanceOf
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.HttpMethod
-import io.openapiprocessor.core.model.datatypes.InterfaceDataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.support.getBodySchemaInfo
 import io.openapiprocessor.core.support.parse
@@ -75,11 +73,11 @@ class DataTypeConverterOneOfSpec: StringSpec({
 
         // when:
         val converter = DataTypeConverter(options)
-        val datatype = converter.convert(schemaInfo, dataTypes)
+        converter.convert(schemaInfo, dataTypes)
 
         // then:
-        val ifDataType = dataTypes.find("GenericProperties")
-        ifDataType.shouldBeInstanceOf<InterfaceDataType>()
+        val ifDataType = dataTypes.getInterfaceDataTypes().first()
+        ifDataType.getName() shouldBe "GenericProperties"
         ifDataType.items.size shouldBe 2
         ifDataType.items.forEach {
             (it as ModelDataType).implementsDataType shouldBe ifDataType

@@ -63,6 +63,19 @@ class DataTypes {
     }
 
     /**
+     * provides the *interface* data types (model interfaces) used by the api endpoints.
+     * For these objects the processor will create POJOs interfaces.
+     *
+     * @return list of object data types
+     */
+    fun getInterfaceDataTypes(): Collection<InterfaceDataType> {
+        return dataTypeInfos.values
+            .filter { it.dataType is InterfaceDataType }
+            .filter { it.refCount > 0 }
+            .map { it.dataType as InterfaceDataType }
+    }
+
+    /**
      * remember a data type.
      *
      * @param dataType the source data type
