@@ -38,6 +38,11 @@
             "Dto"
           ]
         },
+        "one-of-interface": {
+          "description": "generate common interface for an `oneOf` object list (since core 2022.3).",
+          "type": "boolean",
+          "default": false
+        },
         "format-code": {
           "description": "enable/disable code formatting (since core 2022.1.1).",
           "type": "boolean",
@@ -4593,6 +4598,11 @@
             "Resource",
             "Dto"
           ]
+        },
+        "one-of-interface": {
+          "description": "generate common interface for an `oneOf` object list (since core 2022.3).",
+          "type": "boolean",
+          "default": false
         },
         "format-code": {
           "description": "enable/disable code formatting (since core 2022.1.1).",
