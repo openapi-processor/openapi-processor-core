@@ -1,0 +1,6 @@
+items:
+  - generated/api/Api.java
+  - generated/model/Foo.java
+  - generated/model/GenericProperties.java
+  - generated/model/SpecificPropertiesOne.java
+  - generated/model/SpecificPropertiesTwo.java
