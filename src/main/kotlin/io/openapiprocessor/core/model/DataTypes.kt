@@ -38,7 +38,7 @@ class DataTypes {
 
     /**
      * provides the *object* data types (model classes) used by the api endpoints.
-     * For this objects the processor will create POJOs classes.
+     * For these objects the processor will create POJOs classes.
      *
      * @return list of object data types
      */
@@ -51,7 +51,7 @@ class DataTypes {
 
     /**
      * provides the enum data types (model classes) used by the api endpoints.
-     * For this objects the processor will create enum classes.
+     * For these objects the processor will create enum classes.
      *
      * @return list of enum data types
      */
