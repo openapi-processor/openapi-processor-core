@@ -15,6 +15,7 @@ import io.openapiprocessor.core.writer.java.ApiWriter
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DataTypeWriter
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
+import io.openapiprocessor.core.writer.java.InterfaceDataTypeWriter
 import io.openapiprocessor.core.writer.java.InterfaceWriter
 import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
@@ -51,6 +52,7 @@ class TestProcessor implements OpenApiProcessor {
 
             def headerWriter = new TestHeaderWriter()
             def beanValidationFactory = new BeanValidationFactory()
+            def javadocWriter = new JavaDocWriter()
 
             def writer = new ApiWriter (
                 options,
@@ -70,9 +72,14 @@ class TestProcessor implements OpenApiProcessor {
                     options,
                     headerWriter,
                     beanValidationFactory,
-                    new JavaDocWriter()
+                    javadocWriter
                 ),
-                new StringEnumWriter(headerWriter)
+                new StringEnumWriter(headerWriter),
+                new InterfaceDataTypeWriter(
+                    options,
+                    headerWriter,
+                    javadocWriter
+                )
             )
 
             writer.write (api)

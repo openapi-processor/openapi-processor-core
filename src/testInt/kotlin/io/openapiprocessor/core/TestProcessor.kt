@@ -39,6 +39,7 @@ class TestProcessor: OpenApiProcessor {
 
             val headerWriter = TestHeaderWriter()
             val beanValidation = BeanValidationFactory()
+            val javaDocWriter = JavaDocWriter()
 
             val writer = ApiWriter(
                 options,
@@ -60,9 +61,14 @@ class TestProcessor: OpenApiProcessor {
                     options,
                     headerWriter,
                     beanValidation,
-                    JavaDocWriter()
+                    javaDocWriter
                 ),
-                StringEnumWriter(headerWriter)
+                StringEnumWriter(headerWriter),
+                InterfaceDataTypeWriter(
+                    options,
+                    headerWriter,
+                    javaDocWriter
+                )
             )
 
             writer.write(api)
