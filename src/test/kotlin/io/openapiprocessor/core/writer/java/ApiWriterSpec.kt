@@ -63,7 +63,7 @@ class ApiWriterSpec: StringSpec({
 
             // when:
             options.formatCode = false
-            ApiWriter(options, stub(), stub(), enumWriter)
+            ApiWriter(options, stub(), stub(), enumWriter, stub())
                 .write(api)
 
             // then:
@@ -84,7 +84,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dts)
 
         // when:
-        ApiWriter(options, stub(), stub(), enumWriter)
+        ApiWriter(options, stub(), stub(), enumWriter, stub())
             .write(api)
 
         // then:
@@ -97,7 +97,7 @@ class ApiWriterSpec: StringSpec({
 
     "creates package structure in target folder" {
         // when:
-        ApiWriter(options, stub(), stub(), stub())
+        ApiWriter(options, stub(), stub(), stub(), stub())
             .write(Api())
 
         // then:
@@ -116,7 +116,7 @@ class ApiWriterSpec: StringSpec({
         Files.createDirectories(options.getSourceDir("model"))
 
         shouldNotThrowAny {
-            ApiWriter(options, stub(), stub(), stub())
+            ApiWriter(options, stub(), stub(), stub(), stub())
                 .write (Api())
         }
     }
@@ -134,7 +134,7 @@ class ApiWriterSpec: StringSpec({
 
         // when:
         options.formatCode = false
-        ApiWriter(options, itfWriter, stub(), stub())
+        ApiWriter(options, itfWriter, stub(), stub(), stub())
             .write (api)
 
         // then:
@@ -154,7 +154,7 @@ class ApiWriterSpec: StringSpec({
 
         // when:
         options.formatCode = false
-        ApiWriter(options, itfWriter, stub(), stub())
+        ApiWriter(options, itfWriter, stub(), stub(), stub())
             .write (api)
 
         // then:
@@ -175,7 +175,7 @@ class ApiWriterSpec: StringSpec({
 
             // when:
             options.formatCode = false
-            ApiWriter(options, stub(), dtWriter, stub())
+            ApiWriter(options, stub(), dtWriter, stub(), stub())
                 .write(api)
 
             // then:
@@ -192,7 +192,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dt)
 
         // when:
-        ApiWriter(options, stub(), dtWriter, stub())
+        ApiWriter(options, stub(), dtWriter, stub(), stub())
             .write (api)
 
         // then:
@@ -208,7 +208,7 @@ class ApiWriterSpec: StringSpec({
         }
 
         // when:
-        ApiWriter(options, itfWriter, stub(), stub())
+        ApiWriter(options, itfWriter, stub(), stub(), stub())
             .write (Api(listOf(
                 `interface`("Foo", options.getSourceDir("api").toString()) {}
             )))
@@ -233,7 +233,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dt)
 
         // when:
-        ApiWriter(options, stub(), dtWriter, stub())
+        ApiWriter(options, stub(), dtWriter, stub(), stub())
             .write (api)
 
         // then:
@@ -252,7 +252,7 @@ class ApiWriterSpec: StringSpec({
 
         // when:
         options.formatCode = false
-        ApiWriter(options, itfWriter, stub(), stub())
+        ApiWriter(options, itfWriter, stub(), stub(), stub())
             .write (Api(listOf(
                 `interface`("Foo", options.getSourceDir("api").toString()) {}
             )))
