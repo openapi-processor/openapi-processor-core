@@ -19,6 +19,10 @@ options: # general processor options (optional)
   # suffix for model class names and enum names. Default is none.
   model-name-suffix: Resource
 
+  # generate common interface for an `oneOf` object list (optional): true or false (default)
+  # (since since core 2022.3)
+  one-of-interface: true
+
   # enable/disable code formatter: true (default) or false. (since core 2022.1.1)
   format-code: false
 
