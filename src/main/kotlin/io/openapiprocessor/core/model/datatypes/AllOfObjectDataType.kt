@@ -13,7 +13,8 @@ class AllOfObjectDataType(
     private val pkg: String,
     private val items: List<DataType> = emptyList(),
     override val deprecated: Boolean = false
-): DataType, ModelDataType {
+): ModelDataType {
+    override var implementsDataType: InterfaceDataType? = null
 
     override fun getName(): String {
         return name.id

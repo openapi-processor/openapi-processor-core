@@ -105,10 +105,28 @@ class DataTypeConverter(
 
             objectType = AllOfObjectDataType(
                 DataTypeName(schemaInfo.getName(), getTypeNameWithSuffix(schemaInfo.getName())),
-                listOf(options.packageName, "model").joinToString ("."),
+                listOf(options.packageName, "model").joinToString("."),
                 items,
                 schemaInfo.getDeprecated()
             )
+        } else if (shouldGenerateOneOfInterface(items) && schemaInfo.isComposedOneOf()) {
+            val constraints = DataTypeConstraints(
+                nullable = schemaInfo.getNullable(),
+                required = schemaInfo.getRequired()
+            )
+
+            objectType = InterfaceDataType (
+                DataTypeName(schemaInfo.getName(), getTypeNameWithSuffix(schemaInfo.getName())),
+                listOf(options.packageName, "model").joinToString("."),
+                items,
+                constraints,
+                schemaInfo.getDeprecated(),
+                Documentation(description = schemaInfo.description)
+            )
+
+            items.forEach {
+                (it as ModelDataType).implementsDataType = objectType
+            }
         } else {
             objectType = AnyOneOfObjectDataType(
                 schemaInfo.getName(),
@@ -122,6 +140,11 @@ class DataTypeConverter(
 
         dataTypes.add (objectType)
         return objectType
+    }
+
+    private fun shouldGenerateOneOfInterface(items: List<DataType>): Boolean {
+        return options.oneOfInterface
+            && items.size == items.filterIsInstance<ModelDataType>().count()
     }
 
     private fun createArrayDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {

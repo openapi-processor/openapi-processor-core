@@ -18,7 +18,8 @@ open class ObjectDataType(
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     override val documentation: Documentation? = null
-): DataType, ModelDataType {
+): ModelDataType {
+    override var implementsDataType: InterfaceDataType? = null
 
     override fun getName(): String {
         return name.id
@@ -38,10 +39,7 @@ open class ObjectDataType(
 
     override val referencedImports: Set<String>
         get() {
-            return properties.values
-                .map { it.getImports() }
-                .flatten()
-                .toSet()
+            return propertiesImports + implementsImports
         }
 
     fun addObjectProperty(name: String, type: PropertyDataType) {
@@ -64,4 +62,16 @@ open class ObjectDataType(
         for (p in properties) action(p.key, p.value)
     }
 
+    private val propertiesImports: Set<String>
+        get() {
+            return properties.values
+                .map { it.getImports() }
+                .flatten()
+                .toSet()
+        }
+
+    private val implementsImports: Set<String>
+        get() {
+            return implementsDataType?.referencedImports ?: emptySet()
+        }
 }

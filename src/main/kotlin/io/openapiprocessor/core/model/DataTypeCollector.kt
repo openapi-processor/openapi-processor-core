@@ -56,6 +56,12 @@ class DataTypeCollector(
             is PropertyDataType -> {
                 collect(dataType.dataType)
             }
+            is InterfaceDataType -> {
+                dataTypes.addRef(dataType.getName())
+                dataType.items.forEach {
+                    collect(it)
+                }
+            }
         }
     }
 

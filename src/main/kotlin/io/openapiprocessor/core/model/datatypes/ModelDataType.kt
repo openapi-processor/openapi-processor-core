@@ -6,6 +6,10 @@
 package io.openapiprocessor.core.model.datatypes
 
 interface ModelDataType: DataType {
+    /**
+     * implements this interface.
+     */
+    var implementsDataType: InterfaceDataType?
 
     /**
      * loop object properties.

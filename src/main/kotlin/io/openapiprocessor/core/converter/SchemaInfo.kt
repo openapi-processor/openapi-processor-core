@@ -340,6 +340,10 @@ open class SchemaInfo(
         return itemOf().equals("allOf")
     }
 
+    fun isComposedOneOf(): Boolean {
+        return itemOf().equals("oneOf")
+    }
+
     fun isTypeLess(): Boolean {
         return schema?.getType() == null
     }

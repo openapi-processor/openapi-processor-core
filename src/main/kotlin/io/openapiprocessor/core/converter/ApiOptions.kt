@@ -48,6 +48,12 @@ class ApiOptions {
     var modelNameSuffix = String.Empty
 
     /**
+     * enable/disable generation of a common interface for an `oneOf` list of objects. All objects
+     * implement that interface.
+     */
+    var oneOfInterface = false
+
+    /**
      * enable/disable the code formatter (optional).
      */
     var formatCode = true
