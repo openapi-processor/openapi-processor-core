@@ -133,14 +133,14 @@ class DataTypeWriterSpec: StringSpec({
         writer.write (target, dataType)
 
         // then:
-        target.toString ().contains ("""\
-    @JsonProperty(value = "foo", access = JsonProperty.Access.READ_ONLY)
-    private String foo;
-
-    @JsonProperty(value = "bar", access = JsonProperty.Access.WRITE_ONLY)
-    private String bar;
-
-""")
+        target.toString () shouldContain
+            """
+            |    @JsonProperty(value = "foo", access = JsonProperty.Access.READ_ONLY)
+            |    private String foo;
+            |
+            |    @JsonProperty(value = "bar", access = JsonProperty.Access.WRITE_ONLY)
+            |    private String bar;
+            """.trimMargin()
     }
 
 })
