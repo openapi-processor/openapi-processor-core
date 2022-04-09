@@ -38,6 +38,11 @@ data class Options(
     val modelNameSuffix: String = String.Empty,
 
     /**
+     * generate common interface for an `oneOf` object list (optional)
+     */
+    val oneOfInterface: Boolean = false,
+
+    /**
      * enable/disable the code formatter (optional)
      */
     val formatCode: Boolean = true
