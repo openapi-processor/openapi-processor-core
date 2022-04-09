@@ -53,7 +53,12 @@ class DataTypeWriter(
             }
         }
 
-        target.write("public class ${dataType.getTypeName()} {\n\n")
+        val implements: DataType? = dataType.implementsDataType
+        if (implements != null) {
+            writeClassImplementsHeader(target, dataType, implements)
+        } else {
+            writeClassHeader(target, dataType)
+        }
 
         dataType.forEach { propName, propDataType ->
             val javaPropertyName = toCamelCase(propName)
@@ -68,6 +73,21 @@ class DataTypeWriter(
         }
 
         target.write ("}\n")
+    }
+
+    private fun writeClassImplementsHeader(
+        target: Writer,
+        dataType: ModelDataType,
+        implements: DataType
+    ) {
+        target.write("public class ${dataType.getTypeName()} implements ${implements.getTypeName()} {\n\n")
+    }
+
+    private fun writeClassHeader(
+        target: Writer,
+        dataType: ModelDataType
+    ) {
+        target.write("public class ${dataType.getTypeName()} {\n\n")
     }
 
     private fun getProp(

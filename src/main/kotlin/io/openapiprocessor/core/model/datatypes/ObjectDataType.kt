@@ -72,6 +72,6 @@ open class ObjectDataType(
 
     private val implementsImports: Set<String>
         get() {
-            return implementsDataType?.referencedImports ?: emptySet()
+            return implementsDataType?.getImports() ?: emptySet()
         }
 }

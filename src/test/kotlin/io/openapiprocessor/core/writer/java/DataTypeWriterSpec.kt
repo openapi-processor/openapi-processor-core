@@ -11,11 +11,8 @@ import io.kotest.matchers.string.shouldContain
 import io.mockk.mockk
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.extractImports
-import io.openapiprocessor.core.model.datatypes.DataTypeConstraints
-import io.openapiprocessor.core.model.datatypes.ModelDataType
-import io.openapiprocessor.core.model.datatypes.PropertyDataType
+import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.support.datatypes.ListDataType
 import io.openapiprocessor.core.support.datatypes.propertyDataType
 import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
@@ -141,6 +138,24 @@ class DataTypeWriterSpec: StringSpec({
             |    @JsonProperty(value = "bar", access = JsonProperty.Access.WRITE_ONLY)
             |    private String bar;
             """.trimMargin()
+    }
+
+    "writes class with implements" {
+        options.oneOfInterface = true
+
+        val dataType = ObjectDataType ("Foo", "pkg", linkedMapOf(
+            "foo" to PropertyDataType (false, false, StringDataType ())
+        ))
+
+        val ifDataType = InterfaceDataType(
+            DataTypeName("MarkerInterface"), "pkg", listOf(dataType))
+
+        dataType.implementsDataType = ifDataType
+
+        // when:
+        writer.write (target, dataType)
+
+        target.toString() shouldContain ("public class Foo implements MarkerInterface {")
     }
 
 })
