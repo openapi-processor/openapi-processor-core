@@ -45,7 +45,7 @@ interface DataType {
     fun getImports(): Set<String>
 
     /**
-     * provides the list of imports for the types referenced by this this type. Used to create the
+     * provides the list of imports for the types referenced by this type. Used to create the
      * imports used by the data type itself.
      */
     val referencedImports: Set<String>
