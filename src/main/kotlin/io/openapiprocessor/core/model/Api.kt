@@ -5,6 +5,7 @@
 
 package io.openapiprocessor.core.model
 
+import io.openapiprocessor.core.model.datatypes.InterfaceDataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import java.util.function.Consumer
@@ -39,6 +40,10 @@ class Api(
 
     fun forEachModelDataType(action: Consumer<ModelDataType>) {
         dataTypes.getModelDataTypes().forEach(action)
+    }
+
+    fun forEachInterfaceDataType(action: Consumer<InterfaceDataType>) {
+        dataTypes.getInterfaceDataTypes().forEach(action)
     }
 
     fun forEachEnumDataType(action: Consumer<StringEnumDataType>) {

@@ -10,6 +10,7 @@ import com.google.googlejavaformat.java.JavaFormatterOptions
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.Interface
+import io.openapiprocessor.core.model.datatypes.InterfaceDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.support.toURL
 import io.openapiprocessor.core.model.datatypes.ModelDataType
@@ -29,7 +30,8 @@ class ApiWriter(
     private val options: ApiOptions,
     private val interfaceWriter: InterfaceWriter,
     private val dataTypeWriter: DataTypeWriter,
-    private val enumWriter: StringEnumWriter
+    private val enumWriter: StringEnumWriter,
+    private val interfaceDataTypeWriter: InterfaceDataTypeWriter
 ) {
     private var log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
@@ -46,6 +48,7 @@ class ApiWriter(
         createTargetFolders()
         writeInterfaces(api)
         writeObjectDataTypes(api)
+        writeInterfaceDataTypes(api)
         writeEnumDataTypes(api)
     }
 
@@ -60,6 +63,15 @@ class ApiWriter(
 
     private fun writeObjectDataTypes(api: Api) {
         api.forEachModelDataType {
+            val target = modelFolder.resolve ("${it.getTypeName()}.java")
+            val writer = BufferedWriter(PathWriter(target))
+            writeDataType(writer, it)
+            writer.close()
+        }
+    }
+
+    private fun writeInterfaceDataTypes(api: Api) {
+        api.forEachInterfaceDataType() {
             val target = modelFolder.resolve ("${it.getTypeName()}.java")
             val writer = BufferedWriter(PathWriter(target))
             writeDataType(writer, it)
@@ -85,6 +97,12 @@ class ApiWriter(
     private fun writeDataType(writer: Writer, dataType: ModelDataType) {
         val raw = StringWriter()
         dataTypeWriter.write(raw, dataType)
+        writer.write(format(raw.toString ()))
+    }
+
+    private fun writeDataType(writer: Writer, dataType: InterfaceDataType) {
+        val raw = StringWriter()
+        interfaceDataTypeWriter.write(raw, dataType)
         writer.write(format(raw.toString ()))
     }
 
