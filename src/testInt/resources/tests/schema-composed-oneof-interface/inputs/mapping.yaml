@@ -2,4 +2,5 @@ openapi-processor-mapping: v2
 
 options:
   package-name: generated
+  bean-validation: true
   one-of-interface: true

@@ -6,9 +6,11 @@
 package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.Valid;
 
 public class Foo {
 
+    @Valid
     @JsonProperty("myProperties")
     private GenericProperties myProperties;
 

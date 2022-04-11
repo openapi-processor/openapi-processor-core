@@ -6,9 +6,11 @@
 package generated.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.Size;
 
 public class SpecificPropertiesTwo implements GenericProperties {
 
+    @Size(max = 100)
     @JsonProperty("bar")
     private String bar;
 
