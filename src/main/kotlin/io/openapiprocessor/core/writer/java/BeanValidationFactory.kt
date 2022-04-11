@@ -75,7 +75,7 @@ open class BeanValidationFactory {
     private fun collectAnnotations(dataType: DataType, required: Boolean = false): List<String> {
         val annotations = mutableListOf<String>()
 
-        if (dataType.isModel() || dataType.isArrayOfModel()) {
+        if (dataType.isModel() || dataType.isInterface() || dataType.isArrayOfModel()) {
             annotations.add(BeanValidation.VALID.annotation)
         }
 
@@ -107,7 +107,7 @@ open class BeanValidationFactory {
     }
 
     private fun requiresValidImport(dataType: DataType): Boolean {
-        if (dataType.isModel())
+        if (dataType.isModel() || dataType.isInterface())
             return true
 
         if (dataType !is CollectionDataType)
@@ -166,6 +166,8 @@ open class BeanValidationFactory {
 }
 
 private fun DataType.isModel(): Boolean = this is ModelDataType
+
+private fun DataType.isInterface(): Boolean = this is InterfaceDataType
 
 private fun DataType.isArrayOfModel(): Boolean {
     if (this !is ArrayDataType)
