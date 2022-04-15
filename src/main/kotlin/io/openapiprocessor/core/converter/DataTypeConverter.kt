@@ -73,6 +73,16 @@ class DataTypeConverter(
         return result
     }
 
+    fun createMappedDataType(targetType: TargetType, schemaInfo: SchemaInfo? = null): MappedDataType {
+        return MappedDataType(
+            targetType.getName(),
+            targetType.getPkg(),
+            targetType.genericNames.map { DataTypeName(it) },
+            null,
+            schemaInfo?.getDeprecated() ?: false
+        )
+    }
+
     private fun createComposedDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
         val items: MutableList<DataType> = mutableListOf()
         schemaInfo.eachItemOf { itemSchemaInfo: SchemaInfo ->
@@ -82,13 +92,7 @@ class DataTypeConverter(
 
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
-            return MappedDataType(
-                targetType.getName(),
-                targetType.getPkg(),
-                targetType.genericNames.map { DataTypeName(it) },
-                null,
-                schemaInfo.getDeprecated()
-            )
+            return createMappedDataType(targetType, schemaInfo)
         }
 
         val found = dataTypes.find(schemaInfo.getName())
@@ -200,20 +204,9 @@ class DataTypeConverter(
             when(targetType.typeName) {
                 Map::class.java.name,
                 "org.springframework.util.MultiValueMap" ->
-                    return MappedMapDataType(
-                        targetType.getName(),
-                        targetType.getPkg(),
-                        targetType.genericNames.map { DataTypeName(it) },
-                        null,
-                        schemaInfo.getDeprecated())
+                    return createMappedDataType(targetType, schemaInfo);
                 else -> {
-                    return MappedDataType(
-                        targetType.getName(),
-                        targetType.getPkg(),
-                        targetType.genericNames.map { DataTypeName(it) },
-                        null,
-                        schemaInfo.getDeprecated()
-                    )
+                    return createMappedDataType(targetType, schemaInfo)
                 }
             }
         }
@@ -244,14 +237,7 @@ class DataTypeConverter(
     private fun createSimpleDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
         val targetType = getMappedDataType(schemaInfo)
         if(targetType != null) {
-            return MappedDataType (
-                targetType.getName(),
-                targetType.getPkg(),
-                targetType.genericNames.map { DataTypeName(it) },
-                null,
-                schemaInfo.getDeprecated(),
-                true
-            )
+            return createMappedDataType(targetType, schemaInfo)
         }
 
         var typeFormat = schemaInfo.getType()

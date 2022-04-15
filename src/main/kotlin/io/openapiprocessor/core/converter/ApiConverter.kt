@@ -183,13 +183,7 @@ class  ApiConverter(
         val tm = mapping.getChildMappings().first () as TypeMapping
         val tt = tm.getTargetType()
 
-        val addType = MappedDataType(
-            tt.getName(),
-            tt.getPkg(),
-            tt.genericNames.map { DataTypeName(it) },
-            null,
-            false
-        )
+        val addType = dataTypeConverter.createMappedDataType(tt)
 
         var annotationType: AnnotationDataType? = null
         if (mapping.annotation != null) {
