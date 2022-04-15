@@ -1,0 +1,34 @@
+openapi: 3.0.2
+info:
+  title: test generic mapping with {package-name}
+  version: 1.0.0
+
+paths:
+
+  /foos:
+    get:
+      responses:
+        '200':
+          description: the result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foos'
+
+components:
+  schemas:
+
+    Foos:
+      description: wrapper
+      type: object
+      properties:
+        foos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Foo'
+
+    Foo:
+      type: object
+      properties:
+        bar:
+          type: string

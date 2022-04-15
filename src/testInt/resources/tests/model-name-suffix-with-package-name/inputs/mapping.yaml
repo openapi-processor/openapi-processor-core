@@ -1,0 +1,9 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: generated
+  model-name-suffix: Resource
+
+map:
+  types:
+    - type: Foos => io.openapiprocessor.Wrap<{package-name}.model.Foo>
