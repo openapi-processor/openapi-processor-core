@@ -28,7 +28,7 @@ package io.openapiprocessor.core.model.datatypes
 class MappedMapDataType(
     type: String,
     pkg: String,
-    genericTypes: List<String> = emptyList(),
+    genericTypes: List<DataTypeName> = emptyList(),
     constraints: DataTypeConstraints? = null,
     deprecated: Boolean = false
 ) : MappedDataType(type, pkg, genericTypes, constraints, deprecated)

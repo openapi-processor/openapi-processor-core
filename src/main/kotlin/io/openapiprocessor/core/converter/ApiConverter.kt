@@ -186,7 +186,7 @@ class  ApiConverter(
         val addType = MappedDataType(
             tt.getName(),
             tt.getPkg(),
-            tt.genericNames,
+            tt.genericNames.map { DataTypeName(it) },
             null,
             false
         )

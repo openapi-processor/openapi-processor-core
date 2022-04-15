@@ -30,9 +30,9 @@ class DataTypeCollector(
             }
             is MappedDataType -> {
                 dataType.genericTypes
-                    .filter { it.startsWith(generatedPackageName) }
+                    .filter { it.id.startsWith(generatedPackageName) }
                     .forEach {
-                        val name = it.substringAfterLast(".")
+                        val name = it.id.substringAfterLast(".")
                         val found = dataTypes.find(name)
                         if (found != null) {
                             collect(found)

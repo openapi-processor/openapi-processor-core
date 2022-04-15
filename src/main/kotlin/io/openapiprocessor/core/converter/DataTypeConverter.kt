@@ -85,7 +85,7 @@ class DataTypeConverter(
             return MappedDataType(
                 targetType.getName(),
                 targetType.getPkg(),
-                targetType.genericNames,
+                targetType.genericNames.map { DataTypeName(it) },
                 null,
                 schemaInfo.getDeprecated()
             )
@@ -203,14 +203,14 @@ class DataTypeConverter(
                     return MappedMapDataType(
                         targetType.getName(),
                         targetType.getPkg(),
-                        targetType.genericNames,
+                        targetType.genericNames.map { DataTypeName(it) },
                         null,
                         schemaInfo.getDeprecated())
                 else -> {
                     return MappedDataType(
                         targetType.getName(),
                         targetType.getPkg(),
-                        targetType.genericNames,
+                        targetType.genericNames.map { DataTypeName(it) },
                         null,
                         schemaInfo.getDeprecated()
                     )
@@ -247,7 +247,7 @@ class DataTypeConverter(
             return MappedDataType (
                 targetType.getName(),
                 targetType.getPkg(),
-                targetType.genericNames,
+                targetType.genericNames.map { DataTypeName(it) },
                 null,
                 schemaInfo.getDeprecated(),
                 true

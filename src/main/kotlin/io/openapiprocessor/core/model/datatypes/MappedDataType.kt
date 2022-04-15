@@ -9,10 +9,9 @@ package io.openapiprocessor.core.model.datatypes
  * OpenAPI schema mapped to a java type.
  */
 open class MappedDataType(
-
     private val type: String,
     private val pkg: String,
-    /*private*/ val genericTypes: List<String> = emptyList(),
+    val genericTypes: List<DataTypeName> = emptyList(),
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false,
     val simpleDataType: Boolean = false
@@ -23,7 +22,7 @@ open class MappedDataType(
         return if (genericTypes.isEmpty()) {
             type
         } else {
-            "${type}<${getGenericTypeNames().joinToString(", ")}>"
+            "${type}<${genericTypeNames.joinToString(", ")}>"
         }
     }
 
@@ -32,17 +31,18 @@ open class MappedDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf("${getPackageName()}.$type") + genericTypes.filter { it != "?" }
+        return setOf("${getPackageName()}.$type") + genericTypes.map { it.type }.filter { it != "?" }
     }
 
-    private fun getGenericTypeNames(): List<String> {
-        return genericTypes.map {
-            getClassName (it)
+    private val genericTypeNames: List<String>
+        get() {
+            return genericTypes.map {
+                getClassName(it.type)
+            }
         }
-    }
 
-    private fun getClassName(ref: String): String {
-        return ref.substring(ref.lastIndexOf('.') + 1)
+    private fun getClassName(type: String): String {
+        return type.substringAfterLast('.')
     }
 
 }
