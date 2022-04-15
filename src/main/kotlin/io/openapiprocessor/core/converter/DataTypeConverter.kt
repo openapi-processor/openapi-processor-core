@@ -215,14 +215,7 @@ class DataTypeConverter(
 
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
-            when(targetType.typeName) {
-                Map::class.java.name,
-                "org.springframework.util.MultiValueMap" ->
-                    return createMappedDataType(targetType, schemaInfo);
-                else -> {
-                    return createMappedDataType(targetType, schemaInfo)
-                }
-            }
+            return createMappedDataType(targetType, schemaInfo)
         }
 
         val found = dataTypes.find(schemaInfo.getName())
