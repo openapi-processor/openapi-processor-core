@@ -31,8 +31,16 @@ open class MappedDataType(
     }
 
     override fun getImports(): Set<String> {
-        return setOf("${getPackageName()}.$type") + genericTypes.map { it.type }.filter { it != "?" }
+        return setOf("${getPackageName()}.$type") + genericImports
     }
+
+    private val genericImports: Set<String>
+        get() {
+            return genericTypes
+                .map { it.type }
+                .filter { it != "?" }
+                .toSet()
+        }
 
     private val genericTypeNames: List<String>
         get() {
