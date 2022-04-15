@@ -9,12 +9,10 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.openapiprocessor.core.converter.mapping.TargetType
 import io.openapiprocessor.core.model.DataTypes
 import io.openapiprocessor.core.model.HttpMethod
-import io.openapiprocessor.core.model.datatypes.AllOfObjectDataType
-import io.openapiprocessor.core.model.datatypes.ArrayDataType
-import io.openapiprocessor.core.model.datatypes.ObjectDataType
-import io.openapiprocessor.core.model.datatypes.StringEnumDataType
+import io.openapiprocessor.core.model.datatypes.*
 import io.openapiprocessor.core.support.getBodySchemaInfo
 import io.openapiprocessor.core.support.getSchemaInfo
 import io.openapiprocessor.core.support.parse
@@ -215,4 +213,19 @@ components:
         datatype.getTypeName().shouldBe("FooSuffix[]")
     }
 
+    "adds suffix to mapped data type generics" {
+        val options = ApiOptions()
+        options.packageName = "model"
+        options.modelNameSuffix = "Suffix"
+
+        // when:
+        val converter = DataTypeConverter(options)
+        val datatype = converter.createMappedDataType(
+            TargetType("other.Foo", listOf("model.Bar")))
+
+        // then:
+        datatype.shouldBeInstanceOf<MappedDataType>()
+        datatype.getName().shouldBe("Foo<Bar>")
+        datatype.getTypeName().shouldBe("Foo<BarSuffix>")
+    }
 })

@@ -74,10 +74,24 @@ class DataTypeConverter(
     }
 
     fun createMappedDataType(targetType: TargetType, schemaInfo: SchemaInfo? = null): MappedDataType {
+        val genericDataTypeNames = mutableListOf<DataTypeName>()
+
+        targetType.genericNames.forEach {
+            val dataTypeName = when {
+                it.startsWith(options.packageName) -> {
+                    DataTypeName(it, getTypeNameWithSuffix(it))
+                }
+                else -> {
+                    DataTypeName(it)
+                }
+            }
+            genericDataTypeNames.add(dataTypeName)
+        }
+
         return MappedDataType(
             targetType.getName(),
             targetType.getPkg(),
-            targetType.genericNames.map { DataTypeName(it) },
+            genericDataTypeNames,
             null,
             schemaInfo?.getDeprecated() ?: false
         )

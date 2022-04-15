@@ -22,6 +22,14 @@ open class MappedDataType(
         return if (genericTypes.isEmpty()) {
             type
         } else {
+            "${type}<${genericIds.joinToString(", ")}>"
+        }
+    }
+
+    override fun getTypeName(): String {
+        return if (genericTypes.isEmpty()) {
+            type
+        } else {
             "${type}<${genericTypeNames.joinToString(", ")}>"
         }
     }
@@ -42,6 +50,13 @@ open class MappedDataType(
                 .toSet()
         }
 
+    private val genericIds: List<String>
+        get() {
+            return genericTypes.map {
+                getClassName(it.id)
+            }
+        }
+
     private val genericTypeNames: List<String>
         get() {
             return genericTypes.map {
@@ -49,8 +64,8 @@ open class MappedDataType(
             }
         }
 
-    private fun getClassName(type: String): String {
-        return type.substringAfterLast('.')
+    private fun getClassName(source: String): String {
+        return source.substringAfterLast('.')
     }
 
 }
