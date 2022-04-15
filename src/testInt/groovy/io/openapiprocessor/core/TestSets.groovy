@@ -18,6 +18,7 @@ class TestSets {
         'javadoc',
         'method-operation-id',
         'model-name-suffix',
+        'model-name-suffix-with-package-name',
         'object-nullable-properties',
         'object-read-write-properties',
         'object-without-properties',
