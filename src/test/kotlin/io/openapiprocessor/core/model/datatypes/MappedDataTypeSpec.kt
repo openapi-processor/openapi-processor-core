@@ -50,4 +50,46 @@ class MappedDataTypeSpec: StringSpec ({
             type.getImports() shouldBe data.imports
         }
     }
+
+    "get name of type with (optional) generic parameters & model name suffix" {
+        class TypeName (val generics: List<DataTypeName>, val typeName: String)
+
+        withData(
+            TypeName(listOf(
+                DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix")),
+                "Foo<BarSuffix>"),
+            TypeName(listOf(
+                DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix"),
+                DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix")),
+                "Foo<BarSuffix, BarSuffix>")
+        ) { data ->
+            val type = MappedDataType(
+                "Foo",
+                "model",
+                data.generics)
+
+            type.getTypeName() shouldBe data.typeName
+        }
+    }
+
+    "get imports of type with (optional) generic parameters & model suffix" {
+        class TypeImports (val generics: List<DataTypeName>, val imports: List<String>)
+
+        withData(
+            TypeImports(listOf(
+                DataTypeName("model.Bar", "model.BarSuffix")),
+                listOf("model.Foo", "model.BarSuffix")),
+            TypeImports(listOf(
+                DataTypeName("model.Bar", "model.BarSuffix"),
+                DataTypeName("model.Bar", "model.BarSuffix")),
+                listOf("model.Foo", "model.BarSuffix"))
+        ) { data ->
+            val type = MappedDataType(
+                "Foo",
+                "model",
+                data.generics)
+
+            type.getImports() shouldBe data.imports
+        }
+    }
 })
