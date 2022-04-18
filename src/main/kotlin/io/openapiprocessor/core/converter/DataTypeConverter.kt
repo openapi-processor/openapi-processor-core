@@ -305,7 +305,8 @@ class DataTypeConverter(
         )
 
         return NoDataType(
-            schemaInfo.getName(),
+            DataTypeName(schemaInfo.getName(), getTypeNameWithSuffix(schemaInfo.getName())),
+            listOf(options.packageName, "model").joinToString("."),
             constraints = constraints,
             deprecated = schemaInfo.getDeprecated()
         )

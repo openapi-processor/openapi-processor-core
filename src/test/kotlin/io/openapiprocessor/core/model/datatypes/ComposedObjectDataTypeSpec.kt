@@ -64,7 +64,7 @@ class ComposedObjectDataTypeSpec : StringSpec({
             ObjectDataType("Bar", "pkg", linkedMapOf(
                 "bar" to propertyDataTypeString()
             )),
-            NoDataType("Leak")
+            NoDataType(DataTypeName("Leak"), "pkg")
         ))
 
         composed.getImports() shouldBe setOf("pkg.Foo")

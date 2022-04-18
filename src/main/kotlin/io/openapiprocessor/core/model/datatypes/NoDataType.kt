@@ -13,17 +13,18 @@ package io.openapiprocessor.core.model.datatypes
  *  - $ref: '#/components/schemas/Foo'
  */
 class NoDataType(
-    private val name: String,
+    private val name: DataTypeName,
+    private val pkg: String,
     override val constraints: DataTypeConstraints? = null,
     override val deprecated: Boolean = false
 ): DataType {
 
     override fun getName(): String {
-        return name
+        return name.id
     }
 
     override fun getPackageName(): String {
-        return "io.openapiprocessor.leaked"
+        return pkg
     }
 
     override fun getImports(): Set<String> {
