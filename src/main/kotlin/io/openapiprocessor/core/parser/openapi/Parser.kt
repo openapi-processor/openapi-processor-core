@@ -6,13 +6,16 @@
 package io.openapiprocessor.core.parser.openapi
 
 import io.openapiparser.*
-import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
-import io.openapiprocessor.core.parser.openapi.v30.OpenApi as ParserOpenApi30
-import io.openapiprocessor.core.parser.openapi.v31.OpenApi as ParserOpenApi31
 import io.openapiparser.jackson.JacksonConverter
 import io.openapiparser.reader.UriReader
 import io.openapiparser.schema.DocumentStore
 import io.openapiparser.schema.Resolver
+import io.openapiparser.schema.SchemaStore
+import io.openapiparser.validator.result.FullResultTextBuilder
+import io.openapiparser.validator.result.ListResultBuilder
+import io.openapiprocessor.core.parser.OpenApi as ParserOpenApi
+import io.openapiprocessor.core.parser.openapi.v30.OpenApi as ParserOpenApi30
+import io.openapiprocessor.core.parser.openapi.v31.OpenApi as ParserOpenApi31
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.URI
@@ -25,13 +28,25 @@ import io.openapiparser.model.v31.OpenApi as OpenApi31
 class Parser {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
+
     fun parse(apiPath: String): ParserOpenApi {
         val resolver = Resolver(UriReader(), JacksonConverter(), DocumentStore())
+        val store = SchemaStore(resolver)
+
         val parser = OpenApiParser(resolver)
         val result = parser.parse(URI(apiPath))
 
         return when (result.version) {
             OpenApiResult.Version.V30 -> {
+                store.loadDraft4()
+                val validator = io.openapiparser.validator.Validator()
+                val valid = result.validate(validator, store)
+                if (!valid) {
+                    val printer = ListResultBuilder(FullResultTextBuilder())
+                    val messages = printer.print(result.validationMessages)
+                    print(messages)
+                }
+
                 ParserOpenApi30(result.getModel(OpenApi30::class.java))
             }
             OpenApiResult.Version.V31 -> {
