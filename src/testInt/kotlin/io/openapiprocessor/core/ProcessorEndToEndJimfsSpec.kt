@@ -20,7 +20,7 @@ import io.openapiprocessor.test.TestSetRunner
 class ProcessorEndToEndJimfsSpec: StringSpec({
 
     for (testSet in sources()) {
-        "native - $testSet".config(enabled = true) {
+        "jimfs - $testSet".config(enabled = true) {
             val support = FileSupport(
                 ProcessorPendingSpec::class.java,
                 testSet.inputs, testSet.generated)
