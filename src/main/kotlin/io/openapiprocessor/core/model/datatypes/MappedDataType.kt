@@ -13,7 +13,8 @@ open class MappedDataType(
     private val pkg: String,
     val genericTypes: List<DataTypeName> = emptyList(),
     override val constraints: DataTypeConstraints? = null,
-    override val deprecated: Boolean = false
+    override val deprecated: Boolean = false,
+    val simpleDataType: Boolean = false
 ): DataType {
 
     override fun getName(): String {

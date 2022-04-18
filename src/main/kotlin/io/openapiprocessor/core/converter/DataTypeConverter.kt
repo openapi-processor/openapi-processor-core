@@ -73,7 +73,11 @@ class DataTypeConverter(
         return result
     }
 
-    fun createMappedDataType(targetType: TargetType, schemaInfo: SchemaInfo? = null): MappedDataType {
+    fun createMappedDataType(
+        targetType: TargetType,
+        schemaInfo: SchemaInfo? = null,
+        simpleDataType: Boolean = false): MappedDataType {
+
         val genericDataTypeNames = mutableListOf<DataTypeName>()
 
         targetType.genericNames.forEach {
@@ -93,7 +97,8 @@ class DataTypeConverter(
             targetType.getPkg(),
             genericDataTypeNames,
             null,
-            schemaInfo?.getDeprecated() ?: false
+            schemaInfo?.getDeprecated() ?: false,
+            simpleDataType
         )
     }
 
@@ -106,7 +111,7 @@ class DataTypeConverter(
 
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
-            return createMappedDataType(targetType, schemaInfo)
+            return createMappedDataType(targetType, schemaInfo, false)
         }
 
         val found = dataTypes.find(schemaInfo.getName())
@@ -215,7 +220,7 @@ class DataTypeConverter(
 
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
-            return createMappedDataType(targetType, schemaInfo)
+            return createMappedDataType(targetType, schemaInfo, false)
         }
 
         val found = dataTypes.find(schemaInfo.getName())
@@ -244,7 +249,7 @@ class DataTypeConverter(
     private fun createSimpleDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
         val targetType = getMappedDataType(schemaInfo)
         if(targetType != null) {
-            return createMappedDataType(targetType, schemaInfo)
+            return createMappedDataType(targetType, schemaInfo, true)
         }
 
         var typeFormat = schemaInfo.getType()
@@ -301,7 +306,7 @@ class DataTypeConverter(
     private fun createNoDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
-            return createMappedDataType(targetType, schemaInfo)
+            return createMappedDataType(targetType, schemaInfo, false)
         }
 
         val constraints = DataTypeConstraints(
