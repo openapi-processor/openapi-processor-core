@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: test empty object
+  version: 1.0.0
+
+paths:
+
+  /foo:
+    get:
+      responses:
+        '200':
+          description: empty object result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/AnyValue'
+
+components:
+  schemas:
+    AnyValue: {}
