@@ -9,6 +9,7 @@ import io.openapiprocessor.core.parser.openapi.Validation
 import io.openapiprocessor.core.parser.openapi.ValidationContext
 import io.openapiprocessor.core.parser.openapi.ValidationMessage
 
+@Deprecated("obsolete")
 class VersionValidator: Validation {
 
     override fun validate(context: ValidationContext, node: Map<String, Any?>): List<ValidationMessage> {
