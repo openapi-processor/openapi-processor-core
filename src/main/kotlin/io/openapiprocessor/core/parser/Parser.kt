@@ -20,7 +20,7 @@ class Parser {
     fun parse(processorOptions: Map<String, *>): OpenApi {
         val apiPath: String = processorOptions["apiPath"]?.toString() ?: throw NoOpenApiException()
 
-        when(val parser= processorOptions["parser"]?.toString()) {
+        when(val parser = processorOptions["parser"]?.toString()) {
             ParserType.SWAGGER.name -> {
                 log.info("using SWAGGER parser")
                 return Swagger().parse(apiPath)
