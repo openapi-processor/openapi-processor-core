@@ -7,12 +7,14 @@ package io.openapiprocessor.core.parser.openapi
 
 import java.net.URL
 
+@Deprecated("use io.openapiparser.validator.Validator()")
 interface Validation {
 
     fun validate(context: ValidationContext, node: Map<String, Any?>): List<ValidationMessage>
 
 }
 
+@Deprecated("obsolete")
 class ValidationContext(val source: URL, val path: String = """$""") {
 
     fun propertyPath(property: String): String {
@@ -21,6 +23,7 @@ class ValidationContext(val source: URL, val path: String = """$""") {
 
 }
 
+@Deprecated("obsolete")
 class ValidationMessage(
     // warn/error ?
     // file ?
