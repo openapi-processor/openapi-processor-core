@@ -299,6 +299,11 @@ class DataTypeConverter(
     }
 
     private fun createNoDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
+        val targetType = getMappedDataType(schemaInfo)
+        if (targetType != null) {
+            return createMappedDataType(targetType, schemaInfo)
+        }
+
         val constraints = DataTypeConstraints(
             nullable = schemaInfo.getNullable(),
             required = schemaInfo.getRequired()
