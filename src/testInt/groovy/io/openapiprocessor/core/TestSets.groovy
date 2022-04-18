@@ -19,6 +19,7 @@ class TestSets {
         'method-operation-id',
         'model-name-suffix',
         'model-name-suffix-with-package-name',
+        'object-empty',
         'object-nullable-properties',
         'object-read-write-properties',
         'object-without-properties',
