@@ -10,86 +10,85 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class MappedDataTypeSpec: StringSpec ({
+    class TypeName (val generics: List<String>, val typeName: String)
 
-    "get name of type with (optional) generic parameters" {
-        class TypeName (val generics: List<String>, val typeName: String)
+    withData(
+        nameFn = {"get name of type with (optional) generic parameters: ${it.generics}"},
 
-        withData(
-            TypeName(emptyList(), "Foo"),
-            TypeName(listOf("?"), "Foo<?>"),
-            TypeName(listOf("java.lang.String"), "Foo<String>"),
-            TypeName(listOf("java.lang.String", "java.lang.String"), "Foo<String, String>")
-        ) { data ->
-            val type = MappedDataType(
-                "Foo",
-                "model",
-                data.generics.map { DataTypeName(it) })
+        TypeName(emptyList(), "Foo"),
+        TypeName(listOf("?"), "Foo<?>"),
+        TypeName(listOf("java.lang.String"), "Foo<String>"),
+        TypeName(listOf("java.lang.String", "java.lang.String"), "Foo<String, String>")
+    ) { data ->
+        val type = MappedDataType(
+            "Foo",
+            "model",
+            data.generics.map { DataTypeName(it) })
 
-            type.getTypeName() shouldBe data.typeName
-        }
+        type.getTypeName() shouldBe data.typeName
     }
 
-    "get imports of type with (optional) generic parameters" {
-        class TypeImports (val generics: List<String>, val imports: List<String>)
+    class TypeImports (val generics: List<String>, val imports: List<String>)
 
-        withData(
-            TypeImports(emptyList(), listOf("model.Foo")),
-            TypeImports(listOf("?"), listOf("model.Foo")),
-            TypeImports(
-                listOf("java.lang.String"),
-                listOf("model.Foo", "java.lang.String")),
-            TypeImports(
-                listOf("java.lang.String", "java.lang.String"),
-                listOf("model.Foo", "java.lang.String"))
-        ) { data ->
-            val type = MappedDataType(
-                "Foo",
-                "model",
-                data.generics.map { DataTypeName(it) })
+    withData(
+        nameFn = {"get imports of type with (optional) generic parameters: ${it.generics}"},
 
-            type.getImports() shouldBe data.imports
-        }
+        TypeImports(emptyList(), listOf("model.Foo")),
+        TypeImports(listOf("?"), listOf("model.Foo")),
+        TypeImports(
+            listOf("java.lang.String"),
+            listOf("model.Foo", "java.lang.String")),
+        TypeImports(
+            listOf("java.lang.String", "java.lang.String"),
+            listOf("model.Foo", "java.lang.String"))
+    ) { data ->
+        val type = MappedDataType(
+            "Foo",
+            "model",
+            data.generics.map { DataTypeName(it) })
+
+        type.getImports() shouldBe data.imports
     }
 
-    "get name of type with (optional) generic parameters & model name suffix" {
-        class TypeName (val generics: List<DataTypeName>, val typeName: String)
+    class DataTypeNames (val generics: List<DataTypeName>, val typeName: String)
 
-        withData(
-            TypeName(listOf(
-                DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix")),
-                "Foo<BarSuffix>"),
-            TypeName(listOf(
-                DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix"),
-                DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix")),
-                "Foo<BarSuffix, BarSuffix>")
-        ) { data ->
-            val type = MappedDataType(
-                "Foo",
-                "model",
-                data.generics)
+    withData(
+        nameFn = {"get name of type with (optional) generic parameters & model name suffix: ${it.generics}"},
 
-            type.getTypeName() shouldBe data.typeName
-        }
+        DataTypeNames(listOf(
+            DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix")),
+            "Foo<BarSuffix>"),
+        DataTypeNames(listOf(
+            DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix"),
+            DataTypeName("io.openapiprocessor.Bar", "io.openapiprocessor.BarSuffix")),
+            "Foo<BarSuffix, BarSuffix>")
+    ) { data ->
+        val type = MappedDataType(
+            "Foo",
+            "model",
+            data.generics)
+
+        type.getTypeName() shouldBe data.typeName
     }
 
-    "get imports of type with (optional) generic parameters & model suffix" {
-        class TypeImports (val generics: List<DataTypeName>, val imports: List<String>)
+    class DataTypeImports (val generics: List<DataTypeName>, val imports: List<String>)
 
-        withData(
-            TypeImports(listOf(
-                DataTypeName("model.Bar", "model.BarSuffix")),
-                listOf("model.Foo", "model.BarSuffix")),
-            TypeImports(listOf(
-                DataTypeName("model.Bar", "model.BarSuffix"),
-                DataTypeName("model.Bar", "model.BarSuffix")),
-                listOf("model.Foo", "model.BarSuffix"))
-        ) { data ->
-            val type = MappedDataType(
-                "Foo",
-                "model",
-                data.generics)
+    withData(
+        nameFn = {"get imports of type with (optional) generic parameters & model suffix: ${it.generics}"},
 
-            type.getImports() shouldBe data.imports
-        }
+        DataTypeImports(listOf(
+            DataTypeName("model.Bar", "model.BarSuffix")),
+            listOf("model.Foo", "model.BarSuffix")),
+        DataTypeImports(listOf(
+            DataTypeName("model.Bar", "model.BarSuffix"),
+            DataTypeName("model.Bar", "model.BarSuffix")),
+            listOf("model.Foo", "model.BarSuffix"))
+    ) { data ->
+        val type = MappedDataType(
+            "Foo",
+            "model",
+            data.generics)
+
+        type.getImports() shouldBe data.imports
     }
 })
