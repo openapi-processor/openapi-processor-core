@@ -237,31 +237,29 @@ class JavaDocWriterSpec: StringSpec({
         html.shouldBeEmpty()
     }
 
-    "converts property schema description to javadoc comment" {
-        data class Type(val dt: DataType)
+    data class Type(val dt: DataType)
+    val description = "*markdown* description with **text**"
 
-        val description = "*markdown* description with **text**"
+    withData(
+        nameFn = {"converts property schema description to javadoc comment: ${it.dt.getName()}"},
 
-        withData(
-            Type(IntegerDataType(documentation = Documentation(description = description))),
-            Type(LongDataType(documentation = Documentation(description = description))),
-            Type(FloatDataType(documentation = Documentation(description = description))),
-            Type(DoubleDataType(documentation = Documentation(description = description))),
-            Type(BooleanDataType(documentation = Documentation(description = description))),
-            Type(StringDataType(documentation = Documentation(description = description))),
-            Type(LocalDateDataType(documentation = Documentation(description = description))),
-            Type(OffsetDateTimeDataType(documentation = Documentation(description = description)))
-        ) { (type: DataType) ->
+        Type(IntegerDataType(documentation = Documentation(description = description))),
+        Type(LongDataType(documentation = Documentation(description = description))),
+        Type(FloatDataType(documentation = Documentation(description = description))),
+        Type(DoubleDataType(documentation = Documentation(description = description))),
+        Type(BooleanDataType(documentation = Documentation(description = description))),
+        Type(StringDataType(documentation = Documentation(description = description))),
+        Type(LocalDateDataType(documentation = Documentation(description = description))),
+        Type(OffsetDateTimeDataType(documentation = Documentation(description = description)))
+    ) { (type: DataType) ->
 
-            val html = writer.convert(type)
+        val html = writer.convert(type)
 
-            html shouldBe """
-                |    /**
-                |     * <em>markdown</em> description with <strong>text</strong>
-                |     */
-                |
-                """.trimMargin()
-        }
+        html shouldBe """
+            |    /**
+            |     * <em>markdown</em> description with <strong>text</strong>
+            |     */
+            |
+            """.trimMargin()
     }
-
 })
