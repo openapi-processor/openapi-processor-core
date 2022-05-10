@@ -305,7 +305,7 @@ open class SchemaInfo(
     }
 
     /**
-     * Factory method to create an {@link SchemaInfo} of the item type of an array schema.
+     * Factory method to create an {@link SchemaInfo} of the item type of array schema.
      *
      * @return a new {@link SchemaInfo}
      */
@@ -314,7 +314,7 @@ open class SchemaInfo(
 
         return SchemaInfo(
             endpoint = endpoint,
-            name = getArrayItemName(item),
+            name = getArrayItemName(),
             schema = item,
             resolver = resolver
         )
@@ -364,7 +364,7 @@ open class SchemaInfo(
         return schema!!.getEnum()
     }
 
-    private fun getArrayItemName(schema: Schema): String {
+    private fun getArrayItemName(): String {
         return "Array" + name.capitalizeFirstChar()
     }
 
