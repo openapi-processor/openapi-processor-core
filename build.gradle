@@ -6,20 +6,13 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id "org.sonarqube" version "3.3"
-    id 'org.jetbrains.dokka' version '1.6.10'
     id 'org.jetbrains.kotlin.jvm' version '1.6.21'
-    id 'org.unbroken-dome.test-sets' version '4.0.0'
     id 'com.github.ben-manes.versions' version '0.42.0'
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
 group projectGroupId
 version projectVersion
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
 
 String getBuildProperty(String property) {
     project.findProperty (property) ?: System.getenv (property) ?: 'n/a'
@@ -55,15 +48,41 @@ repositories {
     }
 }
 
-tasks.withType(Test) {
-    useJUnitPlatform()
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter('5.8.2')
+        }
+
+        testInt(JvmTestSuite) {
+            useJUnitJupiter('5.8.2')
+            testType = TestSuiteType.INTEGRATION_TEST
+
+            dependencies {
+                implementation project
+            }
+
+            sources {
+                java {
+                    srcDirs = ['src/testInt/kotlin']
+                }
+            }
+
+            targets {
+                all {
+                    testTask.configure {
+                        shouldRunAfter(test)
+                    }
+                }
+            }
+        }
+    }
 }
 
-testSets {
-    testInt
+tasks.named('check') {
+    dependsOn(testing.suites.testInt)
 }
-
-check.dependsOn testInt
 
 sourceSets {
     main {
@@ -73,40 +92,47 @@ sourceSets {
     }
 }
 
-generateGrammarSource {
+java {
+    withJavadocJar ()
+    withSourcesJar ()
+}
+
+tasks.named('generateGrammarSource') {
     arguments += ['-package', 'io.openapiprocessor.core.processor.mapping.v2.parser']
     outputDirectory = new File("$buildDir/antlr/io/openapiprocessor/core/processor/mapping/v2/parser".toString())
 }
 
-compileTestGroovy {
+tasks.named('compileTestGroovy') {
     dependsOn 'compileKotlin'
     classpath += files(compileKotlin.destinationDir)
     classpath += files(compileTestKotlin.destinationDir)
 }
 
-compileKotlin {
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
+tasks.named('compileKotlin') {
+    dependsOn 'generateVersion', 'generateGrammarSource'
+
     kotlinOptions.jvmTarget = "1.8"
 }
 
-compileKotlin.dependsOn generateGrammarSource
-compileKotlin.dependsOn "generateVersion"
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+tasks.named('compileTestKotlin') {
+    dependsOn 'generateVersion', 'generateTestGrammarSource'
 }
 
-//id 'info.solidsoft.pitest' version '1.6.0'
-//pitest {
-//    verbose = true
-//    testPlugin = "junit5"
-//    junit5PluginVersion = "0.12"
-//}
+tasks.named('sourcesJar') {
+    dependsOn 'generateVersion', 'generateGrammarSource'
+}
 
 dependencies {
     antlr 'org.antlr:antlr4:4.10.1'
 
     compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
-    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.6.10")
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.6.21")
     implementation platform("com.fasterxml.jackson:jackson-bom:2.13.2")
 
     implementation 'org.openapi4j:openapi-parser:1.0.7'
@@ -120,7 +146,6 @@ dependencies {
 //    implementation ('io.openapiprocessor:openapi-parser-interfaces')
 //    implementation ('io.openapiprocessor:openapi-parser-validator')
     implementation ('io.openapiprocessor:openapi-parser-jackson')
-
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation ('org.apache.commons:commons-text:1.9')
     implementation ('com.atlassian.commonmark:commonmark:0.17.0')
@@ -128,24 +153,32 @@ dependencies {
     implementation ('com.google.guava:guava:31.1-jre')
     implementation ('com.networknt:json-schema-validator:1.0.69')
 
-    testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     testImplementation ("io.openapiprocessor:openapi-processor-test:$processorTestVersion")
-
+    testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
     testImplementation platform("org.codehaus.groovy:groovy-bom:3.0.10")
     testImplementation ("org.codehaus.groovy:groovy")
     testImplementation ("org.codehaus.groovy:groovy-nio")
     testImplementation ('org.spockframework:spock-core:2.1-groovy-3.0')
-    testImplementation platform("org.junit:junit-bom:5.8.2")
-    testImplementation ("org.junit.jupiter:junit-jupiter-api")
-    testImplementation ("org.junit.jupiter:junit-jupiter-params")
-    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("io.mockk:mockk:1.12.3")
     testImplementation(platform("io.kotest:kotest-bom:5.3.0"))
     testImplementation("io.kotest:kotest-runner-junit5")
     testImplementation("io.kotest:kotest-framework-datatest")
-//    testImplementation ('ch.qos.logback:logback-classic:1.2.11')
+    testImplementation("io.mockk:mockk:1.12.3")
     testImplementation ("ch.qos.logback:logback-classic:1.3.0-alpha14")
     testImplementation("com.google.jimfs:jimfs:1.2")
+    testImplementation('com.google.guava:guava:31.1-jre')
+
+    testIntImplementation ("io.openapiprocessor:openapi-processor-test:$processorTestVersion")
+    testIntImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
+    testIntImplementation platform("org.codehaus.groovy:groovy-bom:3.0.10")
+    testIntImplementation ("org.codehaus.groovy:groovy")
+    testIntImplementation ("org.codehaus.groovy:groovy-nio")
+    testIntImplementation(platform("io.kotest:kotest-bom:5.3.0"))
+    testIntImplementation("io.kotest:kotest-runner-junit5")
+    testIntImplementation("io.kotest:kotest-framework-datatest")
+    testIntImplementation("io.mockk:mockk:1.12.3")
+    testIntImplementation ("ch.qos.logback:logback-classic:1.3.0-alpha14")
+    testIntImplementation("com.google.jimfs:jimfs:1.2")
+    testIntImplementation('com.google.guava:guava:31.1-jre')
 }
 
 tasks.named("dependencyUpdates").configure {
@@ -174,24 +207,9 @@ jacocoTestReport {
     getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
 }
 
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier.set ('sources')
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: [dokkaHtml]) {
-    archiveClassifier.set ('javadoc')
-    from "$buildDir/docs"
-}
-
 artifacts {
     archives sourcesJar
     archives javadocJar
-}
-
-dokkaHtml {
-    outputDirectory = file("$buildDir/docs/kotlin".toString ())
 }
 
 sonarqube {
