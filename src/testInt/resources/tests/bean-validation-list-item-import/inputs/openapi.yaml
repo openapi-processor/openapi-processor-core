@@ -10,7 +10,7 @@ paths:
         - in: query
           name: patternParam
           required: false
-          description: query parameter with @Pattern annotaion
+          description: query parameter with @Pattern annotation
           schema:
             $ref: '#/components/schemas/PatternParam'
       responses:
