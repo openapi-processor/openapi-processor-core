@@ -11,6 +11,7 @@ class TestSets {
         'bean-validation',
         'bean-validation-allof-required',
         'bean-validation-iterable',
+        'bean-validation-list-item-import',
         'bean-validation-requestbody',
         'deprecated',
         'endpoint-exclude',

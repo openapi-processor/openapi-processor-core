@@ -83,7 +83,7 @@ class InterfaceWriter(
     private fun addImports(parameter: Parameter, imports: MutableSet<String>) {
         if (apiOptions.beanValidation) {
             val info = validationAnnotations.validate(parameter.dataType, parameter.required)
-            imports.addAll(info.imports)
+            imports.addAll(info.inout.imports)
         }
 
         if (parameter.withAnnotation) {
