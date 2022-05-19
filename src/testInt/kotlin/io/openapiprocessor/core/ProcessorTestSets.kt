@@ -11,6 +11,7 @@ val ALL_30: List<TestSet> = listOf(
     TestSet("bean-validation", API_30),
     TestSet("bean-validation-allof-required", API_30),
     TestSet("bean-validation-iterable", API_30),
+    TestSet("bean-validation-list-item-import", API_30),
     TestSet("bean-validation-requestbody", API_30),
     TestSet("deprecated", API_30),
     TestSet("endpoint-exclude", API_30),
@@ -18,6 +19,8 @@ val ALL_30: List<TestSet> = listOf(
     TestSet("javadoc", API_30),
     TestSet("method-operation-id", API_30),
     TestSet("model-name-suffix", API_30),
+    TestSet("model-name-suffix-with-package-name", API_30),
+    TestSet("object-empty", API_30),
     TestSet("object-nullable-properties", API_30),
     TestSet("object-read-write-properties", API_30),
     TestSet("object-without-properties", API_30),
@@ -46,6 +49,7 @@ val ALL_30: List<TestSet> = listOf(
     TestSet("response-content-multiple-style-all", API_30),
     TestSet("response-content-multiple-style-success", API_30),
     TestSet("response-content-single", API_30),
+    TestSet("response-multi-mapping-with-array-type-mapping", API_30),
     TestSet("response-result-mapping", API_30),
     TestSet("response-simple-data-types", API_30),
     TestSet("response-single-multi-mapping", API_30),
@@ -53,13 +57,16 @@ val ALL_30: List<TestSet> = listOf(
     TestSet("schema-composed-allof", API_30),
     TestSet("schema-composed-allof-notype", API_30),
     TestSet("schema-composed-allof-properties", API_30),
+    TestSet("schema-composed-allof-ref-sibling", API_30),
     TestSet("schema-composed-nested", API_30),
+    TestSet("schema-composed-oneof-interface", API_30)
 )
 
 val ALL_31: List<TestSet> = listOf(
     TestSet("bean-validation", API_31),
     TestSet("bean-validation-allof-required", API_31),
     TestSet("bean-validation-iterable", API_31),
+    TestSet("bean-validation-list-item-import", API_31),
     TestSet("bean-validation-requestbody", API_31),
     TestSet("deprecated", API_31),
     TestSet("endpoint-exclude", API_31),
@@ -67,7 +74,9 @@ val ALL_31: List<TestSet> = listOf(
     TestSet("javadoc", API_31),
     TestSet("method-operation-id", API_31),
     TestSet("model-name-suffix", API_31),
-    TestSet("object-nullable-properties", API_31), // todo
+    TestSet("model-name-suffix-with-package-name", API_31),
+    TestSet("object-empty", API_31),
+    TestSet("object-nullable-properties", API_31),
     TestSet("object-read-write-properties", API_31),
     TestSet("object-without-properties", API_31),
     TestSet("params-additional", API_31),
@@ -95,6 +104,7 @@ val ALL_31: List<TestSet> = listOf(
     TestSet("response-content-multiple-style-all", API_31),
     TestSet("response-content-multiple-style-success", API_31),
     TestSet("response-content-single", API_31),
+    TestSet("response-multi-mapping-with-array-type-mapping", API_31),
     TestSet("response-result-mapping", API_31),
     TestSet("response-simple-data-types", API_31),
     TestSet("response-single-multi-mapping", API_31),
@@ -102,5 +112,7 @@ val ALL_31: List<TestSet> = listOf(
     TestSet("schema-composed-allof", API_31),
     TestSet("schema-composed-allof-notype", API_31),
     TestSet("schema-composed-allof-properties", API_31),
+    TestSet("schema-composed-allof-ref-sibling", API_31),
     TestSet("schema-composed-nested", API_31),
+    TestSet("schema-composed-oneof-interface", API_31)
 )
