@@ -303,6 +303,7 @@ class DataTypeConverter(
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun createNoDataType(schemaInfo: SchemaInfo, dataTypes: DataTypes): DataType {
         val targetType = getMappedDataType(schemaInfo)
         if (targetType != null) {
@@ -352,7 +353,7 @@ class DataTypeConverter(
             return found
         }
 
-        val enumType = StringEnumDataType (
+        @Suppress("UNCHECKED_CAST") val enumType = StringEnumDataType (
             DataTypeName(enumName, getTypeNameWithSuffix(enumName)),
             listOf(options.packageName, "model").joinToString("."),
             schemaInfo.getEnumValues() as List<String>,

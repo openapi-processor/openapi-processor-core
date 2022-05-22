@@ -94,11 +94,12 @@ fun OpenApi.getSchemaInfo(name: String, path: String, method: HttpMethod, status
  * extracts a specific body Schema from an [OpenApi] object created by [parse()][parse] and
  * creates a [SchemaInfo] for the schema.
  *
- * @param name name of schema info, i.e the datatype name
+ * @param name name of schema info, i.e. the datatype name
  * @param path the endpoint path
  * @param method the http method
  * @return the [SchemaInfo]
  */
+@Suppress("UNUSED_PARAMETER")
 fun OpenApi.getBodySchemaInfo(name: String, path: String, method: HttpMethod, mediaType: String)
 : SchemaInfo {
     val schema = getBodySchema(path, method, mediaType)

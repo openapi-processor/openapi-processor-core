@@ -19,6 +19,7 @@ class ParametersBuilder {
         parameters.add(parameter)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun any(parameter: Parameter, init: ParameterBuilder.() -> Unit? = {}) {
         parameters.add(parameter)
     }

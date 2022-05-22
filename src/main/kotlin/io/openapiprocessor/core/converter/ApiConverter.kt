@@ -179,6 +179,7 @@ class  ApiConverter(
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun createAdditionalParameter(mapping: AddParameterTypeMapping, dataTypes: DataTypes, resolver: RefResolver): ModelParameter {
         val tm = mapping.getChildMappings().first () as TypeMapping
         val tt = tm.getTargetType()
