@@ -3,6 +3,8 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
+@file:Suppress("DEPRECATION")
+
 package io.openapiprocessor.core.parser.openapi.validations
 
 import io.openapiprocessor.core.parser.openapi.Validation
