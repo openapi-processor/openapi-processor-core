@@ -124,7 +124,7 @@ dependencies {
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
 
-    implementation platform('io.openapiprocessor:openapi-parser-bom:2022.1-SNAPSHOT.1')
+    implementation platform('io.openapiprocessor:openapi-parser-bom:2022.1-SNAPSHOT')
     implementation ('io.openapiprocessor:openapi-parser')
 //    implementation ('io.openapiprocessor:openapi-parser-interfaces')
 //    implementation ('io.openapiprocessor:openapi-parser-validator')
