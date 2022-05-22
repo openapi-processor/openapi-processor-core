@@ -3,7 +3,7 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "UNUSED_PARAMETER")
 
 package io.openapiprocessor.core.parser.openapi
 
