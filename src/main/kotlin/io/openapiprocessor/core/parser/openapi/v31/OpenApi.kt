@@ -27,7 +27,7 @@ class OpenApi(
             if (path.isRef) {
                 path = path.refObject
             }
-            paths[name] = Path31(name, value)
+            paths[name] = Path31(name, path)
         }
 
         return paths
