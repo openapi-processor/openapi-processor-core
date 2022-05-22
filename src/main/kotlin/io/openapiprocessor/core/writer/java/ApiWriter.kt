@@ -12,8 +12,8 @@ import io.openapiprocessor.core.model.Api
 import io.openapiprocessor.core.model.Interface
 import io.openapiprocessor.core.model.datatypes.InterfaceDataType
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
-import io.openapiprocessor.core.support.toURL
 import io.openapiprocessor.core.model.datatypes.ModelDataType
+import io.openapiprocessor.core.support.toURI
 import java.io.BufferedWriter
 import java.io.StringWriter
 import java.io.Writer
@@ -151,7 +151,7 @@ class ApiWriter(
         val root = options.targetDir
         val pkg = listOf(root, apiPkg).joinToString("/")
 
-        val target = Paths.get (toURL(pkg).toURI())
+        val target = Paths.get (toURI(pkg))
         Files.createDirectories(target)
         return target
     }
