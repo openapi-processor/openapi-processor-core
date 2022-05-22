@@ -12,9 +12,9 @@ import io.openapiparser.schema.DocumentStore
 import io.openapiparser.schema.Resolver
 import io.openapiparser.schema.SchemaStore
 import io.openapiparser.validator.result.*
+import io.openapiprocessor.core.support.toURI
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.net.URI
 import java.util.*
 import io.openapiparser.model.v30.OpenApi as OpenApi30
 import io.openapiparser.model.v31.OpenApi as OpenApi31
@@ -34,7 +34,9 @@ class Parser {
         val store = SchemaStore(resolver)
 
         val parser = OpenApiParser(resolver)
-        val result = parser.parse(URI(apiPath))
+
+        val apiUri = toURI(apiPath)
+        val result = parser.parse(apiUri)
 
         return when (result.version) {
             OpenApiResult.Version.V30 -> {
