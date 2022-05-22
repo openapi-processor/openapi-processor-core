@@ -47,8 +47,10 @@ class Parser {
                     val collector = MessageCollector(result.validationMessages)
                     val messages: LinkedList<Message> = collector.collect()
                     val builder = MessageTextBuilder()
+
+                    log.warn("OpenAPI description '{}' does not pass schema validation:", apiPath)
                     for (message in messages) {
-                        println(builder.getText(message))
+                        log.warn(builder.getText(message))
                     }
                 }
 
