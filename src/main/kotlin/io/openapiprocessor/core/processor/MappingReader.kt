@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.openapiprocessor.core.processor.mapping.v1.Mapping
@@ -86,9 +87,10 @@ class MappingReader(private val validator: MappingValidator = MappingValidator()
             .configure(KotlinFeature.NullIsSameAsDefault, true)
             .build ()
 
-        return ObjectMapper(YAMLFactory())
+        return YAMLMapper.builder(YAMLFactory())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS, true)
+            .build()
             .setPropertyNamingStrategy(PropertyNamingStrategies.KEBAB_CASE)
             .registerModules(kotlinModule, module)
     }
@@ -108,10 +110,13 @@ class MappingReader(private val validator: MappingValidator = MappingValidator()
     }
 
     private fun createVersionParser(): ObjectMapper {
+        val kotlinModule = KotlinModule.Builder()
+            .build ()
+
         return ObjectMapper (YAMLFactory ())
             .configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .setPropertyNamingStrategy (PropertyNamingStrategies.KEBAB_CASE)
-            .registerModule (KotlinModule ())
+            .registerModule (kotlinModule)
     }
 
     private fun isFileName(name: String): Boolean {
