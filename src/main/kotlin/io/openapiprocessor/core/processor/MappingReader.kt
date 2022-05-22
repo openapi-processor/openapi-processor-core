@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.openapiprocessor.core.processor.mapping.v1.Mapping
 import io.openapiprocessor.core.processor.mapping.MappingVersion
@@ -82,7 +83,7 @@ class MappingReader(private val validator: MappingValidator = MappingValidator()
         module.addDeserializer (ParameterV2::class.java, ParameterDeserializerV2 ())
 
         val kotlinModule = KotlinModule.Builder()
-            .nullIsSameAsDefault (true)
+            .configure(KotlinFeature.NullIsSameAsDefault, true)
             .build ()
 
         return ObjectMapper(YAMLFactory())
@@ -97,7 +98,7 @@ class MappingReader(private val validator: MappingValidator = MappingValidator()
         module.addDeserializer (Parameter::class.java, ParameterDeserializer ())
 
         val kotlinModule = KotlinModule.Builder()
-            .nullIsSameAsDefault (true)
+            .configure(KotlinFeature.NullIsSameAsDefault, true)
             .build ()
 
         return ObjectMapper (YAMLFactory ())
