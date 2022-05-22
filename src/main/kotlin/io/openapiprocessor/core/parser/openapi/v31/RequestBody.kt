@@ -16,7 +16,7 @@ import io.openapiprocessor.core.parser.RequestBody as ParserRequestBody
 class RequestBody(private val requestBody: RequestBody31): ParserRequestBody {
 
     override fun getRequired(): Boolean {
-        return requestBody.required ?: false
+        return requestBody.required
     }
 
     override fun getContent(): Map<String, ParserMediaType> {

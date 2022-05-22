@@ -72,14 +72,14 @@ class Operation(
         return content
     }
 
-    override fun isDeprecated(): Boolean = operation.deprecated ?: false
+    override fun isDeprecated(): Boolean = operation.deprecated
 
-    override fun hasTags(): Boolean = operation.tags?.isNotEmpty() ?: false
+    override fun hasTags(): Boolean = operation.tags.isNotEmpty()
 
     override val summary: String? = operation.summary
 
     override val description: String? = operation.description
 
-    override fun getFirstTag(): String? = operation.tags.first ()
+    override fun getFirstTag(): String? = if (hasTags()) operation.tags.first () else null
 
 }

@@ -22,7 +22,7 @@ class Parameter(private val parameter: Parameter30): ParserParameter {
 
     override fun isRequired(): Boolean = parameter.required
 
-    override fun isDeprecated(): Boolean = parameter.deprecated ?: false
+    override fun isDeprecated(): Boolean = parameter.deprecated
 
     override val description: String?
         get() = parameter.description
