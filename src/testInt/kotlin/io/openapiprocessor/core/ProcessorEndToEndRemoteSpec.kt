@@ -28,15 +28,16 @@ class ProcessorEndToEndRemoteSpec: StringSpec({
 
     "processes remote openapi with ref's" {
         forAll(
-            row("SWAGGER", "ref-into-another-file"),
-            row("OPENAPI4J", "ref-into-another-file"),
-            row("INTERNAL", "ref-into-another-file"),
-        ) { parser, source ->
+            row("INTERNAL", "ref-into-another-file", "openapi30.yaml"),
+            row("INTERNAL", "ref-into-another-file", "openapi31.yaml"),
+            row("SWAGGER", "ref-into-another-file", "openapi30.yaml"),
+            row("OPENAPI4J", "ref-into-another-file", "openapi30.yaml")
+        ) { parser, source, api ->
             val folder = tempdir()
 
             val processor = TestProcessor()
             processor.run(mutableMapOf(
-                "apiPath" to "$repo/src/testInt/resources/tests/$source/inputs/openapi.yaml",
+                "apiPath" to "$repo/src/testInt/resources/tests/$source/inputs/$api",
                 "targetDir" to folder.canonicalPath,
                 "parser" to parser,
                 "mapping" to mapping
@@ -57,7 +58,9 @@ class ProcessorEndToEndRemoteSpec: StringSpec({
                 val expected = "$expectedPath/$it"
                 val generated = generatedPath.resolve (it)
 
-                success = success && !files.printUnifiedDiff (expected, generated)
+                val hasDiff = !files.printUnifiedDiff (expected, generated)
+
+                success = success && hasDiff
             }
 
             success.shouldBeTrue()
