@@ -16,7 +16,8 @@ version projectVersion
 
 ext {
     processorApiVersion = '2021.1'
-    processorTestVersion = '2022.2-SNAPSHOT'
+    processorTestVersion = '2022.2'
+    openapiParserVersion = '2022.1.1'
     groovyVersion = '3.0.10'
 }
 
@@ -124,10 +125,8 @@ dependencies {
         exclude group: 'io.swagger.core.v3', module: 'swagger-annotations'
     }
 
-    implementation platform('io.openapiprocessor:openapi-parser-bom:2022.1-SNAPSHOT')
+    implementation platform("io.openapiprocessor:openapi-parser-bom:$openapiParserVersion")
     implementation ('io.openapiprocessor:openapi-parser')
-//    implementation ('io.openapiprocessor:openapi-parser-interfaces')
-//    implementation ('io.openapiprocessor:openapi-parser-validator')
     implementation ('io.openapiprocessor:openapi-parser-jackson')
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
     implementation ('org.apache.commons:commons-text:1.9')
