@@ -15,8 +15,6 @@ group projectGroupId
 version projectVersion
 
 ext {
-    processorApiVersion = '2021.1'
-    processorTestVersion = '2022.2'
     openapiParserVersion = '2022.1.1'
     groovyVersion = '3.0.10'
 }
@@ -36,11 +34,11 @@ repositories {
 testing {
     suites {
         test {
-            useJUnitJupiter('5.8.2')
+            useJUnitJupiter(libs.versions.junit.get())
         }
 
         testInt(JvmTestSuite) {
-            useJUnitJupiter('5.8.2')
+            useJUnitJupiter(libs.versions.junit.get())
             testType = TestSuiteType.INTEGRATION_TEST
 
             dependencies {
@@ -115,7 +113,7 @@ tasks.named('sourcesJar') {
 dependencies {
     antlr 'org.antlr:antlr4:4.10.1'
 
-    compileOnly "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
+    compileOnly libs.openapi.processor.api
     implementation platform("org.jetbrains.kotlin:kotlin-bom:1.6.21")
     implementation platform("com.fasterxml.jackson:jackson-bom:2.13.3")
 
@@ -135,8 +133,8 @@ dependencies {
     implementation ('com.google.guava:guava:31.1-jre')
     implementation ('com.networknt:json-schema-validator:1.0.69')
 
-    testImplementation ("io.openapiprocessor:openapi-processor-test:$processorTestVersion")
-    testImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
+    testImplementation libs.openapi.processor.api
+    testImplementation libs.openapi.processor.test
     testImplementation platform("org.codehaus.groovy:groovy-bom:3.0.10")
     testImplementation ("org.codehaus.groovy:groovy")
     testImplementation ("org.codehaus.groovy:groovy-nio")
@@ -149,8 +147,8 @@ dependencies {
     testImplementation("com.google.jimfs:jimfs:1.2")
     testImplementation('com.google.guava:guava:31.1-jre')
 
-    testIntImplementation ("io.openapiprocessor:openapi-processor-test:$processorTestVersion")
-    testIntImplementation "io.openapiprocessor:openapi-processor-api:$processorApiVersion"
+    testIntImplementation libs.openapi.processor.api
+    testIntImplementation libs.openapi.processor.test
     testIntImplementation platform("org.codehaus.groovy:groovy-bom:3.0.10")
     testIntImplementation ("org.codehaus.groovy:groovy")
     testIntImplementation ("org.codehaus.groovy:groovy-nio")
