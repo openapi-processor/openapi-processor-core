@@ -1,5 +1,4 @@
 [versions]
-#openapiprocessor = "2022.6-SNAPSHOT"
 openapiprocessor-api = "2021.1"
 openapiprocessor-test = "2022.2"
 
@@ -8,6 +7,7 @@ build-jdk = "11"
 target-jvm = "8"
 
 junit = "5.8.2"
+jacoco = "0.8.7"
 
 [libraries]
 openapi-processor-api = { module = "io.openapiprocessor:openapi-processor-api", version.ref = "openapiprocessor-api" }

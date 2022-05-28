@@ -1,5 +1,7 @@
 plugins {
     id("openapiprocessor.library")
+    id("openapiprocessor.test")
+    id("openapiprocessor.testInt")
 
     id 'antlr'
     id 'groovy'
@@ -18,50 +20,7 @@ ext {
 }
 
 repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-        mavenContent {
-            snapshotsOnly()
-        }
-    }
-}
-
-
-testing {
-    suites {
-        test {
-            useJUnitJupiter(libs.versions.junit.get())
-        }
-
-        testInt(JvmTestSuite) {
-            useJUnitJupiter(libs.versions.junit.get())
-            testType = TestSuiteType.INTEGRATION_TEST
-
-            dependencies {
-                implementation project
-            }
-
-            sources {
-                java {
-                    srcDirs = ['src/testInt/kotlin']
-                }
-            }
-
-            targets {
-                all {
-                    testTask.configure {
-                        shouldRunAfter(test)
-                    }
-                }
-            }
-        }
-    }
-}
-
-tasks.named('check') {
-    dependsOn(testing.suites.testInt)
+//    mavenLocal()
 }
 
 sourceSets {
@@ -167,21 +126,7 @@ tasks.named("dependencyUpdates").configure {
     }
 }
 
-tasks.withType(Test) {
-    finalizedBy jacocoTestReport
-}
-
-jacoco {
-    toolVersion = "0.8.7"
-}
-
 jacocoTestReport {
-    reports {
-        xml.required = true
-        html.required = false
-        csv.required = false
-    }
-
     getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
 }
 

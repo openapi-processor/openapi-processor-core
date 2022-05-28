@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 
 plugins {
@@ -14,31 +15,48 @@ plugins {
 // see buildSrc/build.gradle.kts
 val libs = the<LibrariesForLibs>()
 
+// gradle.properties
+val projectVersion: String by project
+
 group = "io.openapiprocessor"
-version = libs.versions.openapiprocessor
-println("version: $version")
+version = projectVersion
+println("version: $projectVersion")
+
 
 repositories {
     mavenCentral()
-}
-
-/*
-jacoco {
-    toolVersion = "0.8.7"
-}
-
-tasks.jacocoTestReport {
-    reports {
-//        xml.required.set(false)
-//        csv.required.set(false)
-//        html.required.set(false)
-//        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    maven {
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+        mavenContent {
+            snapshotsOnly()
+        }
     }
 }
 
-configure<org.checkerframework.gradle.plugin.CheckerFrameworkExtension> {
-//    skipCheckerFramework = true
-//    excludeTests = true
+dependencies {
+    checkerFramework(libs.checker)
+}
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
+tasks.named<JacocoReport>("jacocoTestReport") {
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.required.set(false)
+        //html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+}
+
+tasks.withType<Test>().configureEach {
+    finalizedBy(tasks.named("jacocoTestReport"))
+}
+
+configure<CheckerFrameworkExtension> {
+    skipCheckerFramework = true
+    excludeTests = true
     extraJavacArgs = listOf("-Awarns")
 
     checkers = listOf(
@@ -48,4 +66,3 @@ configure<org.checkerframework.gradle.plugin.CheckerFrameworkExtension> {
 //        "org.checkerframework.checker.index.IndexChecker"
     )
 }
-*/
