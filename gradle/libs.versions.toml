@@ -1,5 +1,5 @@
 [versions]
-openapiprocessor = "2022.6-SNAPSHOT"
+#openapiprocessor = "2022.6-SNAPSHOT"
 openapiprocessor-api = "2021.1"
 openapiprocessor-test = "2022.2"
 
