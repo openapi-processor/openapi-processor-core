@@ -22,23 +22,13 @@ import org.gradle.api.Project
  */
 class VersionPlugin implements Plugin<Project> {
 
-    void apply(Project project) {
-        project.afterEvaluate (new Action<Project> () {
-
+    void apply (Project project) {
+        project.tasks.register ('generateVersion', VersionTask, new Action<VersionTask> () {
             @Override
-            void execute (Project prj) {
-                prj.tasks.register ('generateVersion', VersionTask , new Action<VersionTask>() {
-
-                    @Override
-                    void execute (VersionTask task) {
-                        task.targetDir = prj.buildDir
-                        task.version = prj.version
-                    }
-
-                })
+            void execute (VersionTask task) {
+                task.targetDir = project.buildDir
+                task.version = project.version
             }
-
         })
     }
-
 }

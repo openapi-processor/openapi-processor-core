@@ -1,4 +1,6 @@
 import org.gradle.api.DefaultTask
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
@@ -10,7 +12,14 @@ import java.time.Instant
 /**
  * simple task to create a Version class.
  */
-class VersionTask extends DefaultTask {
+abstract class VersionTask extends DefaultTask {
+
+    /**
+     * package name of the generated version class.
+     */
+
+    @Input
+    abstract Property<String> getTargetPackage();
 
     /**
      * Target directory for the generated version class.
@@ -20,6 +29,7 @@ class VersionTask extends DefaultTask {
     @OutputDirectory
     String targetDir
 
+
     @Internal
     String version
 
@@ -28,7 +38,8 @@ class VersionTask extends DefaultTask {
      */
     @TaskAction
     void generateVersion () {
-        def path = Path.of (targetDir, "version", "io", "openapiprocessor", "core")
+        String[] parts = targetPackage.get ().split ("\\.")
+        def path = Path.of (targetDir, "version", *parts)
         Files.createDirectories(path)
 
         def target = path.resolve ("Version.java")
@@ -40,7 +51,7 @@ class VersionTask extends DefaultTask {
  * ${Instant.now ().toString ()}
  */
 
-package io.openapiprocessor.core;
+package ${targetPackage.get ()};
  
 public class Version {
     public static final String version = "${version}"; 

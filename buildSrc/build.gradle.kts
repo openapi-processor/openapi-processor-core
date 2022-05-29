@@ -2,6 +2,7 @@
 
 plugins {
     `kotlin-dsl`
+    `java-gradle-plugin`
 }
 
 repositories {
@@ -23,3 +24,12 @@ dependencies {
 //tasks.withType<KotlinCompile> {
 //    kotlinOptions.jvmTarget = "11"
 //}
+
+gradlePlugin {
+    plugins {
+        create("VersionPlugin") {
+            id = "openapiprocessor.version"
+            implementationClass = "VersionPlugin"
+        }
+    }
+}

@@ -2,6 +2,7 @@ plugins {
     id("openapiprocessor.library")
     id("openapiprocessor.test")
     id("openapiprocessor.testInt")
+    id("openapiprocessor.version")
 
     id 'antlr'
     id 'groovy'
@@ -139,6 +140,13 @@ sonarqube {
   }
 }
 
-apply plugin: VersionPlugin
+tasks.generateVersion {
+    targetPackage = "io.openapiprocessor.core"
+}
+
+//tasks.named("generateVersion") {
+//    targetPackage = "io.openapiprocessor.core"
+//}
+
 apply from: "${rootProject.rootDir}/gradle/publishing.gradle"
 apply from: "${rootProject.rootDir}/gradle/publishing.tasks.gradle.kts"
