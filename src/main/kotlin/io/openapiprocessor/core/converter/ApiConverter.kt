@@ -114,10 +114,24 @@ class  ApiConverter(
             ep.parameters.add (createParameter (ep, parameter, dataTypes, resolver))
         }
 
-        val addMappings = mappingFinder.findEndpointAddParameterTypeMappings (ep.path, ep.method)
+        val addMappings = getAdditionalParameter (ep)
         addMappings.forEach {
             ep.parameters.add (createAdditionalParameter (it, dataTypes, resolver))
         }
+    }
+
+    private fun getAdditionalParameter(ep: Endpoint): List<AddParameterTypeMapping> {
+        // check endpoint parameter mappings
+        val epMatch = mappingFinder.findEndpointAddParameterTypeMappings (ep.path, ep.method)
+        if (epMatch.isNotEmpty())
+            return epMatch
+
+        // check global parameter mappings
+        val paramMatch = mappingFinder.findAddParameterTypeMappings()
+        if (paramMatch.isNotEmpty())
+            return paramMatch
+
+        return emptyList()
     }
 
     private fun collectRequestBody(requestBody: RequestBody?, ep: Endpoint, dataTypes: DataTypes, resolver: RefResolver) {

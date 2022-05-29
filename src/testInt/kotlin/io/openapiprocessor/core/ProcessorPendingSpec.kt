@@ -19,7 +19,7 @@ import io.openapiprocessor.test.TestSetRunner
 class ProcessorPendingSpec: StringSpec({
 
     for (testSet in sources()) {
-        "native - $testSet".config(enabled = true) {
+        "native - $testSet".config(enabled = false) {
             val folder = tempdir()
 
             val support = FileSupport(
@@ -37,8 +37,8 @@ private fun sources(): Collection<TestSet> {
     return listOf(
 //        testSet("params-additional-new", ParserType.SWAGGER, API_30),
 //        testSet("params-additional-new", ParserType.OPENAPI4J, API_30),
-        testSet("params-additional", INTERNAL, API_30),
-        testSet("params-additional", INTERNAL, API_31)
+//        testSet("params-additional-global", INTERNAL, API_30),
+//        testSet("params-additional-global", INTERNAL, API_31)
     )
 }
 

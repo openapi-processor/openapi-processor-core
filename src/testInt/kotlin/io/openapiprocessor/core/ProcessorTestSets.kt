@@ -25,6 +25,7 @@ val ALL_30: List<TestSet> = listOf(
     TestSet("object-read-write-properties", API_30),
     TestSet("object-without-properties", API_30),
     TestSet("params-additional", API_30),
+    TestSet("params-additional-global", API_30),
     TestSet("params-complex-data-types", API_30), // framework specific
     TestSet("params-endpoint", API_30),
     TestSet("params-enum", API_30),
@@ -80,6 +81,7 @@ val ALL_31: List<TestSet> = listOf(
     TestSet("object-read-write-properties", API_31),
     TestSet("object-without-properties", API_31),
     TestSet("params-additional", API_31),
+    TestSet("params-additional-global", API_31),
     TestSet("params-complex-data-types", API_31), // framework specific
     TestSet("params-endpoint", API_31),
     TestSet("params-enum", API_31),

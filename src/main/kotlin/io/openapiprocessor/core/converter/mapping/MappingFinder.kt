@@ -77,10 +77,26 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
     }
 
     /**
+     * find a matching (global) add parameter type mapping.
+     *
+     * @return the matching mappings or an empty list.
+     * @throws AmbiguousTypeMappingException if there is more than one match.
+     */
+    fun findAddParameterTypeMappings(): List<AddParameterTypeMapping>  {
+        val matches = typeMappings
+            .filterIsInstance(AddParameterTypeMapping::class.java)
+
+        if (matches.isNotEmpty())
+            return matches
+
+        return emptyList()
+    }
+
+    /**
      * find all (endpoint) add parameter type mappings for the given schema info.
      *
      * @param path the endpoint path
-     * @return the matching mapping or null if there is no match.
+     * @return the matching mappings or an empty list.
      * @throws AmbiguousTypeMappingException if there is more than one match.
      */
     fun findEndpointAddParameterTypeMappings(path: String, method: HttpMethod): List<AddParameterTypeMapping> {

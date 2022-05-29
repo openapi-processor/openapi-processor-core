@@ -1,0 +1,9 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: generated
+
+map:
+
+  parameters:
+   - add: request => javax.servlet.http.HttpServletRequest
