@@ -140,13 +140,9 @@ sonarqube {
   }
 }
 
-tasks.generateVersion {
+generateVersion {
     targetPackage = "io.openapiprocessor.core"
 }
-
-//tasks.named("generateVersion") {
-//    targetPackage = "io.openapiprocessor.core"
-//}
 
 apply from: "${rootProject.rootDir}/gradle/publishing.gradle"
 apply from: "${rootProject.rootDir}/gradle/publishing.tasks.gradle.kts"
