@@ -27,7 +27,7 @@ repositories {
 sourceSets {
     main {
         java {
-            srcDirs 'build/antlr', "${buildDir}/version"
+            srcDirs 'build/antlr'
         }
     }
 }
@@ -55,17 +55,17 @@ kotlin {
 }
 
 tasks.named('compileKotlin') {
-    dependsOn 'generateVersion', 'generateGrammarSource'
+    dependsOn 'generateGrammarSource'
 
     kotlinOptions.jvmTarget = "1.8"
 }
 
 tasks.named('compileTestKotlin') {
-    dependsOn 'generateVersion', 'generateTestGrammarSource'
+    dependsOn 'generateTestGrammarSource'
 }
 
 tasks.named('sourcesJar') {
-    dependsOn 'generateVersion', 'generateGrammarSource'
+    dependsOn 'generateGrammarSource'
 }
 
 dependencies {
