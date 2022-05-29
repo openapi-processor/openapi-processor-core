@@ -90,32 +90,27 @@ dependencies {
     implementation ('com.google.guava:guava:31.1-jre')
     implementation ('com.networknt:json-schema-validator:1.0.69')
 
-    testImplementation libs.openapi.processor.api
-    testImplementation libs.openapi.processor.test
-    testImplementation platform("org.codehaus.groovy:groovy-bom:3.0.10")
-    testImplementation ("org.codehaus.groovy:groovy")
-    testImplementation ("org.codehaus.groovy:groovy-nio")
-    testImplementation ('org.spockframework:spock-core:2.1-groovy-3.0')
-    testImplementation(platform(libs.kotest.bom))
-    testImplementation(libs.kotest.runner)
-    testImplementation(libs.kotest.datatest)
-    testImplementation(libs.mockk)
-    testImplementation(libs.logback)
-    testImplementation("com.google.jimfs:jimfs:1.2")
-    testImplementation('com.google.guava:guava:31.1-jre')
+    testImplementation (libs.openapi.processor.api)
+    testImplementation (libs.openapi.processor.test)
+    testImplementation (platform(libs.kotest.bom))
+    testImplementation (libs.kotest.runner)
+    testImplementation (libs.kotest.datatest)
+    testImplementation (libs.mockk)
+    testImplementation (libs.spock)
+    testImplementation (libs.logback)
+    testImplementation (libs.jimfs)
+    testImplementation (libs.guava)
 
-    testIntImplementation libs.openapi.processor.api
-    testIntImplementation libs.openapi.processor.test
-    testIntImplementation platform("org.codehaus.groovy:groovy-bom:3.0.10")
-    testIntImplementation ("org.codehaus.groovy:groovy")
-    testIntImplementation ("org.codehaus.groovy:groovy-nio")
-    testIntImplementation(platform(libs.kotest.bom))
-    testIntImplementation(libs.kotest.runner)
-    testIntImplementation(libs.kotest.datatest)
-    testIntImplementation(libs.mockk)
-    testIntImplementation(libs.logback)
-    testIntImplementation("com.google.jimfs:jimfs:1.2")
-    testIntImplementation('com.google.guava:guava:31.1-jre')
+    testIntImplementation (libs.openapi.processor.api)
+    testIntImplementation (libs.openapi.processor.test)
+    testIntImplementation (platform(libs.kotest.bom))
+    testIntImplementation (libs.kotest.runner)
+    testIntImplementation (libs.kotest.datatest)
+    testIntImplementation (libs.mockk)
+    testIntImplementation (libs.spock)
+    testIntImplementation (libs.logback)
+    testIntImplementation (libs.jimfs)
+    testIntImplementation (libs.guava)
 }
 
 tasks.named("dependencyUpdates").configure {
