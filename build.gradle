@@ -16,7 +16,6 @@ group projectGroupId
 version projectVersion
 
 ext {
-    openapiParserVersion = '2022.1.1'
     groovyVersion = '3.0.10'
 }
 
