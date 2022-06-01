@@ -37,7 +37,7 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
 
         target.write (
             """
-            |    private ${dataType.getTypeName()}(String value) {
+            |    ${dataType.getTypeName()}(String value) {
             |        this.value = value;
             |    }
             |

@@ -15,7 +15,7 @@ public enum Foo {
 
     private final String value;
 
-    private Foo(String value) {
+    Foo(String value) {
         this.value = value;
     }
 

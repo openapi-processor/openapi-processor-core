@@ -109,7 +109,7 @@ public enum Foo {
         then:
         target.toString ().contains ("""\
 
-    private $type(String value) {
+    $type(String value) {
         this.value = value;
     }
 

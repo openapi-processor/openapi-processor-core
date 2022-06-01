@@ -15,7 +15,7 @@ public enum Bar {
 
     private final String value;
 
-    private Bar(String value) {
+    Bar(String value) {
         this.value = value;
     }
 
