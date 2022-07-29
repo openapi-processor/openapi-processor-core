@@ -15,27 +15,29 @@ import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.support.datatypes.propertyDataType
 import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
 
-class BeanValidationFactorySpec: StringSpec({
+class BeanValidationFactorySpec : StringSpec({
     isolationMode = IsolationMode.InstancePerTest
 
     "applies @Valid to 'array' with object items" {
         val validation = BeanValidationFactory()
 
         val dataType = ArrayDataType(
-            ObjectDataType("Foo", "pkg", linkedMapOf(
-                "foo" to propertyDataTypeString()
+            ObjectDataType(
+                "Foo", "pkg", linkedMapOf(
+                    "foo" to propertyDataTypeString()
+                )
             )
-        ))
+        )
         val info = validation.validate(dataType)
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "Foo[]"
-        prop.imports shouldBe setOf(BeanValidation.VALID.import)
-        prop.annotations shouldBe setOf(BeanValidation.VALID.annotation)
+        prop.imports shouldBe setOf(BeanValidation.VALID.typeName)
+        prop.annotations shouldBe setOf("@Valid")
 
         val io = info.inout
         io.dataTypeValue shouldBe "@Valid Foo[]"
-        io.imports shouldBe setOf(BeanValidation.VALID.import)
+        io.imports shouldBe setOf(BeanValidation.VALID.typeName)
         io.annotations.shouldBeEmpty()
     }
 
@@ -59,19 +61,22 @@ class BeanValidationFactorySpec: StringSpec({
     "applies @Valid to mapped collection with object items" {
         val validation = BeanValidationFactory()
 
-        val dataType = MappedCollectionDataType("List", "pkg",
-            ObjectDataType("Foo", "pkg", linkedMapOf("foo" to propertyDataTypeString())
-        ))
+        val dataType = MappedCollectionDataType(
+            "List", "pkg",
+            ObjectDataType(
+                "Foo", "pkg", linkedMapOf("foo" to propertyDataTypeString())
+            )
+        )
         val info = validation.validate(dataType)
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "List<@Valid Foo>"
-        prop.imports shouldBe setOf(BeanValidation.VALID.import)
+        prop.imports shouldBe setOf(BeanValidation.VALID.typeName)
         prop.annotations.shouldBeEmpty()
 
         val io = info.inout
         io.dataTypeValue shouldBe "List<@Valid Foo>"
-        io.imports shouldBe setOf(BeanValidation.VALID.import)
+        io.imports shouldBe setOf(BeanValidation.VALID.typeName)
         io.annotations.shouldBeEmpty()
     }
 
@@ -97,15 +102,16 @@ class BeanValidationFactorySpec: StringSpec({
 
         val dataType = StringDataType(DataTypeConstraints(pattern = "regex"))
         val info = validation.validate(dataType)
+        info.annotations.size shouldBe 1
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "String"
-        info.imports shouldBe setOf(BeanValidation.PATTERN.import)
-        info.annotations shouldBe setOf("""${BeanValidation.PATTERN.annotation}(regexp = "regex")""")
+        prop.imports shouldBe setOf(BeanValidation.PATTERN.typeName)
+        prop.annotations shouldBe listOf("""@Pattern(regexp = "regex")""")
 
         val io = info.inout
-        io.dataTypeValue shouldBe """${BeanValidation.PATTERN.annotation}(regexp = "regex") String"""
-        io.imports shouldBe setOf(BeanValidation.PATTERN.import)
+        io.dataTypeValue shouldBe """@Pattern(regexp = "regex") String"""
+        io.imports shouldBe setOf(BeanValidation.PATTERN.typeName)
         io.annotations.shouldBeEmpty()
     }
 
@@ -117,36 +123,34 @@ class BeanValidationFactorySpec: StringSpec({
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "String"
-        info.imports shouldBe setOf(BeanValidation.PATTERN.import)
-        info.annotations shouldBe setOf("""${BeanValidation.PATTERN.annotation}(regexp = "\\.\\\\")""")
+        prop.imports shouldBe setOf(BeanValidation.PATTERN.typeName)
+        prop.annotations shouldBe setOf("""@Pattern(regexp = "\\.\\\\")""")
 
         val io = info.inout
-        io.dataTypeValue shouldBe """${BeanValidation.PATTERN.annotation}(regexp = "\\.\\\\") String"""
-        io.imports shouldBe setOf(BeanValidation.PATTERN.import)
+        io.dataTypeValue shouldBe """@Pattern(regexp = "\\.\\\\") String"""
+        io.imports shouldBe setOf(BeanValidation.PATTERN.typeName)
         io.annotations.shouldBeEmpty()
     }
 
     "does apply validation annotations to 'collection' item" {
         val validation = BeanValidationFactory()
 
-        val dataType = ListDataType(StringDataType(
-            constraints = DataTypeConstraints(minLength = 2, maxLength = 3)),
-            constraints = DataTypeConstraints())
+        val dataType = ListDataType(
+            StringDataType(
+                constraints = DataTypeConstraints(minLength = 2, maxLength = 3)
+            ),
+            constraints = DataTypeConstraints()
+        )
         val info = validation.validate(dataType, true)
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "List<@Size(min = 2, max = 3) String>"
-        prop.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import,
-            BeanValidation.SIZE.import)
-        prop.annotations shouldBe setOf(
-            BeanValidation.NOT_NULL.annotation)
+        prop.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName, BeanValidation.SIZE.typeName)
+        prop.annotations shouldBe setOf("@NotNull")
 
         val io = info.inout
         io.dataTypeValue shouldBe "@NotNull List<@Size(min = 2, max = 3) String>"
-        io.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import,
-            BeanValidation.SIZE.import)
+        io.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName, BeanValidation.SIZE.typeName)
         io.annotations.shouldBeEmpty()
     }
 
@@ -162,17 +166,12 @@ class BeanValidationFactorySpec: StringSpec({
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "List<@Valid Foo>"
-        prop.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import,
-            BeanValidation.VALID.import)
-        prop.annotations shouldBe setOf(
-            BeanValidation.NOT_NULL.annotation)
+        prop.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName, BeanValidation.VALID.typeName)
+        prop.annotations shouldBe setOf("@NotNull")
 
         val io = info.inout
         io.dataTypeValue shouldBe "@NotNull List<@Valid Foo>"
-        io.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import,
-            BeanValidation.VALID.import)
+        io.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName, BeanValidation.VALID.typeName)
         io.annotations.shouldBeEmpty()
     }
 
@@ -186,15 +185,12 @@ class BeanValidationFactorySpec: StringSpec({
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "String[]"
-        prop.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import)
-        prop.annotations shouldBe setOf(
-            BeanValidation.NOT_NULL.annotation)
+        prop.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName)
+        prop.annotations shouldBe setOf("@NotNull")
 
         val io = info.inout
         io.dataTypeValue shouldBe "@NotNull String[]"
-        io.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import)
+        io.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName)
         io.annotations.shouldBeEmpty()
     }
 
@@ -210,18 +206,12 @@ class BeanValidationFactorySpec: StringSpec({
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "Foo[]"
-        prop.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import,
-            BeanValidation.VALID.import)
-        prop.annotations shouldBe listOf(
-            BeanValidation.VALID.annotation,
-            BeanValidation.NOT_NULL.annotation)
+        prop.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName, BeanValidation.VALID.typeName)
+        prop.annotations shouldBe listOf("@Valid", "@NotNull")
 
         val io = info.inout
         io.dataTypeValue shouldBe "@Valid @NotNull Foo[]"
-        io.imports shouldBe setOf(
-            BeanValidation.NOT_NULL.import,
-            BeanValidation.VALID.import)
+        io.imports shouldBe setOf(BeanValidation.NOT_NULL.typeName, BeanValidation.VALID.typeName)
         io.annotations.shouldBeEmpty()
     }
 
@@ -233,12 +223,12 @@ class BeanValidationFactorySpec: StringSpec({
 
         val prop = info.prop
         prop.dataTypeValue shouldBe "String"
-        info.imports shouldBe setOf(BeanValidation.EMAIL.import)
-        info.annotations shouldBe setOf(BeanValidation.EMAIL.annotation)
+        prop.imports shouldBe setOf(BeanValidation.EMAIL.typeName)
+        prop.annotations shouldBe setOf("@Email")
 
         val io = info.inout
-        io.dataTypeValue shouldBe """${BeanValidation.EMAIL.annotation} String"""
-        io.imports shouldBe setOf(BeanValidation.EMAIL.import)
+        io.dataTypeValue shouldBe "@Email String"
+        io.imports shouldBe setOf(BeanValidation.EMAIL.typeName)
         io.annotations.shouldBeEmpty()
     }
 })

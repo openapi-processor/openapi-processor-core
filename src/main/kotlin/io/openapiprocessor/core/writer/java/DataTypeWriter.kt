@@ -49,7 +49,7 @@ class DataTypeWriter(
         if (apiOptions.beanValidation) {
             val objectInfo = validationAnnotations.validate(dataType)
             objectInfo.annotations.forEach {
-                target.write("$it\n")
+                target.write("${it.annotation}\n")
             }
         }
 

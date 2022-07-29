@@ -13,7 +13,4 @@ enum class BeanValidation(val typeName: String) {
     PATTERN("javax.validation.constraints.Pattern"),
     SIZE("javax.validation.constraints.Size"),
     VALID("javax.validation.Valid");
-
-    val import = typeName
-    val annotation = "@" + typeName.substring(typeName.lastIndexOf('.') + 1)
 }

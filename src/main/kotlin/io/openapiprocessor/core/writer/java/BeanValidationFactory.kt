@@ -17,70 +17,33 @@ open class BeanValidationFactory {
      * override to add annotations to the model object class.
      */
     open fun validate(dataType: ModelDataType): BeanValidationInfo {
-        return BeanValidationInfoSimple(dataType, emptySet(), emptyList())
+        return BeanValidationInfoSimple(dataType, emptyList())
     }
 
     fun validate(dataType: DataType, required: Boolean = false): BeanValidationInfo {
         return if (dataType is CollectionDataType) {
             BeanValidationInfoCollection(
                 dataType,
-                collectImports(dataType, required),
                 collectAnnotations(dataType, required),
                 validate(dataType.item, false)
             )
         } else {
             BeanValidationInfoSimple(
                 dataType,
-                collectImports(dataType, required),
                 collectAnnotations(dataType, required)
             )
         }
     }
 
-    private fun collectImports(dataType: DataType, required: Boolean = false): Set<String> {
-        val imports = mutableSetOf<String>()
-
-        if (requiresValidImport(dataType)) {
-            imports.add(BeanValidation.VALID.import)
-        }
-
-        if (required) {
-            imports.add(BeanValidation.NOT_NULL.import)
-        }
-
-        if (dataType.hasSizeConstraints()) {
-            imports.add(BeanValidation.SIZE.import)
-        }
-
-        if (dataType.hasMinConstraint()) {
-            imports.add(BeanValidation.DECIMAL_MIN.import)
-        }
-
-        if (dataType.hasMaxConstraint()) {
-            imports.add(BeanValidation.DECIMAL_MAX.import)
-        }
-
-        if (dataType.patternConstraint()) {
-            imports.add(BeanValidation.PATTERN.import)
-        }
-
-        if (dataType.emailConstraint()) {
-            imports.add(BeanValidation.EMAIL.import)
-        }
-
-        return imports
-    }
-
-    // uses list to keep order
-    private fun collectAnnotations(dataType: DataType, required: Boolean = false): List<String> {
-        val annotations = mutableListOf<String>()
+    private fun collectAnnotations(dataType: DataType, required: Boolean = false): List<Annotation>  {
+        val annotations = mutableListOf<Annotation>()
 
         if (dataType.isModel() || dataType.isInterface() || dataType.isArrayOfModel()) {
-            annotations.add(BeanValidation.VALID.annotation)
+            annotations.add(Annotation(BeanValidation.VALID.typeName))
         }
 
         if (required) {
-            annotations.add(BeanValidation.NOT_NULL.annotation)
+            annotations.add(Annotation(BeanValidation.NOT_NULL.typeName))
         }
 
         if (dataType.hasSizeConstraints()) {
@@ -100,45 +63,39 @@ open class BeanValidationFactory {
         }
 
         if (dataType.emailConstraint()) {
-            annotations.add(BeanValidation.EMAIL.annotation)
+            annotations.add(createEmailAnnotation())
         }
 
         return annotations
     }
 
-    private fun requiresValidImport(dataType: DataType): Boolean {
-        if (dataType.isModel() || dataType.isInterface())
-            return true
+    private fun createDecimalMinAnnotation(dataType: DataType): Annotation {
+        val parameters = linkedMapOf<String, String>()
 
-        if (dataType !is CollectionDataType)
-            return false
-
-        val itemDataType = dataType.item
-        if (!itemDataType.isModel())
-            return false
-
-        return true
-    }
-
-    private fun createDecimalMinAnnotation(dataType: DataType): String {
         val minimum = dataType.constraints?.minimumConstraint!!
-        return if(minimum.exclusive) {
-            "@DecimalMin(value = \"${minimum.value}\", inclusive = false)"
-        } else {
-            "@DecimalMin(value = \"${minimum.value}\")"
+        parameters["value"] = """"${minimum.value}""""
+
+        if (minimum.exclusive) {
+            parameters["inclusive"] = "false"
         }
+
+        return Annotation(BeanValidation.DECIMAL_MIN.typeName, parameters)
     }
 
-    private fun createDecimalMaxAnnotation(dataType: DataType): String {
+    private fun createDecimalMaxAnnotation(dataType: DataType): Annotation {
+        val parameters = linkedMapOf<String, String>()
+
         val maximum = dataType.constraints?.maximumConstraint!!
-        return if(maximum.exclusive) {
-            "@DecimalMax(value = \"${maximum.value}\", inclusive = false)"
-        } else {
-            "@DecimalMax(value = \"${maximum.value}\")"
+        parameters["value"] = """"${maximum.value}""""
+
+        if (maximum.exclusive) {
+            parameters["inclusive"] = "false"
         }
+
+        return Annotation(BeanValidation.DECIMAL_MAX.typeName, parameters)
     }
 
-    private fun createSizeAnnotation(dataType: DataType): String {
+    private fun createSizeAnnotation(dataType: DataType): Annotation {
         return if (dataType.isString()) {
             createSizeAnnotation(dataType.lengthConstraints())
         } else {
@@ -146,22 +103,28 @@ open class BeanValidationFactory {
         }
     }
 
-    private fun createSizeAnnotation(size: SizeConstraints): String {
-        return when {
-            size.hasMin && size.hasMax -> {
-                "@Size(min = ${size.min}, max = ${size.max})"
-            }
-            size.hasMin -> {
-                "@Size(min = ${size.min})"
-            }
-            else -> {
-                "@Size(max = ${size.max})"
-            }
+    private fun createSizeAnnotation(size: SizeConstraints): Annotation {
+        val parameters = linkedMapOf<String, String>()
+
+        if (size.hasMin) {
+            parameters["min"] = "${size.min}"
         }
+
+        if (size.hasMax) {
+            parameters["max"] = "${size.max}"
+        }
+
+        return Annotation(BeanValidation.SIZE.typeName, parameters)
     }
 
-    private fun createPatternAnnotation(dataType: DataType): String {
-        return """@Pattern(regexp = "${escapeJava(dataType.constraints?.pattern!!)}")"""
+    private fun createPatternAnnotation(dataType: DataType): Annotation {
+        val parameters = linkedMapOf<String, String>()
+        parameters["regexp"] = """"${escapeJava(dataType.constraints?.pattern!!)}""""
+        return Annotation(BeanValidation.PATTERN.typeName, parameters)
+    }
+
+    private fun createEmailAnnotation(): Annotation {
+        return Annotation(BeanValidation.EMAIL.typeName)
     }
 }
 
