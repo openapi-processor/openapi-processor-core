@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface Mapping {
     enum Kind {
-        MAP, ANNOTATE
+        TYPE, MAP, ANNOTATE
     }
 
     Mapping.Kind getKind();

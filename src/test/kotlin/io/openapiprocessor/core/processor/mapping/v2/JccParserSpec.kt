@@ -13,9 +13,22 @@ import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.processor.mapping.v2.parser.MappingParser
 import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping.Kind.MAP
+import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping.Kind.TYPE
 
 
 class JccParserSpec: StringSpec ({
+
+    "qualified java target type" {
+        val source = "io.oap.TargetType<java.lang.String>"
+
+        val mapping = MappingParser(source).mapping()
+        mapping.kind shouldBe TYPE
+        mapping.sourceType.shouldBeNull()
+        mapping.targetType shouldBe "io.oap.TargetType"
+        mapping.targetGenericTypes shouldBe listOf("java.lang.String")
+        mapping.annotationType.shouldBeNull()
+        mapping.annotationParameters.shouldBeEmpty()
+    }
 
     "map source type to fully qualified java target type" {
         val source = "SourceType => io.oap.TargetType"

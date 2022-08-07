@@ -90,6 +90,14 @@ Mapping mapping(): {
 } {
       LOOKAHEAD(2) map() { return this; }
     | LOOKAHEAD(2) annotate() { return this; }
+    | type() { return this; }
+}
+
+
+// type
+void type(): {
+} {
+    targetType() <EOF> { kind = Mapping.Kind.TYPE; }
 }
 
 // type mapping
@@ -135,10 +143,8 @@ void annotationParameters(): {
 void annotationParameterUnnamed(): {
     StringBuilder s = new StringBuilder();
 } {
-    <IDENTIFIER>
-    { annotationParameters.put ("", token.image); }
-  | <NUMBER>
-    { annotationParameters.put ("", token.image); }
+    <IDENTIFIER> { annotationParameters.put ("", token.image); }
+  | <NUMBER> { annotationParameters.put ("", token.image); }
   | <QUOTE_OPEN>
     (<CHAR> { s.append (token.image); })* { annotationParameters.put ("", wrap(s.toString ())); }
     <QUOTE_CLOSE>
@@ -151,10 +157,8 @@ void annotationParameterNamed(): {
 } {
     name = <IDENTIFIER> "="
     (
-        value = <IDENTIFIER>
-        { annotationParameters.put (name.image, value.image); }
-      | value = <NUMBER>
-        { annotationParameters.put (name.image, value.image); }
+        value = <IDENTIFIER> { annotationParameters.put (name.image, value.image); }
+      | value = <NUMBER> { annotationParameters.put (name.image, value.image); }
       | <QUOTE_OPEN>
         (<CHAR> { s.append (token.image); })* { annotationParameters.put (name.image, wrap(s.toString ())); }
         <QUOTE_CLOSE>
