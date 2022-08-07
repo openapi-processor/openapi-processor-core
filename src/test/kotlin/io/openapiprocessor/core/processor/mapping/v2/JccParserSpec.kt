@@ -29,6 +29,19 @@ class JccParserSpec: StringSpec ({
         mapping.annotationParameters.shouldBeEmpty()
     }
 
+    "map source type with format to fully qualified java target type" {
+        val source = "SourceType:format => io.oap.TargetType"
+
+        val mapping = MappingParser(source).mapping()
+        mapping.kind shouldBe MAP
+        mapping.sourceType shouldBe "SourceType"
+        mapping.sourceFormat shouldBe "format"
+        mapping.targetType shouldBe "io.oap.TargetType"
+        mapping.targetGenericTypes.shouldBeEmpty()
+        mapping.annotationType.shouldBeNull()
+        mapping.annotationParameters.shouldBeEmpty()
+    }
+
     "map source type to fully qualified java target type with generic parameters" {
         val source = "SourceType => io.oap.TargetType <java.lang.String, java.lang.Integer>"
 

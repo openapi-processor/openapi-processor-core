@@ -106,7 +106,7 @@ void annotate(): {
 
 void sourceType(): {
 } {
-    <IDENTIFIER> { sourceType = token.image; }
+    <IDENTIFIER> { sourceType = token.image; } (":" <IDENTIFIER> )? { sourceFormat = token.image; }
 }
 
 void targetType(): {
