@@ -73,7 +73,7 @@ SKIP: {
 TOKEN: {
       < IDENTIFIER: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >
     | < NUMBER: ["0"-"9"] (["0"-"9"])* >
-    | < QUALIFIED_TYPE: <IDENTIFIER> ("." <IDENTIFIER>)* >
+    | < QUALIFIED_TYPE: (<IDENTIFIER> | "{package-name}") ("." <IDENTIFIER>)* >
     | < QUOTE_OPEN: "\""> : STRING
     | < PARENTHESIS_OPEN: "(">
     | < PARENTHESIS_CLOSE: ")">
