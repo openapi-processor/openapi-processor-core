@@ -21,7 +21,7 @@ class JccParserSpec: StringSpec ({
     "qualified java target type" {
         val source = "io.oap.TargetType<java.lang.String>"
 
-        val mapping = MappingParser(source).mapping()
+        val mapping = MappingParser(source).mappingType()
         mapping.kind shouldBe TYPE
         mapping.sourceType.shouldBeNull()
         mapping.targetType shouldBe "io.oap.TargetType"

@@ -5,8 +5,7 @@
 
 package io.openapiprocessor.core.processor.mapping.v2.parser;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface Mapping {
     enum Kind {
@@ -19,5 +18,5 @@ public interface Mapping {
     String getTargetType();
     List<String> getTargetGenericTypes();
     String getAnnotationType();
-    Map<String, String> getAnnotationParameters();
+    LinkedHashMap<String, String> getAnnotationParameters();  // preserves order
 }

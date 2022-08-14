@@ -263,7 +263,7 @@ paths:
                     'foo', new TypeMapping (
                         null,
                         'java.lang.String'),
-                    new Annotation("bar.Bar", "(anything)"))
+                    new Annotation("bar.Bar", "(anything)", null))
             ])
         ])
 

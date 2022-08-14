@@ -22,7 +22,7 @@ public class MappingParser implements Mapping {
     private String sourceType;
     private String sourceFormat;
     private String annotationType;
-    private Map<String, String> annotationParameters = new LinkedHashMap<String, String> ();
+    private LinkedHashMap<String, String> annotationParameters = new LinkedHashMap<String, String> ();
     private String targetType;
     private List<String> targetGenericTypes = new ArrayList<String> ();
 
@@ -54,7 +54,7 @@ public class MappingParser implements Mapping {
         return annotationType;
     }
 
-    public Map<String, String> getAnnotationParameters() {
+    public LinkedHashMap<String, String> getAnnotationParameters() {
         return annotationParameters;
     }
 
@@ -71,17 +71,19 @@ SKIP: {
 }
 
 TOKEN: {
-      < IDENTIFIER: ["a"-"z","A"-"Z","_"] ( ["a"-"z","A"-"Z","_","0"-"9"] )* >
-    | < NUMBER: ["0"-"9"] (["0"-"9"])* >
+      < NUMBER: ["0"-"9"] (["0"-"9"])* >
+    | < PLAIN: "plain" >
+    | < IDENTIFIER: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "0"-"9"] )* >
     | < QUALIFIED_TYPE: (<IDENTIFIER> | "{package-name}") ("." <IDENTIFIER>)* >
-    | < QUOTE_OPEN: "\""> : STRING
+    | < FORMAT: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "-", "0"-"9"] )* >
+    | < MIME_TYPE: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "-", ".", "0"-"9"] )* >
+    | < MIME_SUBTYPE: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "-", ".", "0"-"9"] )* >
+    | < CONTENT_TYPE: <MIME_TYPE> "/" <MIME_SUBTYPE> >
     | < PARENTHESIS_OPEN: "(">
     | < PARENTHESIS_CLOSE: ")">
-}
-
-<STRING> TOKEN: {
-      < QUOTE_CLOSE: <QUOTE_OPEN> >: DEFAULT
-    | < CHAR: ~["\""]>
+    | < ARROW: "=>" >
+    | < ANNOTATE: "@" >
+    | < STRING: "\"" ( ~["\"", "\\"] | "\\" ["t", "\\", "\""] )* "\"" >
 }
 
 
@@ -90,31 +92,64 @@ Mapping mapping(): {
 } {
       LOOKAHEAD(2) map() { return this; }
     | LOOKAHEAD(2) annotate() { return this; }
-    | type() { return this; }
 }
 
+Mapping mappingType(): {
+} {
+    type() { return this; }
+}
+
+Mapping mappingContentType(): {
+} {
+    content() { return this; }
+}
 
 // type
 void type(): {
 } {
-    targetType() <EOF> { kind = Mapping.Kind.TYPE; }
+    (plain() | targetType()) <EOF> { kind = Mapping.Kind.TYPE; }
 }
 
 // type mapping
 void map(): {
 } {
-    sourceType() "=>" targetType() <EOF> { kind = Mapping.Kind.MAP; }
+    sourceType() <ARROW> targetType() <EOF> { kind = Mapping.Kind.MAP; }
 }
 
 // type annotation
 void annotate(): {
 } {
-    sourceType() "@" annotationType() <EOF> { kind = Mapping.Kind.ANNOTATE; }
+    sourceType() <ANNOTATE> annotationType() <EOF> { kind = Mapping.Kind.ANNOTATE; }
+}
+
+void content(): {
+} {
+    contentType() <ARROW> targetType() <EOF> { kind = Mapping.Kind.MAP; }
+}
+
+void plain(): {
+} {
+  <PLAIN> { targetType = token.image; }
 }
 
 void sourceType(): {
 } {
-    <IDENTIFIER> { sourceType = token.image; } (":" <IDENTIFIER> )? { sourceFormat = token.image; }
+    sourceIdentifier() { sourceType = token.image; } (":" formatIdentifier() { sourceFormat = token.image; })?
+}
+
+void contentType(): {
+} {
+    <CONTENT_TYPE> { sourceType = token.image; }
+}
+
+void sourceIdentifier(): {
+} {
+  <IDENTIFIER> | <STRING>
+}
+
+void formatIdentifier(): {
+} {
+  <IDENTIFIER> | <FORMAT> | <STRING>
 }
 
 void targetType(): {
@@ -145,9 +180,7 @@ void annotationParameterUnnamed(): {
 } {
     <IDENTIFIER> { annotationParameters.put ("", token.image); }
   | <NUMBER> { annotationParameters.put ("", token.image); }
-  | <QUOTE_OPEN>
-    (<CHAR> { s.append (token.image); })* { annotationParameters.put ("", wrap(s.toString ())); }
-    <QUOTE_CLOSE>
+  | <STRING> { annotationParameters.put ("", token.image); }
 }
 
 void annotationParameterNamed(): {
@@ -155,20 +188,16 @@ void annotationParameterNamed(): {
     Token value;
     StringBuilder s = new StringBuilder();
 } {
-    name = <IDENTIFIER> "="
-    (
+    name = <IDENTIFIER> "=" (
         value = <IDENTIFIER> { annotationParameters.put (name.image, value.image); }
       | value = <NUMBER> { annotationParameters.put (name.image, value.image); }
-      | <QUOTE_OPEN>
-        (<CHAR> { s.append (token.image); })* { annotationParameters.put (name.image, wrap(s.toString ())); }
-        <QUOTE_CLOSE>
+      | value = <STRING> { annotationParameters.put (name.image, value.image); }
    )
 }
 
 void genericParameters(): {
 } {
-    <QUALIFIED_TYPE> { targetGenericTypes.add (token.image); }
-    (
+    <QUALIFIED_TYPE> { targetGenericTypes.add (token.image); } (
         "," <QUALIFIED_TYPE> { targetGenericTypes.add (token.image); }
     )?
 }

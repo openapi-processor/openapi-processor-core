@@ -16,7 +16,6 @@ import io.openapiprocessor.core.writer.java.MappingAnnotationWriter as CoreMappi
 import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter as CoreParameterAnnotationWriter
 import java.io.StringWriter
 import java.io.Writer
-import java.util.*
 
 /**
  * Writer for Java interface methods, i.e. endpoints.
@@ -125,10 +124,28 @@ open class MethodWriter(
         parameterAnnotationWriter.write(annotation, parameter)
 
         if (parameter is AdditionalParameter && parameter.annotationDataType != null) {
-            annotation.write(" @${parameter.annotationDataType.getName()}${parameter.annotationDataType.getParameters()}")
+            annotation.write(" @${parameter.annotationDataType.getName()}")
+
+            val parametersX = parameter.annotationDataType.getParametersX()
+            if (parametersX != null) {
+                val parameters = mutableListOf<String>()
+
+                parametersX.forEach {
+                    if (it.key == "") {
+                        parameters.add(it.value)
+                    } else {
+                        parameters.add("${it.key} = ${it.value}")
+                    }
+                }
+
+                if (parameters.isNotEmpty()) {
+                    annotation.write("(")
+                    annotation.write(parameters.joinToString(", "))
+                    annotation.write(")")
+                }
+            }
         }
 
         return annotation.toString ()
     }
-
 }

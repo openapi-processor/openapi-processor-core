@@ -7,25 +7,14 @@ package io.openapiprocessor.core.processor.mapping.v2
 
 import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.processor.mapping.v2.parser.MappingParser
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
-import io.openapiprocessor.core.processor.mapping.v2.parser.ToData
-import io.openapiprocessor.core.processor.mapping.v2.parser.ToExtractor
-import io.openapiprocessor.core.processor.mapping.v2.parser.ToLexer
-import io.openapiprocessor.core.processor.mapping.v2.parser.ToParser
-import org.antlr.v4.runtime.CharStreams
-import org.antlr.v4.runtime.CommonTokenStream
-import org.antlr.v4.runtime.tree.ParseTreeWalker
 
 /**
  *  Converter for the type mapping from the mapping yaml. It converts the type mapping information
  *  into the format used by [io.openapiprocessor.core.converter.DataTypeConverter].
  */
 class MappingConverter(val mapping: MappingV2) {
-    companion object {
-        private const val SEPARATOR_TYPE = " => "
-        private const val SEPARATOR_FORMAT = ":"
-        private val PATTERN_GENERICS = "(\\S+?)\\s*<(.+?)>".toPattern()
-    }
 
     fun convert(): List<Mapping> {
         val result = ArrayList<Mapping>()
@@ -75,7 +64,8 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun convertResult (result: String): Mapping {
-        return ResultTypeMapping(result)
+        val mapping = MappingParser(result).mappingType()
+        return ResultTypeMapping(resolvePackageVariable(mapping.targetType))
     }
 
     private fun convertNull(value: String): Mapping {
@@ -92,15 +82,24 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun convertType (from: String, to: String): Mapping {
-        return TypeMapping(from, to)
+        val mapping = MappingParser(to).mappingType()
+        return TypeMapping(from, resolvePackageVariable(mapping.targetType))
     }
 
     private fun convertType(source: Type): Mapping {
-        val (fromType, toType) = splitMapping(source.type)
-        val (fromName, fromFormat) = parseFromType(fromType)
-        val (toName, generics) = parseToType(toType, source.generics)
+        val mapping = MappingParser(source.type).mapping()
 
-        return TypeMapping(fromName, fromFormat, toName, generics)
+        val targetGenericTypes = mapping.targetGenericTypes
+        if (targetGenericTypes.isEmpty() && source.generics != null) {
+            targetGenericTypes.addAll(source.generics)
+        }
+
+        return TypeMapping(
+            mapping.sourceType,
+            mapping.sourceFormat,
+            resolvePackageVariable(mapping.targetType),
+            resolvePackageVariable(targetGenericTypes)
+        )
     }
 
     private fun convertParameter(source: Parameter): Mapping {
@@ -118,24 +117,63 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun createParameterTypeMapping(source: RequestParameter): ParameterTypeMapping {
-        val (name, toType) = splitMapping(source.name)
-        val (toName, generics) = parseToType(toType, source.generics)
+        val mapping = MappingParser(source.name).mapping()
 
-        return ParameterTypeMapping(name, TypeMapping(null, toName, generics))
+        val targetGenericTypes = mapping.targetGenericTypes
+        if (targetGenericTypes.isEmpty() && source.generics != null) {
+            targetGenericTypes.addAll(source.generics)
+        }
+
+        val typeMapping = TypeMapping(
+            null,
+            null,
+            resolvePackageVariable(mapping.targetType),
+            resolvePackageVariable(targetGenericTypes)
+        )
+
+        return ParameterTypeMapping(mapping.sourceType, typeMapping)
     }
 
     private fun createAddParameterTypeMapping(source: AdditionalParameter): AddParameterTypeMapping {
-        val (name, toType) = splitMapping(source.add)
-        val to = parseToTypeV2(toType, source.generics)
+        val mapping = MappingParser(source.add).mapping()
 
-        return AddParameterTypeMapping(name, to.createSourcelessTypeMapping(), to.createAnnotation())
+        val targetGenericTypes = mapping.targetGenericTypes
+        if (targetGenericTypes.isEmpty() && source.generics != null) {
+            targetGenericTypes.addAll(source.generics)
+        }
+
+        val typeMapping = TypeMapping(
+            null,
+            null,
+            resolvePackageVariable(mapping.targetType),
+            resolvePackageVariable(targetGenericTypes)
+        )
+
+        var annotation: io.openapiprocessor.core.converter.mapping.Annotation? = null
+        if(mapping.annotationType != null) {
+            annotation = Annotation(
+                mapping.annotationType, null, mapping.annotationParameters)
+        }
+
+        return AddParameterTypeMapping(mapping.sourceType, typeMapping, annotation)
     }
 
     private fun convertResponse(source: Response): Mapping {
-        val (content, toType) = splitMapping(source.content)
-        val (toName, generics) = parseToType(toType, source.generics)
+        val mapping = MappingParser(source.content).mappingContentType()
 
-        return ResponseTypeMapping(content, TypeMapping(null, toName, generics))
+        val targetGenericTypes = mapping.targetGenericTypes
+        if (targetGenericTypes.isEmpty() && source.generics != null) {
+            targetGenericTypes.addAll(source.generics)
+        }
+
+        val typeMapping = TypeMapping(
+            null,
+            null,
+            resolvePackageVariable(mapping.targetType),
+            resolvePackageVariable(targetGenericTypes)
+        )
+
+        return ResponseTypeMapping (mapping.sourceType, typeMapping)
     }
 
     private fun convertPath(path: String, source: Path): Mapping {
@@ -245,88 +283,14 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private data class MappingTypes(val result: String, val format: String)
-    private data class FromType(val name: String, val format: String?)
-    private data class ToType(val name: String, val generics: List<String>)
-
-    private fun splitMapping(type: String): MappingTypes {
-        val split = type
-                .split(SEPARATOR_TYPE)
-                .map { it.trim() }
-
-        return MappingTypes(
-                split.component1(),
-                split.component2())
-    }
-
-    private fun parseFromType(type: String): FromType {
-        var name = type
-        var format: String? = null
-
-        if (type.contains(SEPARATOR_FORMAT)) {
-            val split = type
-                    .split(SEPARATOR_FORMAT)
-                    .map { it.trim() }
-
-            name = split.component1()
-            format = split.component2()
-        }
-
-        return FromType(name, format)
-    }
-
-    private fun parseToType(type: String, typeGenerics: List<String>?): ToType {
-        var name: String = type
-        var generics = emptyList<String>()
-
-        val matcher = PATTERN_GENERICS.matcher(type)
-        if (matcher.find ()) {
-            name = matcher.group (1)
-            generics = matcher
-                .group (2)
-                .split (',')
-                    .map { it.trim() }
-                    .toList()
-
-        } else if (typeGenerics != null) {
-            generics = typeGenerics
-        }
-
-        return ToType(name, resolvePackageVariable(generics))
-    }
 
     private fun resolvePackageVariable(source: List<String>): List<String> {
         return source.map {
-            it.replace("{package-name}", mapping.options.packageName)
+            resolvePackageVariable(it)
         }
     }
 
-}
-
-private fun ToData.createSourcelessTypeMapping() =
-    TypeMapping(null, type, typeArguments)
-
-private fun ToData.createAnnotation(): io.openapiprocessor.core.converter.mapping.Annotation? {
-    if(annotationType == null) {
-        return null
+    private fun resolvePackageVariable(source: String): String {
+        return source.replace("{package-name}", mapping.options.packageName)
     }
-
-    return Annotation(annotationType!!, annotationParameters)
-}
-
-/**
- * parse "to" with grammar
- */
-private fun parseToTypeV2(type: String, typeGenerics: List<String>?): ToData {
-    val lexer = ToLexer(CharStreams.fromString(type))
-    val tokens = CommonTokenStream(lexer)
-    val parser = ToParser(tokens)
-    val ctx = parser.to()
-    val extractor = ToExtractor()
-    ParseTreeWalker().walk(extractor, ctx)
-
-    val target = extractor.getTarget()
-    if (typeGenerics != null) {
-        target.typeArguments = typeGenerics
-    }
-    return target
 }

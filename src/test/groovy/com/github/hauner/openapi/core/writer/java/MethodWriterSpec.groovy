@@ -204,7 +204,7 @@ class MethodWriterSpec extends Specification {
             }
             e.parameters { ps ->
                 ps.add ('foo', new StringDataType()) { a ->
-                    a.annotation = new AnnotationDataType ('Foo', 'oap', '()')
+                    a.annotation = new AnnotationDataType ('Foo', 'oap', null, [:])
                 }
             }
         }
@@ -215,7 +215,56 @@ class MethodWriterSpec extends Specification {
         then:
         target.toString () == """\
     @CoreMapping
-    void getFoo(@Parameter @Foo() String foo);
+    void getFoo(@Parameter @Foo String foo);
+"""
+    }
+
+    void "writes additional parameter annotation with default parameter" () {
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('204') { r -> r.empty () }
+            }
+            e.parameters { ps ->
+                ps.add ('foo', new StringDataType()) { a ->
+                    a.annotation = new AnnotationDataType ('Foo', 'oap', null, [
+                        "": '"bar"'
+                    ])
+                }
+            }
+        }
+
+        when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        then:
+        target.toString () == """\
+    @CoreMapping
+    void getFoo(@Parameter @Foo("bar") String foo);
+"""
+    }
+
+    void "writes additional parameter annotation with named parameter" () {
+        def endpoint = endpoint ("/foo", HttpMethod.GET) {e ->
+            e.responses { rs ->
+                rs.status ('204') { r -> r.empty () }
+            }
+            e.parameters { ps ->
+                ps.add ('foo', new StringDataType()) { a ->
+                    a.annotation = new AnnotationDataType ('Foo', 'oap', null, [
+                        foo: '"bar"',
+                        oof: '"rab"'
+                    ])
+                }
+            }
+        }
+
+        when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        then:
+        target.toString () == """\
+    @CoreMapping
+    void getFoo(@Parameter @Foo(foo = "bar", oof = "rab") String foo);
 """
     }
 

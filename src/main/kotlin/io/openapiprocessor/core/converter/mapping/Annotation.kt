@@ -18,6 +18,10 @@ class Annotation(
     /**
      * all parameters of the annotation (pass through).
      */
-    val parameters: String? = null
+    val parameters: String? = null,
 
+    /**
+     * parameter key/value map
+     */
+    val parametersX: LinkedHashMap<String, String>? = null
 )

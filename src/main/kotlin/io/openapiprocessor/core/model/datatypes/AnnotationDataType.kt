@@ -11,7 +11,8 @@ package io.openapiprocessor.core.model.datatypes
 class AnnotationDataType(
     private val name: String,
     private val pkg: String,
-    private val parameters: String?
+    private val parameters: String?,
+    private val parametersX: LinkedHashMap<String, String>?
 ): DataType {
 
     override fun getName(): String {
@@ -30,4 +31,7 @@ class AnnotationDataType(
         return parameters ?: ""
     }
 
+    fun getParametersX(): LinkedHashMap<String, String>? {
+        return parametersX;
+    }
 }

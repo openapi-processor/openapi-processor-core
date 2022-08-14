@@ -315,7 +315,9 @@ map:
         parameter.mapping.targetTypeName == 'java.lang.String'
         parameter.mapping.genericTypeNames == []
         parameter.annotation.type == 'io.micronaut.http.annotation.RequestAttribute'
-        parameter.annotation.parameters == '(ANY)'
+        parameter.annotation.parameters == null
+        parameter.annotation.parametersX.size () == 1
+        parameter.annotation.parametersX[""] == "ANY"
     }
 
     void "reads endpoint response type mapping" () {
