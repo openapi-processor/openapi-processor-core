@@ -61,7 +61,7 @@ class OptionsConverter(private val checkObsoleteProcessorOptions: Boolean = fals
             }
         }
 
-        if (options.packageName.equals("io.openapiprocessor.generated")) {
+        if (options.packageName == "io.openapiprocessor.generated") {
             log.warn("is 'options.package-name' set in mapping? found default: '{}'.", options.packageName)
         }
 
