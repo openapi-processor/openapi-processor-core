@@ -5,12 +5,13 @@
 
 package io.openapiprocessor.core.writer.java;
 
+import java.io.StringWriter
 import java.io.Writer
 
 class AnnotationWriter {
 
     fun write (target: Writer, annotation: Annotation) {
-        target.write(" @${annotation.typeName}")
+        target.write("@${annotation.typeName}")
 
         val parameters = mutableListOf<String>()
         annotation.parameters.forEach {

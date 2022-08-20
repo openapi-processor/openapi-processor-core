@@ -123,10 +123,15 @@ open class MethodWriter(
         if (parameter.deprecated) {
             target.write("@Deprecated ")
         }
+
         parameterAnnotationWriter.write(target, parameter)
 
         apiOptions.findAnnotations(parameter.dataType.getTypeName()).forEach {
-            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parametersX))
+            target.write(" ")
+            annotationWriter.write(
+                target,
+                Annotation(it.annotation.type, it.annotation.parametersX)
+            )
         }
 
         if (parameter is AdditionalParameter && parameter.annotationDataType != null) {
@@ -152,6 +157,6 @@ open class MethodWriter(
             }
         }
 
-        return target.toString ()
+        return target.toString()
     }
 }
