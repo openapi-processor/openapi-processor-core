@@ -29,3 +29,9 @@ class AnnotationWriter {
         }
     }
 }
+
+fun buildAnnotation(annotation: Annotation): String {
+    val writer = StringWriter()
+    AnnotationWriter().write(writer, annotation)
+    return writer.toString()
+}

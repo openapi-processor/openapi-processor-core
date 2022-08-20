@@ -43,7 +43,7 @@ class BeanValidationInfoSimple(
         get() = annotations.map { it.import }.toSet()
 
     private val annotationValues: List<String>
-        get() = annotations.map { it.annotation }.toList()
+        get() = annotations.map { buildAnnotation(it) }.toList()
 
     private val dataTypeWithAnnotations: String
         get() {
