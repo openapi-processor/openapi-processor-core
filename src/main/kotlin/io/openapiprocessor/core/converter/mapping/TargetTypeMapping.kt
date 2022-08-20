@@ -9,9 +9,7 @@ package io.openapiprocessor.core.converter.mapping
  * provider of target type information.
  */
 interface TargetTypeMapping {
-
     fun getTargetType (): TargetType?
-
 }
 
 /**
