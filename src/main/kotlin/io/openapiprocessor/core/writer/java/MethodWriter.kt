@@ -128,10 +128,7 @@ open class MethodWriter(
 
         apiOptions.findAnnotations(parameter.dataType.getTypeName()).forEach {
             target.write(" ")
-            annotationWriter.write(
-                target,
-                Annotation(it.annotation.type, it.annotation.parametersX)
-            )
+            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parametersX))
         }
 
         if (parameter is AdditionalParameter && parameter.annotationDataType != null) {
