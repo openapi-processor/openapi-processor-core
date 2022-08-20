@@ -7,7 +7,9 @@ package io.openapiprocessor.core.processor.mapping.v2
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.openapiprocessor.core.converter.mapping.AnnotationTypeMapping
 import io.openapiprocessor.core.converter.mapping.NullTypeMapping
 import io.openapiprocessor.core.converter.mapping.TypeMapping
 import io.openapiprocessor.core.processor.MappingConverter
@@ -105,4 +107,26 @@ class MappingConverterSpec: StringSpec({
         `null`.targetTypeName shouldBe "org.openapitools.jackson.nullable.JsonNullable"
     }
 
+    "read additional bean validation annotation" {
+        val yaml = """
+                   |openapi-processor-mapping: v2
+                   |
+                   |options:
+                   |  package-name: io.openapiprocessor.somewhere
+                   | 
+                   |map:
+                   |  types:
+                   |    - type: Foo @ io.openapiprocessor.Annotation
+                   """.trimMargin()
+
+        // when:
+        val mapping = reader.read (yaml)
+        val mappings = converter.convert (mapping)
+
+        // then:
+        val type = mappings.first() as AnnotationTypeMapping
+        type.sourceTypeName shouldBe "Foo"
+        type.sourceTypeFormat.shouldBeNull()
+        type.annotation.type shouldBe "io.openapiprocessor.Annotation"
+    }
 })

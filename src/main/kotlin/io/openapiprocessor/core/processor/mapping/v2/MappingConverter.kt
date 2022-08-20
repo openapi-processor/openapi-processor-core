@@ -7,6 +7,7 @@ package io.openapiprocessor.core.processor.mapping.v2
 
 import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.model.HttpMethod
+import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping.Kind.ANNOTATE
 import io.openapiprocessor.core.processor.mapping.v2.parser.MappingParser
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
@@ -94,12 +95,20 @@ class MappingConverter(val mapping: MappingV2) {
             targetGenericTypes.addAll(source.generics)
         }
 
-        return TypeMapping(
-            mapping.sourceType,
-            mapping.sourceFormat,
-            resolvePackageVariable(mapping.targetType),
-            resolvePackageVariable(targetGenericTypes)
-        )
+        return if (mapping.kind == ANNOTATE) {
+            AnnotationTypeMapping(
+                mapping.sourceType,
+                mapping.sourceFormat,
+                Annotation(mapping.annotationType, null, mapping.annotationParameters)
+            )
+        } else {
+            TypeMapping(
+                mapping.sourceType,
+                mapping.sourceFormat,
+                resolvePackageVariable(mapping.targetType),
+                resolvePackageVariable(targetGenericTypes)
+            )
+        }
     }
 
     private fun convertParameter(source: Parameter): Mapping {
