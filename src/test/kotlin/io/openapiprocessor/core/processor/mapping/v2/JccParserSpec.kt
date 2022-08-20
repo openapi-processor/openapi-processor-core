@@ -130,4 +130,59 @@ class JccParserSpec: StringSpec ({
         mapping.annotationParameters["a"] shouldBe "42"
         mapping.annotationParameters["bb"] shouldBe """"foo""""
     }
+
+    "map source type to fully qualified java target type with annotation & boolean parameter" {
+        val source = """SourceType => io.oap.Annotation(true) io.oap.TargetType"""
+
+        val mapping = MappingParser(source).mapping()
+        mapping.kind shouldBe MAP
+        mapping.sourceType shouldBe "SourceType"
+        mapping.targetType shouldBe "io.oap.TargetType"
+        mapping.targetGenericTypes.shouldBeEmpty()
+        mapping.annotationType shouldBe "io.oap.Annotation"
+        mapping.annotationParameters.size shouldBe 1
+        mapping.annotationParameters[""] shouldBe "true"
+    }
+
+    "map source type to fully qualified java target type with annotation & named boolean parameter" {
+        val source = """SourceType => io.oap.Annotation(value = true) io.oap.TargetType"""
+
+        val mapping = MappingParser(source).mapping()
+        mapping.kind shouldBe MAP
+        mapping.sourceType shouldBe "SourceType"
+        mapping.targetType shouldBe "io.oap.TargetType"
+        mapping.targetGenericTypes.shouldBeEmpty()
+        mapping.annotationType shouldBe "io.oap.Annotation"
+        mapping.annotationParameters.size shouldBe 1
+        mapping.annotationParameters["value"] shouldBe "true"
+    }
+
+    // the parser does not detect exact number format
+    val anyNumber = "0b0B_0x0X_0123456789_abcdef_ABCDEF_fFlL_."
+
+    "map source type to fully qualified java target type with annotation & number parameter" {
+        val source = """SourceType => io.oap.Annotation($anyNumber) io.oap.TargetType"""
+
+        val mapping = MappingParser(source).mapping()
+        mapping.kind shouldBe MAP
+        mapping.sourceType shouldBe "SourceType"
+        mapping.targetType shouldBe "io.oap.TargetType"
+        mapping.targetGenericTypes.shouldBeEmpty()
+        mapping.annotationType shouldBe "io.oap.Annotation"
+        mapping.annotationParameters.size shouldBe 1
+        mapping.annotationParameters[""] shouldBe anyNumber
+    }
+
+    "map source type to fully qualified java target type with annotation & named number parameter" {
+        val source = """SourceType => io.oap.Annotation(value = $anyNumber) io.oap.TargetType"""
+
+        val mapping = MappingParser(source).mapping()
+        mapping.kind shouldBe MAP
+        mapping.sourceType shouldBe "SourceType"
+        mapping.targetType shouldBe "io.oap.TargetType"
+        mapping.targetGenericTypes.shouldBeEmpty()
+        mapping.annotationType shouldBe "io.oap.Annotation"
+        mapping.annotationParameters.size shouldBe 1
+        mapping.annotationParameters["value"] shouldBe anyNumber
+    }
 })

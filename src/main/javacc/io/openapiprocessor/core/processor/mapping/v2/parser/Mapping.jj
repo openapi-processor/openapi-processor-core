@@ -71,19 +71,28 @@ SKIP: {
 }
 
 TOKEN: {
-      < NUMBER: ["0"-"9"] (["0"-"9"])* >
+      < ARROW: "=>" >
+    | < ANNOTATE: "@" >
+
+    | < PARENTHESIS_OPEN: "(">
+    | < PARENTHESIS_CLOSE: ")">
+
     | < PLAIN: "plain" >
+    | < BOOLEAN: "true" | "false" >
+
     | < IDENTIFIER: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "0"-"9"] )* >
     | < QUALIFIED_TYPE: (<IDENTIFIER> | "{package-name}") ("." <IDENTIFIER>)* >
+
     | < FORMAT: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "-", "0"-"9"] )* >
     | < MIME_TYPE: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "-", ".", "0"-"9"] )* >
     | < MIME_SUBTYPE: ["a"-"z", "A"-"Z", "_"] ( ["a"-"z", "A"-"Z", "_", "-", ".", "0"-"9"] )* >
     | < CONTENT_TYPE: <MIME_TYPE> "/" <MIME_SUBTYPE> >
-    | < PARENTHESIS_OPEN: "(">
-    | < PARENTHESIS_CLOSE: ")">
-    | < ARROW: "=>" >
-    | < ANNOTATE: "@" >
-    | < STRING: "\"" ( ~["\"", "\\"] | "\\" ["t", "\\", "\""] )* "\"" >
+
+    // parameter: string
+    | < STRING: "\"" ( ~["\"", "\\"] | "\\" ["\t", "\\", "\""] )* "\"" >
+
+    // parameter: "any" number format, just used to parse the parameters list tokens
+    | < NUMBER: (["a"-"f", "A"-"F", "l", "L", "x", "X", "0"-"9", ".", "_"])+ >
 }
 
 
@@ -179,8 +188,9 @@ void annotationParameterUnnamed(): {
     StringBuilder s = new StringBuilder();
 } {
     <IDENTIFIER> { annotationParameters.put ("", token.image); }
-  | <NUMBER> { annotationParameters.put ("", token.image); }
+  | <BOOLEAN> { annotationParameters.put ("", token.image); }
   | <STRING> { annotationParameters.put ("", token.image); }
+  | <NUMBER> { annotationParameters.put ("", token.image); }
 }
 
 void annotationParameterNamed(): {
@@ -190,8 +200,9 @@ void annotationParameterNamed(): {
 } {
     name = <IDENTIFIER> "=" (
         value = <IDENTIFIER> { annotationParameters.put (name.image, value.image); }
-      | value = <NUMBER> { annotationParameters.put (name.image, value.image); }
+      | value = <BOOLEAN> { annotationParameters.put (name.image, value.image); }
       | value = <STRING> { annotationParameters.put (name.image, value.image); }
+      | value = <NUMBER> { annotationParameters.put (name.image, token.image); }
    )
 }
 
