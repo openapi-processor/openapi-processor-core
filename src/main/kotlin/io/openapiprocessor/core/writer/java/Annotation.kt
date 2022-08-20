@@ -20,18 +20,4 @@ class Annotation(
         }
 
     val import = qualifiedName
-
-    @Deprecated("use AnnotationWriter")
-    val annotation: String
-        get() {
-            var result = "@" + qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1)
-            if (parameters.isNotEmpty()) {
-                result += "("
-                result += parameters
-                    .map { e -> "${e.key} = ${e.value}"}
-                    .joinToString(", ")
-                result += ")"
-            }
-            return result
-        }
 }

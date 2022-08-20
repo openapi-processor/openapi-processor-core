@@ -17,10 +17,12 @@ import io.openapiprocessor.core.model.datatypes.IntegerDataType
 import io.openapiprocessor.core.model.datatypes.LongDataType
 import io.openapiprocessor.core.model.datatypes.StringDataType
 import io.openapiprocessor.core.support.datatypes.ObjectDataType
+import io.openapiprocessor.core.writer.java.AnnotationWriterKt
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static io.openapiprocessor.core.writer.java.AnnotationWriterKt.buildAnnotation
 import static io.openapiprocessor.core.writer.java.BeanValidation.DECIMAL_MAX
 import static io.openapiprocessor.core.writer.java.BeanValidation.DECIMAL_MIN
 import static io.openapiprocessor.core.writer.java.BeanValidation.NOT_NULL
@@ -74,7 +76,7 @@ class BeanValidationFactorySpec extends Specification {
 
         then:
         info.annotations.collect {it.import }.containsAll (resultImports)
-        info.annotations.collect {it.annotation}.containsAll (resultAnnotations)
+        info.annotations.collect { buildAnnotation (it)}.containsAll (resultAnnotations)
 
         where:
         // minLength defaults to 0 if not set
@@ -101,7 +103,7 @@ class BeanValidationFactorySpec extends Specification {
 
         then:
         info.annotations.collect {it.import }.containsAll (resultImports)
-        info.annotations.collect {it.annotation}.containsAll (resultAnnotations)
+        info.annotations.collect {buildAnnotation (it)}.containsAll (resultAnnotations)
 
         where:
         // minItems defaults to 0 if not set
@@ -133,7 +135,7 @@ class BeanValidationFactorySpec extends Specification {
 
         then:
         info.annotations.collect {it.import }.containsAll (resultImports)
-        info.annotations.collect {it.annotation}.containsAll (resultAnnotations)
+        info.annotations.collect {buildAnnotation (it)}.containsAll (resultAnnotations)
 
         where:
         // minItems defaults to 0 if not set
@@ -155,7 +157,7 @@ class BeanValidationFactorySpec extends Specification {
 
         then:
         info.annotations.collect {it.import }.containsAll (resultImports)
-        info.annotations.collect {it.annotation}.containsAll (resultAnnotations)
+        info.annotations.collect {buildAnnotation (it)}.containsAll (resultAnnotations)
 
         where:
         type                     | required || resultImports       | resultAnnotations
@@ -181,7 +183,7 @@ class BeanValidationFactorySpec extends Specification {
 
         then:
         info.annotations.collect {it.import }.containsAll (resultImports)
-        info.annotations.collect {it.annotation}.containsAll (resultAnnotations)
+        info.annotations.collect {buildAnnotation (it)}.containsAll (resultAnnotations)
 
         where:
         // exclusiveMinimum defaults to false if not set
@@ -219,7 +221,7 @@ class BeanValidationFactorySpec extends Specification {
 
         then:
         info.annotations.collect {it.import }.containsAll (resultImports)
-        info.annotations.collect {it.annotation}.containsAll (resultAnnotations)
+        info.annotations.collect {buildAnnotation (it)}.containsAll (resultAnnotations)
 
         where:
         // exclusiveMaximum defaults to false if not set
@@ -258,7 +260,7 @@ class BeanValidationFactorySpec extends Specification {
 
         then:
         info.annotations.collect {it.import }.containsAll (resultImports)
-        info.annotations.collect {it.annotation}.containsAll (resultAnnotations)
+        info.annotations.collect {buildAnnotation (it)}.containsAll (resultAnnotations)
 
         where:
         minimum | exclusiveMinimum | maximum | exclusiveMaximum || resultImports                                | resultAnnotations

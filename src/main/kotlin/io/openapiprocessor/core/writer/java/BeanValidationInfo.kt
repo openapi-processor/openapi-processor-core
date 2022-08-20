@@ -48,7 +48,7 @@ class BeanValidationInfoSimple(
     private val dataTypeWithAnnotations: String
         get() {
             val dt = mutableListOf<String>()
-            dt.addAll(annotations.map { it.annotation })
+            dt.addAll(annotations.map { buildAnnotation(it) })
             dt.add(dataType.getTypeName())
             return dt.joinToString(" ")
         }
@@ -150,11 +150,11 @@ class BeanValidationInfoCollection(
         get() = annotations.map { it.import }.toSet()
 
     private val annotationValues: List<String>
-        get() = annotations.map { it.annotation }.toList()
+        get() = annotations.map { buildAnnotation(it) }.toList()
 
     private val itemAnnotationImports: Set<String>
         get() = item.annotations.map { it.import }.toSet()
 
     private val itemAnnotationValues: List<String>
-        get() = item.annotations.map { it.annotation }.toList()
+        get() = item.annotations.map { buildAnnotation(it) }.toList()
 }
