@@ -6,14 +6,25 @@
 package io.openapiprocessor.core.writer.java
 
 class Annotation(
-    private val typeName: String,
-    private val parameters: LinkedHashMap<String, String> = linkedMapOf()
+    val qualifiedName: String,
+    val parameters: LinkedHashMap<String, String> = linkedMapOf()
 ) {
-    val import = typeName
+    val typeName: String
+        get() {
+            return qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1)
+        }
 
+    val packageName: String
+        get() {
+            return qualifiedName.substring(0, qualifiedName.lastIndexOf('.') + 1)
+        }
+
+    val import = qualifiedName
+
+    @Deprecated("use AnnotationWriter")
     val annotation: String
         get() {
-            var result = "@" + typeName.substring(typeName.lastIndexOf('.') + 1)
+            var result = "@" + qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1)
             if (parameters.isNotEmpty()) {
                 result += "("
                 result += parameters

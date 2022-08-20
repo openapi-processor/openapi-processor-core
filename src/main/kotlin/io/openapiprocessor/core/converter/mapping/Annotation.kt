@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2020 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -17,11 +17,13 @@ class Annotation(
 
     /**
      * all parameters of the annotation (pass through).
+     * todo: remove, replace with parameterX
      */
+    @Deprecated("replace with parameters")
     val parameters: String? = null,
 
     /**
      * parameter key/value map
      */
-    val parametersX: LinkedHashMap<String, String>? = null
+    val parametersX: LinkedHashMap<String, String> = linkedMapOf()
 )

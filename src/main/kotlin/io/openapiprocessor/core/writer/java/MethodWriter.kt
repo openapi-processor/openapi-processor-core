@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.findAnnotations
 import io.openapiprocessor.core.converter.resultStyle
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
@@ -27,6 +28,7 @@ open class MethodWriter(
     private val beanValidationFactory: BeanValidationFactory,
     private val javadocWriter: JavaDocWriter = JavaDocWriter()
 ) {
+    private val annotationWriter = AnnotationWriter()
 
     fun write(target: Writer, endpoint: Endpoint, endpointResponse: EndpointResponse) {
         if (apiOptions.javadoc) {
@@ -117,14 +119,18 @@ open class MethodWriter(
     }
 
     private fun createParameterAnnotation(parameter: Parameter): String {
-        val annotation = StringWriter()
+        val target = StringWriter()
         if (parameter.deprecated) {
-            annotation.write("@Deprecated ")
+            target.write("@Deprecated ")
         }
-        parameterAnnotationWriter.write(annotation, parameter)
+        parameterAnnotationWriter.write(target, parameter)
+
+        apiOptions.findAnnotations(parameter.dataType.getTypeName()).forEach {
+            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parametersX))
+        }
 
         if (parameter is AdditionalParameter && parameter.annotationDataType != null) {
-            annotation.write(" @${parameter.annotationDataType.getName()}")
+            target.write(" @${parameter.annotationDataType.getName()}")
 
             val parametersX = parameter.annotationDataType.getParametersX()
             if (parametersX != null) {
@@ -139,13 +145,13 @@ open class MethodWriter(
                 }
 
                 if (parameters.isNotEmpty()) {
-                    annotation.write("(")
-                    annotation.write(parameters.joinToString(", "))
-                    annotation.write(")")
+                    target.write("(")
+                    target.write(parameters.joinToString(", "))
+                    target.write(")")
                 }
             }
         }
 
-        return annotation.toString ()
+        return target.toString ()
     }
 }
