@@ -8,7 +8,7 @@ package io.openapiprocessor.core.processor.mapping.v2
 import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping.Kind.ANNOTATE
-import io.openapiprocessor.core.processor.mapping.v2.parser.MappingParser
+import io.openapiprocessor.core.processor.mapping.v2.parser.jcc.MappingParser
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
 /**

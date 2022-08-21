@@ -11,7 +11,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import io.openapiprocessor.core.processor.mapping.v2.parser.MappingParser
+import io.openapiprocessor.core.processor.mapping.v2.parser.jcc.MappingParser
 import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping.Kind.MAP
 import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping.Kind.TYPE
 

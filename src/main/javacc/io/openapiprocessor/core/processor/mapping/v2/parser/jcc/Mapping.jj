@@ -8,8 +8,9 @@ options {
 }
 
 PARSER_BEGIN(MappingParser)
-package io.openapiprocessor.core.processor.mapping.v2.parser;
+package io.openapiprocessor.core.processor.mapping.v2.parser.jcc;
 
+import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
