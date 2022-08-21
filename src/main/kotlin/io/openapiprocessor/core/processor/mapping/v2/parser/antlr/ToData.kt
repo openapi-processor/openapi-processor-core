@@ -3,7 +3,7 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-package io.openapiprocessor.core.processor.mapping.v2.parser
+package io.openapiprocessor.core.processor.mapping.v2.parser.antlr
 
 /**
  * extracted data from parser

@@ -41,8 +41,9 @@ java {
 }
 
 tasks.named('generateGrammarSource') {
-    arguments += ['-package', 'io.openapiprocessor.core.processor.mapping.v2.parser']
-    outputDirectory = new File("$buildDir/antlr/io/openapiprocessor/core/processor/mapping/v2/parser".toString())
+    def antlrPkg = 'io.openapiprocessor.core.processor.mapping.v2.parser.antlr'
+    arguments += ['-package', antlrPkg]
+    outputDirectory = new File("$buildDir/antlr/${antlrPkg.replace ('.', '/')}".toString())
 }
 
 tasks.named('compileTestGroovy') {

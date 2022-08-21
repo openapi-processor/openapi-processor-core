@@ -5,6 +5,11 @@
 
 package io.openapiprocessor.core.processor.mapping.v2.parser
 
+import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.ToErrorListener
+import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.ToException
+import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.ToExtractor
+import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.ToLexer
+import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.ToParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.tree.ParseTreeWalker

@@ -3,7 +3,7 @@
  * PDX-License-Identifier: Apache-2.0
  */
 
-package io.openapiprocessor.core.processor.mapping.v2.parser
+package io.openapiprocessor.core.processor.mapping.v2.parser.antlr
 
 import org.antlr.v4.runtime.RecognitionException
 import org.antlr.v4.runtime.misc.ParseCancellationException
