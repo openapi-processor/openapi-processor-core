@@ -20,18 +20,5 @@ fun parseMapping(type: String): Mapping {
     val ctx = parser.mapping()
     val extractor = MappingExtractor()
     ParseTreeWalker().walk(extractor, ctx)
-    return extractor//.mapping
-}
-
-/**
- * parse "to" grammar
- */
-private fun parseTo(type: String): ToData {
-    val lexer = ToLexer(CharStreams.fromString(type))
-    val tokens = CommonTokenStream(lexer)
-    val parser = ToParser(tokens)
-    val ctx = parser.to()
-    val extractor = ToExtractor()
-    ParseTreeWalker().walk(extractor, ctx)
-    return extractor.getTarget()
+    return extractor
 }
