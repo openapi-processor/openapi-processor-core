@@ -48,12 +48,16 @@ class MappingExtractor: MappingBaseListener(), Mapping {
         kind = Mapping.Kind.MAP
     }
 
-    override fun enterContent(ctx: MappingParser.ContentContext?) {
+    override fun enterContent(ctx: MappingParser.ContentContext) {
         kind = Mapping.Kind.MAP
     }
 
-    override fun enterAnnotate(ctx: MappingParser.AnnotateContext?) {
+    override fun enterAnnotate(ctx: MappingParser.AnnotateContext) {
         kind = Mapping.Kind.ANNOTATE
+    }
+
+    override fun enterPlainType(ctx: MappingParser.PlainTypeContext) {
+        targetType = ctx.text
     }
 
     override fun enterSourceIdentifier(ctx: MappingParser.SourceIdentifierContext) {

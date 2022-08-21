@@ -11,7 +11,7 @@ mapping
     ;
 
 type
-    : Plain | targetType
+    : plainType | targetType
     ;
 
 map
@@ -24,6 +24,10 @@ content
 
 annotate
     : sourceType Annotate annotationType
+    ;
+
+plainType
+    : Plain
     ;
 
 sourceType
@@ -104,6 +108,15 @@ QualifiedType
     : (Identifier | Package) ('.' Identifier)*
     ;
 
+
+Format
+    : FormatLetter FormatLetterOrDigit*
+    ;
+
+String
+    : DoubleQuote ( ~["\\] | '\\' [\t\\"] )* DoubleQuote
+    ;
+
 MimeType
     : [a-zA-Z_] ([a-zA-Z0-9\\._-])*
     ;
@@ -114,14 +127,6 @@ MimeSubType
 
 ContentType
     : MimeType '/' MimeSubType
-    ;
-
-Format
-    : FormatLetter FormatLetterOrDigit*
-    ;
-
-String
-    : DoubleQuote ( ~["\\] | '\\' [\t\\"] )* DoubleQuote
     ;
 
 // "any" number format (we only want to split the parameters list)
