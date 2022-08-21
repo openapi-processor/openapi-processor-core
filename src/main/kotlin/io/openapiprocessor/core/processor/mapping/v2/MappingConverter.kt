@@ -8,7 +8,7 @@ package io.openapiprocessor.core.processor.mapping.v2
 import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping.Kind.ANNOTATE
-import io.openapiprocessor.core.processor.mapping.v2.parser.jcc.MappingParser
+import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.parseMapping
 import io.openapiprocessor.core.processor.mapping.v2.Mapping as MappingV2
 
 /**
@@ -65,7 +65,7 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun convertResult (result: String): Mapping {
-        val mapping = MappingParser(result).mappingType()
+        val mapping = parseMapping(result)
         return ResultTypeMapping(resolvePackageVariable(mapping.targetType))
     }
 
@@ -83,12 +83,12 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun convertType (from: String, to: String): Mapping {
-        val mapping = MappingParser(to).mappingType()
+        val mapping = parseMapping(to)
         return TypeMapping(from, resolvePackageVariable(mapping.targetType))
     }
 
     private fun convertType(source: Type): Mapping {
-        val mapping = MappingParser(source.type).mapping()
+        val mapping = parseMapping(source.type)
 
         val targetGenericTypes = mapping.targetGenericTypes
         if (targetGenericTypes.isEmpty() && source.generics != null) {
@@ -126,7 +126,7 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun createParameterTypeMapping(source: RequestParameter): ParameterTypeMapping {
-        val mapping = MappingParser(source.name).mapping()
+        val mapping = parseMapping(source.name)
 
         val targetGenericTypes = mapping.targetGenericTypes
         if (targetGenericTypes.isEmpty() && source.generics != null) {
@@ -144,7 +144,7 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun createAddParameterTypeMapping(source: AdditionalParameter): AddParameterTypeMapping {
-        val mapping = MappingParser(source.add).mapping()
+        val mapping = parseMapping(source.add)
 
         val targetGenericTypes = mapping.targetGenericTypes
         if (targetGenericTypes.isEmpty() && source.generics != null) {
@@ -168,7 +168,7 @@ class MappingConverter(val mapping: MappingV2) {
     }
 
     private fun convertResponse(source: Response): Mapping {
-        val mapping = MappingParser(source.content).mappingContentType()
+        val mapping = parseMapping(source.content)
 
         val targetGenericTypes = mapping.targetGenericTypes
         if (targetGenericTypes.isEmpty() && source.generics != null) {
@@ -290,8 +290,6 @@ class MappingConverter(val mapping: MappingV2) {
 
         return EndpointTypeMapping(path, method, result, source.exclude)
     }
-
-    private data class MappingTypes(val result: String, val format: String)
 
     private fun resolvePackageVariable(source: List<String>): List<String> {
         return source.map {
