@@ -5,12 +5,15 @@
 
 package io.openapiprocessor.core.processor.mapping.v2
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.maps.shouldBeEmpty
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldStartWith
 import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping
+import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.MappingException
 import io.openapiprocessor.core.processor.mapping.v2.parser.antlr.parseMapping
 
 
@@ -204,5 +207,15 @@ class AntlrParserSpec: StringSpec({
         mapping.targetGenericTypes.shouldBeEmpty()
         mapping.annotationType shouldBe "io.oap.Annotation"
         mapping.annotationParameters.shouldBeEmpty()
+    }
+
+    "reports parsing error" {
+        val source = """SourceType =X io.oap.TargetType"""
+
+        val ex = shouldThrow<MappingException> {
+            parseMapping(source)
+        }
+
+        ex.message shouldStartWith "failed to parse mapping:"
     }
 })

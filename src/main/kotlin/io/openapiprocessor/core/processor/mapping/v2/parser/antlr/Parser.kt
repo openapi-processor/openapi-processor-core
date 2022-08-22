@@ -13,12 +13,17 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker
 /**
  * parse "mapping" grammar
  */
-fun parseMapping(type: String): Mapping {
-    val lexer = MappingLexer(CharStreams.fromString(type))
-    val tokens = CommonTokenStream(lexer)
-    val parser = MappingParser(tokens)
-    val ctx = parser.mapping()
-    val extractor = MappingExtractor()
-    ParseTreeWalker().walk(extractor, ctx)
-    return extractor
+fun parseMapping(mapping: String): Mapping {
+    try {
+        val lexer = MappingLexer(CharStreams.fromString(mapping))
+        val tokens = CommonTokenStream(lexer)
+        val parser = MappingParser(tokens)
+        parser.addErrorListener(MappingErrorListener())
+        val ctx = parser.mapping()
+        val extractor = MappingExtractor()
+        ParseTreeWalker().walk(extractor, ctx)
+        return extractor
+    } catch (e: MappingParserException) {
+        throw MappingException(mapping, e)
+    }
 }
