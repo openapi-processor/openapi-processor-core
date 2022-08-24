@@ -7,6 +7,7 @@ package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.findAnnotations
 import io.openapiprocessor.core.converter.resultStyle
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
@@ -94,9 +95,14 @@ class InterfaceWriter(
             imports.addAll(parameter.annotationDataType.getImports())
         }
 
+        apiOptions.findAnnotations(parameter.dataType.getTypeName()).forEach {
+            imports.add(it.annotation.type)
+        }
+
         imports.addAll(parameter.dataTypeImports)
     }
 
+    // annotation import???
     private fun addImports(body: RequestBody, imports: MutableSet<String>) {
         imports.add(annotations.getAnnotation(body).fullyQualifiedName)
         imports.addAll(body.dataTypeImports)
