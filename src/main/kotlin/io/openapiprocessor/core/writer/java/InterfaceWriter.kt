@@ -102,18 +102,6 @@ class InterfaceWriter(
         imports.addAll(parameter.dataTypeImports)
     }
 
-    // annotation import???
-    private fun addImports(body: RequestBody, imports: MutableSet<String>) {
-        imports.add(annotations.getAnnotation(body).fullyQualifiedName)
-        imports.addAll(body.dataTypeImports)
-
-        if (apiOptions.beanValidation) {
-            val info = validationAnnotations.validate(body.dataType, body.required)
-            val io = info.inout
-            imports.addAll(io.imports)
-        }
-    }
-
     private fun addImports(response: EndpointResponse, imports: MutableSet<String>) {
         val responseImports: MutableSet<String> = response.getResponseImports(
                     apiOptions.resultStyle).toMutableSet()
