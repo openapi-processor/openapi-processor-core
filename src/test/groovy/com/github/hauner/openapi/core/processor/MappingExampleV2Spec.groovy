@@ -47,6 +47,7 @@ map:
 
   types:
     - type: array => java.util.Collection
+    - type: Foo @ fully.qualified.Annotation
 
     - type: Schema => java.util.Map
       generics:
@@ -54,8 +55,9 @@ map:
         - java.lang.Double
 
   parameters:
+    - type: Foo @ fully.qualified.Annotation 
     - name: foo => java.util.List
-    - name: bar => com.github.hauner.openapi.Bar  
+    - name: bar => com.github.hauner.openapi.Bar
 
   responses:
     - content: application/vnd.something => java.util.List
@@ -72,8 +74,10 @@ map:
 
       types:
         - type: Schema => java.util.Collection
-
+        - type: Foo @ fully.qualified.Annotation
+    
       parameters:
+        - type: Foo @ fully.qualified.Annotation 
         - name: foo => java.util.List
         - add: bar => java.util.Set
 

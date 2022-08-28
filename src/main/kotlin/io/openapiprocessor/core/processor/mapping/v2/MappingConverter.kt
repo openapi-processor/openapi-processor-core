@@ -120,7 +120,12 @@ class MappingConverter(val mapping: MappingV2) {
                 createAddParameterTypeMapping(source)
             }
             is Type -> {
-                convertType(source)
+                when (val mapping = convertType(source)) {
+                    is AnnotationTypeMapping -> ParameterAnnotationTypeMapping(mapping)
+                    else -> {
+                        throw Exception("invalid parameter mapping $source")
+                    }
+                }
             }
             else -> {
                 throw Exception("unknown parameter mapping $source")

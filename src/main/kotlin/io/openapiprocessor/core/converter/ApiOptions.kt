@@ -5,9 +5,7 @@
 
 package io.openapiprocessor.core.converter
 
-import io.openapiprocessor.core.converter.mapping.AnnotationTypeMapping
-import io.openapiprocessor.core.converter.mapping.Mapping
-import io.openapiprocessor.core.converter.mapping.ResultStyleOptionMapping
+import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.processor.mapping.v2.ResultStyle
 import io.openapiprocessor.core.support.Empty
 
@@ -99,14 +97,3 @@ val ApiOptions.resultStyle: ResultStyle
 
         return matches.first().value
     }
-
-/**
- * get (global) annotation type mappings.
- */
-fun ApiOptions.findAnnotations(typeName: String): List<AnnotationTypeMapping> {
-    return typeMappings
-        .filterIsInstance(AnnotationTypeMapping::class.java)
-        .filter {
-            it.sourceTypeName == typeName
-        }
-}

@@ -7,12 +7,11 @@ package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.converter.findAnnotations
+import io.openapiprocessor.core.converter.MappingFinder
 import io.openapiprocessor.core.converter.resultStyle
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
 import io.openapiprocessor.core.model.Interface
-import io.openapiprocessor.core.model.RequestBody
 import io.openapiprocessor.core.model.parameters.AdditionalParameter
 import io.openapiprocessor.core.model.parameters.Parameter
 import java.io.Writer
@@ -28,9 +27,7 @@ class InterfaceWriter(
     private val annotations: FrameworkAnnotations,
     private val validationAnnotations: BeanValidationFactory = BeanValidationFactory(),
     private val importFilter: ImportFilter = DefaultImportFilter()
-
 ) {
-
     fun write(target: Writer, itf: Interface) {
         headerWriter.write (target)
         target.write ("package ${itf.getPackageName()};\n\n")
@@ -64,11 +61,11 @@ class InterfaceWriter(
             }
 
             ep.parameters.forEach { p ->
-                addImports(p, imports)
+                addImports(ep, p, imports)
             }
 
             ep.requestBodies.forEach { b ->
-                addImports(b, imports)
+                addImports(ep, b, imports)
             }
 
             ep.endpointResponses.forEach { r ->
@@ -81,7 +78,7 @@ class InterfaceWriter(
             .sorted ()
     }
 
-    private fun addImports(parameter: Parameter, imports: MutableSet<String>) {
+    private fun addImports(endpoint: Endpoint, parameter: Parameter, imports: MutableSet<String>) {
         if (apiOptions.beanValidation) {
             val info = validationAnnotations.validate(parameter.dataType, parameter.required)
             imports.addAll(info.inout.imports)
@@ -95,7 +92,10 @@ class InterfaceWriter(
             imports.addAll(parameter.annotationDataType.getImports())
         }
 
-        apiOptions.findAnnotations(parameter.dataType.getTypeName()).forEach {
+        val annotationTypeMappings = MappingFinder(apiOptions.typeMappings).findParameterAnnotations(
+            endpoint.path, endpoint.method, parameter.dataType.getTypeName())
+
+        annotationTypeMappings.forEach {
             imports.add(it.annotation.type)
         }
 

@@ -15,6 +15,7 @@ import io.openapiprocessor.core.builder.api.`interface`
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.Annotation
 import io.openapiprocessor.core.converter.mapping.AnnotationTypeMapping
+import io.openapiprocessor.core.converter.mapping.ParameterAnnotationTypeMapping
 import io.openapiprocessor.core.extractBody
 import io.openapiprocessor.core.extractImports
 import io.openapiprocessor.core.framework.FrameworkAnnotation
@@ -207,9 +208,10 @@ class InterfaceWriterSpec: StringSpec({
 
     "writes additional annotation mapping import" {
         options.typeMappings = listOf(
-            AnnotationTypeMapping("Foo", annotation = Annotation(
-                "io.openapiprocessor.Bar")
-            ))
+            ParameterAnnotationTypeMapping(
+                AnnotationTypeMapping("Foo", annotation = Annotation(
+                    "io.openapiprocessor.Bar")
+            )))
 
         val itf = `interface` {
             endpoint("/foo") {

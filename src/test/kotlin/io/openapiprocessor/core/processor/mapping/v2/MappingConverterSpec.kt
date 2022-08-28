@@ -9,10 +9,7 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import io.openapiprocessor.core.converter.mapping.AnnotationTypeMapping
-import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
-import io.openapiprocessor.core.converter.mapping.NullTypeMapping
-import io.openapiprocessor.core.converter.mapping.TypeMapping
+import io.openapiprocessor.core.converter.mapping.*
 import io.openapiprocessor.core.processor.MappingConverter
 import io.openapiprocessor.core.processor.MappingReader
 
@@ -126,7 +123,7 @@ class MappingConverterSpec: StringSpec({
 
         // then:
         mappings.size.shouldBe(1)
-        val annotation = mappings.first() as AnnotationTypeMapping
+        val annotation = mappings.first() as ParameterAnnotationTypeMapping
         annotation.sourceTypeName shouldBe "Foo"
         annotation.sourceTypeFormat.shouldBeNull()
         annotation.annotation.type shouldBe "io.openapiprocessor.Annotation"
@@ -154,7 +151,7 @@ class MappingConverterSpec: StringSpec({
         mappings.size.shouldBe(1)
         val ep = mappings[0] as EndpointTypeMapping
 
-        val annotation = ep.typeMappings.first() as AnnotationTypeMapping
+        val annotation = ep.typeMappings.first() as ParameterAnnotationTypeMapping
         annotation.sourceTypeName shouldBe "Foo"
         annotation.sourceTypeFormat.shouldBeNull()
         annotation.annotation.type shouldBe "io.openapiprocessor.Annotation"
@@ -183,7 +180,7 @@ class MappingConverterSpec: StringSpec({
         mappings.size.shouldBe(2)
         val ep = mappings[1] as EndpointTypeMapping
 
-        val annotation = ep.typeMappings.first() as AnnotationTypeMapping
+        val annotation = ep.typeMappings.first() as ParameterAnnotationTypeMapping
         annotation.sourceTypeName shouldBe "Foo"
         annotation.sourceTypeFormat.shouldBeNull()
         annotation.annotation.type shouldBe "io.openapiprocessor.Annotation"

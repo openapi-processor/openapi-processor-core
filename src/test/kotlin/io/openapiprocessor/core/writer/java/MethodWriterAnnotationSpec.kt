@@ -12,6 +12,8 @@ import io.openapiprocessor.core.builder.api.endpoint
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.Annotation
 import io.openapiprocessor.core.converter.mapping.AnnotationTypeMapping
+import io.openapiprocessor.core.converter.mapping.EndpointTypeMapping
+import io.openapiprocessor.core.converter.mapping.ParameterAnnotationTypeMapping
 import io.openapiprocessor.core.model.datatypes.DataTypeName
 import io.openapiprocessor.core.model.datatypes.ObjectDataType
 import io.openapiprocessor.core.model.parameters.ParameterBase
@@ -34,11 +36,13 @@ class MethodWriterAnnotationSpec: StringSpec ({
     val target = StringWriter()
 
 
-    "writes additional parameter annotation from type mapping" {
+    "writes additional parameter annotation from annotation mapping" {
         apiOptions.typeMappings = listOf(
-            AnnotationTypeMapping("Foo", annotation = Annotation(
-                "io.openapiprocessor.Bar", parametersX = linkedMapOf("bar" to "rab")
-            ))
+            ParameterAnnotationTypeMapping(
+                AnnotationTypeMapping("Foo", annotation = Annotation(
+                    "io.openapiprocessor.Bar", parametersX = linkedMapOf("bar" to "rab"))
+                )
+            )
         )
 
         val endpoint = endpoint("/foo") {
@@ -65,4 +69,39 @@ class MethodWriterAnnotationSpec: StringSpec ({
             """.trimMargin()
     }
 
+    "writes additional parameter annotation from path annotation mapping" {
+        apiOptions.typeMappings = listOf(
+            EndpointTypeMapping(
+                "/foo", null, listOf(
+                    ParameterAnnotationTypeMapping(
+                        AnnotationTypeMapping("Foo", annotation = Annotation(
+                            "io.openapiprocessor.Bar", parametersX = linkedMapOf("bar" to "rab"))
+                        )
+                    )
+                )
+            ))
+
+        val endpoint = endpoint("/foo") {
+            parameters {
+                any(object : ParameterBase("foo", ObjectDataType(
+                    DataTypeName("Foo"), "pkg"), true) {})
+            }
+            responses {
+                status("204") {
+                    response()
+                }
+            }
+        }
+
+        // when:
+        writer.write (target, endpoint, endpoint.endpointResponses.first ())
+
+        // then:
+        target.toString () shouldBe
+            """    
+            |    @CoreMapping
+            |    void getFoo(@Parameter @Bar(bar = rab) Foo foo);
+            |
+            """.trimMargin()
+    }
 })

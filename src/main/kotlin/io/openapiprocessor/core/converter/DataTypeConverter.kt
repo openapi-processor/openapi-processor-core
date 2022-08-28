@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.converter
 
 import io.openapiprocessor.core.converter.mapping.*
+import io.openapiprocessor.core.converter.mapping.MappingFinder
 import io.openapiprocessor.core.converter.wrapper.NullDataTypeWrapper
 import io.openapiprocessor.core.model.DataTypeCollector
 import io.openapiprocessor.core.model.DataTypes

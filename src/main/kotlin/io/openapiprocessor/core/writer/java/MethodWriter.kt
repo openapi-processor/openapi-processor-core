@@ -6,7 +6,7 @@
 package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
-import io.openapiprocessor.core.converter.findAnnotations
+import io.openapiprocessor.core.converter.MappingFinder
 import io.openapiprocessor.core.converter.resultStyle
 import io.openapiprocessor.core.model.Endpoint
 import io.openapiprocessor.core.model.EndpointResponse
@@ -98,7 +98,7 @@ open class MethodWriter(
                 it.dataType.getTypeName()
             }
 
-             "${createParameterAnnotation(it)} $dataTypeValue ${toCamelCase (it.name)}".trim()
+             "${createParameterAnnotation(endpoint, it)} $dataTypeValue ${toCamelCase (it.name)}".trim()
         }.toMutableList()
 
         if (endpoint.requestBodies.isNotEmpty()) {
@@ -111,14 +111,14 @@ open class MethodWriter(
                 body.dataType.getTypeName()
             }
 
-            val param = "${createParameterAnnotation(body)} $dataTypeValue ${body.name}"
+            val param = "${createParameterAnnotation(endpoint, body)} $dataTypeValue ${body.name}"
             ps.add (param.trim())
         }
 
         return ps.joinToString (", ")
     }
 
-    private fun createParameterAnnotation(parameter: Parameter): String {
+    private fun createParameterAnnotation(endpoint: Endpoint, parameter: Parameter): String {
         val target = StringWriter()
         if (parameter.deprecated) {
             target.write("@Deprecated ")
@@ -126,7 +126,10 @@ open class MethodWriter(
 
         parameterAnnotationWriter.write(target, parameter)
 
-        apiOptions.findAnnotations(parameter.dataType.getTypeName()).forEach {
+        val annotationTypeMappings = MappingFinder(apiOptions.typeMappings)
+            .findParameterAnnotations(endpoint.path, endpoint.method, parameter.dataType.getTypeName())
+
+        annotationTypeMappings.forEach {
             target.write(" ")
             annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parametersX))
         }

@@ -6,19 +6,9 @@
 package io.openapiprocessor.core.converter.mapping
 
 /**
- * Common interface for type mappings.
+ * marker interface for type mappings.
+ *
+ * todo remove [ChildMapping]
  */
-interface Mapping {
-
-    /**
-     * Returns the inner mappings.
-     *
-     * In case of an ENDPOINT mapping the IO or TYPE mappings.
-     * In case of an IO mapping its parameter/response type mappings.
-     * In case of a TYPE or RESULT the mapping itself.
-     *
-     * @return the inner type mappings.
-     */
-    fun getChildMappings (): List<Mapping>
-
+interface Mapping: ChildMapping {
 }
