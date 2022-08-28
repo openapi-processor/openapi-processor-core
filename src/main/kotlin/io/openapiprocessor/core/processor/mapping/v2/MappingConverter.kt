@@ -119,6 +119,9 @@ class MappingConverter(val mapping: MappingV2) {
             is AdditionalParameter -> {
                 createAddParameterTypeMapping(source)
             }
+            is Type -> {
+                convertType(source)
+            }
             else -> {
                 throw Exception("unknown parameter mapping $source")
             }

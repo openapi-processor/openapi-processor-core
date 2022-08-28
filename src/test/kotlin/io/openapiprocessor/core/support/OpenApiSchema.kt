@@ -10,6 +10,26 @@ import io.openapiprocessor.core.model.HttpMethod
 import io.openapiprocessor.core.parser.OpenApi
 import io.openapiprocessor.core.parser.Schema
 
+
+fun OpenApi.getParameterSchema(path: String, method: HttpMethod, name: String): Schema {
+    val endpoint = this.getPaths()[path]
+    if (endpoint == null) {
+        println("unknown path '$path' !")
+    }
+
+    val operation = endpoint?.getOperations()?.find { it.getMethod() == method }
+    if (operation == null) {
+        println("unknown method '$method' ($path)!")
+    }
+
+    val parameter = operation?.getParameters()?.find { it.getName() == name }
+    if (parameter == null) {
+        println("unknown parameter '$name' ($path)!")
+    }
+
+    return parameter?.getSchema()!!
+}
+
 /**
  * extracts a specific response Schema from an [OpenApi] object created by [parse()][parse].
  *
@@ -74,11 +94,16 @@ fun OpenApi.getBodySchema(path: String, method: HttpMethod, mediaType: String): 
     return media?.getSchema()!!
 }
 
+fun OpenApi.getParameterSchemaInfo(path: String, method: HttpMethod, name: String) : SchemaInfo {
+    val schema = getParameterSchema(path, method, name)
+    return SchemaInfo(SchemaInfo.Endpoint(path, method), name, "", schema, getRefResolver())
+}
+
 /**
  * extracts a specific response Schema from an [OpenApi] object created by [parse()][parse] and
  * creates a [SchemaInfo] for the schema.
  *
- * @param name name of schema info, i.e the datatype name
+ * @param name name of schema info, i.e. the datatype name
  * @param path the endpoint path
  * @param method the http method
  * @param status the http response status
