@@ -10,7 +10,7 @@ import io.openapiprocessor.core.model.HttpMethod
 /**
  * Used with [io.openapiprocessor.core.converter.ApiOptions] to store endpoint specific type
  * mappings. It can also be used to add parameters that are not defined in the api. For example
- * to pass a [javax.servlet.http.HttpServletRequest] to the*controller method.
+ * to pass a [javax.servlet.http.HttpServletRequest] to the controller method.
  */
 class EndpointTypeMapping @JvmOverloads constructor(
 
@@ -20,7 +20,7 @@ class EndpointTypeMapping @JvmOverloads constructor(
     val path: String,
 
     /**
-     * http method of this endpoint. If it is not set (i.e null) the mapping applies to all http
+     * http method of this endpoint. If it is not set (i.e. null) the mapping applies to all http
      * methods.
      */
     val method: HttpMethod? = null,
