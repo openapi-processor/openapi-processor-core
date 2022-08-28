@@ -293,8 +293,6 @@ map:
     /foo:
       parameters:
         - add: foo => io.micronaut.http.annotation.RequestAttribute(ANY) java.lang.String
-#          annotations:
-#            - bar 
 """
 
         when:
