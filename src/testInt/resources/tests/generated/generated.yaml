@@ -1,0 +1,4 @@
+items:
+  - generated/support/Generated.java
+ignore:
+  - generated/api/Api.java
