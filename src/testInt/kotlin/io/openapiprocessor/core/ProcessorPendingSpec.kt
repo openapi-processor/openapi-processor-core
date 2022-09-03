@@ -8,6 +8,7 @@ package io.openapiprocessor.core
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.engine.spec.tempdir
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.openapiprocessor.core.parser.ParserType
 import io.openapiprocessor.core.parser.ParserType.INTERNAL
 import io.openapiprocessor.test.FileSupport
 import io.openapiprocessor.test.TestSet
@@ -35,6 +36,7 @@ class ProcessorPendingSpec: StringSpec({
 
 private fun sources(): Collection<TestSet> {
     return listOf(
+        testSet("generated", ParserType.SWAGGER, API_30),
 //        testSet("params-additional-new", ParserType.SWAGGER, API_30),
 //        testSet("params-additional-new", ParserType.OPENAPI4J, API_30),
 //        testSet("params-additional-global", INTERNAL, API_30),
