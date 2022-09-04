@@ -11,11 +11,15 @@ import java.io.Writer
 
 class GeneratedWriter(private val info: GeneratedInfo, private val options: ApiOptions) {
 
-    fun write(target: Writer) {
+    fun getImport():String {
+        return "${options.packageName}.support.Generated";
+    }
+
+    fun writeUse(target: Writer) {
         target.write(create())
     }
 
-    fun generate(target: Writer) {
+    fun writeSource(target: Writer) {
         target.write("""
             package ${options.packageName}.support.Generated;
 
