@@ -1,4 +1,4 @@
 items:
-  - generated/support/Generated.java
-ignore:
   - generated/api/Api.java
+  - generated/model/Foo.java
+  - generated/support/Generated.java

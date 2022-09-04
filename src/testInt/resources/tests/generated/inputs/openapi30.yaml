@@ -8,5 +8,18 @@ paths:
   /foo:
     get:
       responses:
-        '204':
+        '200':
           description: empty result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+
+    Foo:
+      type: object
+      properties:
+        bar:
+          type: string
