@@ -16,6 +16,10 @@ import io.openapiprocessor.core.model.HttpMethod
  */
 class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
 
+    fun findTypeAnnotations(typeName: String): List<AnnotationTypeMapping> {
+        return findTypeAnnotations(typeMappings, typeName)
+    }
+
     fun findParameterAnnotations(path: String, method: HttpMethod?, typeName: String)
     : List<AnnotationTypeMapping> {
 
@@ -49,8 +53,17 @@ class MappingFinder(private val typeMappings: List<Mapping> = emptyList()) {
             .flatten()
     }
 
+    private fun findTypeAnnotations(typeMappings: List<Mapping>, typeName: String)
+        : List<AnnotationTypeMapping> {
+
+        return typeMappings
+            .filterIsInstance<AnnotationTypeMapping>()
+            .filter { it.sourceTypeName == typeName }
+    }
+
     private fun findParameterAnnotations(typeMappings: List<Mapping>, typeName: String)
-    : List<AnnotationTypeMapping> {
+        : List<AnnotationTypeMapping> {
+
         return typeMappings
             .filterIsInstance<ParameterAnnotationTypeMapping>()
             .filter { it.sourceTypeName == typeName }

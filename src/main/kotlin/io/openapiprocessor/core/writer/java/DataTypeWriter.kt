@@ -6,6 +6,7 @@
 package io.openapiprocessor.core.writer.java
 
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.converter.MappingFinder
 import io.openapiprocessor.core.model.datatypes.DataType
 import io.openapiprocessor.core.model.datatypes.ModelDataType
 import io.openapiprocessor.core.model.datatypes.NullDataType
@@ -24,6 +25,7 @@ class DataTypeWriter(
     private val validationAnnotations: BeanValidationFactory = BeanValidationFactory(),
     private val javadocWriter: JavaDocWriter = JavaDocWriter()
 ) {
+    private val annotationWriter = AnnotationWriter()
 
     fun write(target: Writer, dataType: ModelDataType) {
         headerWriter.write(target)
@@ -51,6 +53,14 @@ class DataTypeWriter(
             objectInfo.annotations.forEach {
                 target.write("${buildAnnotation(it)}\n")
             }
+        }
+
+        val annotationTypeMappings = MappingFinder(apiOptions.typeMappings)
+            .findTypeAnnotations(dataType.getTypeName())
+
+        annotationTypeMappings.forEach {
+            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parametersX))
+            target.write("\n")
         }
 
         val implements: DataType? = dataType.implementsDataType
@@ -210,6 +220,13 @@ class DataTypeWriter(
                 val propProp = propInfo.prop
                 imports.addAll(propProp.imports)
             }
+        }
+
+        val annotationTypeMappings = MappingFinder(apiOptions.typeMappings).findTypeAnnotations(
+            dataType.getTypeName())
+
+        annotationTypeMappings.forEach {
+            imports.add(it.annotation.type)
         }
 
         return DefaultImportFilter()
