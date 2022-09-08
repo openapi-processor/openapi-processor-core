@@ -9,7 +9,6 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id "org.sonarqube" version "3.3"
-    id "ca.coglinc2.javacc" version "3.0.0"
     id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
 }
 
@@ -59,23 +58,17 @@ kotlin {
 }
 
 tasks.named('compileKotlin') {
-    dependsOn 'generateGrammarSource', 'compileJavacc'
+    dependsOn 'generateGrammarSource'
 
     kotlinOptions.jvmTarget = "1.8"
 }
 
 tasks.named('compileTestKotlin') {
-    dependsOn 'generateTestGrammarSource', 'compileJavacc'
+    dependsOn 'generateTestGrammarSource'
 }
 
 tasks.named('sourcesJar') {
-    dependsOn 'generateGrammarSource', 'compileJavacc'
-}
-
-compileJavacc {
-//    inputDirectory = file('src/main/javacc')
-    outputDirectory = file("$buildDir/javacc")
-//    arguments = [grammar_encoding: 'UTF-8', static: 'false']
+    dependsOn 'generateGrammarSource'
 }
 
 dependencies {
