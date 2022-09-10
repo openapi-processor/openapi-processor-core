@@ -36,7 +36,7 @@ class UriSpec: StringSpec({
         forAll(
             row("file://some/path", "file://some/path"),
             row("https://some/path", "https://some/path"),
-            row("some/path", "file:///$current/some/path"),
+            row("some/path", "file://$current/some/path"),
             row("/some/path", "file:///some/path"),
         ) { source, uri ->
             toURI(source).toString() shouldBe uri
