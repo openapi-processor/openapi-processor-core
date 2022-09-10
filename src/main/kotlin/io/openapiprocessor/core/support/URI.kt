@@ -23,13 +23,12 @@ fun toURI(source: String): URI {
         if (uri.scheme != null) {
             return uri
         }
-
-        // no scheme, assume file path
-        return Paths.get(source)
-            .normalize()
-            .toAbsolutePath()
-            .toUri()
-    } catch (e: Exception) {
-        throw e
+    } catch (ignore: Exception) {
     }
+
+    // no scheme, assume file path
+    return Paths.get(source)
+        .normalize()
+        .toAbsolutePath()
+        .toUri()
 }
