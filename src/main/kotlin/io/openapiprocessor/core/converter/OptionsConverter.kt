@@ -24,11 +24,11 @@ class OptionsConverter(private val checkObsoleteProcessorOptions: Boolean = fals
 
         checkDeprecatedMapOptions(processorOptions, options)
 
-        if (processorOptions.containsKey("targetDir")) {
-            options.targetDir = processorOptions["targetDir"].toString()
-        } else {
-            log.warn("required option 'targetDir' is missing!")
-        }
+//        if (processorOptions.containsKey("targetDir")) {
+//            options.targetDir = processorOptions["targetDir"].toString()
+//        } else {
+//            log.warn("required option 'targetDir' is missing!")
+//        }
 
         if (processorOptions.containsKey("mapping")) {
             readMapping(processorOptions["mapping"].toString(), options)
