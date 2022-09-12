@@ -74,9 +74,9 @@ class ApiOptions {
      * validate that targetDir is set, throws if not.
      */
     fun validate() {
-        if (targetDir == null) {
-            throw InvalidOptionException("targetDir")
-        }
+//        if (targetDir == null) {
+//            throw InvalidOptionException("targetDir")
+//        }
     }
 
 }

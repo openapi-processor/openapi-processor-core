@@ -31,12 +31,10 @@ class ApiWriter(
     private val interfaceWriter: InterfaceWriter,
     private val dataTypeWriter: DataTypeWriter,
     private val enumWriter: StringEnumWriter,
-    private val interfaceDataTypeWriter: InterfaceDataTypeWriter
+    private val interfaceDataTypeWriter: InterfaceDataTypeWriter,
+    private val fileHandler: FileHandler
 ) {
     private var log: Logger = LoggerFactory.getLogger(this.javaClass.name)
-
-    private lateinit var apiFolder: Path
-    private lateinit var modelFolder: Path
 
     private var formatter: Formatter? = null
 
@@ -45,7 +43,7 @@ class ApiWriter(
     }
 
     fun write(api: Api) {
-        createTargetFolders()
+        fileHandler.createTargetFolders()
         writeInterfaces(api)
         writeObjectDataTypes(api)
         writeInterfaceDataTypes(api)
@@ -54,8 +52,7 @@ class ApiWriter(
 
     private fun writeInterfaces(api: Api) {
         api.forEachInterface {
-            val target = apiFolder.resolve("${it.getInterfaceName()}.java")
-            val writer = BufferedWriter(PathWriter(target))
+            val writer = fileHandler.createApiWriter(it.getPackageName(), it.getInterfaceName())
             writeInterface(writer, it)
             writer.close()
         }
@@ -63,8 +60,7 @@ class ApiWriter(
 
     private fun writeObjectDataTypes(api: Api) {
         api.forEachModelDataType {
-            val target = modelFolder.resolve ("${it.getTypeName()}.java")
-            val writer = BufferedWriter(PathWriter(target))
+            val writer = fileHandler.createModelWriter(it.getPackageName(), it.getTypeName())
             writeDataType(writer, it)
             writer.close()
         }
@@ -72,8 +68,7 @@ class ApiWriter(
 
     private fun writeInterfaceDataTypes(api: Api) {
         api.forEachInterfaceDataType() {
-            val target = modelFolder.resolve ("${it.getTypeName()}.java")
-            val writer = BufferedWriter(PathWriter(target))
+            val writer = fileHandler.createModelWriter(it.getPackageName(), it.getTypeName())
             writeDataType(writer, it)
             writer.close()
         }
@@ -81,8 +76,7 @@ class ApiWriter(
 
     private fun writeEnumDataTypes(api: Api) {
         api.forEachEnumDataType {
-            val target = modelFolder.resolve("${it.getTypeName()}.java")
-            val writer = BufferedWriter(PathWriter(target))
+            val writer = fileHandler.createModelWriter(it.getPackageName(), it.getTypeName())
             writeEnumDataType(writer, it)
             writer.close()
         }
@@ -133,28 +127,6 @@ class ApiWriter(
             .append("\n}\n")
             .toString()
       }
-
-    private fun createTargetFolders() {
-        val rootPkg = options.packageName.replace(".", "/")
-        val apiPkg = listOf(rootPkg, "api").joinToString("/")
-        val modelPkg = listOf(rootPkg, "model").joinToString("/")
-        log.debug ("creating target folders: {}", rootPkg)
-
-        apiFolder = createTargetPackage(apiPkg)
-        log.debug ("created target folder: {}", apiFolder.toAbsolutePath ().toString ())
-
-        modelFolder = createTargetPackage(modelPkg)
-        log.debug ("created target folder: {}", modelFolder.toAbsolutePath ().toString ())
-    }
-
-    private fun createTargetPackage(apiPkg: String): Path {
-        val root = options.targetDir
-        val pkg = listOf(root, apiPkg).joinToString("/")
-
-        val target = Paths.get (toURI(pkg))
-        Files.createDirectories(target)
-        return target
-    }
 
     private fun initFormatter() {
         if (options.formatCode) {
