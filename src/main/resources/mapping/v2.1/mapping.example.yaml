@@ -1,0 +1,97 @@
+##
+## mapping example with keys & values
+##
+
+# mapping format [required]
+openapi-processor-mapping: v2.1
+
+options: # general processor options (optional)
+
+  # target package (optional): io.openapiprocessor.generated (default)
+  package-name: io.openapiprocessor.generated
+
+  # validation annotation (optional): true or false (default)
+  bean-validation: false
+
+  # generate javadoc from OpenAPI 'description' properties.
+  javadoc: true
+
+  # suffix for model class names and enum names. Default is none.
+  model-name-suffix: Resource
+
+  # generate common interface for an `oneOf` object list (optional): true or false (default)
+  one-of-interface: true
+
+  # enable/disable code formatter: true (default) or false.
+  format-code: false
+
+map: # the type mappings
+
+  # global mappings, apply to all paths/endpoints
+
+  # response wrapper (optional)
+  result: org.springframework.http.ResponseEntity
+
+  # result style (optional, default "success")
+  resultStyle: all
+
+  # reactive single wrapper (optional)
+  single: reactor.core.publisher.Mono
+
+  # reactive array wrapper (optional)
+  multi: reactor.core.publisher.Flux
+
+  types: # global type mappings (optional)
+
+    - type: array => java.util.Collection
+
+    - type: Schema => java.util.Map
+      generics:
+        - java.lang.String
+        - java.lang.Double
+
+    - type: Schema @ io.openapiprocessor.Annotation()
+
+  parameters: # global parameter mappings (optional)
+
+    - name: foo => java.util.List
+    - name: bar => com.github.hauner.openapi.Bar
+    - type: Schema @ io.openapiprocessor.Annotation()
+
+  responses:  # global response mappings (optional)
+
+    - content: application/vnd.something => java.util.List
+    - content: application/json => com.github.hauner.openapi.FooBar
+
+
+  paths: # path/endpoint specific mappings (optional)
+
+    /first: # a path/endpoint from the openapi.yaml
+
+      # generate endpoint to a separate "excluded" interface
+      exclude: true
+
+    /second: # another path/endpoint from the openapi.yaml
+
+      # path mappings, allow the same mappings as on the global level (except paths)
+      # all mappings apply only to the parent path & override any matching global mapping
+
+      result: org.springframework.http.ResponseEntity
+      single: reactor.core.publisher.Mono
+      multi: reactor.core.publisher.Flux
+
+      types:
+        - type: Schema => java.util.Collection
+
+      parameters:
+        - name: foo => java.util.List
+        - add: bar => java.util.Set
+        - type: Schema @ io.openapiprocessor.Annotation()
+
+      responses:
+        - content: application/vnd.any => java.util.Set
+        - content: application/json => java.util.Map
+
+    /third:
+      patch:
+        null: org.openapitools.jackson.nullable.JsonNullable = JsonNullable.undefined()

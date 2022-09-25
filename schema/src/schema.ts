@@ -38,12 +38,12 @@ function print(schema: JSONSchema) {
 }
 
 function write(schema: JSONSchema) {
-  fs.writeFileSync("../src/main/resources/mapping/v2/mapping.flat.yaml.json",
+  fs.writeFileSync("../src/main/resources/mapping/v2.1/mapping.flat.yaml.json",
     JSON.stringify(schema, null, 2) + "\n");
 }
 
 async function run(): Promise<JSONSchema> {
-  let expanded = await flatten("../src/main/resources/mapping/v2/mapping.yaml.json");
+  let expanded = await flatten("../src/main/resources/mapping/v2.1/mapping.yaml.json");
   return await mergeAllOf(expanded);
 }
 

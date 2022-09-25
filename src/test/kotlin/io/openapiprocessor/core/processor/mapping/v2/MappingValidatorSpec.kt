@@ -7,6 +7,8 @@ package io.openapiprocessor.core.processor.mapping.v2
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.blocking.forAll
+import io.kotest.data.row
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.openapiprocessor.core.processor.MappingValidator
@@ -23,6 +25,26 @@ class MappingValidatorSpec: StringSpec({
 
     val validator = MappingValidator()
 
+    "validates mapping.yaml with matching schema version" {
+        forAll(
+            row("v2"),
+            row("v2.1")
+        ) { v ->
+            val yaml = """
+                |openapi-processor-mapping: $v
+                |
+                |options:
+                |  package-name: io.openapiprocessor.somewhere
+            """.trimMargin()
+
+            // when:
+            val errors = validator.validate (yaml, v)
+
+            // then:
+            errors.shouldBeEmpty()
+        }
+    }
+
     "validates package-name option" {
         val yaml = """
                    |openapi-processor-mapping: v2
@@ -32,7 +54,7 @@ class MappingValidatorSpec: StringSpec({
                    """.trimMargin()
 
         // when:
-        val errors = validator.validate (yaml)
+        val errors = validator.validate (yaml, "v2")
 
         // then:
         errors.shouldBeEmpty()
@@ -49,7 +71,7 @@ class MappingValidatorSpec: StringSpec({
                    """.trimMargin()
 
         // when:
-        val errors = validator.validate (yaml)
+        val errors = validator.validate (yaml, "v2")
 
         // then:
         errors.size shouldBe 1
@@ -57,8 +79,11 @@ class MappingValidatorSpec: StringSpec({
         error.message shouldBe "\$.bad: is not defined in the schema and the schema does not allow additional properties"
     }
 
-    "validates example mapping" {
-        validator.validate("/mapping/v2/mapping.example.yaml".fromResource()).shouldBeEmpty()
+    "validates example mapping v2" {
+        validator.validate("/mapping/v2/mapping.example.yaml".fromResource(), "v2").shouldBeEmpty()
     }
 
+    "validates example mapping v2.1" {
+        validator.validate("/mapping/v2.1/mapping.example.yaml".fromResource(), "v2.1").shouldBeEmpty()
+    }
 })

@@ -34,14 +34,14 @@ data class Mapping(
         return versionObsolete != null
     }
 
-    private fun getSafeVersion(): String {
+    fun getSafeVersion(): String {
         if (version != null)
             return version
 
         if (versionObsolete != null)
             return versionObsolete
 
-        return "no version"
+        return "v1"
     }
 
 }

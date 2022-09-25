@@ -23,7 +23,7 @@ class MappingReaderSpec: StringSpec ({
         """.trimMargin()
 
         val validator = mockk<MappingValidator>()
-        every { validator.validate(any()) } returns emptySet()
+        every { validator.validate(any(), any()) } returns emptySet()
 
         val log = mockk<Logger>(relaxed = true)
 
@@ -46,12 +46,28 @@ class MappingReaderSpec: StringSpec ({
         """.trimMargin()
 
         val validator = mockk<MappingValidator>()
-        every { validator.validate(any()) } returns emptySet()
+        every { validator.validate(any(), any()) } returns emptySet()
 
         MappingReader(validator).read(yaml)
 
-        verify { validator.validate(yaml) }
+        verify { validator.validate(yaml, "v2") }
     }
+
+//    "validates mapping.yaml with version" {
+//        val yaml = """
+//            |openapi-processor-mapping: v2.1
+//            |
+//            |options:
+//            |  package-name: io.openapiprocessor.somewhere
+//        """.trimMargin()
+//
+//        val validator = mockk<MappingValidator>()
+//        every { validator.validate(any()) } returns emptySet()
+//
+//        MappingReader(validator).read(yaml)
+//
+//        verify { validator.validate(yaml) }
+//    }
 
     "logs mapping.yaml validation errors" {
         val yaml = """
