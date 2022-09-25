@@ -27,9 +27,7 @@ sourceSets {
     main {
         java {
             srcDirs 'build/antlr'
-            srcDirs 'build/javacc'
             srcDirs 'src/main/java'
-            srcDirs 'src/main/javacc'
         }
     }
 }
