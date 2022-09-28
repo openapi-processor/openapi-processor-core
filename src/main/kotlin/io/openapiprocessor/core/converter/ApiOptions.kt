@@ -58,6 +58,12 @@ class ApiOptions {
     var formatCode = true
 
     /**
+     *  enable/disable the @Generated date (optional).
+     */
+
+    var generatedDate = true
+
+    /**
      * provide additional type mapping information to map OpenAPI types to java types. The list can
      * contain the following mappings:
      *
@@ -69,12 +75,6 @@ class ApiOptions {
      * endpoint.
      */
     var typeMappings: List<Mapping> = emptyList()
-
-    /**
-     * create the `Generated` annotation with date of generation (optional).
-     */
-
-    var generatedDate = true
 
     /**
      * validate that targetDir is set, throws if not.
