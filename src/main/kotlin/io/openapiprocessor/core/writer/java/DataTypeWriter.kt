@@ -20,13 +20,12 @@ private const val deprecated =  "@Deprecated"
  */
 class DataTypeWriter(
     private val apiOptions: ApiOptions,
-    private val headerWriter: SimpleWriter,
+    private val generatedWriter: GeneratedWriter,
     private val validationAnnotations: BeanValidationFactory = BeanValidationFactory(),
     private val javadocWriter: JavaDocWriter = JavaDocWriter()
 ) {
 
     fun write(target: Writer, dataType: ModelDataType) {
-        headerWriter.write(target)
         target.write("package ${dataType.getPackageName()};\n\n")
 
         val imports: List<String> = collectImports(dataType.getPackageName(), dataType)
@@ -52,6 +51,9 @@ class DataTypeWriter(
                 target.write("${buildAnnotation(it)}\n")
             }
         }
+
+        generatedWriter.writeUse(target)
+        target.write("\n")
 
         val implements: DataType? = dataType.implementsDataType
         if (implements != null) {
@@ -192,6 +194,8 @@ class DataTypeWriter(
 
     private fun collectImports(packageName: String, dataType: ModelDataType): List<String> {
         val imports = mutableSetOf<String>()
+
+        imports.add(generatedWriter.getImport())
 
         dataType.forEach { _, _ ->
             imports.add("com.fasterxml.jackson.annotation.JsonProperty")

@@ -17,27 +17,26 @@
 package io.openapiprocessor.core.writer.java
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
 class ImportFilterSpec: StringSpec({
 
-    lateinit var filter: DefaultImportFilter
-
-    beforeTest {
-        filter = DefaultImportFilter()
-    }
-
     "drops imports from same package" {
+        val filter = DefaultImportFilter()
         val result = filter.filter("same", setOf(
             "other.Foo",
-            "same.Bar"
+            "same.Bar",
+            "same.nested.Bar"
         ))
 
-        result.size shouldBe 1
-        result.first() shouldBe "other.Foo"
+        result.size shouldBe 2
+        result shouldContain "other.Foo"
+        result shouldContain "same.nested.Bar"
     }
 
     "drops java.lang imports" {
+        val filter = DefaultImportFilter()
         val result = filter.filter("any", setOf(
             "java.lang.String",
             "java.lang.Long",
@@ -49,6 +48,7 @@ class ImportFilterSpec: StringSpec({
     }
 
     "provides empty list when no imports are left" {
+        val filter = DefaultImportFilter()
         val result = filter.filter("any", setOf(
             "java.lang.String"
         ))

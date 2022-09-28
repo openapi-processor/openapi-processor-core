@@ -12,7 +12,7 @@ import io.openapiprocessor.core.support.datatypes.ObjectDataType
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DataTypeWriter
 import io.openapiprocessor.core.writer.java.JavaDocWriter
-import io.openapiprocessor.core.writer.java.SimpleWriter
+import io.openapiprocessor.core.writer.java.SimpleGeneratedWriter
 import spock.lang.Specification
 
 import static io.openapiprocessor.core.AssertKt.extractBody
@@ -22,24 +22,18 @@ import static io.openapiprocessor.core.support.datatypes.Builder.objectDataType
 import static io.openapiprocessor.core.support.datatypes.Builder.propertyDataType
 
 class DataTypeWriterSpec extends Specification {
-    def headerWriter = Mock SimpleWriter
     def options = new ApiOptions()
+    def generatedWriter = new SimpleGeneratedWriter (options)
 
-    def writer = new DataTypeWriter(options, headerWriter, new BeanValidationFactory(), new JavaDocWriter())
+    def writer = new DataTypeWriter(
+        options,
+        generatedWriter,
+        new BeanValidationFactory(),
+        new JavaDocWriter())
     def target = new StringWriter ()
 
-    void "writes 'generated' comment" () {
-        def dataType = objectDataType ('Book', '')
-
-        when:
-        writer.write (target, dataType)
-
-        then:
-        1 * headerWriter.write (target)
-    }
-
     void "writes 'package'" () {
-        def pkg = 'io.openapiprocessor.test'
+        def pkg = 'io.openapiprocessor.generated'
         def dataType = objectDataType ('Book', pkg)
 
         when:
@@ -49,6 +43,19 @@ class DataTypeWriterSpec extends Specification {
         target.toString ().contains ("""\
 package $pkg;
 
+""")
+    }
+
+    void "writes @Generated import" () {
+        def pkg = 'io.openapiprocessor.generated'
+        def dataType = objectDataType ('Book', pkg)
+
+        when:
+        writer.write (target, dataType)
+
+        then:
+        target.toString ().contains ("""\
+import io.openapiprocessor.generated.support.Generated;
 """)
     }
 
@@ -115,6 +122,7 @@ package $pkg;
 
         then:
         target.toString ().contains ("""\
+@Generated
 public class $type {
 
 }
@@ -240,6 +248,7 @@ public class $type {
         then:
         target.toString ().contains ("""\
 @Deprecated
+@Generated
 public class Bar {
 
 }
