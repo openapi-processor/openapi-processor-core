@@ -15,10 +15,6 @@ plugins {
 group projectGroupId
 version projectVersion
 
-ext {
-    groovyVersion = '3.0.10'
-}
-
 repositories {
 //    mavenLocal()
 }
