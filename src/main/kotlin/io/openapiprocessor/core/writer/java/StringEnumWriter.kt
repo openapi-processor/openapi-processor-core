@@ -12,10 +12,9 @@ import java.io.Writer
 /**
  * Writer for String enum.
  */
-open class StringEnumWriter(private val headerWriter: SimpleWriter) {
+open class StringEnumWriter(private val generatedWriter: GeneratedWriter) {
 
     fun write(target: Writer, dataType: StringEnumDataType) {
-        headerWriter.write(target)
         target.write("package ${dataType.getPackageName()};\n\n")
 
         val imports = collectImports (dataType.getPackageName(), dataType)
@@ -26,6 +25,8 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
             target.write("\n")
         }
 
+        generatedWriter.writeUse(target)
+        target.write("\n")
         target.write("public enum ${dataType.getTypeName()} {\n")
 
         val values = mutableListOf<String>()
@@ -76,6 +77,7 @@ open class StringEnumWriter(private val headerWriter: SimpleWriter) {
         val imports = mutableSetOf<String>()
         imports.add ("com.fasterxml.jackson.annotation.JsonCreator")
         imports.add ("com.fasterxml.jackson.annotation.JsonValue")
+        imports.add(generatedWriter.getImport())
         imports.addAll (dataType.referencedImports)
 
         return DefaultImportFilter ()
