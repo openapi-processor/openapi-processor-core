@@ -46,18 +46,18 @@ class GeneratedWriterImpl(private val info: GeneratedInfo, private val options: 
                 String version();
 
                 /**
-                 * The date & time of generation (ISO 8601).
+                 * The date & time of generation (ISO 8601) or "-" if no date was set.
                  *                 
                  * @return date of generation
                  */
-                String date() default null;
+                String date() default "-";
                                 
                 /**
                  * The url of the generator.
                  *
                  * @return url of generator
                  */
-                String url() default null;
+                String url() default "https://openapiprocessor.io";
             }
             """.trimIndent())
     }

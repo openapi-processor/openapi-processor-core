@@ -1,4 +1,4 @@
-package generated.support.Generated;
+package generated.support;
 
 import java.lang.annotation.*;
 import static java.lang.annotation.ElementType.*;
@@ -22,17 +22,17 @@ public @interface Generated {
     String version();
 
     /**
-     * The date & time of generation (ISO 8601).
+     * The date & time of generation (ISO 8601) or "-" if no date was set.
      *
      * @return date of generation
      */
-    String date() default null;
+    String date() default "-";
 
     /**
      * The url of the generator.
      *
      * @return url of generator
      */
-    String url() default null;
+    String url() default "https://openapiprocessor.io";
 
 }
