@@ -5,28 +5,18 @@
 
 package com.github.hauner.openapi.core.writer.java
 
+import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.model.datatypes.StringEnumDataType
 import io.openapiprocessor.core.support.datatypes.DataTypeName
-import io.openapiprocessor.core.writer.java.SimpleWriter
+import io.openapiprocessor.core.writer.java.SimpleGeneratedWriter
 import io.openapiprocessor.core.writer.java.StringEnumWriter
 import spock.lang.Specification
 
 class StringEnumWriterSpec extends Specification {
-    def headerWriter = Mock SimpleWriter
-
-    def writer = new StringEnumWriter(headerWriter)
+    def options = new ApiOptions()
+    def generatedWriter = new SimpleGeneratedWriter(options)
+    def writer = new StringEnumWriter(generatedWriter)
     def target = new StringWriter ()
-
-    void "writes 'generated' comment" () {
-        def dataType = new StringEnumDataType(
-            new DataTypeName('Foo'), 'pkg', [], null, false)
-
-        when:
-        writer.write (target, dataType)
-
-        then:
-        1 * headerWriter.write (target)
-    }
 
     void "writes 'package'" () {
         def pkg = 'com.github.hauner.openapi'
@@ -43,6 +33,19 @@ package $pkg;
 """)
     }
 
+    void "writes @Generated import" () {
+        def dataType = new StringEnumDataType(
+            new DataTypeName('Foo'), 'pkg', [], null, false)
+
+        when:
+        writer.write (target, dataType)
+
+        then:
+        target.toString ().contains ("""\
+import io.openapiprocessor.generated.support.Generated;
+""")
+    }
+
     void "writes enum class"() {
         def pkg = 'com.github.hauner.openapi'
         def dataType = new StringEnumDataType(
@@ -53,6 +56,7 @@ package $pkg;
 
         then:
         target.toString ().contains ("""\
+@Generated
 public enum $type {
 """)
         target.toString ().contains ("""\
@@ -181,7 +185,6 @@ public enum Foo {
         target.toString ().contains ("""\
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-
 """)
     }
 

@@ -8,8 +8,8 @@ package io.openapiprocessor.core.writer.java
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.string.shouldContain
-import io.mockk.verify
 import io.openapiprocessor.core.converter.ApiOptions
+import io.openapiprocessor.core.extractImports
 import io.openapiprocessor.core.model.datatypes.DataTypeName
 import io.openapiprocessor.core.model.datatypes.InterfaceDataType
 import java.io.StringWriter
@@ -18,22 +18,12 @@ import java.io.StringWriter
 class InterfaceDataTypeWriterSpec: StringSpec({
     isolationMode = IsolationMode.InstancePerTest
 
-    val headerWriter: SimpleWriter = io.mockk.mockk(relaxed = true)
     val options = ApiOptions()
     options.oneOfInterface = true
+    val generatedWriter = SimpleGeneratedWriter(options)
 
-    val writer = InterfaceDataTypeWriter(options, headerWriter)
+    val writer = InterfaceDataTypeWriter(options, generatedWriter)
     val target = StringWriter()
-
-    "writes 'generated' comment" {
-        val dataType = InterfaceDataType (DataTypeName("Foo"), "pkg")
-
-        writer.write(target, dataType)
-
-        verify (exactly = 1) {
-            headerWriter.write(any())
-        }
-    }
 
     "writes 'package'" {
         val pkg = "io.openapiprocessor.test"
@@ -46,6 +36,27 @@ class InterfaceDataTypeWriterSpec: StringSpec({
             |package $pkg;
             |
             """.trimMargin()
+    }
+
+    "writes @Generated" {
+        val dataType = InterfaceDataType (DataTypeName("Foo"), "pkg")
+
+        writer.write(target, dataType)
+
+        target.toString() shouldContain
+            """
+            |@Generated
+            |public interface ${dataType.getTypeName()} {
+            |}
+            """.trimMargin()
+    }
+
+    "adds @Generated import" {
+        val dataType = InterfaceDataType (DataTypeName("Foo"), "pkg")
+
+        writer.write(target, dataType)
+
+        extractImports(target).contains("")
     }
 
     "writes 'interface'" {

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 https://github.com/openapi-processor/openapi-processor-core
+ * Copyright 2020 https://github.com/openapi-processor/openapi-processor-core
  * PDX-License-Identifier: Apache-2.0
  */
 
@@ -45,5 +45,10 @@ data class Options(
     /**
      * enable/disable the code formatter (optional)
      */
-    val formatCode: Boolean = true
+    val formatCode: Boolean = true,
+
+    /**
+     * enable/disable the @Generated date (optional)
+     */
+    val generatedDate: Boolean = true
 )

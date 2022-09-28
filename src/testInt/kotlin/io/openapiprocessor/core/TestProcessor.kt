@@ -37,15 +37,23 @@ class TestProcessor: OpenApiProcessor {
             val cv = ApiConverter(options, FrameworkBase())
             val api = cv.convert(openapi)
 
-            val headerWriter = TestHeaderWriter()
+            val generatedInfo = GeneratedInfo(
+                "openapi-processor-core",
+                "test",
+//                OffsetDateTime.now().toString()
+//                url = "https://github.com/openapi-processor/openapi-processor-core"
+            )
+
+            val generatedWriter = GeneratedWriterImpl(generatedInfo, options)
             val beanValidation = BeanValidationFactory()
             val javaDocWriter = JavaDocWriter()
 
             val writer = ApiWriter(
                 options,
+                generatedWriter,
                 InterfaceWriter(
                     options,
-                    headerWriter,
+                    generatedWriter,
                     MethodWriter(
                         options,
                         TestProcessorMappingAnnotationWriter(),
@@ -59,14 +67,14 @@ class TestProcessor: OpenApiProcessor {
                 ),
                 DataTypeWriter(
                     options,
-                    headerWriter,
+                    generatedWriter,
                     beanValidation,
                     javaDocWriter
                 ),
-                StringEnumWriter(headerWriter),
+                StringEnumWriter(generatedWriter),
                 InterfaceDataTypeWriter(
                     options,
-                    headerWriter,
+                    generatedWriter,
                     javaDocWriter
                 )
             )

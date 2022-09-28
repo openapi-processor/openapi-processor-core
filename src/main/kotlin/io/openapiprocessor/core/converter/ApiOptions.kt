@@ -58,6 +58,12 @@ class ApiOptions {
     var formatCode = true
 
     /**
+     *  enable/disable the @Generated date (optional).
+     */
+
+    var generatedDate = true
+
+    /**
      * provide additional type mapping information to map OpenAPI types to java types. The list can
      * contain the following mappings:
      *

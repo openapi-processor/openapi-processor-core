@@ -8,7 +8,6 @@ package io.openapiprocessor.core.writer.java
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.string.shouldContain
-import io.mockk.mockk
 import io.openapiprocessor.core.converter.ApiOptions
 import io.openapiprocessor.core.converter.mapping.Annotation as MappingAnnotation
 import io.openapiprocessor.core.converter.mapping.AnnotationTypeMapping
@@ -21,11 +20,41 @@ import io.openapiprocessor.core.support.datatypes.propertyDataTypeString
 import java.io.StringWriter
 
 class DataTypeWriterSpec: StringSpec({
-    val headerWriter: SimpleWriter = mockk(relaxed = true)
-    val options = ApiOptions()
 
-    var writer = DataTypeWriter(options, headerWriter, BeanValidationFactory())
+    val options = ApiOptions()
+    val generatedWriter = SimpleGeneratedWriter(options)
+    var writer = DataTypeWriter(options, generatedWriter, BeanValidationFactory())
     val target = StringWriter()
+
+    "writes @Generated annotation import" {
+        val dataType = ObjectDataType("Foo", "pkg", linkedMapOf(
+            Pair("foo", propertyDataTypeString())
+        ))
+
+        // when:
+        writer.write(target, dataType)
+
+        // then:
+        val imports = extractImports(target)
+        imports shouldContain "import io.openapiprocessor.generated.support.Generated;"
+    }
+
+    "writes @Generated annotation" {
+        val dataType = ObjectDataType("Foo", "pkg", linkedMapOf(
+            Pair("foo", propertyDataTypeString())
+        ))
+
+        // when:
+        writer.write(target, dataType)
+
+        // then:
+        target.toString() shouldContain
+            """    
+            |@Generated
+            |public class Foo {
+            |
+            """.trimMargin()
+    }
 
     "writes @NotNull import for required property" {
         options.beanValidation = true
@@ -83,7 +112,7 @@ class DataTypeWriterSpec: StringSpec({
             }
         }
 
-        writer = DataTypeWriter(options, headerWriter, validation)
+        writer = DataTypeWriter(options, generatedWriter, validation)
 
         val dataType = ObjectDataType("Foo",
             "pkg", linkedMapOf("foo" to propertyDataTypeString()))
@@ -103,7 +132,7 @@ class DataTypeWriterSpec: StringSpec({
                 return BeanValidationInfoSimple(dataType, listOf(Annotation("foo.Foo")))
             }
         }
-        writer = DataTypeWriter(options, headerWriter, validation)
+        writer = DataTypeWriter(options, generatedWriter, validation)
 
         val dataType = ObjectDataType("Foo",
             "pkg", linkedMapOf("foo" to propertyDataTypeString()))
@@ -115,6 +144,7 @@ class DataTypeWriterSpec: StringSpec({
         target.toString() shouldContain
             """    
             |@Foo
+            |@Generated
             |public class Foo {
             |
             """.trimMargin()

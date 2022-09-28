@@ -20,16 +20,14 @@ import java.io.Writer
  * Writer for Java interfaces.
  */
 class InterfaceWriter(
-
     private val apiOptions: ApiOptions,
-    private val headerWriter: SimpleWriter,
+    private val generatedWriter: GeneratedWriter,
     private val methodWriter: MethodWriter,
     private val annotations: FrameworkAnnotations,
     private val validationAnnotations: BeanValidationFactory = BeanValidationFactory(),
     private val importFilter: ImportFilter = DefaultImportFilter()
 ) {
     fun write(target: Writer, itf: Interface) {
-        headerWriter.write (target)
         target.write ("package ${itf.getPackageName()};\n\n")
 
         val imports: List<String> = collectImports (itf.getPackageName(), itf.endpoints)
@@ -38,6 +36,8 @@ class InterfaceWriter(
         }
         target.write("\n")
 
+        generatedWriter.writeUse(target)
+        target.write("\n")
         target.write("public interface ${itf.getInterfaceName()} {\n\n")
 
         itf.endpoints.forEach { ep ->
@@ -52,6 +52,8 @@ class InterfaceWriter(
 
     private fun collectImports(packageName: String, endpoints: List<Endpoint>): List<String> {
         val imports: MutableSet<String> = mutableSetOf()
+
+        imports.add(generatedWriter.getImport())
 
         endpoints.forEach { ep ->
             imports.add(annotations.getAnnotation (ep.method).fullyQualifiedName)

@@ -12,10 +12,10 @@ import io.openapiprocessor.core.framework.Framework
 import io.openapiprocessor.core.framework.FrameworkAnnotations
 import io.openapiprocessor.core.writer.java.BeanValidationFactory
 import io.openapiprocessor.core.writer.java.DefaultImportFilter
+import io.openapiprocessor.core.writer.java.GeneratedWriter
 import io.openapiprocessor.core.writer.java.JavaDocWriter
 import io.openapiprocessor.core.writer.java.MappingAnnotationWriter
 import io.openapiprocessor.core.writer.java.ParameterAnnotationWriter
-import io.openapiprocessor.core.writer.java.SimpleWriter
 import com.github.hauner.openapi.core.test.ModelAsserts
 import io.openapiprocessor.core.writer.java.InterfaceWriter
 import io.openapiprocessor.core.writer.java.MethodWriter
@@ -131,7 +131,7 @@ paths:
 
         def w = new InterfaceWriter (
             opts,
-            Stub (SimpleWriter),
+            Stub (GeneratedWriter),
             new MethodWriter(
                 opts,
                 Stub (MappingAnnotationWriter),

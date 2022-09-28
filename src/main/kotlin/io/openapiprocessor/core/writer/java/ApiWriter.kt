@@ -28,6 +28,7 @@ import java.nio.file.Paths
  */
 class ApiWriter(
     private val options: ApiOptions,
+    private val generatedWriter: GeneratedWriter,
     private val interfaceWriter: InterfaceWriter,
     private val dataTypeWriter: DataTypeWriter,
     private val enumWriter: StringEnumWriter,
@@ -37,6 +38,7 @@ class ApiWriter(
 
     private lateinit var apiFolder: Path
     private lateinit var modelFolder: Path
+    private lateinit var supportFolder: Path
 
     private var formatter: Formatter? = null
 
@@ -46,10 +48,18 @@ class ApiWriter(
 
     fun write(api: Api) {
         createTargetFolders()
+        writeGenerated()
         writeInterfaces(api)
         writeObjectDataTypes(api)
         writeInterfaceDataTypes(api)
         writeEnumDataTypes(api)
+    }
+
+    private fun writeGenerated () {
+        val target = supportFolder.resolve("Generated.java")
+        val writer = BufferedWriter(PathWriter(target))
+        writeGenerated(writer)
+        writer.close()
     }
 
     private fun writeInterfaces(api: Api) {
@@ -71,7 +81,7 @@ class ApiWriter(
     }
 
     private fun writeInterfaceDataTypes(api: Api) {
-        api.forEachInterfaceDataType() {
+        api.forEachInterfaceDataType {
             val target = modelFolder.resolve ("${it.getTypeName()}.java")
             val writer = BufferedWriter(PathWriter(target))
             writeDataType(writer, it)
@@ -112,6 +122,12 @@ class ApiWriter(
         writer.write(format(raw.toString()))
     }
 
+    private fun writeGenerated(writer: Writer) {
+        val raw = StringWriter()
+        generatedWriter.writeSource(raw)
+        writer.write(format(raw.toString()))
+    }
+
     private fun format(raw: String): String {
         try {
             if (formatter == null) {
@@ -138,6 +154,7 @@ class ApiWriter(
         val rootPkg = options.packageName.replace(".", "/")
         val apiPkg = listOf(rootPkg, "api").joinToString("/")
         val modelPkg = listOf(rootPkg, "model").joinToString("/")
+        val supportPkg = listOf(rootPkg, "support").joinToString("/")
         log.debug ("creating target folders: {}", rootPkg)
 
         apiFolder = createTargetPackage(apiPkg)
@@ -145,6 +162,9 @@ class ApiWriter(
 
         modelFolder = createTargetPackage(modelPkg)
         log.debug ("created target folder: {}", modelFolder.toAbsolutePath ().toString ())
+
+        supportFolder = createTargetPackage(supportPkg)
+        log.debug ("created target folder: {}", supportFolder.toAbsolutePath ().toString ())
     }
 
     private fun createTargetPackage(apiPkg: String): Path {

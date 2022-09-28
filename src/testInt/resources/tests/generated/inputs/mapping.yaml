@@ -1,0 +1,4 @@
+openapi-processor-mapping: v2
+
+options:
+  package-name: generated

@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: test generated annotation
+  version: 1.0.0
+
+paths:
+
+  /foo:
+    get:
+      responses:
+        '200':
+          description: empty result
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+
+    Foo:
+      type: object
+      properties:
+        bar:
+          type: string

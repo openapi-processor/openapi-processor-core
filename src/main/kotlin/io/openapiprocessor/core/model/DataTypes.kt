@@ -126,7 +126,7 @@ class DataTypes {
         }
 
         info.addRef()
-        log.info("ref $name ${info.refCount}")
+        log.debug("ref {} {}", name, info.refCount)
     }
 
     val size: Int
