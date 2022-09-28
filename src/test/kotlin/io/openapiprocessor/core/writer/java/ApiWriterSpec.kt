@@ -34,8 +34,7 @@ class ApiWriterSpec: StringSpec({
 
     val target = tempFolder()
     val options = ApiOptions()
-
-    //val generatedWriterTest = GeneratedWriter(GeneratedInfo("core", "test"), options)
+    val gwStub = SimpleGeneratedWriter(options)
 
     beforeTest {
         options.packageName = "io.openapiprocessor.test"
@@ -55,7 +54,7 @@ class ApiWriterSpec: StringSpec({
     }
 
     "generates @Generated source files in support target folder" {
-        val generatedWriter = stub<GeneratedWriter>()
+        val generatedWriter = stub<GeneratedWriterImpl>()
             every { generatedWriter.writeSource(any()) }
                 .answers {
                     firstArg<Writer>().write("public @interface Generated {}\n")
@@ -85,8 +84,7 @@ class ApiWriterSpec: StringSpec({
 
             // when:
             options.formatCode = false
-            ApiWriter(options, stub(), stub(), stub(), enumWriter, stub(), writeGenerated = false)
-                .write(api)
+            ApiWriter(options, gwStub, stub(), stub(), enumWriter, stub()).write(api)
 
             // then:
             textOf("$type.java") shouldBe "$type enum!\n"
@@ -106,8 +104,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dts)
 
         // when:
-        ApiWriter(options, stub(), stub(), stub(), enumWriter, stub(), writeGenerated = false)
-            .write(api)
+        ApiWriter(options, gwStub, stub(), stub(), enumWriter, stub()).write(api)
 
         // then:
         textOf("Foo.java") shouldBe """
@@ -119,8 +116,7 @@ class ApiWriterSpec: StringSpec({
 
     "creates package structure in target folder" {
         // when:
-        ApiWriter(options, stub(), stub(), stub(), stub(), stub(), writeGenerated = false)
-            .write(Api())
+        ApiWriter(options, gwStub, stub(), stub(), stub(), stub()).write(Api())
 
         // then:
         val api = options.getSourceDir("api")
@@ -141,8 +137,7 @@ class ApiWriterSpec: StringSpec({
         Files.createDirectories(options.getSourceDir("model"))
 
         shouldNotThrowAny {
-            ApiWriter(options, stub(), stub(), stub(), stub(), stub(), writeGenerated = false)
-                .write (Api())
+            ApiWriter(options, gwStub, stub(), stub(), stub(), stub()).write (Api())
         }
     }
 
@@ -159,8 +154,7 @@ class ApiWriterSpec: StringSpec({
 
         // when:
         options.formatCode = false
-        ApiWriter(options, stub(), itfWriter, stub(), stub(), stub(), writeGenerated = false)
-            .write (api)
+        ApiWriter(options, gwStub, itfWriter, stub(), stub(), stub()).write (api)
 
         // then:
         textOfApi("FooApi.java") shouldBe "Foo interface!"
@@ -179,8 +173,7 @@ class ApiWriterSpec: StringSpec({
 
         // when:
         options.formatCode = false
-        ApiWriter(options, stub(), itfWriter, stub(), stub(), stub(), writeGenerated = false)
-            .write (api)
+        ApiWriter(options, gwStub, itfWriter, stub(), stub(), stub()).write (api)
 
         // then:
         Files.exists(options.getApiPath("FooBarApi.java")) shouldBe true
@@ -200,8 +193,7 @@ class ApiWriterSpec: StringSpec({
 
             // when:
             options.formatCode = false
-            ApiWriter(options, stub(), stub(), dtWriter, stub(), stub(), writeGenerated = false)
-                .write(api)
+            ApiWriter(options, gwStub, stub(), dtWriter, stub(), stub()).write(api)
 
             // then:
             textOf("$type.java") shouldBe "$type class!\n"
@@ -217,8 +209,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dt)
 
         // when:
-        ApiWriter(options, stub(), stub(), dtWriter, stub(), stub(), writeGenerated = false)
-            .write (api)
+        ApiWriter(options, gwStub, stub(), dtWriter, stub(), stub()).write (api)
 
         // then:
         verify(exactly = 0) {
@@ -233,8 +224,7 @@ class ApiWriterSpec: StringSpec({
         }
 
         // when:
-        ApiWriter(options, stub(), itfWriter, stub(), stub(), stub(), writeGenerated = false)
-            .write (Api(listOf(
+        ApiWriter(options, gwStub, itfWriter, stub(), stub(), stub()).write (Api(listOf(
                 `interface`("Foo", options.getSourceDir("api").toString()) {}
             )))
 
@@ -258,8 +248,7 @@ class ApiWriterSpec: StringSpec({
         val api = Api(dataTypes = dt)
 
         // when:
-        ApiWriter(options, stub(), stub(), dtWriter, stub(), stub(), writeGenerated = false)
-            .write (api)
+        ApiWriter(options, gwStub, stub(), dtWriter, stub(), stub()).write (api)
 
         // then:
         textOf("Foo.java") shouldBe """
@@ -277,8 +266,7 @@ class ApiWriterSpec: StringSpec({
 
         // when:
         options.formatCode = false
-        ApiWriter(options, stub(), itfWriter, stub(), stub(), stub(), writeGenerated = false)
-            .write (Api(listOf(
+        ApiWriter(options, gwStub, itfWriter, stub(), stub(), stub()).write (Api(listOf(
                 `interface`("Foo", options.getSourceDir("api").toString()) {}
             )))
 

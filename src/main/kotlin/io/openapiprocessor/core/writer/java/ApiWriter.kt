@@ -32,8 +32,7 @@ class ApiWriter(
     private val interfaceWriter: InterfaceWriter,
     private val dataTypeWriter: DataTypeWriter,
     private val enumWriter: StringEnumWriter,
-    private val interfaceDataTypeWriter: InterfaceDataTypeWriter,
-    private val writeGenerated: Boolean = true  // test support
+    private val interfaceDataTypeWriter: InterfaceDataTypeWriter
 ) {
     private var log: Logger = LoggerFactory.getLogger(this.javaClass.name)
 
@@ -57,12 +56,10 @@ class ApiWriter(
     }
 
     private fun writeGenerated () {
-        if (writeGenerated) {
-            val target = supportFolder.resolve("Generated.java")
-            val writer = BufferedWriter(PathWriter(target))
-            writeGenerated(writer)
-            writer.close()
-        }
+        val target = supportFolder.resolve("Generated.java")
+        val writer = BufferedWriter(PathWriter(target))
+        writeGenerated(writer)
+        writer.close()
     }
 
     private fun writeInterfaces(api: Api) {
