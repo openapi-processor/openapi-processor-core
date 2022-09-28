@@ -37,7 +37,7 @@ class InterfaceWriterSpec: StringSpec({
     isolationMode = IsolationMode.InstancePerTest
 
     val options = ApiOptions()
-    val headerWriter: SimpleWriter = stub(relaxed = true)
+    val generatedWriter = SimpleGeneratedWriter(options)
     val methodWriter: MethodWriter = stub(relaxed = true)
     val annotations: FrameworkAnnotations = stub(relaxed = true)
 
@@ -45,7 +45,7 @@ class InterfaceWriterSpec: StringSpec({
     val target = StringWriter()
 
     beforeTest {
-        writer = InterfaceWriter(options, headerWriter, methodWriter, annotations)
+        writer = InterfaceWriter(options, generatedWriter, methodWriter, annotations)
     }
 
     "writes mapping import" {
@@ -340,7 +340,7 @@ class InterfaceWriterSpec: StringSpec({
     }
 
     "writes @Deprecated import" {
-        writer = InterfaceWriter(options, headerWriter, methodWriter, annotations,
+        writer = InterfaceWriter(options, generatedWriter, methodWriter, annotations,
             importFilter = NullImportFilter())
 
         val itf = `interface` {
@@ -383,11 +383,15 @@ class InterfaceWriterSpec: StringSpec({
         writer.write(target, itf)
 
         // then:
-        val imports = extractImports(target)
+        val imports = mutableListOf<String>()
+        imports.addAll(extractImports(target))
+        imports.remove("import io.openapiprocessor.generated.support.Generated;")
+
         imports shouldBe listOf(
             "import annotation.MappingA;",
             "import annotation.MappingB;",
-            "import annotation.MappingC;")
+            "import annotation.MappingC;",
+            )
     }
 
     "filters unnecessary 'java.lang' imports" {
