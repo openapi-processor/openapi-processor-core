@@ -22,7 +22,7 @@ class GeneratedWriterImpl(private val info: GeneratedInfo, private val options: 
 
     override fun writeSource(target: Writer) {
         target.write("""
-            package ${options.packageName}.support.Generated;
+            package ${options.packageName}.support;
 
             import java.lang.annotation.*;
             import static java.lang.annotation.ElementType.*;
