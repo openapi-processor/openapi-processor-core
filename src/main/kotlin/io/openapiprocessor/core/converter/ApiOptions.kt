@@ -71,6 +71,12 @@ class ApiOptions {
     var typeMappings: List<Mapping> = emptyList()
 
     /**
+     * create the `Generated` annotation with date of generation (optional).
+     */
+
+    var generatedDate = true
+
+    /**
      * validate that targetDir is set, throws if not.
      */
     fun validate() {
