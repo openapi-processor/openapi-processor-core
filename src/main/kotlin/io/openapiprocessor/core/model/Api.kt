@@ -14,7 +14,7 @@ import java.util.function.Consumer
  * Root of the internal model used to generate the api.
  */
 class Api(
-    private /*val*/ var interfaces: List<Interface> = emptyList(),
+    private var interfaces: List<Interface> = emptyList(),
 
     /**
      * named data types (i.e. $ref) used in the OpenAPI description.
@@ -49,5 +49,4 @@ class Api(
     fun forEachEnumDataType(action: Consumer<StringEnumDataType>) {
         dataTypes.getEnumDataTypes().forEach(action)
     }
-
 }
