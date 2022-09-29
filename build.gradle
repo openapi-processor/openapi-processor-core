@@ -8,8 +8,8 @@ plugins {
     id 'groovy'
     id 'maven-publish'
     id 'signing'
-    id "org.sonarqube" version "3.3"
-    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+    alias(libs.plugins.sonar)
+    alias(libs.plugins.nexus)
 }
 
 group projectGroupId
@@ -66,7 +66,7 @@ tasks.named('sourcesJar') {
 }
 
 dependencies {
-    antlr 'org.antlr:antlr4:4.10.1'
+    antlr (libs.antlr)
 
     compileOnly libs.openapi.processor.api
 //    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.6.21")
