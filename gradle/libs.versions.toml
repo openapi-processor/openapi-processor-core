@@ -18,6 +18,9 @@ jackson-bom = "com.fasterxml.jackson:jackson-bom:2.13.4"
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind" }
 jackson-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml" }
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+snakeyaml = "org.yaml:snakeyaml:1.33"
+
+groovy-bom = "org.codehaus.groovy:groovy-bom:3.0.13"
 
 openapi4j = "org.openapi4j:openapi-parser:1.0.7"
 swagger = "io.swagger.parser.v3:swagger-parser:2.0.28"

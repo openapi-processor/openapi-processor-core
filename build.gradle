@@ -89,11 +89,11 @@ dependencies {
     implementation (libs.commons.text)
     implementation (libs.commonmark)
     implementation (libs.java.format)
-    implementation (libs.guava)
     implementation (libs.json.schema.validator)
 
     testImplementation (libs.openapi.processor.api)
     testImplementation (libs.openapi.processor.test)
+    testImplementation (platform(libs.groovy.bom))
     testImplementation (platform(libs.kotest.bom))
     testImplementation (libs.kotest.runner)
     testImplementation (libs.kotest.datatest)
@@ -105,6 +105,7 @@ dependencies {
 
     testIntImplementation (libs.openapi.processor.api)
     testIntImplementation (libs.openapi.processor.test)
+    testIntImplementation (platform(libs.groovy.bom))
     testIntImplementation (platform(libs.kotest.bom))
     testIntImplementation (libs.kotest.runner)
     testIntImplementation (libs.kotest.datatest)
@@ -113,6 +114,15 @@ dependencies {
     testIntImplementation (libs.logback)
     testIntImplementation (libs.jimfs)
     testIntImplementation (libs.guava)
+
+    constraints {
+        implementation(libs.guava) {
+            because("avoid the android version")
+        }
+        implementation(libs.snakeyaml) {
+            because("vulnerabilities in 1.31")
+        }
+    }
 }
 
 tasks.named("dependencyUpdates").configure {
