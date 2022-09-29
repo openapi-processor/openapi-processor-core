@@ -193,7 +193,7 @@ class DataTypeWriterSpec: StringSpec({
             AnnotationTypeMapping(
                 "Foo", annotation = MappingAnnotation("foo.Bar")
             ))
-        writer = DataTypeWriter(options, headerWriter, BeanValidationFactory())
+        writer = DataTypeWriter(options, generatedWriter, BeanValidationFactory())
 
         val dataType = ObjectDataType("Foo",
             "pkg", linkedMapOf("foo" to propertyDataTypeString()))
@@ -213,7 +213,7 @@ class DataTypeWriterSpec: StringSpec({
                     "foo.Bar", parametersX = linkedMapOf("bar" to """"rab"""")
                 )
             ))
-        writer = DataTypeWriter(options, headerWriter, BeanValidationFactory())
+        writer = DataTypeWriter(options, generatedWriter, BeanValidationFactory())
 
         val dataType = ObjectDataType("Foo",
             "pkg", linkedMapOf("foo" to propertyDataTypeString()))
@@ -225,6 +225,7 @@ class DataTypeWriterSpec: StringSpec({
         target.toString() shouldContain
             """    
             |@Bar(bar = "rab")
+            |@Generated
             |public class Foo {
             |
             """.trimMargin()
