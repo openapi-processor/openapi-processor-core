@@ -88,6 +88,7 @@ dependencies {
     implementation (libs.commonmark)
     implementation (libs.java.format)
     implementation (libs.json.schema.validator)
+    implementation (libs.slf4j)
 
     testImplementation (libs.openapi.processor.api)
     testImplementation (libs.openapi.processor.test)
