@@ -51,7 +51,7 @@ kotlin {
 }
 
 tasks.named('compileKotlin') {
-    dependsOn 'generateGrammarSource'
+    dependsOn 'generateGrammarSource', 'generateVersion'
     kotlinOptions.jvmTarget = "1.8"
 }
 
