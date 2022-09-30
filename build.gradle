@@ -41,8 +41,8 @@ tasks.named('generateGrammarSource') {
 
 tasks.named('compileTestGroovy') {
     dependsOn 'compileKotlin'
-    classpath += files(compileKotlin.destinationDir)
-    classpath += files(compileTestKotlin.destinationDir)
+    classpath += files(compileKotlin.destinationDirectory)
+    classpath += files(compileTestKotlin.destinationDirectory)
 }
 
 kotlin {
@@ -53,7 +53,6 @@ kotlin {
 
 tasks.named('compileKotlin') {
     dependsOn 'generateGrammarSource'
-
     kotlinOptions.jvmTarget = "1.8"
 }
 
@@ -73,7 +72,6 @@ dependencies {
     antlr (libs.antlr)
 
     compileOnly libs.openapi.processor.api
-//    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.6.21")
 
     implementation (libs.openapi4j)
     implementation (libs.swagger) {
@@ -101,7 +99,6 @@ dependencies {
     testImplementation (libs.spock)
     testImplementation (libs.logback)
     testImplementation (libs.jimfs)
-    testImplementation (libs.guava)
 
     testIntImplementation (libs.openapi.processor.api)
     testIntImplementation (libs.openapi.processor.test)
@@ -113,13 +110,26 @@ dependencies {
     testIntImplementation (libs.spock)
     testIntImplementation (libs.logback)
     testIntImplementation (libs.jimfs)
-    testIntImplementation (libs.guava)
 
     constraints {
         implementation(libs.guava) {
             because("avoid the android version")
         }
         implementation(libs.snakeyaml) {
+            because("vulnerabilities in 1.31")
+        }
+
+        testImplementation(libs.guava) {
+            because("avoid the android version")
+        }
+        testImplementation(libs.snakeyaml) {
+            because("vulnerabilities in 1.31")
+        }
+
+        testIntImplementation(libs.guava) {
+            because("avoid the android version")
+        }
+        testIntImplementation(libs.snakeyaml) {
             because("vulnerabilities in 1.31")
         }
     }
