@@ -66,7 +66,7 @@ class MappingConverter(val mapping: MappingV2) {
 
     private fun convertResult (result: String): Mapping {
         val mapping = parseMapping(result)
-        return ResultTypeMapping(resolvePackageVariable(mapping.targetType))
+        return ResultTypeMapping(resolvePackageVariable(mapping.targetType!!))
     }
 
     private fun convertNull(value: String): Mapping {
@@ -84,28 +84,28 @@ class MappingConverter(val mapping: MappingV2) {
 
     private fun convertType (from: String, to: String): Mapping {
         val mapping = parseMapping(to)
-        return TypeMapping(from, resolvePackageVariable(mapping.targetType))
+        return TypeMapping(from, resolvePackageVariable(mapping.targetType!!))
     }
 
     private fun convertType(source: Type): Mapping {
         val mapping = parseMapping(source.type)
 
-        val targetGenericTypes = mapping.targetGenericTypes
+        val targetGenericTypes = mapping.targetGenericTypes.toMutableList()
         if (targetGenericTypes.isEmpty() && source.generics != null) {
             targetGenericTypes.addAll(source.generics)
         }
 
         return if (mapping.kind == ANNOTATE) {
             AnnotationTypeMapping(
-                mapping.sourceType,
+                mapping.sourceType!!,
                 mapping.sourceFormat,
-                Annotation(mapping.annotationType, null, mapping.annotationParameters)
+                Annotation(mapping.annotationType!!, null, mapping.annotationParameters)
             )
         } else {
             TypeMapping(
                 mapping.sourceType,
                 mapping.sourceFormat,
-                resolvePackageVariable(mapping.targetType),
+                resolvePackageVariable(mapping.targetType!!),
                 resolvePackageVariable(targetGenericTypes)
             )
         }
@@ -136,7 +136,7 @@ class MappingConverter(val mapping: MappingV2) {
     private fun createParameterTypeMapping(source: RequestParameter): ParameterTypeMapping {
         val mapping = parseMapping(source.name)
 
-        val targetGenericTypes = mapping.targetGenericTypes
+        val targetGenericTypes = mapping.targetGenericTypes.toMutableList()
         if (targetGenericTypes.isEmpty() && source.generics != null) {
             targetGenericTypes.addAll(source.generics)
         }
@@ -144,17 +144,17 @@ class MappingConverter(val mapping: MappingV2) {
         val typeMapping = TypeMapping(
             null,
             null,
-            resolvePackageVariable(mapping.targetType),
+            resolvePackageVariable(mapping.targetType!!),
             resolvePackageVariable(targetGenericTypes)
         )
 
-        return ParameterTypeMapping(mapping.sourceType, typeMapping)
+        return ParameterTypeMapping(mapping.sourceType!!, typeMapping)
     }
 
     private fun createAddParameterTypeMapping(source: AdditionalParameter): AddParameterTypeMapping {
         val mapping = parseMapping(source.add)
 
-        val targetGenericTypes = mapping.targetGenericTypes
+        val targetGenericTypes = mapping.targetGenericTypes.toMutableList()
         if (targetGenericTypes.isEmpty() && source.generics != null) {
             targetGenericTypes.addAll(source.generics)
         }
@@ -162,23 +162,23 @@ class MappingConverter(val mapping: MappingV2) {
         val typeMapping = TypeMapping(
             null,
             null,
-            resolvePackageVariable(mapping.targetType),
+            resolvePackageVariable(mapping.targetType!!),
             resolvePackageVariable(targetGenericTypes)
         )
 
         var annotation: io.openapiprocessor.core.converter.mapping.Annotation? = null
         if(mapping.annotationType != null) {
             annotation = Annotation(
-                mapping.annotationType, null, mapping.annotationParameters)
+                mapping.annotationType!!, null, mapping.annotationParameters)
         }
 
-        return AddParameterTypeMapping(mapping.sourceType, typeMapping, annotation)
+        return AddParameterTypeMapping(mapping.sourceType!!, typeMapping, annotation)
     }
 
     private fun convertResponse(source: Response): Mapping {
         val mapping = parseMapping(source.content)
 
-        val targetGenericTypes = mapping.targetGenericTypes
+        val targetGenericTypes = mapping.targetGenericTypes.toMutableList()
         if (targetGenericTypes.isEmpty() && source.generics != null) {
             targetGenericTypes.addAll(source.generics)
         }
@@ -186,11 +186,11 @@ class MappingConverter(val mapping: MappingV2) {
         val typeMapping = TypeMapping(
             null,
             null,
-            resolvePackageVariable(mapping.targetType),
+            resolvePackageVariable(mapping.targetType!!),
             resolvePackageVariable(targetGenericTypes)
         )
 
-        return ResponseTypeMapping (mapping.sourceType, typeMapping)
+        return ResponseTypeMapping (mapping.sourceType!!, typeMapping)
     }
 
     private fun convertPath(path: String, source: Path): Mapping {

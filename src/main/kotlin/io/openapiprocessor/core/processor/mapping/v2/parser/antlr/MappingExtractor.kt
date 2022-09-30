@@ -9,41 +9,13 @@ import io.openapiprocessor.core.processor.mapping.v2.parser.Mapping
 
 
 class MappingExtractor: MappingBaseListener(), Mapping {
-    private var kind: Mapping.Kind? = null
-    private var sourceType: String? = null
-    private var sourceFormat: String? = null
-    private var annotationType: String? = null
-    private var annotationParameters = LinkedHashMap<String, String>()
-    private var targetType: String? = null
-    private var targetGenericTypes: MutableList<String> = mutableListOf()
-
-    override fun getKind(): Mapping.Kind? {
-        return kind
-    }
-
-    override fun getSourceType(): String? {
-        return sourceType
-    }
-
-    override fun getSourceFormat(): String? {
-        return sourceFormat
-    }
-
-    override fun getTargetType(): String? {
-        return targetType
-    }
-
-    override fun getTargetGenericTypes(): List<String> {
-        return targetGenericTypes
-    }
-
-    override fun getAnnotationType(): String? {
-        return annotationType
-    }
-
-    override fun getAnnotationParameters(): LinkedHashMap<String, String> {
-        return annotationParameters
-    }
+    override var kind: Mapping.Kind? = null
+    override var sourceType: String? = null
+    override var sourceFormat: String? = null
+    override var annotationType: String? = null
+    override var annotationParameters = LinkedHashMap<String, String>()
+    override var targetType: String? = null
+    override var targetGenericTypes: MutableList<String> = mutableListOf()
 
     override fun enterType(ctx: MappingParser.TypeContext) {
         kind = Mapping.Kind.TYPE

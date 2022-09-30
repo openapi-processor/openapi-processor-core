@@ -23,7 +23,6 @@ sourceSets {
     main {
         java {
             srcDirs 'build/antlr'
-            srcDirs 'src/main/java'
         }
     }
 }
