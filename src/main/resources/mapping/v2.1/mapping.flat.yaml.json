@@ -47,6 +47,11 @@
           "description": "enable/disable code formatting.",
           "type": "boolean",
           "default": true
+        },
+        "generated-date": {
+          "description": "enable/disable generated date on the @Generated annotation.",
+          "type": "boolean",
+          "default": true
         }
       }
     },
@@ -5312,6 +5317,11 @@
         },
         "format-code": {
           "description": "enable/disable code formatting.",
+          "type": "boolean",
+          "default": true
+        },
+        "generated-date": {
+          "description": "enable/disable generated date on the @Generated annotation.",
           "type": "boolean",
           "default": true
         }

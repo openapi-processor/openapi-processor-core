@@ -14,6 +14,7 @@ import io.openapiprocessor.core.parser.Parser
 import io.openapiprocessor.core.writer.java.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.OffsetDateTime
 
 /**
  *  Simple processor for testing.
@@ -39,9 +40,8 @@ class TestProcessor: OpenApiProcessor {
 
             val generatedInfo = GeneratedInfo(
                 "openapi-processor-core",
-                "test",
-//                OffsetDateTime.now().toString()
-//                url = "https://github.com/openapi-processor/openapi-processor-core"
+                "test"
+                //if (options.generatedDate) OffsetDateTime.now().toString() else null
             )
 
             val generatedWriter = GeneratedWriterImpl(generatedInfo, options)
