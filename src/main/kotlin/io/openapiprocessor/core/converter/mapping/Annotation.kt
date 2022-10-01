@@ -16,14 +16,7 @@ class Annotation(
     val type: String,
 
     /**
-     * all parameters of the annotation (pass through).
-     * todo: remove, replace with parameterX
+     * parameter key/value map.
      */
-    @Deprecated("replace with parameters")
-    val parameters: String? = null,
-
-    /**
-     * parameter key/value map
-     */
-    val parametersX: LinkedHashMap<String, String> = linkedMapOf()
+    val parameters: LinkedHashMap<String, String> = linkedMapOf()
 )

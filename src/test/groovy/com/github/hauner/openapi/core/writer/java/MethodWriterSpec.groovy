@@ -204,7 +204,7 @@ class MethodWriterSpec extends Specification {
             }
             e.parameters { ps ->
                 ps.add ('foo', new StringDataType()) { a ->
-                    a.annotation = new AnnotationDataType ('Foo', 'oap', null, [:])
+                    a.annotation = new AnnotationDataType ('Foo', 'oap', [:])
                 }
             }
         }
@@ -226,7 +226,7 @@ class MethodWriterSpec extends Specification {
             }
             e.parameters { ps ->
                 ps.add ('foo', new StringDataType()) { a ->
-                    a.annotation = new AnnotationDataType ('Foo', 'oap', null, [
+                    a.annotation = new AnnotationDataType ('Foo', 'oap', [
                         "": '"bar"'
                     ])
                 }
@@ -250,7 +250,7 @@ class MethodWriterSpec extends Specification {
             }
             e.parameters { ps ->
                 ps.add ('foo', new StringDataType()) { a ->
-                    a.annotation = new AnnotationDataType ('Foo', 'oap', null, [
+                    a.annotation = new AnnotationDataType ('Foo', 'oap', [
                         foo: '"bar"',
                         oof: '"rab"'
                     ])

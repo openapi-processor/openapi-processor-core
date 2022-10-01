@@ -242,7 +242,7 @@ class InterfaceWriterSpec: StringSpec({
                     any(AdditionalParameter(
                         "bar",
                         StringDataType(),
-                        AnnotationDataType("Bar", "bar", "()", linkedMapOf())
+                        AnnotationDataType("Bar", "bar", linkedMapOf())
                     ))
                 }
             }

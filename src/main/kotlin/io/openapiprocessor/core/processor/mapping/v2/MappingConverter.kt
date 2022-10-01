@@ -99,7 +99,7 @@ class MappingConverter(val mapping: MappingV2) {
             AnnotationTypeMapping(
                 mapping.sourceType!!,
                 mapping.sourceFormat,
-                Annotation(mapping.annotationType!!, null, mapping.annotationParameters)
+                Annotation(mapping.annotationType!!, mapping.annotationParameters)
             )
         } else {
             TypeMapping(
@@ -169,7 +169,7 @@ class MappingConverter(val mapping: MappingV2) {
         var annotation: io.openapiprocessor.core.converter.mapping.Annotation? = null
         if(mapping.annotationType != null) {
             annotation = Annotation(
-                mapping.annotationType!!, null, mapping.annotationParameters)
+                mapping.annotationType!!, mapping.annotationParameters)
         }
 
         return AddParameterTypeMapping(mapping.sourceType!!, typeMapping, annotation)

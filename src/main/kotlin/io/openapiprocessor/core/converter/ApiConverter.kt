@@ -208,8 +208,7 @@ class  ApiConverter(
             annotationType = AnnotationDataType(
                 at.getName(),
                 at.getPkg(),
-                mapping.annotation.parameters,
-                mapping.annotation.parametersX
+                mapping.annotation.parameters
             )
         }
 

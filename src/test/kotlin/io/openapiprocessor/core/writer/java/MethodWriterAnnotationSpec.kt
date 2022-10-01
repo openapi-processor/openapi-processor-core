@@ -40,7 +40,7 @@ class MethodWriterAnnotationSpec: StringSpec ({
         apiOptions.typeMappings = listOf(
             ParameterAnnotationTypeMapping(
                 AnnotationTypeMapping("Foo", annotation = Annotation(
-                    "io.openapiprocessor.Bar", parametersX = linkedMapOf("bar" to "rab"))
+                    "io.openapiprocessor.Bar", linkedMapOf("bar" to "rab"))
                 )
             )
         )
@@ -75,7 +75,7 @@ class MethodWriterAnnotationSpec: StringSpec ({
                 "/foo", null, listOf(
                     ParameterAnnotationTypeMapping(
                         AnnotationTypeMapping("Foo", annotation = Annotation(
-                            "io.openapiprocessor.Bar", parametersX = linkedMapOf("bar" to "rab"))
+                            "io.openapiprocessor.Bar", linkedMapOf("bar" to "rab"))
                         )
                     )
                 )

@@ -58,7 +58,7 @@ class DataTypeWriter(
             .findTypeAnnotations(dataType.getTypeName())
 
         annotationTypeMappings.forEach {
-            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parametersX))
+            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parameters))
             target.write("\n")
         }
 

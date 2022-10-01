@@ -131,13 +131,13 @@ open class MethodWriter(
 
         annotationTypeMappings.forEach {
             target.write(" ")
-            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parametersX))
+            annotationWriter.write(target, Annotation(it.annotation.type, it.annotation.parameters))
         }
 
         if (parameter is AdditionalParameter && parameter.annotationDataType != null) {
             target.write(" @${parameter.annotationDataType.getName()}")
 
-            val parametersX = parameter.annotationDataType.getParametersX()
+            val parametersX = parameter.annotationDataType.getParameters()
             if (parametersX != null) {
                 val parameters = mutableListOf<String>()
 

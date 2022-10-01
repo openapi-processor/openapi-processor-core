@@ -210,7 +210,7 @@ class DataTypeWriterSpec: StringSpec({
         options.typeMappings = listOf(
             AnnotationTypeMapping(
                 "Foo", annotation = MappingAnnotation(
-                    "foo.Bar", parametersX = linkedMapOf("bar" to """"rab"""")
+                    "foo.Bar", linkedMapOf("bar" to """"rab"""")
                 )
             ))
         writer = DataTypeWriter(options, generatedWriter, BeanValidationFactory())

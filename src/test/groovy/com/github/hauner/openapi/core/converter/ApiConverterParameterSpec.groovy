@@ -257,13 +257,17 @@ paths:
 """
         )
 
+
+        def annotationParams = new LinkedHashMap<String, String>()
+        annotationParams.one = "value"
+
         def options = new ApiOptions(packageName: 'pkg', typeMappings: [
             new EndpointTypeMapping('/foo', null, [
                 new AddParameterTypeMapping (
                     'foo', new TypeMapping (
                         null,
                         'java.lang.String'),
-                    new Annotation("bar.Bar", "(anything)", new LinkedHashMap<String, String>()))
+                    new Annotation("bar.Bar", annotationParams))
             ])
         ])
 
@@ -281,7 +285,8 @@ paths:
         foo.dataType.packageName == 'java.lang'
         foo.annotationDataType?.name == 'Bar'
         foo.annotationDataType?.packageName == 'bar'
-        foo.annotationDataType?.parameters == '(anything)'
+        foo.annotationDataType?.parameters?.size () == 1
+        foo.annotationDataType?.parameters?.one == "value"
     }
 
     @Ignore("the openapi parser ignores parameters with unknown types")
@@ -311,7 +316,7 @@ paths:
 """)
 
         when:
-        new ApiConverter ().convert (openApi)
+        new ApiConverter (null, null).convert (openApi)
 
         then:
         def e = thrown (UnknownParameterTypeException)
