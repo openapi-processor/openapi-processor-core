@@ -22,7 +22,7 @@ public @interface Generated {
     String version();
 
     /**
-     * The date & time of generation (ISO 8601) or "-" if no date was set.
+     * The date &amp; time of generation (ISO 8601) or "-" if no date was set.
      *
      * @return date of generation
      */
