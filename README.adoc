@@ -25,6 +25,10 @@ link:{oap-central}[image:{badge-central}[]]
 </p>
 ++++
 
+== moved
+
+this code has moved to https://github.com/openapi-processor/openapi-processor-base/tree/main/openapi-processor-core
+
 == openapi-processor-core
 
 this is the re-usable core of the openapi-processors that generate java code.
